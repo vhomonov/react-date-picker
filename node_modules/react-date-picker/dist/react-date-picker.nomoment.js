@@ -639,7 +639,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        )
 	    },
 
-	    handleClick: function(date) {
+	    handleClick: function(date, event) {
 	        event.target.value = date
 	        ;(this.props.onSelect || emptyFn)(date, event)
 	    }
@@ -773,7 +773,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        )
 	    },
 
-	    handleClick: function(date) {
+	    handleClick: function(date, event) {
 	        event.target.value = date
 	        ;(this.props.onSelect || emptyFn)(date, event)
 	    }
