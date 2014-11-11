@@ -9,7 +9,6 @@
     "serve": "http-server",
     "dev": "webpack-dev-server --progress --colors --port 8090",
     "build-style": "webpack --progress --colors --config build-style.config.js",
-    "build-script": "webpack --progress --colors --config build-script.config.js",
     "dist": "webpack --progress --colors --config dist.config.js",
     "dist.min": "webpack --progress --colors --optimize-minimize --optimize-occurence-order --optimize-dedupe --config dist.min.config.js",
     "dist-nomoment": "webpack --progress --colors --config dist.nomoment.config.js",

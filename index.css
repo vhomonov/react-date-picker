@@ -649,6 +649,7 @@ html.u-app body {
   box-sizing: border-box;
 }
 .u-ellipsis,
+.date-picker .dp-cell.dp-month,
 .date-picker .dp-nav-view,
 .date-picker .dp-nav-cell,
 .date-picker .dp-week-day-name {
