@@ -19,7 +19,7 @@ Don't forget to include index.css or index.styl! ( require('react-date-picker/in
 
 Also you need to have `React` included in the page.
 
-`react-date-picker` works with both React 0.11.2 and the newer 0.12
+`react-date-picker` works with both React 0.11.2 and the newer 0.12, but React 0.12 is the preferred version
 
 ### Example
 
