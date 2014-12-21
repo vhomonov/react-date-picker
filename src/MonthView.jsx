@@ -151,6 +151,8 @@ var MonthView = React.createClass({
             classes.push('dp-value')
         }
 
+        classes = classes.concat(this.props.renderDay(date))
+
         return (
             <td key={dayText} className={classes.join(' ')} onClick={this.handleClick.bind(this, date, dateTimestamp)}>
                 {dayText}

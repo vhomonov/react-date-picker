@@ -96,6 +96,7 @@ var DatePicker = React.createClass({
         var props    = asConfig(this.props)
 
         props.viewDate = this.getViewDate()
+        props.renderDay = this.handleRenderDay
         props.onChange = this.handleChange
         props.onSelect = this.handleSelect
 
@@ -183,6 +184,10 @@ var DatePicker = React.createClass({
                 </tbody></table>
             </div>
         )
+    },
+
+    handleRenderDay: function (date) {
+        return (this.props.renderDay || emptyFn)(date) || []
     },
 
     handleViewChange: function() {

@@ -48,6 +48,7 @@ function onChange(moment, dateString){
  * onChange: Function - called when the user selects a date
  * onSelect: Function - called when the user selects a year/month
  * onNav: Function - called when the user navigates to the next/previous month/year/decade.
+ * renderDay: Function - provides a hook to add custom styling classes for a given day. To add multiple class names simply return an Array with class name strings.
 
 ## Other
 
