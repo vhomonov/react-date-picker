@@ -45,7 +45,9 @@ function onChange(moment, dateString){
  * minDate : Date / String / Moment / Number
  * maxDate : Date / String / Moment / Number
  * dateFormat: String [see moment.js formats](http://momentjs.com/docs/#/displaying/format/). Default date format is 'YYYY-MM-DD'
- * onChange: Function
+ * onChange: Function - called when the user selects a date
+ * onSelect: Function - called when the user selects a year/month
+ * onNav: Function - called when the user navigates to the next/previous month/year/decade.
 
 ## Other
 
@@ -53,8 +55,8 @@ function onChange(moment, dateString){
 
 If you don't use npm you can include any of the following:
 
- * `dist/react-color-picker.js` - the full sources. NOTE: You'll need to include `React` separately
- * `dist/react-color-picker.min.js` - minified & optimized version. NOTE: You'll need to include `React` separately
- * `dist/react-color-picker.nomoment.js` - the full sources. NOTE: You'll need to include `React` AND `moment.js` separately
- * `dist/react-color-picker.nomoment.min.js` - minified & optimized version. NOTE: You'll need to include `React` AND `moment.js` separately
+ * `dist/react-date-picker.js` - the full sources. NOTE: You'll need to include `React` separately
+ * `dist/react-date-picker.min.js` - minified & optimized version. NOTE: You'll need to include `React` separately
+ * `dist/react-date-picker.nomoment.js` - the full sources. NOTE: You'll need to include `React` AND `moment.js` separately
+ * `dist/react-date-picker.nomoment.min.js` - minified & optimized version. NOTE: You'll need to include `React` AND `moment.js` separately
 

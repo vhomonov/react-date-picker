@@ -224,19 +224,23 @@ var DatePicker = React.createClass({
     },
 
     handlePrevNav: function(event) {
-        ;(this.props.onNav || emptyFn)(event)
+        var viewMoment = this.getPrev()
 
         this.setState({
-            viewMoment: this.getPrev()
+            viewMoment: viewMoment
         })
+
+        ;(this.props.onNav || emptyFn)(viewMoment, event)
     },
 
     handleNextNav: function(event) {
-        ;(this.props.onNav || emptyFn)(event)
+        var viewMoment = this.getNext()
 
         this.setState({
-            viewMoment: this.getNext()
+            viewMoment: viewMoment
         })
+
+        ;(this.props.onNav || emptyFn)(viewMoment, event)
     },
 
     handleChange: function(date, event) {
