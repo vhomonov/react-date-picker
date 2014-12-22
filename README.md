@@ -102,3 +102,10 @@ If you don't use npm you can include any of the following:
  * `dist/react-date-picker.nomoment.js` - the full sources. NOTE: You'll need to include `React` AND `moment.js` separately
  * `dist/react-date-picker.nomoment.min.js` - minified & optimized version. NOTE: You'll need to include `React` AND `moment.js` separately
 
+
+## Changelog
+
+#### v1.3.0
+ * `renderDay` & `onRenderDay` properties are available to allow full control over day-cell rendering
+ * `onNav` is called with new args: moment, text, view, direction - where moment is a date as a momentjs instance, text is the date formatted as text, the view is the view name ('month','year','decade') and direction is 1 (nav to next period) or -1 (nav to prev period)
+ * `onSelect` is called with new args: moment, text, view
