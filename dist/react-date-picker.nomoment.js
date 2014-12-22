@@ -151,9 +151,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var view     = this.getViewFactory()
 	        var props    = asConfig(this.props)
 
-	        props.viewDate = this.getViewDate()
-	        props.onChange = this.handleChange
-	        props.onSelect = this.handleSelect
+	        props.viewDate  = this.getViewDate()
+
+	        props.renderDay = this.props.renderDay
+	        props.onRenderDay = this.props.onRenderDay
+
+	        props.onChange  = this.handleChange
+	        props.onSelect  = this.handleSelect
 
 	        return React.DOM.div(copy({
 	            className: (this.props.className || '') + ' date-picker'
@@ -241,6 +245,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        )
 	    },
 
+	    handleRenderDay: function (date) {
+	        return (this.props.renderDay || emptyFn)(date) || []
+	    },
+
 	    handleViewChange: function() {
 	        this.setState({
 	            view: this.getNextViewName()
@@ -280,23 +288,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    handlePrevNav: function(event) {
-	        ;(this.props.onNav || emptyFn)(event)
+	        var viewMoment = this.getPrev()
 
 	        this.setState({
-	            viewMoment: this.getPrev()
+	            viewMoment: viewMoment
 	        })
+
+	        if (typeof this.props.onNav === 'function'){
+	            var text = viewMoment.format(this.props.dateFormat)
+	            var view = this.getViewName()
+
+	            this.props.onNav(viewMoment, text, view, -1, event)
+	        }
 	    },
 
 	    handleNextNav: function(event) {
-	        ;(this.props.onNav || emptyFn)(event)
+	        var viewMoment = this.getNext()
 
 	        this.setState({
-	            viewMoment: this.getNext()
+	            viewMoment: viewMoment
 	        })
+
+	        if (typeof this.props.onNav === 'function'){
+	            var text = viewMoment.format(this.props.dateFormat)
+	            var view = this.getViewName()
+
+	            this.props.onNav(viewMoment, text, view, 1, event)
+	        }
 	    },
 
 	    handleChange: function(date, event) {
 	        date = moment(date)
+
 	        var text = date.format(this.props.dateFormat)
 
 	        ;(this.props.onChange || emptyFn)(date, text, event)
@@ -311,13 +334,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var value = date.get(property)
 	        var viewMoment = moment(this.getViewDate()).set(property, value)
+	        var view = this.getPrevViewName()
 
 	        this.setState({
 	            viewMoment: viewMoment,
-	            view: this.getPrevViewName()
+	            view: view
 	        })
 
-	        ;(this.props.onSelect || emptyFn)(moment(viewMoment), event)
+	        if (typeof this.props.onSelect === 'function'){
+	            var text = viewMoment.format(this.props.dateFormat)
+	            this.props.onSelect(viewMoment, text, view, event)
+	        }
 	    }
 
 	})
@@ -493,11 +520,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	            classes.push('dp-value')
 	        }
 
-	        return (
-	            React.DOM.td({key: dayText, className: classes.join(' '), onClick: this.handleClick.bind(this, date, dateTimestamp)}, 
-	                dayText
-	            )
-	        )
+	        var renderDayProps = {
+	            key      : dayText,
+	            text     : dayText,
+	            date     : date,
+	            className: classes.join(' '),
+	            style    : {},
+	            onClick  : this.handleClick.bind(this, date, dateTimestamp),
+	            children : dayText
+	        }
+
+	        if (typeof this.props.onRenderDay === 'function'){
+	            renderDayProps = this.props.onRenderDay(renderDayProps)
+	        }
+
+	        return (this.props.renderDay || React.DOM.td)(renderDayProps)
 	    },
 
 	    renderWeekDayNames: function(){
