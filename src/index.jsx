@@ -293,4 +293,9 @@ var DatePicker = React.createClass({
 
 })
 
+DatePicker.locale = function(locale){
+    console.log(locale,'!')
+    require('moment/locale/' + locale)
+}
+
 module.exports = DatePicker
