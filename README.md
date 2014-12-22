@@ -45,10 +45,51 @@ function onChange(moment, dateString){
  * minDate : Date / String / Moment / Number
  * maxDate : Date / String / Moment / Number
  * dateFormat: String [see moment.js formats](http://momentjs.com/docs/#/displaying/format/). Default date format is 'YYYY-MM-DD'
- * onChange: Function - called when the user selects a date
- * onSelect: Function - called when the user selects a year/month
- * onNav: Function - called when the user navigates to the next/previous month/year/decade.
- * renderDay: Function - provides a hook to add custom styling classes for a given day. To add multiple class names simply return an Array with class name strings.
+ * onChange: Function(moment, dateText, event) - called when the user selects a date
+ * onSelect: Function(moment, dateText, view) - called when the user selects a year/month
+ * onNav: Function(moment, dateText, view, direction) - called when the user navigates to the next/previous month/year/decade.
+ * renderDay: Function - (optional) A function that should return a React DOM for the day cell. The first param is the props object. You can use this to have full control over what gets rendered for a day.
+ * onRenderDay: Function - (optional) A function that can manipulate the props object for a day, and SHOULD return a new props object. Use this for custom day styling. You can use this to take full control over the styles/css classes/attributes applied to the day cell in the month view.
+
+
+## Examples
+
+
+#### Custom styling of day cells
+
+```jsx
+
+function onRenderDay(props){
+    if (props.date.isBefore('2010-01-01')){
+        props.className += ' invalid'
+    }
+
+    props.style.border = '1px solid red'
+
+    return props
+}
+
+<DatePicker
+    onChange={this.onChange}
+    onRenderDay={onRenderDay}
+/>
+```
+
+
+## Contributing
+
+When contributing, please work on the `src` dir.
+
+You'll need to run the following commands:
+
+```sh
+$ npm run serve # starts a local http server
+$ npm run dev # starts webpack dev server, which does all the bundling
+```
+
+Now navigate to `http://localhost:8080/`
+
+In order to build a new version, make sure you run `npm run build` in order to build the `lib` directory from the `src` directory.
 
 ## Other
 

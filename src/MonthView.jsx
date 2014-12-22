@@ -151,13 +151,21 @@ var MonthView = React.createClass({
             classes.push('dp-value')
         }
 
-        classes = classes.concat(this.props.renderDay(date))
+        var renderDayProps = {
+            key      : dayText,
+            text     : dayText,
+            date     : date,
+            className: classes.join(' '),
+            style    : {},
+            onClick  : this.handleClick.bind(this, date, dateTimestamp),
+            children : dayText
+        }
 
-        return (
-            <td key={dayText} className={classes.join(' ')} onClick={this.handleClick.bind(this, date, dateTimestamp)}>
-                {dayText}
-            </td>
-        )
+        if (typeof this.props.onRenderDay === 'function'){
+            renderDayProps = this.props.onRenderDay(renderDayProps)
+        }
+
+        return (this.props.renderDay || React.DOM.td)(renderDayProps)
     },
 
     renderWeekDayNames: function(){

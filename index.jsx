@@ -15,8 +15,26 @@ var App = React.createClass({
     render: function(){
         var v = VALUE || Date.now()
 
+        function onNav(moment, text, view){
+            console.log(moment, text, view)
+        }
+
+        function onSelect(moment, text, view){
+            console.log(moment, text, view)
+        }
+
+        function renderDay(props){
+            props.className += ' aaa '
+
+            return props
+        }
+
         return <div style={{margin: 10}}>
-            <DatePicker minDate='2014-04-04' maxDate='2015-10-10' date={v} hideFooter={true} viewDate={DATE} onChange={this.onChange}/></div>
+            <DatePicker
+                onNav={onNav}
+                onSelect={onSelect}
+                onRenderDay={renderDay}
+                minDate='2014-04-04' maxDate='2015-10-10' date={v} hideFooter={true} viewDate={DATE} onChange={this.onChange}/></div>
     },
 
     onChange: function(date, dateString) {

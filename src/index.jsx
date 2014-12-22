@@ -95,10 +95,13 @@ var DatePicker = React.createClass({
         var view     = this.getViewFactory()
         var props    = asConfig(this.props)
 
-        props.viewDate = this.getViewDate()
-        props.renderDay = this.handleRenderDay
-        props.onChange = this.handleChange
-        props.onSelect = this.handleSelect
+        props.viewDate  = this.getViewDate()
+
+        props.renderDay = this.props.renderDay
+        props.onRenderDay = this.props.onRenderDay
+
+        props.onChange  = this.handleChange
+        props.onSelect  = this.handleSelect
 
         return React.DOM.div(copy({
             className: (this.props.className || '') + ' date-picker'
@@ -230,28 +233,37 @@ var DatePicker = React.createClass({
 
     handlePrevNav: function(event) {
         var viewMoment = this.getPrev()
-        var view = this.getViewName()
 
         this.setState({
             viewMoment: viewMoment
         })
 
-        ;(this.props.onNav || emptyFn)(viewMoment, view, event)
+        if (typeof this.props.onNav === 'function'){
+            var text = viewMoment.format(this.props.dateFormat)
+            var view = this.getViewName()
+
+            this.props.onNav(viewMoment, text, view, -1, event)
+        }
     },
 
     handleNextNav: function(event) {
         var viewMoment = this.getNext()
-        var view = this.getViewName()
 
         this.setState({
             viewMoment: viewMoment
         })
 
-        ;(this.props.onNav || emptyFn)(viewMoment, view, event)
+        if (typeof this.props.onNav === 'function'){
+            var text = viewMoment.format(this.props.dateFormat)
+            var view = this.getViewName()
+
+            this.props.onNav(viewMoment, text, view, 1, event)
+        }
     },
 
     handleChange: function(date, event) {
         date = moment(date)
+
         var text = date.format(this.props.dateFormat)
 
         ;(this.props.onChange || emptyFn)(date, text, event)
@@ -273,7 +285,10 @@ var DatePicker = React.createClass({
             view: view
         })
 
-        ;(this.props.onSelect || emptyFn)(viewMoment, view, event)
+        if (typeof this.props.onSelect === 'function'){
+            var text = viewMoment.format(this.props.dateFormat)
+            this.props.onSelect(viewMoment, text, view, event)
+        }
     }
 
 })
