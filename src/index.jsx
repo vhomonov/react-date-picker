@@ -103,19 +103,21 @@ var DatePicker = React.createClass({
         props.onChange  = this.handleChange
         props.onSelect  = this.handleSelect
 
-        return React.DOM.div(copy({
-            className: (this.props.className || '') + ' date-picker'
-        }, this.props),
-            <div className="dp-inner">
-                {this.renderHeader(view)}
+        var className = (this.props.className || '') + ' date-picker'
 
-                <div className="dp-body">
-                    <div className="dp-anim-target">
-                    {view(props)}
+        return (
+            <div className={className} {...this.props}>
+                <div className="dp-inner">
+                    {this.renderHeader(view)}
+
+                    <div className="dp-body">
+                        <div className="dp-anim-target">
+                        {view(props)}
+                        </div>
                     </div>
-                </div>
 
-                {this.renderFooter()}
+                    {this.renderFooter()}
+                </div>
             </div>
         )
     },

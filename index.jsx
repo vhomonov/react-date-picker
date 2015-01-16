@@ -49,9 +49,4 @@ var App = React.createClass({
     }
 })
 
-if (React.createFactory){
-    DatePicker = React.createFactory(DatePicker)
-    App        = React.createFactory(App)
-}
-
-;(React.render || React.renderComponent)(<App />, document.getElementById('content'))
+React.render(<App />, document.getElementById('content'))

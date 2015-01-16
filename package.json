@@ -21,7 +21,6 @@
   "dependencies": {
     "copy-utils": "~1.0.0",
     "css-utils": "^0.4.2",
-    "gulp-react": "^2.0.0",
     "moment": "~2.8.3",
     "normalize.css": "~3.0.2",
     "react": "^0.12.2"
@@ -34,7 +33,7 @@
     "gulp-react": "^2.0.0",
     "http-server": "~0.7.2",
     "json-loader": "~0.5.1",
-    "jsx-loader": "~0.11.2",
+    "jsx-loader": "^0.12.2",
     "style-loader": "~0.8.1",
     "stylus-loader": "~0.4.0",
     "url-loader": "~0.5.5",

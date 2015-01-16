@@ -159,19 +159,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	        props.onChange  = this.handleChange
 	        props.onSelect  = this.handleSelect
 
-	        return React.DOM.div(copy({
-	            className: (this.props.className || '') + ' date-picker'
-	        }, this.props),
-	            React.DOM.div({className: "dp-inner"}, 
-	                this.renderHeader(view), 
+	        var className = (this.props.className || '') + ' date-picker'
 
-	                React.DOM.div({className: "dp-body"}, 
-	                    React.DOM.div({className: "dp-anim-target"}, 
-	                    view(props)
-	                    )
-	                ), 
+	        return (
+	            React.createElement("div", React.__spread({className: className},  this.props), 
+	                React.createElement("div", {className: "dp-inner"}, 
+	                    this.renderHeader(view), 
 
-	                this.renderFooter()
+	                    React.createElement("div", {className: "dp-body"}, 
+	                        React.createElement("div", {className: "dp-anim-target"}, 
+	                        view(props)
+	                        )
+	                    ), 
+
+	                    this.renderFooter()
+	                )
 	            )
 	        )
 	    },
@@ -185,11 +187,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var gotoSelected = this.props.gotoSelected || 'Go to selected'
 
 	        return (
-	            React.DOM.div({className: "dp-footer"}, 
-	                React.DOM.div({className: "dp-footer-today", onClick: this.gotoNow}, 
+	            React.createElement("div", {className: "dp-footer"}, 
+	                React.createElement("div", {className: "dp-footer-today", onClick: this.gotoNow}, 
 	                    todayText
 	                ), 
-	                React.DOM.div({className: "dp-footer-selected", onClick: this.gotoSelected}, 
+	                React.createElement("div", {className: "dp-footer-selected", onClick: this.gotoSelected}, 
 	                    gotoSelected
 	                )
 	            )
@@ -231,14 +233,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var next    = this.props.navNext
 
 	        return (
-	            React.DOM.div({className: "dp-header"}, 
-	                React.DOM.table({className: "dp-nav-table"}, React.DOM.tbody(null, 
-	                    React.DOM.tr({className: "dp-row"}, 
-	                        React.DOM.td({className: "dp-prev-nav dp-nav-cell dp-cell", onClick: this.handlePrevNav}, prev), 
+	            React.createElement("div", {className: "dp-header"}, 
+	                React.createElement("table", {className: "dp-nav-table"}, React.createElement("tbody", null, 
+	                    React.createElement("tr", {className: "dp-row"}, 
+	                        React.createElement("td", {className: "dp-prev-nav dp-nav-cell dp-cell", onClick: this.handlePrevNav}, prev), 
 
-	                        React.DOM.td({className: "dp-nav-view dp-cell ", colSpan: colspan, onClick: this.handleViewChange}, headerText), 
+	                        React.createElement("td", {className: "dp-nav-view dp-cell ", colSpan: colspan, onClick: this.handleViewChange}, headerText), 
 
-	                        React.DOM.td({className: "dp-next-nav dp-nav-cell dp-cell", onClick: this.handleNextNav}, next)
+	                        React.createElement("td", {className: "dp-next-nav dp-nav-cell dp-cell", onClick: this.handleNextNav}, next)
 	                    )
 	                ))
 	            )
@@ -637,8 +639,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var daysInView = this.getDaysInMonth(viewMoment)
 
 	        return (
-	            React.DOM.table({className: "dp-table dp-month-view"}, 
-	                React.DOM.tbody(null, 
+	            React.createElement("table", {className: "dp-table dp-month-view"}, 
+	                React.createElement("tbody", null, 
 	                    this.renderWeekDayNames(), 
 
 	                    this.renderDays(daysInView)
@@ -666,7 +668,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        return buckets.map(function(bucket, i){
-	            return React.DOM.tr({key: "row" + i, className: "dp-week dp-row"}, bucket)
+	            return React.createElement("tr", {key: "row" + i, className: "dp-week dp-row"}, bucket)
 	        })
 	    },
 
@@ -716,8 +718,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var names = this.props.weekDayNames
 
 	        return (
-	            React.DOM.tr({className: "dp-row dp-week-day-names"}, 
-	                names.map(function(name)  {return React.DOM.td({key: name, className: "dp-cell dp-week-day-name"}, name);})
+	            React.createElement("tr", {className: "dp-row dp-week-day-names"}, 
+	                names.map(function(name)  {return React.createElement("td", {key: name, className: "dp-cell dp-week-day-name"}, name);})
 	            )
 	        )
 	    },
@@ -803,8 +805,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var monthsInView = this.getMonthsInYear(viewMoment)
 
 	        return (
-	            React.DOM.table({className: "dp-table dp-year-view"}, 
-	                React.DOM.tbody(null, 
+	            React.createElement("table", {className: "dp-table dp-year-view"}, 
+	                React.createElement("tbody", null, 
 	                    this.renderMonths(monthsInView)
 
 	                )
@@ -830,7 +832,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        return buckets.map(function(bucket, i){
-	            return React.DOM.tr({key: "row" + i}, bucket)
+	            return React.createElement("tr", {key: "row" + i}, bucket)
 	        })
 	    },
 
@@ -845,7 +847,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        return (
-	            React.DOM.td({key: monthText, className: classes.join(' '), onClick: this.handleClick.bind(this, date)}, 
+	            React.createElement("td", {key: monthText, className: classes.join(' '), onClick: this.handleClick.bind(this, date)}, 
 	                monthText
 	            )
 	        )
@@ -929,8 +931,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var yearsInView = this.getYearsInDecade(viewMoment)
 
 	        return (
-	            React.DOM.table({className: "dp-table dp-decade-view"}, 
-	                React.DOM.tbody(null, 
+	            React.createElement("table", {className: "dp-table dp-decade-view"}, 
+	                React.createElement("tbody", null, 
 	                    this.renderYears(yearsInView)
 
 	                )
@@ -956,7 +958,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        return buckets.map(function(bucket, i){
-	            return React.DOM.tr({key: "row" + i}, bucket)
+	            return React.createElement("tr", {key: "row" + i}, bucket)
 	        })
 	    },
 
@@ -979,7 +981,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        return (
-	            React.DOM.td({key: yearText, className: classes.join(' '), onClick: this.handleClick.bind(this, date)}, 
+	            React.createElement("td", {key: yearText, className: classes.join(' '), onClick: this.handleClick.bind(this, date)}, 
 	                yearText
 	            )
 	        )
