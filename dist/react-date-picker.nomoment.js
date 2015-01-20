@@ -89,6 +89,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    displayName: 'DatePicker',
 
+	    propTypes: {
+	        todayText: React.PropTypes.string,
+	        gotoSelectedText: React.PropTypes.string,
+
+	        renderFooter: React.PropTypes.func,
+	        onChange: React.PropTypes.func,
+
+	        date: React.PropTypes.any,
+	        viewDate: React.PropTypes.any
+	    },
+
 	    getInitialState: function() {
 	        return {
 	        }
@@ -172,19 +183,44 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        )
 	                    ), 
 
-	                    this.renderFooter()
+	                    this.renderFooter(props)
 	                )
 	            )
 	        )
 	    },
 
-	    renderFooter: function() {
+	    renderFooter: function(props) {
 	        if (this.props.hideFooter){
 	            return
 	        }
 
-	        var todayText    = this.props.today || 'Today'
-	        var gotoSelected = this.props.gotoSelected || 'Go to selected'
+	        if (this.props.today){
+	            console.warn('Please use "todayText" prop instead of "today"!')
+	        }
+	        if (this.props.gotoSelected){
+	            console.warn('Please use "gotoSelectedText" prop instead of "gotoSelected"!')
+	        }
+
+	        var todayText    = this.props.todayText || 'Today'
+	        var gotoSelectedText = this.props.gotoSelectedText || 'Go to selected'
+
+	        var footerProps = {
+	            todayText          : todayText,
+	            gotoSelectedText   : gotoSelectedText,
+	            onTodayClick       : this.gotoNow,
+	            onGotoSelectedClick: this.gotoSelected,
+	            date               : props.date,
+	            viewDate           : props.viewDate
+	        }
+
+	        var result
+	        if (typeof this.props.renderFooter == 'function'){
+	            result = this.props.renderFooter(footerProps)
+	        }
+
+	        if (result !== undefined){
+	            return result
+	        }
 
 	        return (
 	            React.createElement("div", {className: "dp-footer"}, 
@@ -192,7 +228,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    todayText
 	                ), 
 	                React.createElement("div", {className: "dp-footer-selected", onClick: this.gotoSelected}, 
-	                    gotoSelected
+	                    gotoSelectedText
 	                )
 	            )
 	        )
@@ -541,7 +577,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            renderDayProps = this.props.onRenderDay(renderDayProps)
 	        }
 
-	        return (this.props.renderDay || React.DOM.td)(renderDayProps)
+	        var defaultRenderFunction = React.DOM.td
+	        var renderFunction = this.props.renderDay || defaultRenderFunction
+
+	        var result = renderFunction(renderDayProps)
+
+	        if (result === undefined){
+	            result = defaultRenderFunction(renderDayProps)
+	        }
+
+	        return result
 	    },
 
 	    renderWeekDayNames: function(){
