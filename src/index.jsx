@@ -2,16 +2,21 @@
 
 var React  = require('react')
 
-var moment    = require('moment')
-var copyUtils = require('copy-utils')
-var copy     = copyUtils.copy
-var copyList = copyUtils.copyList
-
+var moment   = require('moment')
 var asConfig = require('./utils/asConfig')
+var assign   = require('object-assign')
 
 var MonthView  = require('./MonthView')
 var YearView   = require('./YearView')
 var DecadeView = require('./DecadeView')
+var Header = require('./Header')
+
+var toMoment = require('./toMoment')
+var isMoment = require('./isMoment')
+
+var hasOwn = function(obj, key){
+    return Object.prototype.hasOwnProperty.call(obj, key)
+}
 
 // if (React.createFactory){
 //     MonthView  = React.createFactory(MonthView)
@@ -44,21 +49,30 @@ var DatePicker = React.createClass({
         viewDate: React.PropTypes.any
     },
 
-    getInitialState: function() {
-        return {
-        }
+    getViewOrder: function() {
+        return ['month', 'year', 'decade']
     },
 
     getDefaultProps: function() {
-        return asConfig()
+        var props = assign({}, asConfig())
+
+        delete props.viewDate
+        delete props.date
+
+        return props
+    },
+
+    getInitialState: function() {
+        return {
+            view: this.props.defaultView,
+            viewDate: this.props.defaultViewDate
+        }
     },
 
     getViewName: function() {
-        return this.state.view || this.props.view || 'month'
-    },
-
-    getViewOrder: function() {
-        return ['month', 'year', 'decade']
+        return this.props.view != null?
+                    this.props.view:
+                    this.state.view || 'month'
     },
 
     addViewIndex: function(amount) {
@@ -96,19 +110,27 @@ var DatePicker = React.createClass({
     },
 
     getViewDate: function() {
-        return this.state.viewMoment || this.props.viewDate || this.props.date || this.now
+        var date = hasOwn(this.props, 'viewDate')?
+                        this.props.viewDate:
+                        this.state.viewDate
+
+        date = this.toMoment(date || this.props.date || new Date())
+
+        return date
     },
 
     render: function() {
 
-        this.now = +new Date()
+        this.toMoment = function(value){
+            return toMoment(value, this.props.dateFormat)
+        }.bind(this)
 
         var view     = this.getViewFactory()
         var props    = asConfig(this.props)
 
         props.viewDate  = this.getViewDate()
 
-        props.renderDay = this.props.renderDay
+        props.renderDay   = this.props.renderDay
         props.onRenderDay = this.props.onRenderDay
 
         props.onChange  = this.handleChange
@@ -187,10 +209,9 @@ var DatePicker = React.createClass({
     },
 
     gotoDate: function(value) {
-        this.setState({
-            view: 'month',
-            viewMoment: moment(value)
-        })
+        this.setView('month')
+
+        this.setViewDate(value)
     },
 
     getViewColspan: function(){
@@ -212,19 +233,16 @@ var DatePicker = React.createClass({
         var prev    = this.props.navPrev
         var next    = this.props.navNext
 
-        return (
-            <div className="dp-header">
-                <table className="dp-nav-table"><tbody>
-                    <tr className="dp-row">
-                        <td  className="dp-prev-nav dp-nav-cell dp-cell" onClick={this.handlePrevNav}>{prev}</td>
-
-                        <td className="dp-nav-view dp-cell " colSpan={colspan} onClick={this.handleViewChange}>{headerText}</td>
-
-                        <td className="dp-next-nav dp-nav-cell dp-cell" onClick={this.handleNextNav}>{next}</td>
-                    </tr>
-                </tbody></table>
-            </div>
-        )
+        return <Header 
+                prevText={prev}
+                nextText={next}
+                colspan={colspan}
+                onPrev={this.handlePrevNav}
+                onNext={this.handleNextNav}
+                onChange={this.handleViewChange}
+            >
+            {headerText}
+        </Header>
     },
 
     handleRenderDay: function (date) {
@@ -232,9 +250,50 @@ var DatePicker = React.createClass({
     },
 
     handleViewChange: function() {
-        this.setState({
-            view: this.getNextViewName()
-        })
+        this.setView(this.getNextViewName())
+    },
+
+    /**
+     * Use this method to set the view.
+     * 
+     * @param {String} view 'month'/'year'/'decade'
+     *
+     * It calls onViewChange, and if the view is uncontrolled, also sets it is state,
+     * so the datepicker gets re-rendered view the new view
+     * 
+     */
+    setView: function(view) {
+
+        if (typeof this.props.onViewChange == 'function'){
+            this.props.onViewChange(view)
+        }
+
+        if (this.props.view == null){
+            this.setState({
+                view: view
+            })
+        }
+    },
+
+    setViewDate: function(moment) {
+
+        moment = this.toMoment(moment)
+
+        var fn = this.props.onViewDateChange
+
+        if (typeof fn == 'function'){
+
+            var text = moment.format(this.props.dateFormat)
+            var view = this.getViewName()
+
+            fn(moment, text, view)
+        }
+
+        if (!hasOwn(this.props, 'viewDate')){
+            this.setState({
+                viewDate: moment
+            })
+        }
     },
 
     getNext: function() {
@@ -269,34 +328,27 @@ var DatePicker = React.createClass({
         })[this.getViewName()]()
     },
 
-    handlePrevNav: function(event) {
-        var viewMoment = this.getPrev()
+    handleNavigation: function(direction, event) {
+        var viewMoment = direction == -1?
+                            this.getPrev():
+                            this.getNext()
 
-        this.setState({
-            viewMoment: viewMoment
-        })
+        this.setViewDate(viewMoment)
 
         if (typeof this.props.onNav === 'function'){
             var text = viewMoment.format(this.props.dateFormat)
             var view = this.getViewName()
 
-            this.props.onNav(viewMoment, text, view, -1, event)
+            this.props.onNav(viewMoment, text, view, direction, event)
         }
     },
 
+    handlePrevNav: function(event) {
+        this.handleNavigation(-1, event)
+    },
+
     handleNextNav: function(event) {
-        var viewMoment = this.getNext()
-
-        this.setState({
-            viewMoment: viewMoment
-        })
-
-        if (typeof this.props.onNav === 'function'){
-            var text = viewMoment.format(this.props.dateFormat)
-            var view = this.getViewName()
-
-            this.props.onNav(viewMoment, text, view, 1, event)
-        }
+        this.handleNavigation(1, event)
     },
 
     handleChange: function(date, event) {
@@ -309,19 +361,19 @@ var DatePicker = React.createClass({
 
     handleSelect: function(date, event) {
         var viewName = this.getViewName()
+
         var property = ({
             decade: 'year',
             year  : 'month'
         })[viewName]
 
-        var value = date.get(property)
+        var value      = date.get(property)
         var viewMoment = moment(this.getViewDate()).set(property, value)
-        var view = this.getPrevViewName()
+        var view       = this.getPrevViewName()
 
-        this.setState({
-            viewMoment: viewMoment,
-            view: view
-        })
+        this.setViewDate(viewMoment)
+
+        this.setView(view)
 
         if (typeof this.props.onSelect === 'function'){
             var text = viewMoment.format(this.props.dateFormat)
@@ -330,10 +382,5 @@ var DatePicker = React.createClass({
     }
 
 })
-
-DatePicker.locale = function(locale){
-    console.log(locale,'!')
-    require('moment/locale/' + locale)
-}
 
 module.exports = DatePicker

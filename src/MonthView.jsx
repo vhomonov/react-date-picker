@@ -2,7 +2,6 @@
 
 var React  = require('react')
 var moment = require('moment')
-var copy   = require('copy-utils').copy
 
 var FORMAT   = require('./utils/format')
 var asConfig = require('./utils/asConfig')
@@ -78,10 +77,6 @@ var MonthView = React.createClass({
 
         this.props.minDate && (this.props.minDate = +toMoment(this.props.minDate, this.props.dateFormat))
         this.props.maxDate && (this.props.maxDate = +toMoment(this.props.maxDate, this.props.dateFormat))
-
-        if (this.props.minDate){
-            // debugger
-        }
 
         this.monthFirst = moment(viewMoment).startOf('month')
         this.monthLast  = moment(viewMoment).endOf('month')
@@ -201,10 +196,8 @@ var MonthView = React.createClass({
     }
 })
 
-copy({
-    getHeaderText: function(moment) {
-        return toMoment(moment).format('MMMM YYYY')
-    }
-}, MonthView)
+MonthView.getHeaderText = function(moment) {
+    return toMoment(moment).format('MMMM YYYY')
+}
 
 module.exports = MonthView

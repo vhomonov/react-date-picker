@@ -23,5 +23,7 @@ module.exports = function(value, dateFormat, config){
         return moment(value, dateFormat, strict)
     }
 
-    return moment(value == null? new Date(): value)
+    return moment.isMoment(value)?
+    			value:
+    			moment(value == null? new Date(): value)
 }

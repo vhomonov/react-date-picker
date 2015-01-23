@@ -2,7 +2,6 @@
 
 var React  = require('react')
 var moment = require('moment')
-var copy   = require('copy-utils').copy
 
 var FORMAT   = require('./utils/format')
 var asConfig = require('./utils/asConfig')
@@ -107,10 +106,8 @@ var YearView = React.createClass({
     }
 })
 
-copy({
-    getHeaderText: function(moment) {
-        return toMoment(moment).format('YYYY')
-    }
-}, YearView)
+YearView.getHeaderText = function(moment) {
+    return toMoment(moment).format('YYYY')
+}
 
 module.exports = YearView

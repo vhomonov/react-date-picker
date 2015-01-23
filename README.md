@@ -29,27 +29,39 @@ var date = '2014-10-10' //or Date.now()
 function onChange(moment, dateString){
     //...
 }
+
 <DatePicker
-        minDate='2014-04-04'
-        maxDate='2015-10-10'
-        date={date}
-        onChange={onChange}
+    minDate='2014-04-04'
+    maxDate='2015-10-10'
+    date={date}
+    onChange={onChange}
 />
 ```
 
-## Options
+## Props
 
  * hideFooter: Boolean - by default footer is shown, so specify this to true if you don't want the footer
  * date    : Date / String / Moment / Number
- * viewDate: Date / String / Moment / Number
- * minDate : Date / String / Moment / Number
- * maxDate : Date / String / Moment / Number
- * dateFormat: String [see moment.js formats](http://momentjs.com/docs/#/displaying/format/). Default date format is 'YYYY-MM-DD'
- * onChange: Function(moment, dateText, event) - called when the user selects a date
- * onSelect: Function(moment, dateText, view) - called when the user selects a year/month
- * onNav: Function(moment, dateText, view, direction) - called when the user navigates to the next/previous month/year/decade.
- * renderDay: Function - (optional) A function that should return a React DOM for the day cell. The first param is the props object. You can use this to have full control over what gets rendered for a day.
- * onRenderDay: Function - (optional) A function that can manipulate the props object for a day, and SHOULD return a new props object. Use this for custom day styling. You can use this to take full control over the styles/css classes/attributes applied to the day cell in the month view.
+ * `minDate` : Date / String / Moment / Number
+ * `maxDate` : Date / String / Moment / Number
+ * `dateFormat`: String [see moment.js formats](http://momentjs.com/docs/#/displaying/format/). Default date format is 'YYYY-MM-DD'
+* `onChange`: Function(moment, dateText, event) - called when the user selects a date
+
+
+* `onSelect`: Function(moment, dateText, view) - called when the user selects a year/month
+* `onNav`: Function(moment, dateText, view, direction) - called when the user navigates to the next/previous month/year/decade.
+* `renderDay`: Function - (optional) A function that should return a React DOM for the day cell. The first param is the props object. You can use this to have full control over what gets rendered for a day.
+* `onRenderDay`: Function - (optional) A function that can manipulate the props object for a day, and SHOULD return a new props object. Use this for custom day styling. You can use this to take full control over the styles/css classes/attributes applied to the day cell in the month view.
+
+#### Props related to the view (the current date in view and the type of view)
+ * `defaultViewDate`: Date / String / Moment / Number - a date for the period to show in the picker. If none specified, defaults to `date` or to the current date.
+ * `viewDate`: Date / String / Moment / Number - controlled version for `defaultViewDate`
+ * `onViewDateChange`: Function(moment, dateText, view) - called when navigating to another viewDate.
+ * `defaultView`: String - the view to render initially in the datepicker - if no defaultView is specified, the "month" view is rendered. Possible values: "month", "year", "decade".
+ * `view`: String - controlled version for `defaultView`.
+ * `onViewChange`: Function - function called when the view is changed. If using the controlled `view` version, make sure you update the `view` prop in this function if you want to navigate to another view as expected.
+
+ 
 
 
 ## Examples
@@ -84,12 +96,13 @@ You'll need to run the following commands:
 
 ```sh
 $ npm run serve # starts a local http server
-$ npm run dev # starts webpack dev server, which does all the bundling
+$ npm run dev # starts webpack-dev-server, which does all the bundling and live reloading
 ```
 
-Now navigate to `http://localhost:8080/`
+Now navigate to `http://localhost:8080/`.
+With this setup, you have an environment which live-reloads all your changes, so you have a rapid development cycle.
 
-In order to build a new version, make sure you run `npm run build` in order to build the `lib` directory from the `src` directory.
+In order to build a new production version, make sure you run `npm run build` (it builds the `lib` directory from the `src` directory, it concats all files and builds the `dist` directory, and also prepares the css files)
 
 ## Other
 
@@ -104,6 +117,11 @@ If you don't use npm you can include any of the following:
 
 
 ## Changelog
+
+#### v2.0.0
+
+ * made `viewDate` and `view` controlled. Introduced uncontrolled alternatives `defaultViewDate`(default tos `date` or now) and `defaultView` (defaults to `"month"`)
+ * add `onViewDateChange` and `onViewChange` props that can be used to handle the changes for the respective properties
 
 #### v1.4.0
 
