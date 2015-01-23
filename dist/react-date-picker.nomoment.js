@@ -58,13 +58,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var React  = __webpack_require__(1)
 
-	var moment    = __webpack_require__(2)
-	var asConfig = __webpack_require__(7)
+	var moment   = __webpack_require__(2)
+	var asConfig = __webpack_require__(9)
+	var assign   = __webpack_require__(11)
 
 	var MonthView  = __webpack_require__(3)
 	var YearView   = __webpack_require__(4)
 	var DecadeView = __webpack_require__(5)
 	var Header = __webpack_require__(6)
+
+	var toMoment = __webpack_require__(7)
+	var isMoment = __webpack_require__(8)
+
+	var hasOwn = function(obj, key){
+	    return Object.prototype.hasOwnProperty.call(obj, key)
+	}
 
 	// if (React.createFactory){
 	//     MonthView  = React.createFactory(MonthView)
@@ -78,7 +86,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    decade: DecadeView
 	}
 
-	var getWeekDayNames = __webpack_require__(8)
+	var getWeekDayNames = __webpack_require__(10)
 
 	function emptyFn(){}
 
@@ -97,21 +105,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	        viewDate: React.PropTypes.any
 	    },
 
-	    getInitialState: function() {
-	        return {
-	        }
+	    getViewOrder: function() {
+	        return ['month', 'year', 'decade']
 	    },
 
 	    getDefaultProps: function() {
-	        return asConfig()
+	        var props = assign({}, asConfig())
+
+	        delete props.viewDate
+	        delete props.date
+
+	        return props
+	    },
+
+	    getInitialState: function() {
+	        return {
+	            view: this.props.defaultView,
+	            viewDate: this.props.defaultViewDate
+	        }
 	    },
 
 	    getViewName: function() {
-	        return this.state.view || this.props.view || 'month'
-	    },
-
-	    getViewOrder: function() {
-	        return ['month', 'year', 'decade']
+	        return this.props.view != null?
+	                    this.props.view:
+	                    this.state.view || 'month'
 	    },
 
 	    addViewIndex: function(amount) {
@@ -149,12 +166,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    getViewDate: function() {
-	        return this.state.viewMoment || this.props.viewDate || this.props.date || this.now
+	        var date = hasOwn(this.props, 'viewDate')?
+	                        this.props.viewDate:
+	                        this.state.viewDate
+
+	        date = this.toMoment(date || this.props.date || new Date())
+
+	        return date
 	    },
 
 	    render: function() {
 
-	        this.now = +new Date()
+	        this.toMoment = function(value){
+	            return toMoment(value, this.props.dateFormat)
+	        }.bind(this)
 
 	        var view     = this.getViewFactory()
 	        var props    = asConfig(this.props)
@@ -240,10 +265,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    gotoDate: function(value) {
-	        this.setState({
-	            view: 'month',
-	            viewMoment: moment(value)
-	        })
+	        this.setView('month')
+
+	        this.setViewDate(value)
 	    },
 
 	    getViewColspan: function(){
@@ -282,9 +306,50 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    handleViewChange: function() {
-	        this.setState({
-	            view: this.getNextViewName()
-	        })
+	        this.setView(this.getNextViewName())
+	    },
+
+	    /**
+	     * Use this method to set the view.
+	     * 
+	     * @param {String} view 'month'/'year'/'decade'
+	     *
+	     * It calls onViewChange, and if the view is uncontrolled, also sets it is state,
+	     * so the datepicker gets re-rendered view the new view
+	     * 
+	     */
+	    setView: function(view) {
+
+	        if (typeof this.props.onViewChange == 'function'){
+	            this.props.onViewChange(view)
+	        }
+
+	        if (this.props.view == null){
+	            this.setState({
+	                view: view
+	            })
+	        }
+	    },
+
+	    setViewDate: function(moment) {
+
+	        moment = this.toMoment(moment)
+
+	        var fn = this.props.onViewDateChange
+
+	        if (typeof fn == 'function'){
+
+	            var text = moment.format(this.props.dateFormat)
+	            var view = this.getViewName()
+
+	            fn(moment, text, view)
+	        }
+
+	        if (!hasOwn(this.props, 'viewDate')){
+	            this.setState({
+	                viewDate: moment
+	            })
+	        }
 	    },
 
 	    getNext: function() {
@@ -319,34 +384,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	        })[this.getViewName()]()
 	    },
 
-	    handlePrevNav: function(event) {
-	        var viewMoment = this.getPrev()
+	    handleNavigation: function(direction, event) {
+	        var viewMoment = direction == -1?
+	                            this.getPrev():
+	                            this.getNext()
 
-	        this.setState({
-	            viewMoment: viewMoment
-	        })
+	        this.setViewDate(viewMoment)
 
 	        if (typeof this.props.onNav === 'function'){
 	            var text = viewMoment.format(this.props.dateFormat)
 	            var view = this.getViewName()
 
-	            this.props.onNav(viewMoment, text, view, -1, event)
+	            this.props.onNav(viewMoment, text, view, direction, event)
 	        }
 	    },
 
+	    handlePrevNav: function(event) {
+	        this.handleNavigation(-1, event)
+	    },
+
 	    handleNextNav: function(event) {
-	        var viewMoment = this.getNext()
-
-	        this.setState({
-	            viewMoment: viewMoment
-	        })
-
-	        if (typeof this.props.onNav === 'function'){
-	            var text = viewMoment.format(this.props.dateFormat)
-	            var view = this.getViewName()
-
-	            this.props.onNav(viewMoment, text, view, 1, event)
-	        }
+	        this.handleNavigation(1, event)
 	    },
 
 	    handleChange: function(date, event) {
@@ -369,10 +427,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var viewMoment = moment(this.getViewDate()).set(property, value)
 	        var view       = this.getPrevViewName()
 
-	        this.setState({
-	            viewMoment: viewMoment,
-	            view      : view
-	        })
+	        this.setViewDate(viewMoment)
+
+	        this.setView(view)
 
 	        if (typeof this.props.onSelect === 'function'){
 	            var text = viewMoment.format(this.props.dateFormat)
@@ -405,9 +462,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var React  = __webpack_require__(1)
 	var moment = __webpack_require__(2)
 
-	var FORMAT   = __webpack_require__(9)
-	var asConfig = __webpack_require__(7)
-	var toMoment = __webpack_require__(10)
+	var FORMAT   = __webpack_require__(12)
+	var asConfig = __webpack_require__(9)
+	var toMoment = __webpack_require__(7)
 
 	var TODAY
 
@@ -479,10 +536,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        this.props.minDate && (this.props.minDate = +toMoment(this.props.minDate, this.props.dateFormat))
 	        this.props.maxDate && (this.props.maxDate = +toMoment(this.props.maxDate, this.props.dateFormat))
-
-	        if (this.props.minDate){
-	            // debugger
-	        }
 
 	        this.monthFirst = moment(viewMoment).startOf('month')
 	        this.monthLast  = moment(viewMoment).endOf('month')
@@ -617,9 +670,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var React  = __webpack_require__(1)
 	var moment = __webpack_require__(2)
 
-	var FORMAT   = __webpack_require__(9)
-	var asConfig = __webpack_require__(7)
-	var toMoment = __webpack_require__(10)
+	var FORMAT   = __webpack_require__(12)
+	var asConfig = __webpack_require__(9)
+	var toMoment = __webpack_require__(7)
 
 	var TODAY
 
@@ -735,9 +788,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var React  = __webpack_require__(1)
 	var moment = __webpack_require__(2)
 
-	var FORMAT   = __webpack_require__(9)
-	var asConfig = __webpack_require__(7)
-	var toMoment = __webpack_require__(10)
+	var FORMAT   = __webpack_require__(12)
+	var asConfig = __webpack_require__(9)
+	var toMoment = __webpack_require__(7)
 
 	var TODAY
 
@@ -870,9 +923,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var React = __webpack_require__(1)
 
+	var P = React.PropTypes
+
 	module.exports = React.createClass({
 
 		displayName: 'DatePickerHeader',
+
+		propTypes: {
+			onChange: P.func,
+			onPrev  : P.func,
+			onNext  : P.func,
+			colspan : P.number,
+			children: P.node
+		},
 
 		render: function() {
 
@@ -912,9 +975,55 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict'
 
-	var assign = __webpack_require__(12)
+	var moment = __webpack_require__(2)
+	var CONFIG = __webpack_require__(13)
 
-	var CONFIG = __webpack_require__(11)
+	/**
+	 * This function will be used to convert a date to a moment.
+	 *
+	 * It accepts input as sring, date or moment
+	 *
+	 * @param  {String/Date/Moment} value
+	 * @param  {String} [dateFormat] if value is string, it will be parsed to a moment using this format
+	 * @param  {Object} [config]
+	 * @param  {Boolean} [config.strict] whether to perform strict parsing on strings
+	 * @return {Moment}
+	 */
+	module.exports = function(value, dateFormat, config){
+	    var strict = !!(config && config.strict)
+
+	    dateFormat = dateFormat || CONFIG.dateFormat
+
+	    if (typeof value == 'string'){
+	        return moment(value, dateFormat, strict)
+	    }
+
+	    return moment.isMoment(value)?
+	    			value:
+	    			moment(value == null? new Date(): value)
+	}
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var moment = __webpack_require__(2)
+
+	module.exports = function(value){
+	    return moment.isMoment(value)
+	}
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var assign = __webpack_require__(11)
+
+	var CONFIG = __webpack_require__(13)
 	var KEYS   = Object.keys(CONFIG)
 
 	function copyList(src, target, list){
@@ -957,7 +1066,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 8 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
@@ -980,116 +1089,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var CONFIG   = __webpack_require__(11)
-	var toMoment = __webpack_require__(10)
-
-	function f(mom, format){
-	    return toMoment(mom).format(format)
-	}
-
-	module.exports = {
-	    day: function(mom, format) {
-	        return f(mom, format || CONFIG.dayFormat)
-	    },
-
-	    month: function(mom, format) {
-	        return f(mom, format || CONFIG.monthFormat)
-	    },
-
-	    year: function(mom, format) {
-	        return f(mom, format || CONFIG.yearFormat)
-	    }
-	}
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var moment = __webpack_require__(2)
-	var CONFIG = __webpack_require__(11)
-
-	/**
-	 * This function will be used to convert a date to a moment.
-	 *
-	 * It accepts input as sring, date or moment
-	 *
-	 * @param  {String/Date/Moment} value
-	 * @param  {String} [dateFormat] if value is string, it will be parsed to a moment using this format
-	 * @param  {Object} [config]
-	 * @param  {Boolean} [config.strict] whether to perform strict parsing on strings
-	 * @return {Moment}
-	 */
-	module.exports = function(value, dateFormat, config){
-	    var strict = !!(config && config.strict)
-
-	    dateFormat = dateFormat || CONFIG.dateFormat
-
-	    if (typeof value == 'string'){
-	        return moment(value, dateFormat, strict)
-	    }
-
-	    return moment(value == null? new Date(): value)
-	}
-
-/***/ },
 /* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var getWeekDayNames = __webpack_require__(8)
-
-	module.exports = {
-
-	    //the names of week days to be displayed in month view - first should be sunday
-	    weekDayNames: getWeekDayNames(),
-
-	    //the day to display as first day of week. defaults to 0, which is sunday
-	    weekStartDay: 0,
-
-	    //the format in which days should be displayed in month view
-	    dayFormat: 'D',
-
-	    //the format in which months should be displayed in year view
-	    monthFormat: 'MMMM',
-
-	    //the format in which years should be displayed in decade view
-	    yearFormat: 'YYYY',
-
-	    //text for navigating to prev period
-	    navPrev      : '‹',
-
-	    //text for navigating to next period
-	    navNext      : '›',
-
-	    //the view to render initially. Possible values are: 'month', 'year', 'decade'
-	    view: 'month',
-
-	    //the date to mark as selected in the date picker.
-	    //Can be a Date object, a moment object or a string.
-	    //If it's a string, it will be parsed using dateFormat
-	    date: null,
-
-	    minDate: null,
-
-	    maxDate: null,
-
-	    //the date where to open the picker. defaults to today if no date and no viewDate specified
-	    viewDate: null,
-
-	    //if the date property is given as string, it will be parsed using this format
-	    dateFormat: 'YYYY-MM-DD'
-	}
-
-/***/ },
-/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1119,6 +1119,85 @@ return /******/ (function(modules) { // webpackBootstrap
 		return to;
 	};
 
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var CONFIG   = __webpack_require__(13)
+	var toMoment = __webpack_require__(7)
+
+	function f(mom, format){
+	    return toMoment(mom).format(format)
+	}
+
+	module.exports = {
+	    day: function(mom, format) {
+	        return f(mom, format || CONFIG.dayFormat)
+	    },
+
+	    month: function(mom, format) {
+	        return f(mom, format || CONFIG.monthFormat)
+	    },
+
+	    year: function(mom, format) {
+	        return f(mom, format || CONFIG.yearFormat)
+	    }
+	}
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var getWeekDayNames = __webpack_require__(10)
+
+	module.exports = {
+
+	    //the names of week days to be displayed in month view - first should be sunday
+	    weekDayNames: getWeekDayNames(),
+
+	    //the day to display as first day of week. defaults to 0, which is sunday
+	    weekStartDay: 0,
+
+	    //the format in which days should be displayed in month view
+	    dayFormat: 'D',
+
+	    //the format in which months should be displayed in year view
+	    monthFormat: 'MMMM',
+
+	    //the format in which years should be displayed in decade view
+	    yearFormat: 'YYYY',
+
+	    //text for navigating to prev period
+	    navPrev      : '‹',
+
+	    //text for navigating to next period
+	    navNext      : '›',
+
+	    //the view to render initially. Possible values are: 'month', 'year', 'decade'
+	    view: null,
+	    defaultView: 'month',
+
+	    //the date to mark as selected in the date picker.
+	    //Can be a Date object, a moment object or a string.
+	    //If it's a string, it will be parsed using dateFormat
+	    date: null,
+
+	    minDate: null,
+
+	    maxDate: null,
+
+	    //the date where to open the picker. defaults to today if no date and no viewDate specified
+	    viewDate: null,
+	    defaultViewDate: null,
+
+	    //if the date property is given as string, it will be parsed using this format
+	    dateFormat: 'YYYY-MM-DD'
+	}
 
 /***/ }
 /******/ ])
