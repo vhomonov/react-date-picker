@@ -179,10 +179,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        this.toMoment = function(value){
 	            return toMoment(value, this.props.dateFormat)
-	        }.bind(this)
+	        }
 
-	        var view     = this.getViewFactory()
-	        var props    = asConfig(this.props)
+	        var view  = this.getViewFactory()
+	        var props = asConfig(this.props)
 
 	        props.viewDate  = this.getViewDate()
 
