@@ -2,6 +2,8 @@
 
 require('./index.styl')
 
+var nl = require('moment/locale/nl')
+
 var React      = require('react')
 var DatePicker = require('./src/index')
 

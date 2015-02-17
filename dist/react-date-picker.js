@@ -58,16 +58,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var React  = __webpack_require__(1)
 
-	var moment    = __webpack_require__(9)
-	var copyUtils = __webpack_require__(8)
+	var moment    = __webpack_require__(8)
+	var copyUtils = __webpack_require__(7)
 	var copy     = copyUtils.copy
 	var copyList = copyUtils.copyList
 
-	var asConfig = __webpack_require__(6)
+	var asConfig = __webpack_require__(5)
 
-	var MonthView  = __webpack_require__(3)
-	var YearView   = __webpack_require__(4)
-	var DecadeView = __webpack_require__(5)
+	var MonthView  = __webpack_require__(2)
+	var YearView   = __webpack_require__(3)
+	var DecadeView = __webpack_require__(4)
 
 	// if (React.createFactory){
 	//     MonthView  = React.createFactory(MonthView)
@@ -81,7 +81,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    decade: DecadeView
 	}
 
-	var getWeekDayNames = __webpack_require__(7)
+	var getWeekDayNames = __webpack_require__(6)
 
 	function emptyFn(){}
 
@@ -387,11 +387,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	})
 
-	DatePicker.locale = function(locale){
-	    console.log(locale,'!')
-	    __webpack_require__(2)("./" + locale)
-	}
-
 	module.exports = DatePicker
 
 /***/ },
@@ -404,191 +399,15 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var map = {
-		"./af": 10,
-		"./af.js": 10,
-		"./ar": 13,
-		"./ar-ma": 11,
-		"./ar-ma.js": 11,
-		"./ar-sa": 12,
-		"./ar-sa.js": 12,
-		"./ar.js": 13,
-		"./az": 14,
-		"./az.js": 14,
-		"./be": 15,
-		"./be.js": 15,
-		"./bg": 16,
-		"./bg.js": 16,
-		"./bn": 17,
-		"./bn.js": 17,
-		"./bo": 18,
-		"./bo.js": 18,
-		"./br": 19,
-		"./br.js": 19,
-		"./bs": 20,
-		"./bs.js": 20,
-		"./ca": 21,
-		"./ca.js": 21,
-		"./cs": 22,
-		"./cs.js": 22,
-		"./cv": 23,
-		"./cv.js": 23,
-		"./cy": 24,
-		"./cy.js": 24,
-		"./da": 25,
-		"./da.js": 25,
-		"./de": 27,
-		"./de-at": 26,
-		"./de-at.js": 26,
-		"./de.js": 27,
-		"./el": 28,
-		"./el.js": 28,
-		"./en-au": 29,
-		"./en-au.js": 29,
-		"./en-ca": 30,
-		"./en-ca.js": 30,
-		"./en-gb": 31,
-		"./en-gb.js": 31,
-		"./eo": 32,
-		"./eo.js": 32,
-		"./es": 33,
-		"./es.js": 33,
-		"./et": 34,
-		"./et.js": 34,
-		"./eu": 35,
-		"./eu.js": 35,
-		"./fa": 36,
-		"./fa.js": 36,
-		"./fi": 37,
-		"./fi.js": 37,
-		"./fo": 38,
-		"./fo.js": 38,
-		"./fr": 40,
-		"./fr-ca": 39,
-		"./fr-ca.js": 39,
-		"./fr.js": 40,
-		"./gl": 41,
-		"./gl.js": 41,
-		"./he": 42,
-		"./he.js": 42,
-		"./hi": 43,
-		"./hi.js": 43,
-		"./hr": 44,
-		"./hr.js": 44,
-		"./hu": 45,
-		"./hu.js": 45,
-		"./hy-am": 46,
-		"./hy-am.js": 46,
-		"./id": 47,
-		"./id.js": 47,
-		"./is": 48,
-		"./is.js": 48,
-		"./it": 49,
-		"./it.js": 49,
-		"./ja": 50,
-		"./ja.js": 50,
-		"./ka": 51,
-		"./ka.js": 51,
-		"./km": 52,
-		"./km.js": 52,
-		"./ko": 53,
-		"./ko.js": 53,
-		"./lb": 54,
-		"./lb.js": 54,
-		"./lt": 55,
-		"./lt.js": 55,
-		"./lv": 56,
-		"./lv.js": 56,
-		"./mk": 57,
-		"./mk.js": 57,
-		"./ml": 58,
-		"./ml.js": 58,
-		"./mr": 59,
-		"./mr.js": 59,
-		"./ms-my": 60,
-		"./ms-my.js": 60,
-		"./my": 61,
-		"./my.js": 61,
-		"./nb": 62,
-		"./nb.js": 62,
-		"./ne": 63,
-		"./ne.js": 63,
-		"./nl": 64,
-		"./nl.js": 64,
-		"./nn": 65,
-		"./nn.js": 65,
-		"./pl": 66,
-		"./pl.js": 66,
-		"./pt": 68,
-		"./pt-br": 67,
-		"./pt-br.js": 67,
-		"./pt.js": 68,
-		"./ro": 69,
-		"./ro.js": 69,
-		"./ru": 70,
-		"./ru.js": 70,
-		"./sk": 71,
-		"./sk.js": 71,
-		"./sl": 72,
-		"./sl.js": 72,
-		"./sq": 73,
-		"./sq.js": 73,
-		"./sr": 75,
-		"./sr-cyrl": 74,
-		"./sr-cyrl.js": 74,
-		"./sr.js": 75,
-		"./sv": 76,
-		"./sv.js": 76,
-		"./ta": 77,
-		"./ta.js": 77,
-		"./th": 78,
-		"./th.js": 78,
-		"./tl-ph": 79,
-		"./tl-ph.js": 79,
-		"./tr": 80,
-		"./tr.js": 80,
-		"./tzm": 82,
-		"./tzm-latn": 81,
-		"./tzm-latn.js": 81,
-		"./tzm.js": 82,
-		"./uk": 83,
-		"./uk.js": 83,
-		"./uz": 84,
-		"./uz.js": 84,
-		"./vi": 85,
-		"./vi.js": 85,
-		"./zh-cn": 86,
-		"./zh-cn.js": 86,
-		"./zh-tw": 87,
-		"./zh-tw.js": 87
-	};
-	function webpackContext(req) {
-		return __webpack_require__(webpackContextResolve(req));
-	};
-	function webpackContextResolve(req) {
-		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
-	};
-	webpackContext.keys = function webpackContextKeys() {
-		return Object.keys(map);
-	};
-	webpackContext.resolve = webpackContextResolve;
-	module.exports = webpackContext;
-	webpackContext.id = 2;
-
-
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
 	/** @jsx React.DOM */'use strict'
 
 	var React  = __webpack_require__(1)
-	var moment = __webpack_require__(9)
-	var copy   = __webpack_require__(8).copy
+	var moment = __webpack_require__(8)
+	var copy   = __webpack_require__(7).copy
 
-	var FORMAT   = __webpack_require__(88)
-	var asConfig = __webpack_require__(6)
-	var toMoment = __webpack_require__(89)
+	var FORMAT   = __webpack_require__(9)
+	var asConfig = __webpack_require__(5)
+	var toMoment = __webpack_require__(10)
 
 	var TODAY
 
@@ -792,18 +611,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = MonthView
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */'use strict'
 
 	var React  = __webpack_require__(1)
-	var moment = __webpack_require__(9)
-	var copy   = __webpack_require__(8).copy
+	var moment = __webpack_require__(8)
+	var copy   = __webpack_require__(7).copy
 
-	var FORMAT   = __webpack_require__(88)
-	var asConfig = __webpack_require__(6)
-	var toMoment = __webpack_require__(89)
+	var FORMAT   = __webpack_require__(9)
+	var asConfig = __webpack_require__(5)
+	var toMoment = __webpack_require__(10)
 
 	var TODAY
 
@@ -913,18 +732,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = YearView
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */'use strict'
 
 	var React  = __webpack_require__(1)
-	var moment = __webpack_require__(9)
-	var copy   = __webpack_require__(8).copy
+	var moment = __webpack_require__(8)
+	var copy   = __webpack_require__(7).copy
 
-	var FORMAT   = __webpack_require__(88)
-	var asConfig = __webpack_require__(6)
-	var toMoment = __webpack_require__(89)
+	var FORMAT   = __webpack_require__(9)
+	var asConfig = __webpack_require__(5)
+	var toMoment = __webpack_require__(10)
 
 	var TODAY
 
@@ -1052,16 +871,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = DecadeView
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
-	var copyUtils = __webpack_require__(8)
+	var copyUtils = __webpack_require__(7)
 	var copy      = copyUtils.copy
 	var copyList  = copyUtils.copyList
 
-	var CONFIG = __webpack_require__(90)
+	var CONFIG = __webpack_require__(11)
 	var KEYS   = Object.keys(CONFIG)
 
 	/**
@@ -1094,12 +913,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
-	var moment = __webpack_require__(9)
+	var moment = __webpack_require__(8)
 
 	var DEFAULT_WEEK_START_DAY = moment().startOf('week').format('d') * 1
 
@@ -1117,7 +936,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(){
@@ -1141,7 +960,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copy: __webpack_require__(91),
+	        copy: __webpack_require__(12),
 
 	        /**
 	         * Copies all properties from source to destination, if the property does not exist into the destination
@@ -1154,7 +973,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copyIf: __webpack_require__(92),
+	        copyIf: __webpack_require__(13),
 
 	        /**
 	         * Copies all properties from source to a new object, with the given value. This object is returned
@@ -1196,7 +1015,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copyList: __webpack_require__(93),
+	        copyList: __webpack_require__(14),
 
 	        /**
 	         * Copies all properties named in the list, from source to destination, if the property does not exist into the destination
@@ -1210,7 +1029,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copyListIf: __webpack_require__(94),
+	        copyListIf: __webpack_require__(15),
 
 	        /**
 	         * Copies all properties named in the namedKeys, from source to destination
@@ -1224,7 +1043,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copyKeys: __webpack_require__(95),
+	        copyKeys: __webpack_require__(16),
 
 	        /**
 	         * Copies all properties named in the namedKeys, from source to destination,
@@ -1239,7 +1058,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         *
 	         * @return {Object} destination
 	         */
-	        copyKeysIf: __webpack_require__(96),
+	        copyKeysIf: __webpack_require__(17),
 
 	        copyExceptKeys: function(source, destination, exceptKeys){
 	            destination = destination || {}
@@ -1318,11 +1137,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}()
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global, module) {//! moment.js
-	//! version : 2.8.3
+	//! version : 2.8.4
 	//! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 	//! license : MIT
 	//! momentjs.com
@@ -1333,7 +1152,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    ************************************/
 
 	    var moment,
-	        VERSION = '2.8.3',
+	        VERSION = '2.8.4',
 	        // the global-scope this is NOT the global object in Node.js
 	        globalScope = typeof global !== 'undefined' ? global : this,
 	        oldGlobalMoment,
@@ -1356,7 +1175,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        momentProperties = [],
 
 	        // check for nodeJS
-	        hasModule = (typeof module !== 'undefined' && module.exports),
+	        hasModule = (typeof module !== 'undefined' && module && module.exports),
 
 	        // ASP.NET json date format regex
 	        aspNetJsonRegex = /^\/?Date\((\-?\d+)/i,
@@ -1367,8 +1186,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        isoDurationRegex = /^(-)?P(?:(?:([0-9,.]*)Y)?(?:([0-9,.]*)M)?(?:([0-9,.]*)D)?(?:T(?:([0-9,.]*)H)?(?:([0-9,.]*)M)?(?:([0-9,.]*)S)?)?|([0-9,.]*)W)$/,
 
 	        // format tokens
-	        formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Q|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,4}|X|zz?|ZZ?|.)/g,
-	        localFormattingTokens = /(\[[^\[]*\])|(\\)?(LT|LL?L?L?|l{1,4})/g,
+	        formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Q|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,4}|x|X|zz?|ZZ?|.)/g,
+	        localFormattingTokens = /(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g,
 
 	        // parsing token regexes
 	        parseTokenOneOrTwoDigits = /\d\d?/, // 0 - 99
@@ -1379,8 +1198,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        parseTokenWord = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i, // any word (or two) characters or numbers including two/three word month in arabic.
 	        parseTokenTimezone = /Z|[\+\-]\d\d:?\d\d/gi, // +00:00 -00:00 +0000 -0000 or Z
 	        parseTokenT = /T/i, // T (ISO separator)
+	        parseTokenOffsetMs = /[\+\-]?\d+/, // 1234567890123
 	        parseTokenTimestampMs = /[\+\-]?\d+(\.\d{1,3})?/, // 123456789 123456789.123
-	        parseTokenOrdinal = /\d{1,2}/,
 
 	        //strict parsing regexes
 	        parseTokenOneDigit = /\d/, // 0 - 9
@@ -1594,6 +1413,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            },
 	            zz : function () {
 	                return this.zoneName();
+	            },
+	            x    : function () {
+	                return this.valueOf();
 	            },
 	            X    : function () {
 	                return this.unix();
@@ -2021,7 +1843,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            overflow =
 	                m._a[MONTH] < 0 || m._a[MONTH] > 11 ? MONTH :
 	                m._a[DATE] < 1 || m._a[DATE] > daysInMonth(m._a[YEAR], m._a[MONTH]) ? DATE :
-	                m._a[HOUR] < 0 || m._a[HOUR] > 23 ? HOUR :
+	                m._a[HOUR] < 0 || m._a[HOUR] > 24 ||
+	                    (m._a[HOUR] === 24 && (m._a[MINUTE] !== 0 ||
+	                                           m._a[SECOND] !== 0 ||
+	                                           m._a[MILLISECOND] !== 0)) ? HOUR :
 	                m._a[MINUTE] < 0 || m._a[MINUTE] > 59 ? MINUTE :
 	                m._a[SECOND] < 0 || m._a[SECOND] > 59 ? SECOND :
 	                m._a[MILLISECOND] < 0 || m._a[MILLISECOND] > 999 ? MILLISECOND :
@@ -2048,7 +1873,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (m._strict) {
 	                m._isValid = m._isValid &&
 	                    m._pf.charsLeftOver === 0 &&
-	                    m._pf.unusedTokens.length === 0;
+	                    m._pf.unusedTokens.length === 0 &&
+	                    m._pf.bigHour === undefined;
 	            }
 	        }
 	        return m._isValid;
@@ -2090,7 +1916,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (!locales[name] && hasModule) {
 	            try {
 	                oldLocale = moment.locale();
-	                __webpack_require__(2)("./" + name);
+	                __webpack_require__(18)("./" + name);
 	                // because defineLocale currently also sets the global locale, we want to undo that for lazy loaded locales
 	                moment.locale(oldLocale);
 	            } catch (e) { }
@@ -2100,8 +1926,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    // Return a moment from input, that is local/utc/zone equivalent to model.
 	    function makeAs(input, model) {
-	        return model._isUTC ? moment(input).zone(model._offset || 0) :
-	            moment(input).local();
+	        var res, diff;
+	        if (model._isUTC) {
+	            res = model.clone();
+	            diff = (moment.isMoment(input) || isDate(input) ?
+	                    +input : +moment(input)) - (+res);
+	            // Use low-level api, because this fn is low-level api.
+	            res._d.setTime(+res._d + diff);
+	            moment.updateOffset(res, false);
+	            return res;
+	        } else {
+	            return moment(input).local();
+	        }
 	    }
 
 	    /************************************
@@ -2121,6 +1957,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    this['_' + i] = prop;
 	                }
 	            }
+	            // Lenient ordinal parsing accepts just a number in addition to
+	            // number + (possibly) stuff coming from _ordinalParseLenient.
+	            this._ordinalParseLenient = new RegExp(this._ordinalParse.source + '|' + /\d{1,2}/.source);
 	        },
 
 	        _months : 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_'),
@@ -2133,22 +1972,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return this._monthsShort[m.month()];
 	        },
 
-	        monthsParse : function (monthName) {
+	        monthsParse : function (monthName, format, strict) {
 	            var i, mom, regex;
 
 	            if (!this._monthsParse) {
 	                this._monthsParse = [];
+	                this._longMonthsParse = [];
+	                this._shortMonthsParse = [];
 	            }
 
 	            for (i = 0; i < 12; i++) {
 	                // make the regex if we don't have it already
-	                if (!this._monthsParse[i]) {
-	                    mom = moment.utc([2000, i]);
+	                mom = moment.utc([2000, i]);
+	                if (strict && !this._longMonthsParse[i]) {
+	                    this._longMonthsParse[i] = new RegExp('^' + this.months(mom, '').replace('.', '') + '$', 'i');
+	                    this._shortMonthsParse[i] = new RegExp('^' + this.monthsShort(mom, '').replace('.', '') + '$', 'i');
+	                }
+	                if (!strict && !this._monthsParse[i]) {
 	                    regex = '^' + this.months(mom, '') + '|^' + this.monthsShort(mom, '');
 	                    this._monthsParse[i] = new RegExp(regex.replace('.', ''), 'i');
 	                }
 	                // test the regex
-	                if (this._monthsParse[i].test(monthName)) {
+	                if (strict && format === 'MMMM' && this._longMonthsParse[i].test(monthName)) {
+	                    return i;
+	                } else if (strict && format === 'MMM' && this._shortMonthsParse[i].test(monthName)) {
+	                    return i;
+	                } else if (!strict && this._monthsParse[i].test(monthName)) {
 	                    return i;
 	                }
 	            }
@@ -2191,6 +2040,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        _longDateFormat : {
+	            LTS : 'h:mm:ss A',
 	            LT : 'h:mm A',
 	            L : 'MM/DD/YYYY',
 	            LL : 'MMMM D, YYYY',
@@ -2231,9 +2081,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            lastWeek : '[Last] dddd [at] LT',
 	            sameElse : 'L'
 	        },
-	        calendar : function (key, mom) {
+	        calendar : function (key, mom, now) {
 	            var output = this._calendar[key];
-	            return typeof output === 'function' ? output.apply(mom) : output;
+	            return typeof output === 'function' ? output.apply(mom, [now]) : output;
 	        },
 
 	        _relativeTime : {
@@ -2268,6 +2118,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return this._ordinal.replace('%d', number);
 	        },
 	        _ordinal : '%d',
+	        _ordinalParse : /\d{1,2}/,
 
 	        preparse : function (string) {
 	            return string;
@@ -2409,6 +2260,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        case 'a':
 	        case 'A':
 	            return config._locale._meridiemParse;
+	        case 'x':
+	            return parseTokenOffsetMs;
 	        case 'X':
 	            return parseTokenTimestampMs;
 	        case 'Z':
@@ -2443,7 +2296,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        case 'E':
 	            return parseTokenOneOrTwoDigits;
 	        case 'Do':
-	            return parseTokenOrdinal;
+	            return strict ? config._locale._ordinalParse : config._locale._ordinalParseLenient;
 	        default :
 	            a = new RegExp(regexpEscape(unescapeFormat(token.replace('\\', '')), 'i'));
 	            return a;
@@ -2480,7 +2333,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            break;
 	        case 'MMM' : // fall through to MMMM
 	        case 'MMMM' :
-	            a = config._locale.monthsParse(input);
+	            a = config._locale.monthsParse(input, token, config._strict);
 	            // if we didn't find a month name, mark the date as invalid.
 	            if (a != null) {
 	                datePartArray[MONTH] = a;
@@ -2497,7 +2350,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            break;
 	        case 'Do' :
 	            if (input != null) {
-	                datePartArray[DATE] = toInt(parseInt(input, 10));
+	                datePartArray[DATE] = toInt(parseInt(
+	                            input.match(/\d{1,2}/)[0], 10));
 	            }
 	            break;
 	        // DAY OF YEAR
@@ -2522,11 +2376,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        case 'A' :
 	            config._isPm = config._locale.isPM(input);
 	            break;
-	        // 24 HOUR
-	        case 'H' : // fall through to hh
-	        case 'HH' : // fall through to hh
+	        // HOUR
 	        case 'h' : // fall through to hh
 	        case 'hh' :
+	            config._pf.bigHour = true;
+	            /* falls through */
+	        case 'H' : // fall through to HH
+	        case 'HH' :
 	            datePartArray[HOUR] = toInt(input);
 	            break;
 	        // MINUTE
@@ -2545,6 +2401,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        case 'SSS' :
 	        case 'SSSS' :
 	            datePartArray[MILLISECOND] = toInt(('0.' + input) * 1000);
+	            break;
+	        // UNIX OFFSET (MILLISECONDS)
+	        case 'x':
+	            config._d = new Date(toInt(input));
 	            break;
 	        // UNIX TIMESTAMP WITH MS
 	        case 'X':
@@ -2682,11 +2542,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	            config._a[i] = input[i] = (config._a[i] == null) ? (i === 2 ? 1 : 0) : config._a[i];
 	        }
 
+	        // Check for 24:00:00.000
+	        if (config._a[HOUR] === 24 &&
+	                config._a[MINUTE] === 0 &&
+	                config._a[SECOND] === 0 &&
+	                config._a[MILLISECOND] === 0) {
+	            config._nextDay = true;
+	            config._a[HOUR] = 0;
+	        }
+
 	        config._d = (config._useUTC ? makeUTCDate : makeDate).apply(null, input);
 	        // Apply timezone offset from input. The actual zone can be changed
 	        // with parseZone.
 	        if (config._tzm != null) {
 	            config._d.setUTCMinutes(config._d.getUTCMinutes() + config._tzm);
+	        }
+
+	        if (config._nextDay) {
+	            config._a[HOUR] = 24;
 	        }
 	    }
 
@@ -2701,7 +2574,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        config._a = [
 	            normalizedInput.year,
 	            normalizedInput.month,
-	            normalizedInput.day,
+	            normalizedInput.day || normalizedInput.date,
 	            normalizedInput.hour,
 	            normalizedInput.minute,
 	            normalizedInput.second,
@@ -2774,6 +2647,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            config._pf.unusedInput.push(string);
 	        }
 
+	        // clear _12h flag if hour is <= 12
+	        if (config._pf.bigHour === true && config._a[HOUR] <= 12) {
+	            config._pf.bigHour = undefined;
+	        }
 	        // handle am pm
 	        if (config._isPm && config._a[HOUR] < 12) {
 	            config._a[HOUR] += 12;
@@ -2782,7 +2659,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (config._isPm === false && config._a[HOUR] === 12) {
 	            config._a[HOUR] = 0;
 	        }
-
 	        dateFromConfig(config);
 	        checkOverflow(config);
 	    }
@@ -3042,7 +2918,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function makeMoment(config) {
 	        var input = config._i,
-	            format = config._f;
+	            format = config._f,
+	            res;
 
 	        config._locale = config._locale || moment.localeData(config._l);
 
@@ -3066,7 +2943,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            makeDateFromInput(config);
 	        }
 
-	        return new Moment(config);
+	        res = new Moment(config);
+	        if (res._nextDay) {
+	            // Adding is smart enough around DST
+	            res.add(1, 'd');
+	            res._nextDay = undefined;
+	        }
+
+	        return res;
 	    }
 
 	    moment = function (input, format, locale, strict) {
@@ -3098,7 +2982,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        'release. Please refer to ' +
 	        'https://github.com/moment/moment/issues/1407 for more info.',
 	        function (config) {
-	            config._d = new Date(config._i);
+	            config._d = new Date(config._i + (config._useUTC ? ' UTC' : ''));
 	        }
 	    );
 
@@ -3410,7 +3294,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        toISOString : function () {
 	            var m = moment(this).utc();
 	            if (0 < m.year() && m.year() <= 9999) {
-	                return formatMoment(m, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
+	                if ('function' === typeof Date.prototype.toISOString) {
+	                    // native implementation is ~50x faster, use it when we can
+	                    return this.toDate().toISOString();
+	                } else {
+	                    return formatMoment(m, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
+	                }
 	            } else {
 	                return formatMoment(m, 'YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
 	            }
@@ -3529,7 +3418,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    diff < 1 ? 'sameDay' :
 	                    diff < 2 ? 'nextDay' :
 	                    diff < 7 ? 'nextWeek' : 'sameElse';
-	            return this.format(this.localeData().calendar(format, this));
+	            return this.format(this.localeData().calendar(format, this, moment(now)));
 	        },
 
 	        isLeapYear : function () {
@@ -3598,36 +3487,45 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        endOf: function (units) {
 	            units = normalizeUnits(units);
+	            if (units === undefined || units === 'millisecond') {
+	                return this;
+	            }
 	            return this.startOf(units).add(1, (units === 'isoWeek' ? 'week' : units)).subtract(1, 'ms');
 	        },
 
 	        isAfter: function (input, units) {
+	            var inputMs;
 	            units = normalizeUnits(typeof units !== 'undefined' ? units : 'millisecond');
 	            if (units === 'millisecond') {
 	                input = moment.isMoment(input) ? input : moment(input);
 	                return +this > +input;
 	            } else {
-	                return +this.clone().startOf(units) > +moment(input).startOf(units);
+	                inputMs = moment.isMoment(input) ? +input : +moment(input);
+	                return inputMs < +this.clone().startOf(units);
 	            }
 	        },
 
 	        isBefore: function (input, units) {
+	            var inputMs;
 	            units = normalizeUnits(typeof units !== 'undefined' ? units : 'millisecond');
 	            if (units === 'millisecond') {
 	                input = moment.isMoment(input) ? input : moment(input);
 	                return +this < +input;
 	            } else {
-	                return +this.clone().startOf(units) < +moment(input).startOf(units);
+	                inputMs = moment.isMoment(input) ? +input : +moment(input);
+	                return +this.clone().endOf(units) < inputMs;
 	            }
 	        },
 
 	        isSame: function (input, units) {
+	            var inputMs;
 	            units = normalizeUnits(units || 'millisecond');
 	            if (units === 'millisecond') {
 	                input = moment.isMoment(input) ? input : moment(input);
 	                return +this === +input;
 	            } else {
-	                return +this.clone().startOf(units) === +makeAs(input, this).startOf(units);
+	                inputMs = +moment(input);
+	                return +(this.clone().startOf(units)) <= inputMs && inputMs <= +(this.clone().endOf(units));
 	            }
 	        },
 
@@ -3804,7 +3702,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 
 	        lang : deprecate(
-	            'moment().lang() is deprecated. Use moment().localeData() instead.',
+	            'moment().lang() is deprecated. Instead, use moment().localeData() to get the language configuration. Use moment().locale() to change languages.',
 	            function (key) {
 	                if (key === undefined) {
 	                    return this.localeData();
@@ -4025,7 +3923,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return units === 'month' ? months : months / 12;
 	            } else {
 	                // handle milliseconds separately because of floating point math errors (issue #1867)
-	                days = this._days + yearsToDays(this._months / 12);
+	                days = this._days + Math.round(yearsToDays(this._months / 12));
 	                switch (units) {
 	                    case 'week': return days / 7 + this._milliseconds / 6048e5;
 	                    case 'day': return days + this._milliseconds / 864e5;
@@ -4127,6 +4025,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    // Set default locale, other locale will inherit from English.
 	    moment.locale('en', {
+	        ordinalParse: /\d{1,2}(th|st|nd|rd)/,
 	        ordinal : function (number) {
 	            var b = number % 10,
 	                output = (toInt(number % 100 / 10) === 1) ? 'th' :
@@ -4181,7 +4080,574 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(97)(module)))
 
 /***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var CONFIG   = __webpack_require__(11)
+	var toMoment = __webpack_require__(10)
+
+	function f(mom, format){
+	    return toMoment(mom).format(format)
+	}
+
+	module.exports = {
+	    day: function(mom, format) {
+	        return f(mom, format || CONFIG.dayFormat)
+	    },
+
+	    month: function(mom, format) {
+	        return f(mom, format || CONFIG.monthFormat)
+	    },
+
+	    year: function(mom, format) {
+	        return f(mom, format || CONFIG.yearFormat)
+	    }
+	}
+
+/***/ },
 /* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var moment = __webpack_require__(8)
+	var CONFIG = __webpack_require__(11)
+
+	/**
+	 * This function will be used to convert a date to a moment.
+	 *
+	 * It accepts input as sring, date or moment
+	 *
+	 * @param  {String/Date/Moment} value
+	 * @param  {String} [dateFormat] if value is string, it will be parsed to a moment using this format
+	 * @param  {Object} [config]
+	 * @param  {Boolean} [config.strict] whether to perform strict parsing on strings
+	 * @return {Moment}
+	 */
+	module.exports = function(value, dateFormat, config){
+	    var strict = !!(config && config.strict)
+
+	    dateFormat = dateFormat || CONFIG.dateFormat
+
+	    if (typeof value == 'string'){
+	        return moment(value, dateFormat, strict)
+	    }
+
+	    return moment(value == null? new Date(): value)
+	}
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var getWeekDayNames = __webpack_require__(6)
+
+	module.exports = {
+
+	    //the names of week days to be displayed in month view - first should be sunday
+	    weekDayNames: getWeekDayNames(),
+
+	    //the day to display as first day of week. defaults to 0, which is sunday
+	    weekStartDay: 0,
+
+	    //the format in which days should be displayed in month view
+	    dayFormat: 'D',
+
+	    //the format in which months should be displayed in year view
+	    monthFormat: 'MMMM',
+
+	    //the format in which years should be displayed in decade view
+	    yearFormat: 'YYYY',
+
+	    //text for navigating to prev period
+	    navPrev      : '‹',
+
+	    //text for navigating to next period
+	    navNext      : '›',
+
+	    //the view to render initially. Possible values are: 'month', 'year', 'decade'
+	    view: 'month',
+
+	    //the date to mark as selected in the date picker.
+	    //Can be a Date object, a moment object or a string.
+	    //If it's a string, it will be parsed using dateFormat
+	    date: null,
+
+	    minDate: null,
+
+	    maxDate: null,
+
+	    //the date where to open the picker. defaults to today if no date and no viewDate specified
+	    viewDate: null,
+
+	    //if the date property is given as string, it will be parsed using this format
+	    dateFormat: 'YYYY-MM-DD'
+	}
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var HAS_OWN       = Object.prototype.hasOwnProperty
+	var STR_OBJECT    = 'object'
+
+	/**
+	 * Copies all properties from source to destination
+	 *
+	 *      copy({name: 'jon',age:5}, this);
+	 *      // => this will have the 'name' and 'age' properties set to 'jon' and 5 respectively
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination){
+
+	    destination = destination || {}
+
+	    if (source != null && typeof source === STR_OBJECT ){
+
+	        for (var i in source) if ( HAS_OWN.call(source, i) ) {
+	            destination[i] = source[i]
+	        }
+
+	    }
+
+	    return destination
+	}
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var HAS_OWN       = Object.prototype.hasOwnProperty
+	var STR_OBJECT    = 'object'
+	var STR_UNDEFINED = 'undefined'
+
+	/**
+	 * Copies all properties from source to destination, if the property does not exist into the destination
+	 *
+	 *      copyIf({name: 'jon',age:5}, {age:7})
+	 *      // => { name: 'jon', age: 7}
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination){
+	    destination = destination || {}
+
+	    if (source != null && typeof source === STR_OBJECT){
+
+	        for (var i in source) if ( HAS_OWN.call(source, i) && (typeof destination[i] === STR_UNDEFINED) ) {
+
+	            destination[i] = source[i]
+
+	        }
+	    }
+
+	    return destination
+	}
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var STR_UNDEFINED = 'undefined'
+
+	/**
+	 * Copies all properties named in the list, from source to destination
+	 *
+	 *      copyList({name: 'jon',age:5, year: 2006}, {}, ['name','age'])
+	 *      // => {name: 'jon', age: 5}
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 * @param {Array} list the array with the names of the properties to copy
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination, list){
+	    if (arguments.length < 3){
+	        list = destination
+	        destination = null
+	    }
+
+	    destination = destination || {}
+	    list        = list || Object.keys(source)
+
+	    var i   = 0
+	    var len = list.length
+	    var propName
+
+	    for ( ; i < len; i++ ){
+	        propName = list[i]
+
+	        if ( typeof source[propName] !== STR_UNDEFINED ) {
+	            destination[list[i]] = source[list[i]]
+	        }
+	    }
+
+	    return destination
+	}
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var STR_UNDEFINED = 'undefined'
+
+	/**
+	 * Copies all properties named in the list, from source to destination, if the property does not exist into the destination
+	 *
+	 *      copyListIf({name: 'jon',age:5, year: 2006}, {age: 10}, ['name','age'])
+	 *      // => {name: 'jon', age: 10}
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 * @param {Array} list the array with the names of the properties to copy
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination, list){
+	    if (arguments.length < 3){
+	        list = destination
+	        destination = null
+	    }
+
+	    destination = destination || {}
+	    list        = list || Object.keys(source)
+
+	    var i   = 0
+	    var len = list.length
+	    var propName
+
+	    for ( ; i < len ; i++ ){
+	        propName = list[i]
+	        if (
+	                (typeof source[propName]      !== STR_UNDEFINED) &&
+	                (typeof destination[propName] === STR_UNDEFINED)
+	            ){
+	            destination[propName] = source[propName]
+	        }
+	    }
+
+	    return destination
+	}
+
+/***/ },
+/* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var STR_UNDEFINED = 'undefined'
+	var STR_OBJECT    = 'object'
+	var HAS_OWN       = Object.prototype.hasOwnProperty
+
+	var copyList = __webpack_require__(14)
+
+	/**
+	 * Copies all properties named in the namedKeys, from source to destination
+	 *
+	 *      copyKeys({name: 'jon',age:5, year: 2006, date: '2010/05/12'}, {}, {name:1 ,age: true, year: 'theYear'})
+	 *      // => {name: 'jon', age: 5, theYear: 2006}
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 * @param {Object} namedKeys an object with keys denoting the properties to be copied
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination, namedKeys){
+	    if (arguments.length < 3 ){
+	        namedKeys = destination
+	        destination = null
+	    }
+
+	    destination = destination || {}
+
+	    if (!namedKeys || Array.isArray(namedKeys)){
+	        return copyList(source, destination, namedKeys)
+	    }
+
+	    if (
+	           source != null && typeof source    === STR_OBJECT &&
+	        namedKeys != null && typeof namedKeys === STR_OBJECT
+	    ) {
+	        var typeOfNamedProperty
+	        var namedPropertyValue
+
+	        for  (var propName in namedKeys) if ( HAS_OWN.call(namedKeys, propName) ) {
+	            namedPropertyValue  = namedKeys[propName]
+	            typeOfNamedProperty = typeof namedPropertyValue
+
+	            if (typeof source[propName] !== STR_UNDEFINED){
+	                destination[typeOfNamedProperty == 'string'? namedPropertyValue : propName] = source[propName]
+	            }
+	        }
+	    }
+
+	    return destination
+	}
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var STR_UNDEFINED = 'undefined'
+	var STR_OBJECT    = 'object'
+	var HAS_OWN       = Object.prototype.hasOwnProperty
+
+	var copyListIf = __webpack_require__(15)
+
+	/**
+	 * Copies all properties named in the namedKeys, from source to destination,
+	 * but only if the property does not already exist in the destination object
+	 *
+	 *      copyKeysIf({name: 'jon',age:5, year: 2006}, {aname: 'test'}, {name:'aname' ,age: true})
+	 *      // => {aname: 'test', age: 5}
+	 *
+	 * @param {Object} source
+	 * @param {Object} destination
+	 * @param {Object} namedKeys an object with keys denoting the properties to be copied
+	 *
+	 * @return {Object} destination
+	 */
+	module.exports = function(source, destination, namedKeys){
+	    if (arguments.length < 3 ){
+	        namedKeys = destination
+	        destination = null
+	    }
+
+	    destination = destination || {}
+
+	    if (!namedKeys || Array.isArray(namedKeys)){
+	        return copyListIf(source, destination, namedKeys)
+	    }
+
+	    if (
+	               source != null && typeof source    === STR_OBJECT &&
+	            namedKeys != null && typeof namedKeys === STR_OBJECT
+	        ) {
+
+	            var typeOfNamedProperty
+	            var namedPropertyValue
+	            var newPropertyName
+
+	            for (var propName in namedKeys) if ( HAS_OWN.call(namedKeys, propName) ) {
+
+	                namedPropertyValue  = namedKeys[propName]
+	                typeOfNamedProperty = typeof namedPropertyValue
+	                newPropertyName     = typeOfNamedProperty == 'string'? namedPropertyValue : propName
+
+	                if (
+	                        typeof      source[propName]        !== STR_UNDEFINED &&
+	                        typeof destination[newPropertyName] === STR_UNDEFINED
+	                    ) {
+	                    destination[newPropertyName] = source[propName]
+	                }
+
+	            }
+	        }
+
+	    return destination
+	}
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var map = {
+		"./af": 19,
+		"./af.js": 19,
+		"./ar": 22,
+		"./ar-ma": 20,
+		"./ar-ma.js": 20,
+		"./ar-sa": 21,
+		"./ar-sa.js": 21,
+		"./ar.js": 22,
+		"./az": 23,
+		"./az.js": 23,
+		"./be": 24,
+		"./be.js": 24,
+		"./bg": 25,
+		"./bg.js": 25,
+		"./bn": 26,
+		"./bn.js": 26,
+		"./bo": 27,
+		"./bo.js": 27,
+		"./br": 28,
+		"./br.js": 28,
+		"./bs": 29,
+		"./bs.js": 29,
+		"./ca": 30,
+		"./ca.js": 30,
+		"./cs": 31,
+		"./cs.js": 31,
+		"./cv": 32,
+		"./cv.js": 32,
+		"./cy": 33,
+		"./cy.js": 33,
+		"./da": 34,
+		"./da.js": 34,
+		"./de": 36,
+		"./de-at": 35,
+		"./de-at.js": 35,
+		"./de.js": 36,
+		"./el": 37,
+		"./el.js": 37,
+		"./en-au": 38,
+		"./en-au.js": 38,
+		"./en-ca": 39,
+		"./en-ca.js": 39,
+		"./en-gb": 40,
+		"./en-gb.js": 40,
+		"./eo": 41,
+		"./eo.js": 41,
+		"./es": 42,
+		"./es.js": 42,
+		"./et": 43,
+		"./et.js": 43,
+		"./eu": 44,
+		"./eu.js": 44,
+		"./fa": 45,
+		"./fa.js": 45,
+		"./fi": 46,
+		"./fi.js": 46,
+		"./fo": 47,
+		"./fo.js": 47,
+		"./fr": 49,
+		"./fr-ca": 48,
+		"./fr-ca.js": 48,
+		"./fr.js": 49,
+		"./gl": 50,
+		"./gl.js": 50,
+		"./he": 51,
+		"./he.js": 51,
+		"./hi": 52,
+		"./hi.js": 52,
+		"./hr": 53,
+		"./hr.js": 53,
+		"./hu": 54,
+		"./hu.js": 54,
+		"./hy-am": 55,
+		"./hy-am.js": 55,
+		"./id": 56,
+		"./id.js": 56,
+		"./is": 57,
+		"./is.js": 57,
+		"./it": 58,
+		"./it.js": 58,
+		"./ja": 59,
+		"./ja.js": 59,
+		"./ka": 60,
+		"./ka.js": 60,
+		"./km": 61,
+		"./km.js": 61,
+		"./ko": 62,
+		"./ko.js": 62,
+		"./lb": 63,
+		"./lb.js": 63,
+		"./lt": 64,
+		"./lt.js": 64,
+		"./lv": 65,
+		"./lv.js": 65,
+		"./mk": 66,
+		"./mk.js": 66,
+		"./ml": 67,
+		"./ml.js": 67,
+		"./mr": 68,
+		"./mr.js": 68,
+		"./ms-my": 69,
+		"./ms-my.js": 69,
+		"./my": 70,
+		"./my.js": 70,
+		"./nb": 71,
+		"./nb.js": 71,
+		"./ne": 72,
+		"./ne.js": 72,
+		"./nl": 73,
+		"./nl.js": 73,
+		"./nn": 74,
+		"./nn.js": 74,
+		"./pl": 75,
+		"./pl.js": 75,
+		"./pt": 77,
+		"./pt-br": 76,
+		"./pt-br.js": 76,
+		"./pt.js": 77,
+		"./ro": 78,
+		"./ro.js": 78,
+		"./ru": 79,
+		"./ru.js": 79,
+		"./sk": 80,
+		"./sk.js": 80,
+		"./sl": 81,
+		"./sl.js": 81,
+		"./sq": 82,
+		"./sq.js": 82,
+		"./sr": 84,
+		"./sr-cyrl": 83,
+		"./sr-cyrl.js": 83,
+		"./sr.js": 84,
+		"./sv": 85,
+		"./sv.js": 85,
+		"./ta": 86,
+		"./ta.js": 86,
+		"./th": 87,
+		"./th.js": 87,
+		"./tl-ph": 88,
+		"./tl-ph.js": 88,
+		"./tr": 89,
+		"./tr.js": 89,
+		"./tzm": 91,
+		"./tzm-latn": 90,
+		"./tzm-latn.js": 90,
+		"./tzm.js": 91,
+		"./uk": 92,
+		"./uk.js": 92,
+		"./uz": 93,
+		"./uz.js": 93,
+		"./vi": 94,
+		"./vi.js": 94,
+		"./zh-cn": 95,
+		"./zh-cn.js": 95,
+		"./zh-tw": 96,
+		"./zh-tw.js": 96
+	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 18;
+
+
+/***/ },
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -4190,11 +4656,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('af', {
@@ -4212,6 +4678,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -4240,6 +4707,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : '\'n jaar',
 	            yy : '%d jaar'
 	        },
+	        ordinalParse: /\d{1,2}(ste|de)/,
 	        ordinal : function (number) {
 	            return number + ((number === 1 || number === 8 || number >= 20) ? 'ste' : 'de'); // Thanks to Joris Röling : https://github.com/jjupiter
 	        },
@@ -4252,7 +4720,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 11 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -4262,11 +4730,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('ar-ma', {
@@ -4277,6 +4745,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'ح_ن_ث_ر_خ_ج_س'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -4314,7 +4783,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 12 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -4323,11 +4792,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var symbolMap = {
@@ -4362,6 +4831,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'ح_ن_ث_ر_خ_ج_س'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'HH:mm:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -4398,7 +4868,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            yy : '%d سنوات'
 	        },
 	        preparse: function (string) {
-	            return string.replace(/[۰-۹]/g, function (match) {
+	            return string.replace(/[١٢٣٤٥٦٧٨٩٠]/g, function (match) {
 	                return numberMap[match];
 	            }).replace(/،/g, ',');
 	        },
@@ -4416,7 +4886,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 13 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -4427,11 +4897,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var symbolMap = {
@@ -4497,6 +4967,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'ح_ن_ث_ر_خ_ج_س'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'HH:mm:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -4533,7 +5004,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            yy : pluralize('y')
 	        },
 	        preparse: function (string) {
-	            return string.replace(/[۰-۹]/g, function (match) {
+	            return string.replace(/[١٢٣٤٥٦٧٨٩٠]/g, function (match) {
 	                return numberMap[match];
 	            }).replace(/،/g, ',');
 	        },
@@ -4551,7 +5022,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 14 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -4560,11 +5031,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var suffixes = {
@@ -4600,6 +5071,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Bz_BE_ÇA_Çə_CA_Cü_Şə'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD.MM.YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -4639,6 +5111,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return 'axşam';
 	            }
 	        },
+	        ordinalParse: /\d{1,2}-(ıncı|inci|nci|üncü|ncı|uncu)/,
 	        ordinal : function (number) {
 	            if (number === 0) {  // special case for zero
 	                return number + '-ıncı';
@@ -4658,7 +5131,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 15 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -4669,11 +5142,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    function plural(word, num) {
@@ -4734,6 +5207,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'нд_пн_ат_ср_чц_пт_сб'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD.MM.YYYY',
 	            LL : 'D MMMM YYYY г.',
 	            LLL : 'D MMMM YYYY г., LT',
@@ -4790,6 +5264,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        },
 
+	        ordinalParse: /\d{1,2}-(і|ы|га)/,
 	        ordinal: function (number, period) {
 	            switch (period) {
 	            case 'M':
@@ -4814,7 +5289,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 16 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -4823,11 +5298,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('bg', {
@@ -4838,6 +5313,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'нд_пн_вт_ср_чт_пт_сб'.split('_'),
 	        longDateFormat : {
 	            LT : 'H:mm',
+	            LTS : 'LT:ss',
 	            L : 'D.MM.YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -4878,6 +5354,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'година',
 	            yy : '%d години'
 	        },
+	        ordinalParse: /\d{1,2}-(ев|ен|ти|ви|ри|ми)/,
 	        ordinal : function (number) {
 	            var lastDigit = number % 10,
 	                last2Digits = number % 100;
@@ -4906,7 +5383,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 17 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -4915,11 +5392,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var symbolMap = {
@@ -4955,6 +5432,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'রব_সম_মঙ্গ_বু_ব্রিহ_শু_শনি'.split('_'),
 	        longDateFormat : {
 	            LT : 'A h:mm সময়',
+	            LTS : 'A h:mm:ss সময়',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY, LT',
@@ -5018,7 +5496,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 18 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5027,11 +5505,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var symbolMap = {
@@ -5067,6 +5545,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'ཉི་མ་_ཟླ་བ་_མིག་དམར་_ལྷག་པ་_ཕུར་བུ_པ་སངས་_སྤེན་པ་'.split('_'),
 	        longDateFormat : {
 	            LT : 'A h:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY, LT',
@@ -5127,7 +5606,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 19 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5136,11 +5615,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    function relativeTimeWithMutation(number, withoutSuffix, key) {
@@ -5199,6 +5678,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Su_Lu_Me_Mer_Ya_Gw_Sa'.split('_'),
 	        longDateFormat : {
 	            LT : 'h[e]mm A',
+	            LTS : 'h[e]mm:ss A',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D [a viz] MMMM YYYY',
 	            LLL : 'D [a viz] MMMM YYYY LT',
@@ -5227,6 +5707,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'ur bloaz',
 	            yy : specialMutationForYears
 	        },
+	        ordinalParse: /\d{1,2}(añ|vet)/,
 	        ordinal : function (number) {
 	            var output = (number === 1) ? 'añ' : 'vet';
 	            return number + output;
@@ -5240,7 +5721,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 20 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5250,11 +5731,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    function translate(number, withoutSuffix, key) {
@@ -5311,13 +5792,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    return moment.defineLocale('bs', {
-	        months : 'januar_februar_mart_april_maj_juni_juli_avgust_septembar_oktobar_novembar_decembar'.split('_'),
-	        monthsShort : 'jan._feb._mar._apr._maj._jun._jul._avg._sep._okt._nov._dec.'.split('_'),
+	        months : 'januar_februar_mart_april_maj_juni_juli_august_septembar_oktobar_novembar_decembar'.split('_'),
+	        monthsShort : 'jan._feb._mar._apr._maj._jun._jul._aug._sep._okt._nov._dec.'.split('_'),
 	        weekdays : 'nedjelja_ponedjeljak_utorak_srijeda_četvrtak_petak_subota'.split('_'),
 	        weekdaysShort : 'ned._pon._uto._sri._čet._pet._sub.'.split('_'),
 	        weekdaysMin : 'ne_po_ut_sr_če_pe_su'.split('_'),
 	        longDateFormat : {
 	            LT : 'H:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD. MM. YYYY',
 	            LL : 'D. MMMM YYYY',
 	            LLL : 'D. MMMM YYYY LT',
@@ -5374,6 +5856,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y      : 'godinu',
 	            yy     : translate
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -5384,7 +5867,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 21 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5393,11 +5876,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('ca', {
@@ -5408,6 +5891,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Dg_Dl_Dt_Dc_Dj_Dv_Ds'.split('_'),
 	        longDateFormat : {
 	            LT : 'H:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -5446,7 +5930,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'un any',
 	            yy : '%d anys'
 	        },
-	        ordinal : '%dº',
+	        ordinalParse: /\d{1,2}(r|n|t|è|a)/,
+	        ordinal : function (number, period) {
+	            var output = (number === 1) ? 'r' :
+	                (number === 2) ? 'n' :
+	                (number === 3) ? 'r' :
+	                (number === 4) ? 't' : 'è';
+	            if (period === 'w' || period === 'W') {
+	                output = 'a';
+	            }
+	            return number + output;
+	        },
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
 	            doy : 4  // The week that contains Jan 4th is the first week of the year.
@@ -5456,7 +5950,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 22 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5465,11 +5959,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var months = 'leden_únor_březen_duben_květen_červen_červenec_srpen_září_říjen_listopad_prosinec'.split('_'),
@@ -5548,7 +6042,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'ne_po_út_st_čt_pá_so'.split('_'),
 	        longDateFormat : {
 	            LT: 'H:mm',
-	            L : 'DD. MM. YYYY',
+	            LTS : 'LT:ss',
+	            L : 'DD.MM.YYYY',
 	            LL : 'D. MMMM YYYY',
 	            LLL : 'D. MMMM YYYY LT',
 	            LLLL : 'dddd D. MMMM YYYY LT'
@@ -5607,6 +6102,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : translate,
 	            yy : translate
 	        },
+	        ordinalParse : /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -5617,7 +6113,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 23 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5626,11 +6122,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('cv', {
@@ -5641,6 +6137,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'вр_тн_ыт_юн_кç_эр_шм'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD-MM-YYYY',
 	            LL : 'YYYY [çулхи] MMMM [уйăхĕн] D[-мĕшĕ]',
 	            LLL : 'YYYY [çулхи] MMMM [уйăхĕн] D[-мĕшĕ], LT',
@@ -5672,6 +6169,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'пĕр çул',
 	            yy : '%d çул'
 	        },
+	        ordinalParse: /\d{1,2}-мĕш/,
 	        ordinal : '%d-мĕш',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -5682,7 +6180,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 24 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5691,11 +6189,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('cy', {
@@ -5707,6 +6205,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // time formats are the same as en-gb
 	        longDateFormat: {
 	            LT: 'HH:mm',
+	            LTS : 'LT:ss',
 	            L: 'DD/MM/YYYY',
 	            LL: 'D MMMM YYYY',
 	            LLL: 'D MMMM YYYY LT',
@@ -5735,6 +6234,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y: 'blwyddyn',
 	            yy: '%d flynedd'
 	        },
+	        ordinalParse: /\d{1,2}(fed|ain|af|il|ydd|ed|eg)/,
 	        // traditional ordinal numbers above 31 are not commonly used in colloquial Welsh
 	        ordinal: function (number) {
 	            var b = number,
@@ -5765,7 +6265,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 25 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5774,11 +6274,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('da', {
@@ -5789,6 +6289,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'sø_ma_ti_on_to_fr_lø'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D. MMMM YYYY',
 	            LLL : 'D. MMMM YYYY LT',
@@ -5817,6 +6318,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'et år',
 	            yy : '%d år'
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -5827,7 +6329,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 26 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5838,11 +6340,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    function processRelativeTime(number, withoutSuffix, key, isFuture) {
@@ -5866,19 +6368,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysShort : 'So._Mo._Di._Mi._Do._Fr._Sa.'.split('_'),
 	        weekdaysMin : 'So_Mo_Di_Mi_Do_Fr_Sa'.split('_'),
 	        longDateFormat : {
-	            LT: 'HH:mm [Uhr]',
+	            LT: 'HH:mm',
+	            LTS: 'HH:mm:ss',
 	            L : 'DD.MM.YYYY',
 	            LL : 'D. MMMM YYYY',
 	            LLL : 'D. MMMM YYYY LT',
 	            LLLL : 'dddd, D. MMMM YYYY LT'
 	        },
 	        calendar : {
-	            sameDay: '[Heute um] LT',
+	            sameDay: '[Heute um] LT [Uhr]',
 	            sameElse: 'L',
-	            nextDay: '[Morgen um] LT',
-	            nextWeek: 'dddd [um] LT',
-	            lastDay: '[Gestern um] LT',
-	            lastWeek: '[letzten] dddd [um] LT'
+	            nextDay: '[Morgen um] LT [Uhr]',
+	            nextWeek: 'dddd [um] LT [Uhr]',
+	            lastDay: '[Gestern um] LT [Uhr]',
+	            lastWeek: '[letzten] dddd [um] LT [Uhr]'
 	        },
 	        relativeTime : {
 	            future : 'in %s',
@@ -5895,6 +6398,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : processRelativeTime,
 	            yy : processRelativeTime
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -5905,7 +6409,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 27 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5915,11 +6419,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    function processRelativeTime(number, withoutSuffix, key, isFuture) {
@@ -5943,19 +6447,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysShort : 'So._Mo._Di._Mi._Do._Fr._Sa.'.split('_'),
 	        weekdaysMin : 'So_Mo_Di_Mi_Do_Fr_Sa'.split('_'),
 	        longDateFormat : {
-	            LT: 'HH:mm [Uhr]',
+	            LT: 'HH:mm',
+	            LTS: 'HH:mm:ss',
 	            L : 'DD.MM.YYYY',
 	            LL : 'D. MMMM YYYY',
 	            LLL : 'D. MMMM YYYY LT',
 	            LLLL : 'dddd, D. MMMM YYYY LT'
 	        },
 	        calendar : {
-	            sameDay: '[Heute um] LT',
+	            sameDay: '[Heute um] LT [Uhr]',
 	            sameElse: 'L',
-	            nextDay: '[Morgen um] LT',
-	            nextWeek: 'dddd [um] LT',
-	            lastDay: '[Gestern um] LT',
-	            lastWeek: '[letzten] dddd [um] LT'
+	            nextDay: '[Morgen um] LT [Uhr]',
+	            nextWeek: 'dddd [um] LT [Uhr]',
+	            lastDay: '[Gestern um] LT [Uhr]',
+	            lastWeek: '[letzten] dddd [um] LT [Uhr]'
 	        },
 	        relativeTime : {
 	            future : 'in %s',
@@ -5972,6 +6477,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : processRelativeTime,
 	            yy : processRelativeTime
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -5982,7 +6488,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 28 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -5991,11 +6497,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('el', {
@@ -6025,6 +6531,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        meridiemParse : /[ΠΜ]\.?Μ?\.?/i,
 	        longDateFormat : {
 	            LT : 'h:mm A',
+	            LTS : 'h:mm:ss A',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -6058,7 +6565,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        relativeTime : {
 	            future : 'σε %s',
 	            past : '%s πριν',
-	            s : 'δευτερόλεπτα',
+	            s : 'λίγα δευτερόλεπτα',
 	            m : 'ένα λεπτό',
 	            mm : '%d λεπτά',
 	            h : 'μία ώρα',
@@ -6070,9 +6577,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'ένας χρόνος',
 	            yy : '%d χρόνια'
 	        },
-	        ordinal : function (number) {
-	            return number + 'η';
-	        },
+	        ordinalParse: /\d{1,2}η/,
+	        ordinal: '%dη',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
 	            doy : 4  // The week that contains Jan 4st is the first week of the year.
@@ -6082,7 +6588,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 29 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6090,11 +6596,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('en-au', {
@@ -6105,6 +6611,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
 	        longDateFormat : {
 	            LT : 'h:mm A',
+	            LTS : 'h:mm:ss A',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -6133,6 +6640,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'a year',
 	            yy : '%d years'
 	        },
+	        ordinalParse: /\d{1,2}(st|nd|rd|th)/,
 	        ordinal : function (number) {
 	            var b = number % 10,
 	                output = (~~(number % 100 / 10) === 1) ? 'th' :
@@ -6150,7 +6658,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 30 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6159,11 +6667,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('en-ca', {
@@ -6174,6 +6682,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
 	        longDateFormat : {
 	            LT : 'h:mm A',
+	            LTS : 'h:mm:ss A',
 	            L : 'YYYY-MM-DD',
 	            LL : 'D MMMM, YYYY',
 	            LLL : 'D MMMM, YYYY LT',
@@ -6202,6 +6711,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'a year',
 	            yy : '%d years'
 	        },
+	        ordinalParse: /\d{1,2}(st|nd|rd|th)/,
 	        ordinal : function (number) {
 	            var b = number % 10,
 	                output = (~~(number % 100 / 10) === 1) ? 'th' :
@@ -6215,7 +6725,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 31 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6224,11 +6734,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('en-gb', {
@@ -6239,6 +6749,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'HH:mm:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -6267,6 +6778,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'a year',
 	            yy : '%d years'
 	        },
+	        ordinalParse: /\d{1,2}(st|nd|rd|th)/,
 	        ordinal : function (number) {
 	            var b = number % 10,
 	                output = (~~(number % 100 / 10) === 1) ? 'th' :
@@ -6284,7 +6796,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 32 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6295,11 +6807,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('eo', {
@@ -6310,6 +6822,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Di_Lu_Ma_Me_Ĵa_Ve_Sa'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'YYYY-MM-DD',
 	            LL : 'D[-an de] MMMM, YYYY',
 	            LLL : 'D[-an de] MMMM, YYYY LT',
@@ -6345,6 +6858,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'jaro',
 	            yy : '%d jaroj'
 	        },
+	        ordinalParse: /\d{1,2}a/,
 	        ordinal : '%da',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -6355,7 +6869,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 33 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6364,11 +6878,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var monthsShortDot = 'ene._feb._mar._abr._may._jun._jul._ago._sep._oct._nov._dic.'.split('_'),
@@ -6388,6 +6902,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Do_Lu_Ma_Mi_Ju_Vi_Sá'.split('_'),
 	        longDateFormat : {
 	            LT : 'H:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D [de] MMMM [de] YYYY',
 	            LLL : 'D [de] MMMM [de] YYYY LT',
@@ -6426,6 +6941,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'un año',
 	            yy : '%d años'
 	        },
+	        ordinalParse : /\d{1,2}º/,
 	        ordinal : '%dº',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -6436,7 +6952,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 34 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6446,11 +6962,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    function processRelativeTime(number, withoutSuffix, key, isFuture) {
@@ -6480,6 +6996,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin   : 'P_E_T_K_N_R_L'.split('_'),
 	        longDateFormat : {
 	            LT   : 'H:mm',
+	            LTS : 'LT:ss',
 	            L    : 'DD.MM.YYYY',
 	            LL   : 'D. MMMM YYYY',
 	            LLL  : 'D. MMMM YYYY LT',
@@ -6508,6 +7025,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y      : processRelativeTime,
 	            yy     : processRelativeTime
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -6518,7 +7036,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 35 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6527,11 +7045,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('eu', {
@@ -6542,6 +7060,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'ig_al_ar_az_og_ol_lr'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'YYYY-MM-DD',
 	            LL : 'YYYY[ko] MMMM[ren] D[a]',
 	            LLL : 'YYYY[ko] MMMM[ren] D[a] LT',
@@ -6574,6 +7093,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'urte bat',
 	            yy : '%d urte'
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -6584,7 +7104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 36 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6593,11 +7113,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var symbolMap = {
@@ -6632,6 +7152,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'ی_د_س_چ_پ_ج_ش'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -6677,6 +7198,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return symbolMap[match];
 	            }).replace(/,/g, '،');
 	        },
+	        ordinalParse: /\d{1,2}م/,
 	        ordinal : '%dم',
 	        week : {
 	            dow : 6, // Saturday is the first day of the week.
@@ -6687,7 +7209,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 37 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6696,11 +7218,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var numbersPast = 'nolla yksi kaksi kolme neljä viisi kuusi seitsemän kahdeksan yhdeksän'.split(' '),
@@ -6756,6 +7278,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'su_ma_ti_ke_to_pe_la'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH.mm',
+	            LTS : 'HH.mm.ss',
 	            L : 'DD.MM.YYYY',
 	            LL : 'Do MMMM[ta] YYYY',
 	            LLL : 'Do MMMM[ta] YYYY, [klo] LT',
@@ -6788,6 +7311,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : translate,
 	            yy : translate
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -6798,7 +7322,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 38 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6807,11 +7331,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('fo', {
@@ -6822,6 +7346,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'su_má_tý_mi_hó_fr_le'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -6850,6 +7375,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'eitt ár',
 	            yy : '%d ár'
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -6860,7 +7386,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 39 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6869,11 +7395,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('fr-ca', {
@@ -6884,6 +7410,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Di_Lu_Ma_Me_Je_Ve_Sa'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'YYYY-MM-DD',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -6912,6 +7439,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'un an',
 	            yy : '%d ans'
 	        },
+	        ordinalParse: /\d{1,2}(er|)/,
 	        ordinal : function (number) {
 	            return number + (number === 1 ? 'er' : '');
 	        }
@@ -6920,7 +7448,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 40 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6929,11 +7457,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('fr', {
@@ -6944,6 +7472,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Di_Lu_Ma_Me_Je_Ve_Sa'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -6972,6 +7501,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'un an',
 	            yy : '%d ans'
 	        },
+	        ordinalParse: /\d{1,2}(er|)/,
 	        ordinal : function (number) {
 	            return number + (number === 1 ? 'er' : '');
 	        },
@@ -6984,7 +7514,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 41 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -6993,11 +7523,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('gl', {
@@ -7008,6 +7538,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Do_Lu_Ma_Mé_Xo_Ve_Sá'.split('_'),
 	        longDateFormat : {
 	            LT : 'H:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -7051,6 +7582,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'un ano',
 	            yy : '%d anos'
 	        },
+	        ordinalParse : /\d{1,2}º/,
 	        ordinal : '%dº',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -7061,7 +7593,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 42 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7072,11 +7604,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('he', {
@@ -7087,6 +7619,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'א_ב_ג_ד_ה_ו_ש'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D [ב]MMMM YYYY',
 	            LLL : 'D [ב]MMMM YYYY LT',
@@ -7144,7 +7677,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 43 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7153,11 +7686,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var symbolMap = {
@@ -7193,6 +7726,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'र_सो_मं_बु_गु_शु_श'.split('_'),
 	        longDateFormat : {
 	            LT : 'A h:mm बजे',
+	            LTS : 'A h:mm:ss बजे',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY, LT',
@@ -7255,7 +7789,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 44 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7266,11 +7800,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    function translate(number, withoutSuffix, key) {
@@ -7334,6 +7868,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'ne_po_ut_sr_če_pe_su'.split('_'),
 	        longDateFormat : {
 	            LT : 'H:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD. MM. YYYY',
 	            LL : 'D. MMMM YYYY',
 	            LLL : 'D. MMMM YYYY LT',
@@ -7390,6 +7925,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y      : 'godinu',
 	            yy     : translate
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -7400,7 +7936,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 45 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7409,11 +7945,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var weekEndings = 'vasárnap hétfőn kedden szerdán csütörtökön pénteken szombaton'.split(' ');
@@ -7462,6 +7998,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'v_h_k_sze_cs_p_szo'.split('_'),
 	        longDateFormat : {
 	            LT : 'H:mm',
+	            LTS : 'LT:ss',
 	            L : 'YYYY.MM.DD.',
 	            LL : 'YYYY. MMMM D.',
 	            LLL : 'YYYY. MMMM D., LT',
@@ -7501,6 +8038,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : translate,
 	            yy : translate
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -7511,7 +8049,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 46 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7520,11 +8058,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    function monthsCaseReplace(m, format) {
@@ -7560,6 +8098,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'կրկ_երկ_երք_չրք_հնգ_ուրբ_շբթ'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD.MM.YYYY',
 	            LL : 'D MMMM YYYY թ.',
 	            LLL : 'D MMMM YYYY թ., LT',
@@ -7605,6 +8144,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        },
 
+	        ordinalParse: /\d{1,2}|\d{1,2}-(ին|րդ)/,
 	        ordinal: function (number, period) {
 	            switch (period) {
 	            case 'DDD':
@@ -7629,7 +8169,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 47 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7639,11 +8179,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('id', {
@@ -7654,6 +8194,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Mg_Sn_Sl_Rb_Km_Jm_Sb'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH.mm',
+	            LTS : 'LT.ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY [pukul] LT',
@@ -7702,7 +8243,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 48 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7711,11 +8252,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    function plural(n) {
@@ -7794,6 +8335,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Su_Má_Þr_Mi_Fi_Fö_La'.split('_'),
 	        longDateFormat : {
 	            LT : 'H:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D. MMMM YYYY',
 	            LLL : 'D. MMMM YYYY [kl.] LT',
@@ -7822,6 +8364,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : translate,
 	            yy : translate
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -7832,7 +8375,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 49 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7842,11 +8385,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('it', {
@@ -7857,6 +8400,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'D_L_Ma_Me_G_V_S'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -7867,7 +8411,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            nextDay: '[Domani alle] LT',
 	            nextWeek: 'dddd [alle] LT',
 	            lastDay: '[Ieri alle] LT',
-	            lastWeek: '[lo scorso] dddd [alle] LT',
+	            lastWeek: function () {
+	                switch (this.day()) {
+	                    case 0:
+	                        return '[la scorsa] dddd [alle] LT';
+	                    default:
+	                        return '[lo scorso] dddd [alle] LT';
+	                }
+	            },
 	            sameElse: 'L'
 	        },
 	        relativeTime : {
@@ -7887,6 +8438,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'un anno',
 	            yy : '%d anni'
 	        },
+	        ordinalParse : /\d{1,2}º/,
 	        ordinal: '%dº',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -7897,7 +8449,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 50 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7906,11 +8458,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('ja', {
@@ -7921,6 +8473,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : '日_月_火_水_木_金_土'.split('_'),
 	        longDateFormat : {
 	            LT : 'Ah時m分',
+	            LTS : 'LTs秒',
 	            L : 'YYYY/MM/DD',
 	            LL : 'YYYY年M月D日',
 	            LLL : 'YYYY年M月D日LT',
@@ -7961,7 +8514,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 51 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -7970,11 +8523,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    function monthsCaseReplace(m, format) {
@@ -8011,6 +8564,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'კვ_ორ_სა_ოთ_ხუ_პა_შა'.split('_'),
 	        longDateFormat : {
 	            LT : 'h:mm A',
+	            LTS : 'h:mm:ss A',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -8050,6 +8604,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'წელი',
 	            yy : '%d წელი'
 	        },
+	        ordinalParse: /0|1-ლი|მე-\d{1,2}|\d{1,2}-ე/,
 	        ordinal : function (number) {
 	            if (number === 0) {
 	                return number;
@@ -8074,7 +8629,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 52 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8083,11 +8638,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('km', {
@@ -8098,6 +8653,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin: 'អាទិត្យ_ច័ន្ទ_អង្គារ_ពុធ_ព្រហស្បតិ៍_សុក្រ_សៅរ៍'.split('_'),
 	        longDateFormat: {
 	            LT: 'HH:mm',
+	            LTS : 'LT:ss',
 	            L: 'DD/MM/YYYY',
 	            LL: 'D MMMM YYYY',
 	            LLL: 'D MMMM YYYY LT',
@@ -8135,7 +8691,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 53 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8147,11 +8703,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	// - Jeeeyul Lee <jeeeyul@gmail.com>
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('ko', {
@@ -8162,6 +8718,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : '일_월_화_수_목_금_토'.split('_'),
 	        longDateFormat : {
 	            LT : 'A h시 m분',
+	            LTS : 'A h시 m분 s초',
 	            L : 'YYYY.MM.DD',
 	            LL : 'YYYY년 MMMM D일',
 	            LLL : 'YYYY년 MMMM D일 LT',
@@ -8194,6 +8751,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : '일년',
 	            yy : '%d년'
 	        },
+	        ordinalParse : /\d{1,2}일/,
 	        ordinal : '%d일',
 	        meridiemParse : /(오전|오후)/,
 	        isPM : function (token) {
@@ -8204,7 +8762,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 54 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8217,11 +8775,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    function processRelativeTime(number, withoutSuffix, key, isFuture) {
@@ -8300,6 +8858,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin: 'So_Mé_Dë_Më_Do_Fr_Sa'.split('_'),
 	        longDateFormat: {
 	            LT: 'H:mm [Auer]',
+	            LTS: 'H:mm:ss [Auer]',
 	            L: 'DD.MM.YYYY',
 	            LL: 'D. MMMM YYYY',
 	            LLL: 'D. MMMM YYYY LT',
@@ -8337,6 +8896,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : processRelativeTime,
 	            yy : '%d Joer'
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal: '%d.',
 	        week: {
 	            dow: 1, // Monday is the first day of the week.
@@ -8347,7 +8907,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 55 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8356,11 +8916,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var units = {
@@ -8427,6 +8987,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'S_P_A_T_K_Pn_Š'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'YYYY-MM-DD',
 	            LL : 'YYYY [m.] MMMM D [d.]',
 	            LLL : 'YYYY [m.] MMMM D [d.], LT [val.]',
@@ -8459,6 +9020,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : translateSingular,
 	            yy : translate
 	        },
+	        ordinalParse: /\d{1,2}-oji/,
 	        ordinal : function (number) {
 	            return number + '-oji';
 	        },
@@ -8471,7 +9033,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 56 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8480,11 +9042,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var units = {
@@ -8516,6 +9078,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Sv_P_O_T_C_Pk_S'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD.MM.YYYY',
 	            LL : 'YYYY. [gada] D. MMMM',
 	            LLL : 'YYYY. [gada] D. MMMM, LT',
@@ -8544,6 +9107,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'gadu',
 	            yy : relativeTimeWithPlural
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -8554,7 +9118,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 57 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8563,11 +9127,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('mk', {
@@ -8578,6 +9142,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'нe_пo_вт_ср_че_пе_сa'.split('_'),
 	        longDateFormat : {
 	            LT : 'H:mm',
+	            LTS : 'LT:ss',
 	            L : 'D.MM.YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -8618,6 +9183,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'година',
 	            yy : '%d години'
 	        },
+	        ordinalParse: /\d{1,2}-(ев|ен|ти|ви|ри|ми)/,
 	        ordinal : function (number) {
 	            var lastDigit = number % 10,
 	                last2Digits = number % 100;
@@ -8646,7 +9212,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 58 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8655,11 +9221,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('ml', {
@@ -8670,6 +9236,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'ഞാ_തി_ചൊ_ബു_വ്യാ_വെ_ശ'.split('_'),
 	        longDateFormat : {
 	            LT : 'A h:mm -നു',
+	            LTS : 'A h:mm:ss -നു',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY, LT',
@@ -8716,7 +9283,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 59 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8725,11 +9292,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var symbolMap = {
@@ -8765,6 +9332,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'र_सो_मं_बु_गु_शु_श'.split('_'),
 	        longDateFormat : {
 	            LT : 'A h:mm वाजता',
+	            LTS : 'A h:mm:ss वाजता',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY, LT',
@@ -8826,7 +9394,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 60 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8835,11 +9403,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('ms-my', {
@@ -8850,6 +9418,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Ah_Is_Sl_Rb_Km_Jm_Sb'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH.mm',
+	            LTS : 'LT.ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY [pukul] LT',
@@ -8898,7 +9467,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 61 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -8907,11 +9476,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var symbolMap = {
@@ -8945,6 +9514,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin: 'နွေ_လာ_င်္ဂါ_ဟူး_ကြာ_သော_နေ'.split('_'),
 	        longDateFormat: {
 	            LT: 'HH:mm',
+	            LTS: 'HH:mm:ss',
 	            L: 'DD/MM/YYYY',
 	            LL: 'D MMMM YYYY',
 	            LLL: 'D MMMM YYYY LT',
@@ -8992,7 +9562,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 62 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9002,11 +9572,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('nb', {
@@ -9017,6 +9587,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'sø_ma_ti_on_to_fr_lø'.split('_'),
 	        longDateFormat : {
 	            LT : 'H.mm',
+	            LTS : 'LT.ss',
 	            L : 'DD.MM.YYYY',
 	            LL : 'D. MMMM YYYY',
 	            LLL : 'D. MMMM YYYY [kl.] LT',
@@ -9045,6 +9616,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'ett år',
 	            yy : '%d år'
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -9055,7 +9627,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 63 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9064,11 +9636,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var symbolMap = {
@@ -9104,6 +9676,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'आइ._सो._मङ्_बु._बि._शु._श.'.split('_'),
 	        longDateFormat : {
 	            LT : 'Aको h:mm बजे',
+	            LTS : 'Aको h:mm:ss बजे',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY, LT',
@@ -9166,7 +9739,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 64 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9175,11 +9748,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var monthsShortWithDots = 'jan._feb._mrt._apr._mei_jun._jul._aug._sep._okt._nov._dec.'.split('_'),
@@ -9199,6 +9772,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Zo_Ma_Di_Wo_Do_Vr_Za'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD-MM-YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -9227,6 +9801,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'één jaar',
 	            yy : '%d jaar'
 	        },
+	        ordinalParse: /\d{1,2}(ste|de)/,
 	        ordinal : function (number) {
 	            return number + ((number === 1 || number === 8 || number >= 20) ? 'ste' : 'de');
 	        },
@@ -9239,7 +9814,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 65 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9248,11 +9823,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('nn', {
@@ -9263,6 +9838,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'su_må_ty_on_to_fr_lø'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD.MM.YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -9291,6 +9867,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'eit år',
 	            yy : '%d år'
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -9301,7 +9878,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 66 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9310,11 +9887,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var monthsNominative = 'styczeń_luty_marzec_kwiecień_maj_czerwiec_lipiec_sierpień_wrzesień_październik_listopad_grudzień'.split('_'),
@@ -9356,6 +9933,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'N_Pn_Wt_Śr_Cz_Pt_So'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD.MM.YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -9395,6 +9973,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'rok',
 	            yy : translate
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -9405,7 +9984,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 67 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9414,11 +9993,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('pt-br', {
@@ -9429,6 +10008,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'dom_2ª_3ª_4ª_5ª_6ª_sáb'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D [de] MMMM [de] YYYY',
 	            LLL : 'D [de] MMMM [de] YYYY [às] LT',
@@ -9461,13 +10041,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'um ano',
 	            yy : '%d anos'
 	        },
+	        ordinalParse: /\d{1,2}º/,
 	        ordinal : '%dº'
 	    });
 	}));
 
 
 /***/ },
-/* 68 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9476,11 +10057,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('pt', {
@@ -9491,6 +10072,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'dom_2ª_3ª_4ª_5ª_6ª_sáb'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D [de] MMMM [de] YYYY',
 	            LLL : 'D [de] MMMM [de] YYYY LT',
@@ -9523,6 +10105,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'um ano',
 	            yy : '%d anos'
 	        },
+	        ordinalParse: /\d{1,2}º/,
 	        ordinal : '%dº',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -9533,7 +10116,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 69 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9543,11 +10126,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    function relativeTimeWithPlural(number, withoutSuffix, key) {
@@ -9574,6 +10157,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Du_Lu_Ma_Mi_Jo_Vi_Sâ'.split('_'),
 	        longDateFormat : {
 	            LT : 'H:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD.MM.YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY H:mm',
@@ -9611,7 +10195,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 70 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9621,11 +10205,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    function plural(word, num) {
@@ -9664,7 +10248,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    function monthsShortCaseReplace(m, format) {
 	        var monthsShort = {
-	            'nominative': 'янв_фев_мар_апр_май_июнь_июль_авг_сен_окт_ноя_дек'.split('_'),
+	            'nominative': 'янв_фев_март_апр_май_июнь_июль_авг_сен_окт_ноя_дек'.split('_'),
 	            'accusative': 'янв_фев_мар_апр_мая_июня_июля_авг_сен_окт_ноя_дек'.split('_')
 	        },
 
@@ -9681,7 +10265,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            'accusative': 'воскресенье_понедельник_вторник_среду_четверг_пятницу_субботу'.split('_')
 	        },
 
-	        nounCase = (/\[ ?[Вв] ?(?:прошлую|следующую)? ?\] ?dddd/).test(format) ?
+	        nounCase = (/\[ ?[Вв] ?(?:прошлую|следующую|эту)? ?\] ?dddd/).test(format) ?
 	            'accusative' :
 	            'nominative';
 
@@ -9697,6 +10281,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        monthsParse : [/^янв/i, /^фев/i, /^мар/i, /^апр/i, /^ма[й|я]/i, /^июн/i, /^июл/i, /^авг/i, /^сен/i, /^окт/i, /^ноя/i, /^дек/i],
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD.MM.YYYY',
 	            LL : 'D MMMM YYYY г.',
 	            LLL : 'D MMMM YYYY г., LT',
@@ -9709,18 +10294,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	            nextWeek: function () {
 	                return this.day() === 2 ? '[Во] dddd [в] LT' : '[В] dddd [в] LT';
 	            },
-	            lastWeek: function () {
-	                switch (this.day()) {
-	                case 0:
-	                    return '[В прошлое] dddd [в] LT';
-	                case 1:
-	                case 2:
-	                case 4:
-	                    return '[В прошлый] dddd [в] LT';
-	                case 3:
-	                case 5:
-	                case 6:
-	                    return '[В прошлую] dddd [в] LT';
+	            lastWeek: function (now) {
+	                if (now.week() !== this.week()) {
+	                    switch (this.day()) {
+	                    case 0:
+	                        return '[В прошлое] dddd [в] LT';
+	                    case 1:
+	                    case 2:
+	                    case 4:
+	                        return '[В прошлый] dddd [в] LT';
+	                    case 3:
+	                    case 5:
+	                    case 6:
+	                        return '[В прошлую] dddd [в] LT';
+	                    }
+	                } else {
+	                    if (this.day() === 2) {
+	                        return '[Во] dddd [в] LT';
+	                    } else {
+	                        return '[В] dddd [в] LT';
+	                    }
 	                }
 	            },
 	            sameElse: 'L'
@@ -9758,6 +10351,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        },
 
+	        ordinalParse: /\d{1,2}-(й|го|я)/,
 	        ordinal: function (number, period) {
 	            switch (period) {
 	            case 'M':
@@ -9783,7 +10377,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 71 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9793,11 +10387,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var months = 'január_február_marec_apríl_máj_jún_júl_august_september_október_november_december'.split('_'),
@@ -9876,6 +10470,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'ne_po_ut_st_št_pi_so'.split('_'),
 	        longDateFormat : {
 	            LT: 'H:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD.MM.YYYY',
 	            LL : 'D. MMMM YYYY',
 	            LLL : 'D. MMMM YYYY LT',
@@ -9935,6 +10530,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : translate,
 	            yy : translate
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -9945,7 +10541,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 72 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -9954,11 +10550,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    function translate(number, withoutSuffix, key) {
@@ -10030,6 +10626,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'ne_po_to_sr_če_pe_so'.split('_'),
 	        longDateFormat : {
 	            LT : 'H:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD. MM. YYYY',
 	            LL : 'D. MMMM YYYY',
 	            LLL : 'D. MMMM YYYY LT',
@@ -10085,6 +10682,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y      : 'eno leto',
 	            yy     : translate
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -10095,7 +10693,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 73 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10106,11 +10704,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('sq', {
@@ -10124,6 +10722,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -10152,6 +10751,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'një vit',
 	            yy : '%d vite'
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -10162,7 +10762,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 74 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10171,11 +10771,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var translator = {
@@ -10209,6 +10809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin: ['не', 'по', 'ут', 'ср', 'че', 'пе', 'су'],
 	        longDateFormat: {
 	            LT: 'H:mm',
+	            LTS : 'LT:ss',
 	            L: 'DD. MM. YYYY',
 	            LL: 'D. MMMM YYYY',
 	            LLL: 'D. MMMM YYYY LT',
@@ -10263,6 +10864,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y      : 'годину',
 	            yy     : translator.translate
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -10273,7 +10875,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 75 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10282,11 +10884,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var translator = {
@@ -10320,6 +10922,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin: ['ne', 'po', 'ut', 'sr', 'če', 'pe', 'su'],
 	        longDateFormat: {
 	            LT: 'H:mm',
+	            LTS : 'LT:ss',
 	            L: 'DD. MM. YYYY',
 	            LL: 'D. MMMM YYYY',
 	            LLL: 'D. MMMM YYYY LT',
@@ -10374,6 +10977,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y      : 'godinu',
 	            yy     : translator.translate
 	        },
+	        ordinalParse: /\d{1,2}\./,
 	        ordinal : '%d.',
 	        week : {
 	            dow : 1, // Monday is the first day of the week.
@@ -10384,7 +10988,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 76 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10393,11 +10997,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('sv', {
@@ -10408,6 +11012,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'sö_må_ti_on_to_fr_lö'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'YYYY-MM-DD',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -10436,6 +11041,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'ett år',
 	            yy : '%d år'
 	        },
+	        ordinalParse: /\d{1,2}(e|a)/,
 	        ordinal : function (number) {
 	            var b = number % 10,
 	                output = (~~(number % 100 / 10) === 1) ? 'e' :
@@ -10453,7 +11059,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 77 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10462,11 +11068,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    /*var symbolMap = {
@@ -10502,6 +11108,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'ஞா_தி_செ_பு_வி_வெ_ச'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY, LT',
@@ -10540,6 +11147,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return symbolMap[match];
 	            });
 	        },*/
+	        ordinalParse: /\d{1,2}வது/,
 	        ordinal : function (number) {
 	            return number + 'வது';
 	        },
@@ -10571,7 +11179,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 78 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10580,11 +11188,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('th', {
@@ -10595,6 +11203,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'อา._จ._อ._พ._พฤ._ศ._ส.'.split('_'),
 	        longDateFormat : {
 	            LT : 'H นาฬิกา m นาที',
+	            LTS : 'LT s วินาที',
 	            L : 'YYYY/MM/DD',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY เวลา LT',
@@ -10635,7 +11244,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 79 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10644,11 +11253,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('tl-ph', {
@@ -10659,6 +11268,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Li_Lu_Ma_Mi_Hu_Bi_Sab'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'MM/D/YYYY',
 	            LL : 'MMMM D, YYYY',
 	            LLL : 'MMMM D, YYYY LT',
@@ -10687,6 +11297,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'isang taon',
 	            yy : '%d taon'
 	        },
+	        ordinalParse: /\d{1,2}/,
 	        ordinal : function (number) {
 	            return number;
 	        },
@@ -10699,7 +11310,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 80 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10709,11 +11320,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    var suffixes = {
@@ -10750,6 +11361,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Pz_Pt_Sa_Ça_Pe_Cu_Ct'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD.MM.YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -10778,6 +11390,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'bir yıl',
 	            yy : '%d yıl'
 	        },
+	        ordinalParse: /\d{1,2}'(inci|nci|üncü|ncı|uncu|ıncı)/,
 	        ordinal : function (number) {
 	            if (number === 0) {  // special case for zero
 	                return number + '\'ıncı';
@@ -10797,7 +11410,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 81 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10806,11 +11419,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('tzm-latn', {
@@ -10821,6 +11434,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'asamas_aynas_asinas_akras_akwas_asimwas_asiḍyas'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -10858,7 +11472,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 82 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10867,11 +11481,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('tzm', {
@@ -10882,6 +11496,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'ⴰⵙⴰⵎⴰⵙ_ⴰⵢⵏⴰⵙ_ⴰⵙⵉⵏⴰⵙ_ⴰⴽⵔⴰⵙ_ⴰⴽⵡⴰⵙ_ⴰⵙⵉⵎⵡⴰⵙ_ⴰⵙⵉⴹⵢⴰⵙ'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS: 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -10919,7 +11534,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 83 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -10929,11 +11544,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    function plural(word, num) {
@@ -11003,6 +11618,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'нд_пн_вт_ср_чт_пт_сб'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD.MM.YYYY',
 	            LL : 'D MMMM YYYY р.',
 	            LLL : 'D MMMM YYYY р., LT',
@@ -11058,6 +11674,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        },
 
+	        ordinalParse: /\d{1,2}-(й|го)/,
 	        ordinal: function (number, period) {
 	            switch (period) {
 	            case 'M':
@@ -11082,7 +11699,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 84 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -11091,11 +11708,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('uz', {
@@ -11106,6 +11723,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'Як_Ду_Се_Чо_Па_Жу_Ша'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM YYYY',
 	            LLL : 'D MMMM YYYY LT',
@@ -11143,7 +11761,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 85 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -11152,11 +11770,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('vi', {
@@ -11167,6 +11785,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : 'CN_T2_T3_T4_T5_T6_T7'.split('_'),
 	        longDateFormat : {
 	            LT : 'HH:mm',
+	            LTS : 'LT:ss',
 	            L : 'DD/MM/YYYY',
 	            LL : 'D MMMM [năm] YYYY',
 	            LLL : 'D MMMM [năm] YYYY LT',
@@ -11199,6 +11818,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            y : 'một năm',
 	            yy : '%d năm'
 	        },
+	        ordinalParse: /\d{1,2}/,
 	        ordinal : function (number) {
 	            return number;
 	        },
@@ -11211,7 +11831,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 86 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -11221,11 +11841,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('zh-cn', {
@@ -11236,6 +11856,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : '日_一_二_三_四_五_六'.split('_'),
 	        longDateFormat : {
 	            LT : 'Ah点mm',
+	            LTS : 'Ah点m分s秒',
 	            L : 'YYYY-MM-DD',
 	            LL : 'YYYY年MMMD日',
 	            LLL : 'YYYY年MMMD日LT',
@@ -11285,6 +11906,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            },
 	            sameElse : 'LL'
 	        },
+	        ordinalParse: /\d{1,2}(日|月|周)/,
 	        ordinal : function (number, period) {
 	            switch (period) {
 	            case 'd':
@@ -11325,7 +11947,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 87 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// moment.js locale configuration
@@ -11334,11 +11956,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (factory) {
 	    if (true) {
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(9)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(8)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); // AMD
 	    } else if (typeof exports === 'object') {
 	        module.exports = factory(require('../moment')); // Node
 	    } else {
-	        factory(window.moment); // Browser global
+	        factory((typeof global !== 'undefined' ? global : this).moment); // node or other global
 	    }
 	}(function (moment) {
 	    return moment.defineLocale('zh-tw', {
@@ -11349,6 +11971,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        weekdaysMin : '日_一_二_三_四_五_六'.split('_'),
 	        longDateFormat : {
 	            LT : 'Ah點mm',
+	            LTS : 'Ah點m分s秒',
 	            L : 'YYYY年MMMD日',
 	            LL : 'YYYY年MMMD日',
 	            LLL : 'YYYY年MMMD日LT',
@@ -11380,6 +12003,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            lastWeek : '[上]ddddLT',
 	            sameElse : 'L'
 	        },
+	        ordinalParse: /\d{1,2}(日|月|週)/,
 	        ordinal : function (number, period) {
 	            switch (period) {
 	            case 'd' :
@@ -11413,397 +12037,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	}));
 
-
-/***/ },
-/* 88 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var CONFIG   = __webpack_require__(90)
-	var toMoment = __webpack_require__(89)
-
-	function f(mom, format){
-	    return toMoment(mom).format(format)
-	}
-
-	module.exports = {
-	    day: function(mom, format) {
-	        return f(mom, format || CONFIG.dayFormat)
-	    },
-
-	    month: function(mom, format) {
-	        return f(mom, format || CONFIG.monthFormat)
-	    },
-
-	    year: function(mom, format) {
-	        return f(mom, format || CONFIG.yearFormat)
-	    }
-	}
-
-/***/ },
-/* 89 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var moment = __webpack_require__(9)
-	var CONFIG = __webpack_require__(90)
-
-	/**
-	 * This function will be used to convert a date to a moment.
-	 *
-	 * It accepts input as sring, date or moment
-	 *
-	 * @param  {String/Date/Moment} value
-	 * @param  {String} [dateFormat] if value is string, it will be parsed to a moment using this format
-	 * @param  {Object} [config]
-	 * @param  {Boolean} [config.strict] whether to perform strict parsing on strings
-	 * @return {Moment}
-	 */
-	module.exports = function(value, dateFormat, config){
-	    var strict = !!(config && config.strict)
-
-	    dateFormat = dateFormat || CONFIG.dateFormat
-
-	    if (typeof value == 'string'){
-	        return moment(value, dateFormat, strict)
-	    }
-
-	    return moment(value == null? new Date(): value)
-	}
-
-/***/ },
-/* 90 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var getWeekDayNames = __webpack_require__(7)
-
-	module.exports = {
-
-	    //the names of week days to be displayed in month view - first should be sunday
-	    weekDayNames: getWeekDayNames(),
-
-	    //the day to display as first day of week. defaults to 0, which is sunday
-	    weekStartDay: 0,
-
-	    //the format in which days should be displayed in month view
-	    dayFormat: 'D',
-
-	    //the format in which months should be displayed in year view
-	    monthFormat: 'MMMM',
-
-	    //the format in which years should be displayed in decade view
-	    yearFormat: 'YYYY',
-
-	    //text for navigating to prev period
-	    navPrev      : '‹',
-
-	    //text for navigating to next period
-	    navNext      : '›',
-
-	    //the view to render initially. Possible values are: 'month', 'year', 'decade'
-	    view: 'month',
-
-	    //the date to mark as selected in the date picker.
-	    //Can be a Date object, a moment object or a string.
-	    //If it's a string, it will be parsed using dateFormat
-	    date: null,
-
-	    minDate: null,
-
-	    maxDate: null,
-
-	    //the date where to open the picker. defaults to today if no date and no viewDate specified
-	    viewDate: null,
-
-	    //if the date property is given as string, it will be parsed using this format
-	    dateFormat: 'YYYY-MM-DD'
-	}
-
-/***/ },
-/* 91 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var HAS_OWN       = Object.prototype.hasOwnProperty
-	var STR_OBJECT    = 'object'
-
-	/**
-	 * Copies all properties from source to destination
-	 *
-	 *      copy({name: 'jon',age:5}, this);
-	 *      // => this will have the 'name' and 'age' properties set to 'jon' and 5 respectively
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination){
-
-	    destination = destination || {}
-
-	    if (source != null && typeof source === STR_OBJECT ){
-
-	        for (var i in source) if ( HAS_OWN.call(source, i) ) {
-	            destination[i] = source[i]
-	        }
-
-	    }
-
-	    return destination
-	}
-
-/***/ },
-/* 92 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var HAS_OWN       = Object.prototype.hasOwnProperty
-	var STR_OBJECT    = 'object'
-	var STR_UNDEFINED = 'undefined'
-
-	/**
-	 * Copies all properties from source to destination, if the property does not exist into the destination
-	 *
-	 *      copyIf({name: 'jon',age:5}, {age:7})
-	 *      // => { name: 'jon', age: 7}
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination){
-	    destination = destination || {}
-
-	    if (source != null && typeof source === STR_OBJECT){
-
-	        for (var i in source) if ( HAS_OWN.call(source, i) && (typeof destination[i] === STR_UNDEFINED) ) {
-
-	            destination[i] = source[i]
-
-	        }
-	    }
-
-	    return destination
-	}
-
-/***/ },
-/* 93 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var STR_UNDEFINED = 'undefined'
-
-	/**
-	 * Copies all properties named in the list, from source to destination
-	 *
-	 *      copyList({name: 'jon',age:5, year: 2006}, {}, ['name','age'])
-	 *      // => {name: 'jon', age: 5}
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 * @param {Array} list the array with the names of the properties to copy
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination, list){
-	    if (arguments.length < 3){
-	        list = destination
-	        destination = null
-	    }
-
-	    destination = destination || {}
-	    list        = list || Object.keys(source)
-
-	    var i   = 0
-	    var len = list.length
-	    var propName
-
-	    for ( ; i < len; i++ ){
-	        propName = list[i]
-
-	        if ( typeof source[propName] !== STR_UNDEFINED ) {
-	            destination[list[i]] = source[list[i]]
-	        }
-	    }
-
-	    return destination
-	}
-
-/***/ },
-/* 94 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var STR_UNDEFINED = 'undefined'
-
-	/**
-	 * Copies all properties named in the list, from source to destination, if the property does not exist into the destination
-	 *
-	 *      copyListIf({name: 'jon',age:5, year: 2006}, {age: 10}, ['name','age'])
-	 *      // => {name: 'jon', age: 10}
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 * @param {Array} list the array with the names of the properties to copy
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination, list){
-	    if (arguments.length < 3){
-	        list = destination
-	        destination = null
-	    }
-
-	    destination = destination || {}
-	    list        = list || Object.keys(source)
-
-	    var i   = 0
-	    var len = list.length
-	    var propName
-
-	    for ( ; i < len ; i++ ){
-	        propName = list[i]
-	        if (
-	                (typeof source[propName]      !== STR_UNDEFINED) &&
-	                (typeof destination[propName] === STR_UNDEFINED)
-	            ){
-	            destination[propName] = source[propName]
-	        }
-	    }
-
-	    return destination
-	}
-
-/***/ },
-/* 95 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var STR_UNDEFINED = 'undefined'
-	var STR_OBJECT    = 'object'
-	var HAS_OWN       = Object.prototype.hasOwnProperty
-
-	var copyList = __webpack_require__(93)
-
-	/**
-	 * Copies all properties named in the namedKeys, from source to destination
-	 *
-	 *      copyKeys({name: 'jon',age:5, year: 2006, date: '2010/05/12'}, {}, {name:1 ,age: true, year: 'theYear'})
-	 *      // => {name: 'jon', age: 5, theYear: 2006}
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 * @param {Object} namedKeys an object with keys denoting the properties to be copied
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination, namedKeys){
-	    if (arguments.length < 3 ){
-	        namedKeys = destination
-	        destination = null
-	    }
-
-	    destination = destination || {}
-
-	    if (!namedKeys || Array.isArray(namedKeys)){
-	        return copyList(source, destination, namedKeys)
-	    }
-
-	    if (
-	           source != null && typeof source    === STR_OBJECT &&
-	        namedKeys != null && typeof namedKeys === STR_OBJECT
-	    ) {
-	        var typeOfNamedProperty
-	        var namedPropertyValue
-
-	        for  (var propName in namedKeys) if ( HAS_OWN.call(namedKeys, propName) ) {
-	            namedPropertyValue  = namedKeys[propName]
-	            typeOfNamedProperty = typeof namedPropertyValue
-
-	            if (typeof source[propName] !== STR_UNDEFINED){
-	                destination[typeOfNamedProperty == 'string'? namedPropertyValue : propName] = source[propName]
-	            }
-	        }
-	    }
-
-	    return destination
-	}
-
-/***/ },
-/* 96 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var STR_UNDEFINED = 'undefined'
-	var STR_OBJECT    = 'object'
-	var HAS_OWN       = Object.prototype.hasOwnProperty
-
-	var copyListIf = __webpack_require__(94)
-
-	/**
-	 * Copies all properties named in the namedKeys, from source to destination,
-	 * but only if the property does not already exist in the destination object
-	 *
-	 *      copyKeysIf({name: 'jon',age:5, year: 2006}, {aname: 'test'}, {name:'aname' ,age: true})
-	 *      // => {aname: 'test', age: 5}
-	 *
-	 * @param {Object} source
-	 * @param {Object} destination
-	 * @param {Object} namedKeys an object with keys denoting the properties to be copied
-	 *
-	 * @return {Object} destination
-	 */
-	module.exports = function(source, destination, namedKeys){
-	    if (arguments.length < 3 ){
-	        namedKeys = destination
-	        destination = null
-	    }
-
-	    destination = destination || {}
-
-	    if (!namedKeys || Array.isArray(namedKeys)){
-	        return copyListIf(source, destination, namedKeys)
-	    }
-
-	    if (
-	               source != null && typeof source    === STR_OBJECT &&
-	            namedKeys != null && typeof namedKeys === STR_OBJECT
-	        ) {
-
-	            var typeOfNamedProperty
-	            var namedPropertyValue
-	            var newPropertyName
-
-	            for (var propName in namedKeys) if ( HAS_OWN.call(namedKeys, propName) ) {
-
-	                namedPropertyValue  = namedKeys[propName]
-	                typeOfNamedProperty = typeof namedPropertyValue
-	                newPropertyName     = typeOfNamedProperty == 'string'? namedPropertyValue : propName
-
-	                if (
-	                        typeof      source[propName]        !== STR_UNDEFINED &&
-	                        typeof destination[newPropertyName] === STR_UNDEFINED
-	                    ) {
-	                    destination[newPropertyName] = source[propName]
-	                }
-
-	            }
-	        }
-
-	    return destination
-	}
 
 /***/ },
 /* 97 */

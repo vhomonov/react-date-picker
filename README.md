@@ -37,6 +37,22 @@ function onChange(moment, dateString){
 />
 ```
 
+## Custom locale
+
+If you want to use a custom locale, simply require the appropriate momentjs locale before `require`-ing `react-date-picker`
+
+Example:
+
+```jsx
+//make sure you require this first!
+var nl = require('moment/locale/nl')
+
+//and then require the date picker - it will use the locale you previously required
+var DatePicker = require('react-date-picker')
+
+...
+```
+
 ## Options
 
  * hideFooter: Boolean - by default footer is shown, so specify this to true if you don't want the footer
