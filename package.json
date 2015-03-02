@@ -21,9 +21,11 @@
   "dependencies": {
     "copy-utils": "~1.0.0",
     "css-utils": "^0.4.2",
-    "moment": "^2.8.0",
-    "normalize.css": "~3.0.2",
-    "react": "^0.12.2"
+    "normalize.css": "~3.0.2"
+  },
+  "peerDependencies": {
+    "moment": ">=2.8.0",
+    "react" : ">=0.12.0"
   },
   "devDependencies": {
     "css-loader": "~0.9.0",
