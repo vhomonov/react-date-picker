@@ -38,6 +38,22 @@ function onChange(moment, dateString){
 />
 ```
 
+## Custom locale
+
+If you want to use a custom locale, simply require the appropriate momentjs locale before `require`-ing `react-date-picker`
+
+Example:
+
+```jsx
+//make sure you require this first!
+var nl = require('moment/locale/nl')
+
+//and then require the date picker - it will use the locale you previously required
+var DatePicker = require('react-date-picker')
+
+...
+```
+
 ## Props
 
  * hideFooter: Boolean - by default footer is shown, so specify this to true if you don't want the footer
@@ -61,7 +77,7 @@ function onChange(moment, dateString){
  * `view`: String - controlled version for `defaultView`.
  * `onViewChange`: Function - function called when the view is changed. If using the controlled `view` version, make sure you update the `view` prop in this function if you want to navigate to another view as expected.
 
- 
+
 
 
 ## Examples

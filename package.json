@@ -1,6 +1,6 @@
 {
   "name": "react-date-picker",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "description": "React Date Picker",
   "main": "lib/index.js",
   "scripts": {
@@ -20,10 +20,13 @@
   "license": "MIT",
   "dependencies": {
     "css-utils": "^0.4.2",
-    "moment": "~2.8.3",
+    "moment": "^2.8.0",
     "normalize.css": "~3.0.2",
-    "object-assign": "^2.0.0",
-    "react": "^0.12.2"
+    "object-assign": "^2.0.0"
+  },
+  "peerDependencies": {
+    "moment": ">=2.8.0",
+    "react" : ">=0.12.0"
   },
   "devDependencies": {
     "css-loader": "~0.9.0",
