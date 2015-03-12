@@ -61,18 +61,18 @@ var DatePicker = require('react-date-picker')
  * `minDate` : Date / String / Moment / Number
  * `maxDate` : Date / String / Moment / Number
  * `dateFormat`: String [see moment.js formats](http://momentjs.com/docs/#/displaying/format/). Default date format is 'YYYY-MM-DD'
-* `onChange`: Function(moment, dateText, event) - called when the user selects a date
+* `onChange`: Function(dateText, moment, event) - called when the user selects a date
 
 
-* `onSelect`: Function(moment, dateText, view) - called when the user selects a year/month
-* `onNav`: Function(moment, dateText, view, direction) - called when the user navigates to the next/previous month/year/decade.
+* `onSelect`: Function(dateText, moment, view) - called when the user selects a year/month
+* `onNav`: Function(dateText, moment, view, direction) - called when the user navigates to the next/previous month/year/decade.
 * `renderDay`: Function - (optional) A function that should return a React DOM for the day cell. The first param is the props object. You can use this to have full control over what gets rendered for a day.
 * `onRenderDay`: Function - (optional) A function that can manipulate the props object for a day, and SHOULD return a new props object. Use this for custom day styling. You can use this to take full control over the styles/css classes/attributes applied to the day cell in the month view.
 
 #### Props related to the view (the current date in view and the type of view)
  * `defaultViewDate`: Date / String / Moment / Number - a date for the period to show in the picker. If none specified, defaults to `date` or to the current date.
  * `viewDate`: Date / String / Moment / Number - controlled version for `defaultViewDate`
- * `onViewDateChange`: Function(moment, dateText, view) - called when navigating to another viewDate.
+ * `onViewDateChange`: Function(dateText, moment , view) - called when navigating to another viewDate.
  * `defaultView`: String - the view to render initially in the datepicker - if no defaultView is specified, the "month" view is rendered. Possible values: "month", "year", "decade".
  * `view`: String - controlled version for `defaultView`.
  * `onViewChange`: Function - function called when the view is changed. If using the controlled `view` version, make sure you update the `view` prop in this function if you want to navigate to another view as expected.

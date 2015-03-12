@@ -311,12 +311,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * Use this method to set the view.
-	     * 
+	     *
 	     * @param {String} view 'month'/'year'/'decade'
 	     *
 	     * It calls onViewChange, and if the view is uncontrolled, also sets it is state,
 	     * so the datepicker gets re-rendered view the new view
-	     * 
+	     *
 	     */
 	    setView: function(view) {
 
@@ -342,7 +342,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var text = moment.format(this.props.dateFormat)
 	            var view = this.getViewName()
 
-	            fn(moment, text, view)
+	            fn(text, moment, view)
 	        }
 
 	        if (!hasOwn(this.props, 'viewDate')){
@@ -395,7 +395,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var text = viewMoment.format(this.props.dateFormat)
 	            var view = this.getViewName()
 
-	            this.props.onNav(viewMoment, text, view, direction, event)
+	            this.props.onNav(text, viewMoment, view, direction, event)
 	        }
 	    },
 
@@ -412,7 +412,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var text = date.format(this.props.dateFormat)
 
-	        ;(this.props.onChange || emptyFn)(date, text, event)
+	        ;(this.props.onChange || emptyFn)(text, date, event)
 	    },
 
 	    handleSelect: function(date, event) {
@@ -433,7 +433,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        if (typeof this.props.onSelect === 'function'){
 	            var text = viewMoment.format(this.props.dateFormat)
-	            this.props.onSelect(viewMoment, text, view, event)
+	            this.props.onSelect(text, viewMoment, view, event)
 	        }
 	    }
 

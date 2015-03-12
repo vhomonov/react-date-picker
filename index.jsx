@@ -16,13 +16,13 @@ var App = React.createClass({
     render: function(){
         var v = VALUE
 
-        function onNav(moment, text, view){
-            // console.log('NAV');
-            console.log(moment, text, view)
+        function onNav(text, moment, view){
+            // console.log(arguments);
+            // console.log(moment, text, view)
         }
 
-        function onSelect(moment, text, view){
-            console.log('SELECT', text, view)
+        function onSelect(text, moment, view){
+            // console.log('SELECT', arguments)
             // console.log(moment, text, view)
         }
 
@@ -40,10 +40,12 @@ var App = React.createClass({
 
         var onViewChange = function(view){
             VIEW = view
+            // console.log(arguments);
             this.setState({})
         }.bind(this)
 
         var onViewDateChange = function(d){
+            console.log(arguments);
             VIEW_DATE = d
             this.setState({})
         }.bind(this)
