@@ -2,8 +2,6 @@
 
 require('./index.styl')
 
-var nl = require('moment/locale/nl')
-
 var React      = require('react')
 var DatePicker = require('./src/index')
 
@@ -18,7 +16,7 @@ var App = React.createClass({
         var v = VALUE
 
         function onNav(moment, text, view){
-            console.log(moment, text, view)
+            console.log('nav to ', text)
         }
 
         function onSelect(moment, text, view){
@@ -29,8 +27,6 @@ var App = React.createClass({
         function renderDay(props){
             props.className += ' aaa '
             props.style = props.style || {}
-
-            props.style.color = 'red'
 
             return props
         }
@@ -45,14 +41,14 @@ var App = React.createClass({
                 onNav={onNav}
                 onSelect={onSelect}
                 onRenderDay={renderDay}
-                minDate='2014-04-04' maxDate='2015-10-10' date={v} viewDate={DATE} onChange={this.onChange}/>
+                date={v} onChange={this.onChange}/>
 
                 <button onClick={clear}>clear</button>
             </div>
     },
 
     onChange: function(date, dateString) {
-        console.log(dateString, 'change')
+        console.log('change',dateString)
         DATE  = dateString
         VALUE = dateString
         this.setState({})

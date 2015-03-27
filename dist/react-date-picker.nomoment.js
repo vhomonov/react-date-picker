@@ -60,6 +60,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var moment    = __webpack_require__(2)
 	var copyUtils = __webpack_require__(8)
+
 	var copy     = copyUtils.copy
 	var copyList = copyUtils.copyList
 
@@ -152,7 +153,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    getViewDate: function() {
-	        return this.state.viewMoment || this.props.viewDate || this.props.date || this.now
+	        return this.state.viewMoment || this.viewMoment || this.props.viewDate || this.props.date || this.now
 	    },
 
 	    render: function() {
@@ -162,7 +163,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var view     = this.getViewFactory()
 	        var props    = asConfig(this.props)
 
-	        props.viewDate  = this.getViewDate()
+	        props.viewDate  = this.viewMoment = this.getViewDate()
 
 	        props.renderDay = this.props.renderDay
 	        props.onRenderDay = this.props.onRenderDay
@@ -272,11 +273,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            React.createElement("div", {className: "dp-header"}, 
 	                React.createElement("table", {className: "dp-nav-table"}, React.createElement("tbody", null, 
 	                    React.createElement("tr", {className: "dp-row"}, 
-	                        React.createElement("td", {className: "dp-prev-nav dp-nav-cell dp-cell", onClick: this.handlePrevNav}, prev), 
+	                        React.createElement("td", {className: "dp-prev-nav dp-nav-cell dp-cell", onClick: this.handleNavPrev}, prev), 
 
 	                        React.createElement("td", {className: "dp-nav-view dp-cell ", colSpan: colspan, onClick: this.handleViewChange}, headerText), 
 
-	                        React.createElement("td", {className: "dp-next-nav dp-nav-cell dp-cell", onClick: this.handleNextNav}, next)
+	                        React.createElement("td", {className: "dp-next-nav dp-nav-cell dp-cell", onClick: this.handleNavNext}, next)
 	                    )
 	                ))
 	            )
@@ -325,7 +326,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        })[this.getViewName()]()
 	    },
 
-	    handlePrevNav: function(event) {
+	    handleNavPrev: function(event) {
 	        var viewMoment = this.getPrev()
 
 	        this.setState({
@@ -340,7 +341,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 
-	    handleNextNav: function(event) {
+	    handleNavNext: function(event) {
 	        var viewMoment = this.getNext()
 
 	        this.setState({
@@ -357,6 +358,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    handleChange: function(date, event) {
 	        date = moment(date)
+
+	        var viewDate = moment(this.getViewDate())
+
+	        //it's not enough to compare months, since the year can change as well
+	        //
+	        //also it's ok to hardcode the format here
+	        var viewMonth = viewDate.format('YYYY-MM')
+	        var dateMonth = date.format('YYYY-MM')
+
+	        if (dateMonth > viewMonth){
+	            this.handleNavNext(event)
+	        } else if (dateMonth < viewMonth){
+	            this.handleNavPrev(event)
+	        }
 
 	        var text = date.format(this.props.dateFormat)
 

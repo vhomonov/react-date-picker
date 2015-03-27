@@ -4,6 +4,7 @@ var React  = require('react')
 
 var moment    = require('moment')
 var copyUtils = require('copy-utils')
+
 var copy     = copyUtils.copy
 var copyList = copyUtils.copyList
 
@@ -96,7 +97,7 @@ var DatePicker = React.createClass({
     },
 
     getViewDate: function() {
-        return this.state.viewMoment || this.props.viewDate || this.props.date || this.now
+        return this.state.viewMoment || this.viewMoment || this.props.viewDate || this.props.date || this.now
     },
 
     render: function() {
@@ -106,7 +107,7 @@ var DatePicker = React.createClass({
         var view     = this.getViewFactory()
         var props    = asConfig(this.props)
 
-        props.viewDate  = this.getViewDate()
+        props.viewDate  = this.viewMoment = this.getViewDate()
 
         props.renderDay = this.props.renderDay
         props.onRenderDay = this.props.onRenderDay
@@ -216,11 +217,11 @@ var DatePicker = React.createClass({
             <div className="dp-header">
                 <table className="dp-nav-table"><tbody>
                     <tr className="dp-row">
-                        <td  className="dp-prev-nav dp-nav-cell dp-cell" onClick={this.handlePrevNav}>{prev}</td>
+                        <td  className="dp-prev-nav dp-nav-cell dp-cell" onClick={this.handleNavPrev}>{prev}</td>
 
                         <td className="dp-nav-view dp-cell " colSpan={colspan} onClick={this.handleViewChange}>{headerText}</td>
 
-                        <td className="dp-next-nav dp-nav-cell dp-cell" onClick={this.handleNextNav}>{next}</td>
+                        <td className="dp-next-nav dp-nav-cell dp-cell" onClick={this.handleNavNext}>{next}</td>
                     </tr>
                 </tbody></table>
             </div>
@@ -269,7 +270,7 @@ var DatePicker = React.createClass({
         })[this.getViewName()]()
     },
 
-    handlePrevNav: function(event) {
+    handleNavPrev: function(event) {
         var viewMoment = this.getPrev()
 
         this.setState({
@@ -284,7 +285,7 @@ var DatePicker = React.createClass({
         }
     },
 
-    handleNextNav: function(event) {
+    handleNavNext: function(event) {
         var viewMoment = this.getNext()
 
         this.setState({
@@ -301,6 +302,20 @@ var DatePicker = React.createClass({
 
     handleChange: function(date, event) {
         date = moment(date)
+
+        var viewDate = moment(this.getViewDate())
+
+        //it's not enough to compare months, since the year can change as well
+        //
+        //also it's ok to hardcode the format here
+        var viewMonth = viewDate.format('YYYY-MM')
+        var dateMonth = date.format('YYYY-MM')
+
+        if (dateMonth > viewMonth){
+            this.handleNavNext(event)
+        } else if (dateMonth < viewMonth){
+            this.handleNavPrev(event)
+        }
 
         var text = date.format(this.props.dateFormat)
 
