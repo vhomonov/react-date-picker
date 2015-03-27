@@ -2,6 +2,8 @@
 
 require('./index.styl')
 
+require('moment/locale/fr')
+
 var React      = require('react')
 var DatePicker = require('react-date-picker')
 
