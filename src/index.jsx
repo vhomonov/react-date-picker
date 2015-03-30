@@ -12,7 +12,6 @@ var DecadeView = require('./DecadeView')
 var Header = require('./Header')
 
 var toMoment = require('./toMoment')
-var isMoment = require('./isMoment')
 
 var hasOwn = function(obj, key){
     return Object.prototype.hasOwnProperty.call(obj, key)

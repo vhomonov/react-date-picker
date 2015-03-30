@@ -2,6 +2,7 @@
 
 var React  = require('react')
 var moment = require('moment')
+var assign = require('object-assign')
 
 var FORMAT   = require('./utils/format')
 var asConfig = require('./utils/asConfig')
@@ -119,13 +120,15 @@ var DecadeView = React.createClass({
     }
 })
 
-DecadeView.getHeaderText = function(value) {
-    var year = moment(value).get('year')
-    var offset = year % 10
+assign(DecadeView, {
+    getHeaderText: function(value) {
+        var year = moment(value).get('year')
+        var offset = year % 10
 
-    year = year - offset - 1
+        year = year - offset - 1
 
-    return year + ' - ' + (year + 11)
-}
+        return year + ' - ' + (year + 11)
+    }
+})
 
 module.exports = DecadeView

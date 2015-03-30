@@ -24,7 +24,7 @@ module.exports = React.createClass({
             <table className="dp-nav-table">
             	<tbody>
 	                <tr className="dp-row">
-	                    <td 
+	                    <td
 	                    	className="dp-prev-nav dp-nav-cell dp-cell"
 	                    	onClick={props.onPrev}
 	                    >{props.prevText}

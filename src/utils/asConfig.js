@@ -6,13 +6,13 @@ var CONFIG = require('../config')
 var KEYS   = Object.keys(CONFIG)
 
 function copyList(src, target, list){
-	if (src){
-		list.forEach(function(key){
-			target[key] = src[key]
-		})
-	}
+    if (src){
+        list.forEach(function(key){
+            target[key] = src[key]
+        })
+    }
 
-	return target
+    return target
 }
 
 /**
