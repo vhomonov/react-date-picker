@@ -1,9 +1,11 @@
 react-date-picker
 =================
 
-> Date picker for React
+> A carefully crafted date picker for React
 
 See demo at [jslog.com/react-date-picker](http://jslog.com/react-date-picker)
+
+<img src="http://npm.packagequality.com/badge/react-date-picker.png"/>
 
 ## Install
 
@@ -11,13 +13,17 @@ See demo at [jslog.com/react-date-picker](http://jslog.com/react-date-picker)
 $ npm install react-date-picker
 ```
 
+## Changelog
+
+See [changelog](./CHANGELOG.md)
+
 ## Usage
 
 ### NOTES:
 
 Don't forget to include index.css or index.styl! ( require('react-date-picker/index.css') )
 
-Also you need to have `React` included in the page.
+The picker depends on the availability of both `React` and `moment` global variables, so make sure you include [ReactJS](https://www.npmjs.com/package/react) and [MomentJS](https://www.npmjs.com/package/moment)
 
 The preferred **React** version for `react-date-picker` is  >=0.12. The initial version of `react-date-picker` worked with React 0.11.2 as well, but I do not intend to continue to support it, in order to be able to focus on advancing the current features and developing other high-quality React components.
 
@@ -26,7 +32,7 @@ The preferred **React** version for `react-date-picker` is  >=0.12. The initial 
 ```jsx
 var date = '2014-10-10' //or Date.now()
 
-function onChange(moment, dateString){
+function onChange(dateString, moment){
     //...
 }
 
@@ -38,9 +44,13 @@ function onChange(moment, dateString){
 />
 ```
 
-## Custom locale
+## I18n and localization
 
-If you want to use a custom locale, simply require the appropriate momentjs locale before `require`-ing `react-date-picker`
+For rendering the date picker with a custom locale, there are two options
+
+#### require locale
+
+The first option is to simply require the appropriate momentjs locale before `require`-ing `react-date-picker`
 
 Example:
 
@@ -48,11 +58,26 @@ Example:
 //make sure you require this first!
 var nl = require('moment/locale/nl')
 
-//and then require the date picker - it will use the locale you previously required
-var DatePicker = require('react-date-picker')
+//and then require the date picker - it will use
+//the locale you previously required
 
-...
+var DatePicker = require('react-date-picker')
 ```
+
+#### locale prop
+
+The second option is specifying the `locale` prop on the date picker. This assumes you have momentjs with the locale already into page (for example, you are using `moment-with-locales.js`)
+
+```jsx
+<DatePicker locale="fr" />
+```
+
+
+### Other i18n props
+
+ * `weekDayNames` - either an array of week day names, or a function that returns an array. In case you specify `weekDayNames` as an array, it should have Sunday as the first day. If not specified, will be built with `momentjs`using `moment.weekdaysShort()`
+ * `weekStartDay`: Number - Sun 0, Monday 1, etc... If not specified, the locale specific value will be used.
+ * `locale`: String
 
 ## Props
 
@@ -73,12 +98,12 @@ var DatePicker = require('react-date-picker')
  * `defaultViewDate`: Date / String / Moment / Number - a date for the period to show in the picker. If none specified, defaults to `date` or to the current date.
  * `viewDate`: Date / String / Moment / Number - controlled version for `defaultViewDate`
  * `onViewDateChange`: Function(dateText, moment , view) - called when navigating to another viewDate.
+
  * `defaultView`: String - the view to render initially in the datepicker - if no defaultView is specified, the "month" view is rendered. Possible values: "month", "year", "decade".
  * `view`: String - controlled version for `defaultView`.
  * `onViewChange`: Function - function called when the view is changed. If using the controlled `view` version, make sure you update the `view` prop in this function if you want to navigate to another view as expected.
 
-
-
+ * `navOnDateClick`: Boolean - defaults to true. If false, will not navigate to the date that was clicked, even if that date is in the prev/next month
 
 ## Examples
 
@@ -102,8 +127,6 @@ function onRenderDay(props){
     onRenderDay={onRenderDay}
 />
 ```
-
-
 ## Contributing
 
 When contributing, please work on the `src` dir.
@@ -131,21 +154,6 @@ If you don't use npm you can include any of the following:
  * `dist/react-date-picker.nomoment.js` - the full sources. NOTE: You'll need to include `React` AND `moment.js` separately
  * `dist/react-date-picker.nomoment.min.js` - minified & optimized version. NOTE: You'll need to include `React` AND `moment.js` separately
 
+## License
 
-## Changelog
-
-#### v2.0.0
-
- * made `viewDate` and `view` controlled. Introduced uncontrolled alternatives `defaultViewDate`(default tos `date` or now) and `defaultView` (defaults to `"month"`)
- * add `onViewDateChange` and `onViewChange` props that can be used to handle the changes for the respective properties
-
-#### v1.4.0
-
- * `today` and `gotoSelected` are renamed as `todayText` and `gotoSelectedText`. Old names are now deprecated, and will be removed in a future minor version.
- * add `renderFooter` prop, which can be used to render a different footer.
- * change the behavior of `renderDay` prop: if it now returns undefined, we assume it just changed props, so we render the default cell, with the updated props. This means you can use `renderDay` both to affect the props object passed to day cells and/or the render a completely different cell
-
-#### v1.3.0
- * `renderDay` & `onRenderDay` properties are available to allow full control over day-cell rendering
- * `onNav` is called with new args: moment, text, view, direction - where moment is a date as a momentjs instance, text is the date formatted as text, the view is the view name ('month','year','decade') and direction is 1 (nav to next period) or -1 (nav to prev period)
- * `onSelect` is called with new args: moment, text, view
+```MIT```

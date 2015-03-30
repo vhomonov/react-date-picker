@@ -54,7 +54,12 @@ var DatePicker = React.createClass({
     },
 
     getDefaultProps: function() {
-        var props = assign({}, asConfig())
+        var props = assign({}, asConfig(), {
+            navOnDateClick: true,
+            defaultStyle: {
+                boxSizing: 'border-box'
+            }
+        })
 
         delete props.viewDate
         delete props.date
@@ -114,21 +119,24 @@ var DatePicker = React.createClass({
                         this.props.viewDate:
                         this.state.viewDate
 
-        date = this.toMoment(date || this.props.date || new Date())
+        date = this.toMoment(date || this.viewMoment || this.props.date || new Date())
 
         return date
     },
 
     render: function() {
 
-        this.toMoment = function(value){
-            return toMoment(value, this.props.dateFormat)
+        var props = asConfig(this.props)
+
+        this.toMoment = function(value, dateFormat){
+            return toMoment(value, dateFormat || props.dateFormat, { locale: props.locale })
         }
 
         var view  = this.getViewFactory()
-        var props = asConfig(this.props)
 
-        props.viewDate  = this.getViewDate()
+        props.viewDate   = this.viewMoment = this.getViewDate()
+        props.locale     = this.props.locale
+        props.localeData = moment.localeData(props.locale)
 
         props.renderDay   = this.props.renderDay
         props.onRenderDay = this.props.onRenderDay
@@ -138,12 +146,14 @@ var DatePicker = React.createClass({
 
         var className = (this.props.className || '') + ' date-picker'
 
+        props.style = this.prepareStyle(props)
+
         return (
-            <div className={className} {...this.props}>
-                <div className="dp-inner">
+            <div className={className} style={props.style} {...this.props}>
+                <div className="dp-inner" style={{width: '100%', height: '100%', display: 'flex', flexFlow: 'column'}}>
                     {this.renderHeader(view)}
 
-                    <div className="dp-body">
+                    <div className="dp-body" style={{flex: 1}}>
                         <div className="dp-anim-target">
                         {view(props)}
                         </div>
@@ -153,6 +163,12 @@ var DatePicker = React.createClass({
                 </div>
             </div>
         )
+    },
+
+    prepareStyle: function(props) {
+        var style = assign({}, props.defaultStyle, props.style)
+
+        return style
     },
 
     renderFooter: function(props) {
@@ -237,8 +253,8 @@ var DatePicker = React.createClass({
                 prevText={prev}
                 nextText={next}
                 colspan={colspan}
-                onPrev={this.handlePrevNav}
-                onNext={this.handleNextNav}
+                onPrev={this.handleNavPrev}
+                onNext={this.handleNavNext}
                 onChange={this.handleViewChange}
             >
             {headerText}
@@ -298,32 +314,34 @@ var DatePicker = React.createClass({
 
     getNext: function() {
         var current = this.getViewDate()
+        var toMoment = this.toMoment
 
         return ({
             month: function() {
-                return moment(current).add(1, 'month')
+                return toMoment(current).add(1, 'month')
             },
             year: function() {
-                return moment(current).add(1, 'year')
+                return toMoment(current).add(1, 'year')
             },
             decade: function() {
-                return moment(current).add(10, 'year')
+                return toMoment(current).add(10, 'year')
             }
         })[this.getViewName()]()
     },
 
     getPrev: function() {
         var current = this.getViewDate()
+        var toMoment = this.toMoment
 
         return ({
             month: function() {
-                return moment(current).add(-1, 'month')
+                return toMoment(current).add(-1, 'month')
             },
             year: function() {
-                return moment(current).add(-1, 'year')
+                return toMoment(current).add(-1, 'year')
             },
             decade: function() {
-                return moment(current).add(-10, 'year')
+                return toMoment(current).add(-10, 'year')
             }
         })[this.getViewName()]()
     },
@@ -343,16 +361,32 @@ var DatePicker = React.createClass({
         }
     },
 
-    handlePrevNav: function(event) {
+    handleNavPrev: function(event) {
         this.handleNavigation(-1, event)
     },
 
-    handleNextNav: function(event) {
+    handleNavNext: function(event) {
         this.handleNavigation(1, event)
     },
 
     handleChange: function(date, event) {
-        date = moment(date)
+        date = this.toMoment(date)
+
+        if (this.props.navOnDateClick){
+            var viewDate = this.toMoment(this.getViewDate())
+
+            //it's not enough to compare months, since the year can change as well
+            //
+            //also it's ok to hardcode the format here
+            var viewMonth = viewDate.format('YYYY-MM')
+            var dateMonth = date.format('YYYY-MM')
+
+            if (dateMonth > viewMonth){
+                this.handleNavNext(event)
+            } else if (dateMonth < viewMonth){
+                this.handleNavPrev(event)
+            }
+        }
 
         var text = date.format(this.props.dateFormat)
 
@@ -368,7 +402,7 @@ var DatePicker = React.createClass({
         })[viewName]
 
         var value      = date.get(property)
-        var viewMoment = moment(this.getViewDate()).set(property, value)
+        var viewMoment = this.toMoment(this.getViewDate()).set(property, value)
         var view       = this.getPrevViewName()
 
         this.setViewDate(viewMoment)
