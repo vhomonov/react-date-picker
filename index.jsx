@@ -77,8 +77,8 @@ var App = React.createClass({
         this.setState({})
     },
 
-    onChange: function(moment, dateString) {
-        pickerDate  = moment
+    onChange: function(dateString, moment) {
+        pickerDate = dateString
 
         //now re-render the app
         console.log('selected ', dateString)
