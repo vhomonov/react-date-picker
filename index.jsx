@@ -11,9 +11,17 @@ var VALUE = Date.now()
 var VIEW_DATE = null
 var VIEW  = 'month'
 
+var LOCALE = 'en'
+
 var App = React.createClass({
 
     displayName: 'App',
+
+    onLocaleChange: function(event) {
+        LOCALE = event.target.value
+
+        this.setState({})
+    },
 
     render: function(){
         var v = VALUE
@@ -53,6 +61,16 @@ var App = React.createClass({
         }.bind(this)
 
         return <div style={{margin: 10}}>
+
+        <p>Select locale:
+            <select value={LOCALE} onChange={this.onLocaleChange}>
+                <option value="en">English</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="es">Spanish</option>
+                <option value="ro">Romanian</option>
+            </select>
+        </p>
             <DatePicker
 
                 onNav={onNav}
@@ -62,7 +80,7 @@ var App = React.createClass({
                 onViewDateChange={onViewDateChange}
                 onRenderDay={renderDay}
                 xweekStartDay={0}
-                locale="fr"
+                locale={LOCALE}
                 xweekDayNames={['SUND','mon','marti','miercuri','joi','vineri','sam']}
                 minDate='2013-04-04' maxDate='2015-10-10' date={v} onChange={this.onChange}/>
 

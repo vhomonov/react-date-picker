@@ -174,7 +174,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        this.props.viewDate:
 	                        this.state.viewDate
 
-	        date = this.toMoment(date || this.viewMoment || this.props.date || new Date())
+	        date = date || this.viewMoment || this.props.date || new Date()
+
+	        if (moment.isMoment(date)){
+	            //in order to strip the locale - the date picker may have had its locale changed
+	            //between two render calls. If we don't strip this, moment(mom) returns a new moment
+	            //with the locale of mom, which is not what we want
+	            date = +date
+	        }
+
+	        date = this.toMoment(date)
 
 	        return date
 	    },
@@ -192,6 +201,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        props.viewDate   = this.viewMoment = this.getViewDate()
 	        props.locale     = this.props.locale
 	        props.localeData = moment.localeData(props.locale)
+
+	        console.log(props.locale,'!!!');
 
 	        props.renderDay   = this.props.renderDay
 	        props.onRenderDay = this.props.onRenderDay
