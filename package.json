@@ -3,6 +3,9 @@
   "version": "1.4.4",
   "description": "React Date Picker",
   "main": "lib/index.js",
+  "contributors": [
+    "Radu Brehar <radu@evanghelic.ro>"
+  ],
   "scripts": {
     "test": "make",
     "start": "npm run serve | npm run dev",
@@ -16,7 +19,7 @@
     "lib": "./node_modules/.bin/gulp",
     "build": "npm run build-style && npm run dist && npm run dist-nomoment && npm run dist.min && npm run dist-nomoment.min && npm run lib"
   },
-  "author": "Radu Brehar",
+  "author": "ZippyUI <contact@zippyui.com>",
   "license": "MIT",
   "dependencies": {
     "copy-utils": "~1.0.0",
@@ -52,10 +55,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/radubrehar/react-date-picker.git"
+    "url": "https://github.com/zippyui/react-date-picker.git"
   },
   "bugs": {
-    "url": "https://github.com/radubrehar/react-date-picker/issues"
+    "url": "https://github.com/zippyui/react-date-picker/issues"
   },
-  "homepage": "https://github.com/radubrehar/react-date-picker"
+  "homepage": "https://github.com/zippyui/react-date-picker"
 }
