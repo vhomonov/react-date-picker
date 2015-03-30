@@ -118,13 +118,13 @@ var DecadeView = React.createClass({
         )
     },
 
-    handleClick: function(date, event) {
+    handleClick: function(props, date, event) {
         event.target.value = date
         ;(props.onSelect || emptyFn)(date, event)
     }
 })
 
-DecadeView.getHeaderText = function(value) {
+DecadeView.getHeaderText = function(value, props) {
     var year = moment(value).get('year')
     var offset = year % 10
 

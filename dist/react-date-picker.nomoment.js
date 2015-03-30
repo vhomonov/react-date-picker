@@ -196,21 +196,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	        props.renderDay   = this.props.renderDay
 	        props.onRenderDay = this.props.onRenderDay
 
-	        props.onChange  = this.handleChange
-	        props.onSelect  = this.handleSelect
+	        // props.onChange  = this.handleChange
+	        // props.onSelect  = this.handleSelect
 
 	        var className = (this.props.className || '') + ' date-picker'
 
 	        props.style = this.prepareStyle(props)
 
+	        var viewProps = props
 	        var viewProps = asConfig(props)
 
 	        viewProps.localeData = props.localeData
+	        viewProps.onSelect = this.handleSelect
+	        viewProps.onChange = this.handleChange
 
 	        return (
 	            React.createElement("div", React.__spread({className: className, style: props.style},  this.props), 
 	                React.createElement("div", {className: "dp-inner", style: {width: '100%', height: '100%', display: 'flex', flexFlow: 'column'}}, 
-	                    this.renderHeader(view), 
+	                    this.renderHeader(view, props), 
 
 	                    React.createElement("div", {className: "dp-body", style: {flex: 1}}, 
 	                        React.createElement("div", {className: "dp-anim-target"}, 
@@ -299,10 +302,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return map[this.getViewName()]
 	    },
 
-	    renderHeader: function(view) {
+	    renderHeader: function(view, props) {
+
+	        props = props || this.props
 
 	        var viewDate   = this.getViewDate()
-	        var headerText = this.getView().getHeaderText(viewDate)
+	        var headerText = this.getView().getHeaderText(viewDate, props.locale)
 
 	        var colspan = this.getViewColspan()
 	        var prev    = this.props.navPrev
@@ -739,8 +744,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	})
 
-	MonthView.getHeaderText = function(moment) {
-	    return toMoment(moment).format('MMMM YYYY')
+	MonthView.getHeaderText = function(moment, props) {
+	    return toMoment(moment, null, {locale: props.locale}).format('MMMM YYYY')
 	}
 
 	module.exports = MonthView
@@ -856,15 +861,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        )
 	    },
 
-	    handleClick: function(date, event) {
+	    handleClick: function(props, date, event) {
 	        event.target.value = date
 
 	        ;(props.onSelect || emptyFn)(date, event)
 	    }
 	})
 
-	YearView.getHeaderText = function(moment) {
-	    return toMoment(moment).format('YYYY')
+	YearView.getHeaderText = function(moment, props) {
+	    return toMoment(moment, null, { locale: props.locale }).format('YYYY')
 	}
 
 	module.exports = YearView
@@ -993,13 +998,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        )
 	    },
 
-	    handleClick: function(date, event) {
+	    handleClick: function(props, date, event) {
 	        event.target.value = date
 	        ;(props.onSelect || emptyFn)(date, event)
 	    }
 	})
 
-	DecadeView.getHeaderText = function(value) {
+	DecadeView.getHeaderText = function(value, props) {
 	    var year = moment(value).get('year')
 	    var offset = year % 10
 
@@ -1096,7 +1101,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    // return moment.isMoment(value)?
 	    // 			value:
-	    return moment(value == null? new Date(): value)//, undefined, locale, strict)
+	    return moment(value == null? new Date(): value, undefined, locale, strict)
 	}
 
 /***/ },

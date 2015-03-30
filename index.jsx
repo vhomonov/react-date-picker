@@ -3,7 +3,6 @@
 require('./index.styl')
 
 window.moment = require('moment')
-require('moment/locale/ro')
 
 var React      = require('react')
 var DatePicker = require('./src/index')
@@ -63,7 +62,7 @@ var App = React.createClass({
                 onViewDateChange={onViewDateChange}
                 onRenderDay={renderDay}
                 xweekStartDay={0}
-                xlocale="fr"
+                locale="ro"
                 xweekDayNames={['SUND','mon','marti','miercuri','joi','vineri','sam']}
                 minDate='2013-04-04' maxDate='2015-10-10' date={v} onChange={this.onChange}/>
 

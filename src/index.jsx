@@ -140,21 +140,24 @@ var DatePicker = React.createClass({
         props.renderDay   = this.props.renderDay
         props.onRenderDay = this.props.onRenderDay
 
-        props.onChange  = this.handleChange
-        props.onSelect  = this.handleSelect
+        // props.onChange  = this.handleChange
+        // props.onSelect  = this.handleSelect
 
         var className = (this.props.className || '') + ' date-picker'
 
         props.style = this.prepareStyle(props)
 
+        var viewProps = props
         var viewProps = asConfig(props)
 
         viewProps.localeData = props.localeData
+        viewProps.onSelect = this.handleSelect
+        viewProps.onChange = this.handleChange
 
         return (
             <div className={className} style={props.style} {...this.props}>
                 <div className="dp-inner" style={{width: '100%', height: '100%', display: 'flex', flexFlow: 'column'}}>
-                    {this.renderHeader(view)}
+                    {this.renderHeader(view, props)}
 
                     <div className="dp-body" style={{flex: 1}}>
                         <div className="dp-anim-target">
@@ -243,10 +246,12 @@ var DatePicker = React.createClass({
         return map[this.getViewName()]
     },
 
-    renderHeader: function(view) {
+    renderHeader: function(view, props) {
+
+        props = props || this.props
 
         var viewDate   = this.getViewDate()
-        var headerText = this.getView().getHeaderText(viewDate)
+        var headerText = this.getView().getHeaderText(viewDate, props.locale)
 
         var colspan = this.getViewColspan()
         var prev    = this.props.navPrev
