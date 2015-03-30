@@ -55,6 +55,7 @@ var App = React.createClass({
 
         return <div style={{margin: 10}}>
             <DatePicker
+
                 onNav={onNav}
                 onSelect={onSelect}
                 view={VIEW}

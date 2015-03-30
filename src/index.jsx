@@ -125,7 +125,7 @@ var DatePicker = React.createClass({
 
     render: function() {
 
-        var props = asConfig(this.props)
+        var props = assign({}, this.props)
 
         this.toMoment = function(value, dateFormat){
             return toMoment(value, dateFormat || props.dateFormat, { locale: props.locale })
@@ -147,6 +147,10 @@ var DatePicker = React.createClass({
 
         props.style = this.prepareStyle(props)
 
+        var viewProps = asConfig(props)
+
+        viewProps.localeData = props.localeData
+
         return (
             <div className={className} style={props.style} {...this.props}>
                 <div className="dp-inner" style={{width: '100%', height: '100%', display: 'flex', flexFlow: 'column'}}>
@@ -154,7 +158,7 @@ var DatePicker = React.createClass({
 
                     <div className="dp-body" style={{flex: 1}}>
                         <div className="dp-anim-target">
-                        {view(props)}
+                        {view(viewProps)}
                         </div>
                     </div>
 

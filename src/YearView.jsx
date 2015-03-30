@@ -6,6 +6,7 @@ var moment = require('moment')
 var FORMAT   = require('./utils/format')
 var asConfig = require('./utils/asConfig')
 var toMoment = require('./toMoment')
+var assign = require('object-assign')
 
 var TODAY
 
@@ -43,10 +44,12 @@ var YearView = React.createClass({
 
         TODAY = +moment().startOf('day')
 
-        var viewMoment = this.props.viewMoment = moment(this.props.viewDate)
+        var props = assign({}, this.props)
 
-        if (this.props.date){
-            this.props.moment = moment(this.props.date).startOf('month')
+        var viewMoment = props.viewMoment = moment(this.props.viewDate)
+
+        if (props.date){
+            props.moment = moment(props.date).startOf('month')
         }
 
         var monthsInView = this.getMonthsInYear(viewMoment)
@@ -54,7 +57,7 @@ var YearView = React.createClass({
         return (
             <table className="dp-table dp-year-view">
                 <tbody>
-                    {this.renderMonths(monthsInView)}
+                    {this.renderMonths(props, monthsInView)}
 
                 </tbody>
             </table>
@@ -66,8 +69,10 @@ var YearView = React.createClass({
      * @param  {Moment[]} days
      * @return {React.DOM}
      */
-    renderMonths: function(days) {
-        var nodes      = days.map(this.renderMonth, this)
+    renderMonths: function(props, days) {
+        var nodes      = days.map(function(date){
+            return this.renderMonth(props, date)
+        }, this)
         var len        = days.length
         var buckets    = []
         var bucketsLen = Math.ceil(len / 4)
@@ -83,18 +88,18 @@ var YearView = React.createClass({
         })
     },
 
-    renderMonth: function(date) {
-        var monthText = FORMAT.month(date)
+    renderMonth: function(props, date) {
+        var monthText = FORMAT.month(date, props.monthFormat)
         var classes = ["dp-cell dp-month"]
 
         var dateTimestamp = +date
 
-        if (dateTimestamp == this.props.moment){
+        if (dateTimestamp == props.moment){
             classes.push('dp-value')
         }
 
         return (
-            <td key={monthText} className={classes.join(' ')} onClick={this.handleClick.bind(this, date)}>
+            <td key={monthText} className={classes.join(' ')} onClick={this.handleClick.bind(this, props, date)}>
                 {monthText}
             </td>
         )
@@ -102,7 +107,8 @@ var YearView = React.createClass({
 
     handleClick: function(date, event) {
         event.target.value = date
-        ;(this.props.onSelect || emptyFn)(date, event)
+
+        ;(props.onSelect || emptyFn)(date, event)
     }
 })
 

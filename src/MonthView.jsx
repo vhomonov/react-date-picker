@@ -149,7 +149,7 @@ var MonthView = React.createClass({
     },
 
     renderDay: function(props, date) {
-        var dayText = FORMAT.day(date)
+        var dayText = FORMAT.day(date, props.dayFormat)
         var classes = ["dp-cell dp-day"]
 
         var dateTimestamp = +date

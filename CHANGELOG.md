@@ -8,6 +8,7 @@ react-date-picker
  * made `viewDate` and `view` controlled. Introduced uncontrolled alternatives `defaultViewDate`(default to `date` or now) and `defaultView` (defaults to `"month"`)
  * add `onViewDateChange` and `onViewChange` props that can be used to handle the changes for the respective properties
  * add `navOnDateClick` - defaults to true. If false, will not navigate to the date that was clicked, even if that date is in the prev/next month
+ * add `dayFormat`, `monthFormat`, `yearFormat`
 
 Starting v 2.0.0 `react-date-picker` is moved to [zippyui](http://github.com/zippyui).
 

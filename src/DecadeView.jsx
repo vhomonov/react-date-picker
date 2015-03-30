@@ -7,6 +7,7 @@ var assign = require('object-assign')
 var FORMAT   = require('./utils/format')
 var asConfig = require('./utils/asConfig')
 var toMoment = require('./toMoment')
+var assign = require('object-assign')
 
 var TODAY
 
@@ -49,10 +50,12 @@ var DecadeView = React.createClass({
 
         TODAY = +moment().startOf('day')
 
-        var viewMoment = this.props.viewMoment = moment(this.props.viewDate)
+        var props = assign({}, this.props)
 
-        if (this.props.date){
-            this.props.moment = moment(this.props.date).startOf('year')
+        var viewMoment = props.viewMoment = moment(this.props.viewDate)
+
+        if (props.date){
+            props.moment = moment(props.date).startOf('year')
         }
 
         var yearsInView = this.getYearsInDecade(viewMoment)
@@ -60,8 +63,7 @@ var DecadeView = React.createClass({
         return (
             <table className="dp-table dp-decade-view">
                 <tbody>
-                    {this.renderYears(yearsInView)}
-
+                    {this.renderYears(props, yearsInView)}
                 </tbody>
             </table>
         )
@@ -72,8 +74,10 @@ var DecadeView = React.createClass({
      * @param  {Moment[]} days
      * @return {React.DOM}
      */
-    renderYears: function(days) {
-        var nodes      = days.map(this.renderYear, this)
+    renderYears: function(props, days) {
+        var nodes      = days.map(function(date, index, arr){
+            return this.renderYear(props, date, index, arr)
+        }, this)
         var len        = days.length
         var buckets    = []
         var bucketsLen = Math.ceil(len / 4)
@@ -89,13 +93,13 @@ var DecadeView = React.createClass({
         })
     },
 
-    renderYear: function(date, index, arr) {
-        var yearText = FORMAT.year(date)
+    renderYear: function(props, date, index, arr) {
+        var yearText = FORMAT.year(date, props.yearFormat)
         var classes = ["dp-cell dp-year"]
 
         var dateTimestamp = +date
 
-        if (dateTimestamp == this.props.moment){
+        if (dateTimestamp == props.moment){
             classes.push('dp-value')
         }
 
@@ -108,7 +112,7 @@ var DecadeView = React.createClass({
         }
 
         return (
-            <td key={yearText} className={classes.join(' ')} onClick={this.handleClick.bind(this, date)}>
+            <td key={yearText} className={classes.join(' ')} onClick={this.handleClick.bind(this, props, date)}>
                 {yearText}
             </td>
         )
@@ -116,19 +120,17 @@ var DecadeView = React.createClass({
 
     handleClick: function(date, event) {
         event.target.value = date
-        ;(this.props.onSelect || emptyFn)(date, event)
+        ;(props.onSelect || emptyFn)(date, event)
     }
 })
 
-assign(DecadeView, {
-    getHeaderText: function(value) {
-        var year = moment(value).get('year')
-        var offset = year % 10
+DecadeView.getHeaderText = function(value) {
+    var year = moment(value).get('year')
+    var offset = year % 10
 
-        year = year - offset - 1
+    year = year - offset - 1
 
-        return year + ' - ' + (year + 11)
-    }
-})
+    return year + ' - ' + (year + 11)
+}
 
 module.exports = DecadeView
