@@ -110,7 +110,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    getDefaultProps: function() {
-	        var props = assign({}, asConfig())
+	        var props = assign({}, asConfig(), {
+	            navOnDateClick: true,
+	            defaultStyle: {
+	                boxSizing: 'border-box'
+	            }
+	        })
 
 	        delete props.viewDate
 	        delete props.date
@@ -170,21 +175,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        this.props.viewDate:
 	                        this.state.viewDate
 
-	        date = this.toMoment(date || this.props.date || new Date())
+	        date = this.toMoment(date || this.viewMoment || this.props.date || new Date())
 
 	        return date
 	    },
 
 	    render: function() {
 
-	        this.toMoment = function(value){
-	            return toMoment(value, this.props.dateFormat)
+	        var props = asConfig(this.props)
+
+	        this.toMoment = function(value, dateFormat){
+	            return toMoment(value, dateFormat || props.dateFormat, { locale: props.locale })
 	        }
 
 	        var view  = this.getViewFactory()
-	        var props = asConfig(this.props)
 
-	        props.viewDate  = this.getViewDate()
+	        props.viewDate   = this.viewMoment = this.getViewDate()
+	        props.locale     = this.props.locale
+	        props.localeData = moment.localeData(props.locale)
 
 	        props.renderDay   = this.props.renderDay
 	        props.onRenderDay = this.props.onRenderDay
@@ -194,12 +202,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var className = (this.props.className || '') + ' date-picker'
 
+	        props.style = this.prepareStyle(props)
+
 	        return (
-	            React.createElement("div", React.__spread({className: className},  this.props), 
-	                React.createElement("div", {className: "dp-inner"}, 
+	            React.createElement("div", React.__spread({className: className, style: props.style},  this.props), 
+	                React.createElement("div", {className: "dp-inner", style: {width: '100%', height: '100%', display: 'flex', flexFlow: 'column'}}, 
 	                    this.renderHeader(view), 
 
-	                    React.createElement("div", {className: "dp-body"}, 
+	                    React.createElement("div", {className: "dp-body", style: {flex: 1}}, 
 	                        React.createElement("div", {className: "dp-anim-target"}, 
 	                        view(props)
 	                        )
@@ -209,6 +219,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                )
 	            )
 	        )
+	    },
+
+	    prepareStyle: function(props) {
+	        var style = assign({}, props.defaultStyle, props.style)
+
+	        return style
 	    },
 
 	    renderFooter: function(props) {
@@ -293,8 +309,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                prevText: prev, 
 	                nextText: next, 
 	                colspan: colspan, 
-	                onPrev: this.handlePrevNav, 
-	                onNext: this.handleNextNav, 
+	                onPrev: this.handleNavPrev, 
+	                onNext: this.handleNavNext, 
 	                onChange: this.handleViewChange
 	            }, 
 	            headerText
@@ -354,32 +370,34 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    getNext: function() {
 	        var current = this.getViewDate()
+	        var toMoment = this.toMoment
 
 	        return ({
 	            month: function() {
-	                return moment(current).add(1, 'month')
+	                return toMoment(current).add(1, 'month')
 	            },
 	            year: function() {
-	                return moment(current).add(1, 'year')
+	                return toMoment(current).add(1, 'year')
 	            },
 	            decade: function() {
-	                return moment(current).add(10, 'year')
+	                return toMoment(current).add(10, 'year')
 	            }
 	        })[this.getViewName()]()
 	    },
 
 	    getPrev: function() {
 	        var current = this.getViewDate()
+	        var toMoment = this.toMoment
 
 	        return ({
 	            month: function() {
-	                return moment(current).add(-1, 'month')
+	                return toMoment(current).add(-1, 'month')
 	            },
 	            year: function() {
-	                return moment(current).add(-1, 'year')
+	                return toMoment(current).add(-1, 'year')
 	            },
 	            decade: function() {
-	                return moment(current).add(-10, 'year')
+	                return toMoment(current).add(-10, 'year')
 	            }
 	        })[this.getViewName()]()
 	    },
@@ -399,16 +417,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 
-	    handlePrevNav: function(event) {
+	    handleNavPrev: function(event) {
 	        this.handleNavigation(-1, event)
 	    },
 
-	    handleNextNav: function(event) {
+	    handleNavNext: function(event) {
 	        this.handleNavigation(1, event)
 	    },
 
 	    handleChange: function(date, event) {
-	        date = moment(date)
+	        date = this.toMoment(date)
+
+	        if (this.props.navOnDateClick){
+	            var viewDate = this.toMoment(this.getViewDate())
+
+	            //it's not enough to compare months, since the year can change as well
+	            //
+	            //also it's ok to hardcode the format here
+	            var viewMonth = viewDate.format('YYYY-MM')
+	            var dateMonth = date.format('YYYY-MM')
+
+	            if (dateMonth > viewMonth){
+	                this.handleNavNext(event)
+	            } else if (dateMonth < viewMonth){
+	                this.handleNavPrev(event)
+	            }
+	        }
 
 	        var text = date.format(this.props.dateFormat)
 
@@ -424,7 +458,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        })[viewName]
 
 	        var value      = date.get(property)
-	        var viewMoment = moment(this.getViewDate()).set(property, value)
+	        var viewMoment = this.toMoment(this.getViewDate()).set(property, value)
 	        var view       = this.getPrevViewName()
 
 	        this.setViewDate(viewMoment)
@@ -461,6 +495,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var React  = __webpack_require__(1)
 	var moment = __webpack_require__(2)
+	var assign = __webpack_require__(11)
 
 	var FORMAT   = __webpack_require__(12)
 	var asConfig = __webpack_require__(9)
@@ -494,7 +529,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    getWeekStartMoment: function(value){
-	        var clone = moment(value).startOf('week')
+	        // var clone = moment(value).startOf('week')
+
+	        var weekStartDay = this.weekStartDay
+	        var clone = this.toMoment(value).day(weekStartDay)
+
+	            // debugger
+	        if (weekStartDay != null){
+	            // debugger
+	            // clone.add(this.props.weekStartDay, 'days')
+	        }
 
 	        // if (DEFAULT_WEEK_START_DAY != this.weekStartDay){
 	        //     clone.add('days', this.weekStartDay - DEFAULT_WEEK_START_DAY)
@@ -510,7 +554,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @return {Moment[]}
 	     */
 	    getDaysInMonth: function(value){
-	        var first = moment(value).startOf('month')
+	        var first = this.toMoment(value).startOf('month')
 	        var start = this.getWeekStartMoment(first)
 	        var result = []
 	        var i = 0
@@ -521,7 +565,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        for (; i < 42; i++){
-	            result.push(moment(start))
+	            result.push(this.toMoment(start))
 	            start.add(1, 'days')
 	        }
 
@@ -530,18 +574,34 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    render: function() {
 
-	        TODAY = +moment().startOf('day')
+	        var props = assign({}, this.props)
 
-	        var viewMoment = this.props.viewMoment = toMoment(this.props.viewDate, this.props.dateFormat)
+	        this.toMoment = function(value, dateFormat){
+	            // debugger
+	            return toMoment(value, dateFormat || props.dateFormat, { locale: props.locale })
+	        }
 
-	        this.props.minDate && (this.props.minDate = +toMoment(this.props.minDate, this.props.dateFormat))
-	        this.props.maxDate && (this.props.maxDate = +toMoment(this.props.maxDate, this.props.dateFormat))
+	        TODAY = +this.toMoment().startOf('day')
 
-	        this.monthFirst = moment(viewMoment).startOf('month')
-	        this.monthLast  = moment(viewMoment).endOf('month')
+	        var dateFormat = props.dateFormat
+	        var viewMoment = props.viewMoment = this.toMoment(props.viewDate, dateFormat)
 
-	        if (this.props.date){
-	            this.props.moment = moment(this.props.date).startOf('day')
+	        var weekStartDay = props.weekStartDay
+
+	        if (weekStartDay == null){
+	            weekStartDay = props.localeData._week? props.localeData._week.dow: null
+	        }
+
+	        this.weekStartDay = props.weekStartDay = weekStartDay
+
+	        props.minDate && (props.minDate = +this.toMoment(props.minDate, dateFormat))
+	        props.maxDate && (props.maxDate = +this.toMoment(props.maxDate, dateFormat))
+
+	        this.monthFirst = this.toMoment(viewMoment).startOf('month')
+	        this.monthLast  = this.toMoment(viewMoment).endOf('month')
+
+	        if (props.date){
+	            props.moment = this.toMoment(props.date).startOf('day')
 	        }
 
 	        var daysInView = this.getDaysInMonth(viewMoment)
@@ -550,9 +610,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            React.createElement("table", {className: "dp-table dp-month-view"}, 
 	                React.createElement("tbody", null, 
 	                    this.renderWeekDayNames(), 
-
-	                    this.renderDays(daysInView)
-
+	                    this.renderDays(props, daysInView)
 	                )
 	            )
 	        )
@@ -563,8 +621,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param  {Moment[]} days
 	     * @return {React.DOM}
 	     */
-	    renderDays: function(days) {
-	        var nodes      = days.map(this.renderDay, this)
+	    renderDays: function(props, days) {
+	        var nodes = days.map(function(date){
+	            return this.renderDay(props, date)
+	        }, this)
+
 	        var len        = days.length
 	        var buckets    = []
 	        var bucketsLen = Math.ceil(len / 7)
@@ -580,7 +641,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        })
 	    },
 
-	    renderDay: function(date) {
+	    renderDay: function(props, date) {
 	        var dayText = FORMAT.day(date)
 	        var classes = ["dp-cell dp-day"]
 
@@ -594,14 +655,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            classes.push('dp-next')
 	        }
 
-	        if (this.props.minDate && date < this.props.minDate){
+	        if (props.minDate && date < props.minDate){
 	            classes.push('dp-disabled dp-before-min')
 	        }
-	        if (this.props.maxDate && date > this.props.maxDate){
+	        if (props.maxDate && date > props.maxDate){
 	            classes.push('dp-disabled dp-after-max')
 	        }
 
-	        if (dateTimestamp == this.props.moment){
+	        if (dateTimestamp == props.moment){
 	            classes.push('dp-value')
 	        }
 
@@ -611,16 +672,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            date     : date,
 	            className: classes.join(' '),
 	            style    : {},
-	            onClick  : this.handleClick.bind(this, date, dateTimestamp),
+	            onClick  : this.handleClick.bind(this, props, date, dateTimestamp),
 	            children : dayText
 	        }
 
-	        if (typeof this.props.onRenderDay === 'function'){
-	            renderDayProps = this.props.onRenderDay(renderDayProps)
+	        if (typeof props.onRenderDay === 'function'){
+	            renderDayProps = props.onRenderDay(renderDayProps)
 	        }
 
 	        var defaultRenderFunction = React.DOM.td
-	        var renderFunction = this.props.renderDay || defaultRenderFunction
+	        var renderFunction = props.renderDay || defaultRenderFunction
 
 	        var result = renderFunction(renderDayProps)
 
@@ -631,8 +692,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return result
 	    },
 
+	    getWeekDayNames: function(props) {
+	        props = props || this.props
+
+	        var names        = props.weekDayNames
+	        var weekStartDay = this.weekStartDay
+
+	        if (typeof names == 'function'){
+	            names = names(weekStartDay, props.locale)
+	        } else {
+	            var index = weekStartDay
+
+	            while (index > 0){
+	                names.push(names.shift())
+	                index--
+	            }
+	        }
+
+	        return names
+	    },
+
 	    renderWeekDayNames: function(){
-	        var names = this.props.weekDayNames
+	        var names = this.getWeekDayNames()
 
 	        return (
 	            React.createElement("tr", {className: "dp-row dp-week-day-names"}, 
@@ -641,17 +722,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        )
 	    },
 
-	    handleClick: function(date, timestamp, event) {
-	        if (this.props.minDate && timestamp < this.props.minDate){
+	    handleClick: function(props, date, timestamp, event) {
+	        if (props.minDate && timestamp < props.minDate){
 	            return
 	        }
-	        if (this.props.maxDate && timestamp > this.props.maxDate){
+	        if (props.maxDate && timestamp > props.maxDate){
 	            return
 	        }
 
 	        event.target.value = date
 
-	        ;(this.props.onChange || emptyFn)(date, event)
+	        ;(props.onChange || emptyFn)(date, event)
 	    }
 	})
 
@@ -991,16 +1072,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	module.exports = function(value, dateFormat, config){
 	    var strict = !!(config && config.strict)
+	    var locale = config && config.locale
 
 	    dateFormat = dateFormat || CONFIG.dateFormat
 
 	    if (typeof value == 'string'){
-	        return moment(value, dateFormat, strict)
+	        return moment(value, dateFormat, locale, strict)
 	    }
 
-	    return moment.isMoment(value)?
-	    			value:
-	    			moment(value == null? new Date(): value)
+	    // return moment.isMoment(value)?
+	    // 			value:
+	    return moment(value == null? new Date(): value)//, undefined, locale, strict)
 	}
 
 /***/ },
@@ -1075,10 +1157,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var DEFAULT_WEEK_START_DAY = moment().startOf('week').format('d') * 1
 
-	module.exports = function getWeekDayNames(startDay){
+	module.exports = function getWeekDayNames(startDay, locale){
 
-	    var names = moment.weekdaysShort()
-	    var index = startDay || DEFAULT_WEEK_START_DAY
+		var weekDays
+
+		if (locale){
+			var data = moment.localeData(locale)
+
+			weekDays = data && data._weekdaysShort? data._weekdaysShort: weekDays
+		}
+
+		weekDays = weekDays || moment.weekdaysShort()
+
+		var names = weekDays
+	    var index = startDay == null? DEFAULT_WEEK_START_DAY: startDay
 
 	    while (index > 0){
 	        names.push(names.shift())
@@ -1155,13 +1247,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var getWeekDayNames = __webpack_require__(10)
 
+	// console.log(getWeekDayNames())
+
 	module.exports = {
 
 	    //the names of week days to be displayed in month view - first should be sunday
-	    weekDayNames: getWeekDayNames(),
+	    weekDayNames: getWeekDayNames,
 
 	    //the day to display as first day of week. defaults to 0, which is sunday
-	    weekStartDay: 0,
+	    weekStartDay: null,
 
 	    //the format in which days should be displayed in month view
 	    dayFormat: 'D',
