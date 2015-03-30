@@ -60,7 +60,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var moment   = __webpack_require__(2)
 	var asConfig = __webpack_require__(8)
-	var assign   = __webpack_require__(10)
+	var assign   = __webpack_require__(9)
 
 	var MonthView  = __webpack_require__(3)
 	var YearView   = __webpack_require__(4)
@@ -84,8 +84,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    year  : YearView,
 	    decade: DecadeView
 	}
-
-	var getWeekDayNames = __webpack_require__(9)
 
 	function emptyFn(){}
 
@@ -202,8 +200,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        props.locale     = this.props.locale
 	        props.localeData = moment.localeData(props.locale)
 
-	        console.log(props.locale,'!!!');
-
 	        props.renderDay   = this.props.renderDay
 	        props.onRenderDay = this.props.onRenderDay
 
@@ -298,6 +294,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    gotoDate: function(value) {
+
 	        this.setView('month')
 
 	        this.setViewDate(value)
@@ -514,9 +511,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var React  = __webpack_require__(1)
 	var moment = __webpack_require__(2)
-	var assign = __webpack_require__(10)
+	var assign = __webpack_require__(9)
 
-	var FORMAT   = __webpack_require__(11)
+	var FORMAT   = __webpack_require__(10)
 	var asConfig = __webpack_require__(8)
 	var toMoment = __webpack_require__(7)
 
@@ -719,7 +716,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        if (typeof names == 'function'){
 	            names = names(weekStartDay, props.locale)
-	        } else {
+	        } else if (Array.isArray(names)){
+
+	            names = [].concat(names)
+
 	            var index = weekStartDay
 
 	            while (index > 0){
@@ -770,10 +770,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var React  = __webpack_require__(1)
 	var moment = __webpack_require__(2)
 
-	var FORMAT   = __webpack_require__(11)
+	var FORMAT   = __webpack_require__(10)
 	var asConfig = __webpack_require__(8)
 	var toMoment = __webpack_require__(7)
-	var assign = __webpack_require__(10)
+	var assign = __webpack_require__(9)
 
 	var TODAY
 
@@ -893,12 +893,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var React  = __webpack_require__(1)
 	var moment = __webpack_require__(2)
-	var assign = __webpack_require__(10)
+	var assign = __webpack_require__(9)
 
-	var FORMAT   = __webpack_require__(11)
+	var FORMAT   = __webpack_require__(10)
 	var asConfig = __webpack_require__(8)
 	var toMoment = __webpack_require__(7)
-	var assign = __webpack_require__(10)
+	var assign = __webpack_require__(9)
 
 	var TODAY
 
@@ -1087,7 +1087,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict'
 
 	var moment = __webpack_require__(2)
-	var CONFIG = __webpack_require__(12)
+	var CONFIG = __webpack_require__(11)
 
 	/**
 	 * This function will be used to convert a date to a moment.
@@ -1121,9 +1121,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict'
 
-	var assign = __webpack_require__(10)
+	var assign = __webpack_require__(9)
 
-	var CONFIG = __webpack_require__(12)
+	var CONFIG = __webpack_require__(11)
 	var KEYS   = Object.keys(CONFIG)
 
 	function copyList(src, target, list){
@@ -1168,39 +1168,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict'
-
-	var moment = __webpack_require__(2)
-
-	var DEFAULT_WEEK_START_DAY = moment().startOf('week').format('d') * 1
-
-	module.exports = function getWeekDayNames(startDay, locale){
-
-		var weekDays
-
-		if (locale){
-			var data = moment.localeData(locale)
-
-			weekDays = data && data._weekdaysShort? data._weekdaysShort: weekDays
-		}
-
-		weekDays = weekDays || moment.weekdaysShort()
-
-		var names = weekDays
-	    var index = startDay == null? DEFAULT_WEEK_START_DAY: startDay
-
-	    while (index > 0){
-	        names.push(names.shift())
-	        index--
-	    }
-
-	    return names
-	}
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 
 	function ToObject(val) {
@@ -1230,12 +1197,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 11 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
-	var CONFIG   = __webpack_require__(12)
+	var CONFIG   = __webpack_require__(11)
 	var toMoment = __webpack_require__(7)
 
 	function f(mom, format){
@@ -1257,12 +1224,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict'
 
-	var getWeekDayNames = __webpack_require__(9)
+	var getWeekDayNames = __webpack_require__(12)
 
 	// console.log(getWeekDayNames())
 
@@ -1308,6 +1275,39 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    //if the date property is given as string, it will be parsed using this format
 	    dateFormat: 'YYYY-MM-DD'
+	}
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var moment = __webpack_require__(2)
+
+	var DEFAULT_WEEK_START_DAY = moment().startOf('week').format('d') * 1
+
+	module.exports = function getWeekDayNames(startDay, locale){
+
+		var weekDays
+
+		if (locale){
+			var data = moment.localeData(locale)
+
+			weekDays = data && data._weekdaysShort? data._weekdaysShort: weekDays
+		}
+
+		weekDays = (weekDays || moment.weekdaysShort()).concat()
+
+		var names = weekDays
+	    var index = startDay == null? DEFAULT_WEEK_START_DAY: startDay
+
+	    while (index > 0){
+	        names.push(names.shift())
+	        index--
+	    }
+
+	    return names
 	}
 
 /***/ }

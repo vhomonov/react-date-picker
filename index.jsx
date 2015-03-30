@@ -13,6 +13,24 @@ var VIEW  = 'month'
 
 var LOCALE = 'en'
 
+
+var TODAY = {
+    en: 'Today',
+    fr: 'Aujourd\'hui',
+    de: 'Heute',
+    es: 'Hoy',
+    ro: 'Azi'
+}
+
+var GO2SELECTED = {
+    en: 'Go to selected',
+    es: 'Vaya a Favoritos',
+    de: 'Zum ausgewählten',
+    fr: 'Aller a la liste',
+    ro: 'Mergi la selectie'
+}
+
+
 var App = React.createClass({
 
     displayName: 'App',
@@ -60,6 +78,8 @@ var App = React.createClass({
             this.setState({})
         }.bind(this)
 
+        var today = TODAY[LOCALE]
+
         return <div style={{margin: 10}}>
 
         <p>Select locale:
@@ -81,7 +101,8 @@ var App = React.createClass({
                 onRenderDay={renderDay}
                 xweekStartDay={0}
                 locale={LOCALE}
-                xweekDayNames={['SUND','mon','marti','miercuri','joi','vineri','sam']}
+                todayText={today}
+                weekDayNames={['SUND','mon','marti','miercuri','joi','vineri','sam']}
                 minDate='2013-04-04' maxDate='2015-10-10' date={v} onChange={this.onChange}/>
 
                 <button onClick={clear}>clear</button>

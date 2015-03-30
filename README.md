@@ -78,6 +78,8 @@ The second option is specifying the `locale` prop on the date picker. This assum
  * `weekDayNames` - either an array of week day names, or a function that returns an array. In case you specify `weekDayNames` as an array, it should have Sunday as the first day. If not specified, will be built with `momentjs`using `moment.weekdaysShort()`
  * `weekStartDay`: Number - Sun 0, Monday 1, etc... If not specified, the locale specific value will be used.
  * `locale`: String
+ * todayText: String
+ * gotoSelectedText: String
 
 ## Props
 
