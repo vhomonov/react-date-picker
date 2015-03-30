@@ -62,7 +62,7 @@ var App = React.createClass({
                 onViewDateChange={onViewDateChange}
                 onRenderDay={renderDay}
                 xweekStartDay={0}
-                locale="ro"
+                locale="fr"
                 xweekDayNames={['SUND','mon','marti','miercuri','joi','vineri','sam']}
                 minDate='2013-04-04' maxDate='2015-10-10' date={v} onChange={this.onChange}/>
 

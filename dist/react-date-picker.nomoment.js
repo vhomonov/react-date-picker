@@ -307,7 +307,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        props = props || this.props
 
 	        var viewDate   = this.getViewDate()
-	        var headerText = this.getView().getHeaderText(viewDate, props.locale)
+	        var headerText = this.getView().getHeaderText(viewDate, props)
 
 	        var colspan = this.getViewColspan()
 	        var prev    = this.props.navPrev
