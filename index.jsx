@@ -2,8 +2,6 @@
 
 require('./index.styl')
 
-require('moment/locale/fr')
-
 var React      = require('react')
 var DatePicker = require('react-date-picker')
 
@@ -12,11 +10,34 @@ var NOW = +new Date
 
 var pickerDate = NOW
 
+var LOCALE = 'en'
+
+var TODAY = {
+    en: 'Today',
+    fr: 'Aujourd\'hui',
+    de: 'Heute',
+    es: 'Hoy',
+    ro: 'Azi'
+}
+
+var GO2SELECTED = {
+    en: 'Go to selected',
+    es: 'Vaya a Favoritos',
+    de: 'Zum ausgewählten',
+    fr: 'Aller a la liste',
+    ro: 'Mergi la selectie'
+}
+
+
 var App = React.createClass({
 
     displayName: 'App',
 
     render: function(){
+
+        var todayText = TODAY[LOCALE]
+        var gotoSelectedText = GO2SELECTED[LOCALE]
+
         return <div>
             <h1>React Date Picker</h1>
 
@@ -24,17 +45,36 @@ var App = React.createClass({
             <code>npm install --save react-date-picker</code>
             <p>You can style the picker using the <b>date-picker</b> css class and other 'dp-*' prefixed classes.</p>
             <p>Just inspect the datepicker to see available classes.</p>
-            <p>Github: <a href="https://github.com/radubrehar/react-date-picker">radubrehar/react-date-picker</a></p>
+            <p>Github: <a href="https://github.com/zippyui/react-date-picker">zippyui/react-date-picker</a></p>
 
-            <h2>Example with min date &amp; max date set. (-30 &amp; +60 days)</h2>
+            <h2>Example with min date &amp; max date set. (-90 &amp; +90 days)</h2>
 
             <DatePicker
-                    minDate={NOW - 30 * DAY}
-                    maxDate={NOW + 60 * DAY}
-                    date={pickerDate}
-                    onChange={this.onChange}
-                />
+                minDate={NOW - 90 * DAY}
+                maxDate={NOW + 90 * DAY}
+                date={pickerDate}
+                onChange={this.onChange}
+                locale={LOCALE}
+                gotoSelectedText={gotoSelectedText}
+                todayText={todayText}
+            >
+            </DatePicker>
+
+            <p>Select <b>locale</b>: <select value={LOCALE} onChange={this.onLocaleChange}>
+                    <option value="en">English</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="es">Spanish</option>
+                    <option value="ro">Romanian</option>
+                </select>
+            </p>
         </div>
+    },
+
+    onLocaleChange: function(event) {
+        LOCALE = event.target.value
+
+        this.setState({})
     },
 
     onChange: function(moment, dateString) {

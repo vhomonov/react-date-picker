@@ -10,7 +10,8 @@ module.exports = {
         loaders: require('./loaders.config')
     },
     externals: {
-        'react': 'React'
+        'react': 'React',
+        'moment': 'moment'
     },
     resolve: {
         // Allow to omit extensions when requiring these files
