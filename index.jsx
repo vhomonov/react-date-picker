@@ -95,9 +95,9 @@ var App = React.createClass({
 
                 onNav={onNav}
                 onSelect={onSelect}
-                view={VIEW}
-                onViewChange={onViewChange}
-                onViewDateChange={onViewDateChange}
+                xview={VIEW}
+                xonViewChange={onViewChange}
+                xonViewDateChange={onViewDateChange}
                 onRenderDay={renderDay}
                 weekStartDay={0}
                 locale={LOCALE}
