@@ -128,9 +128,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    getViewName: function() {
-	        return this.props.view != null?
+	        var view = this.props.view != null?
 	                    this.props.view:
-	                    this.state.view || 'month'
+	                    this.state.view
+
+	        return view || 'month'
 	    },
 
 	    addViewIndex: function(amount) {
@@ -513,7 +515,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var moment = __webpack_require__(2)
 	var assign = __webpack_require__(9)
 
-	var FORMAT   = __webpack_require__(10)
+	var FORMAT   = __webpack_require__(11)
 	var asConfig = __webpack_require__(8)
 	var toMoment = __webpack_require__(7)
 
@@ -770,7 +772,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var React  = __webpack_require__(1)
 	var moment = __webpack_require__(2)
 
-	var FORMAT   = __webpack_require__(10)
+	var FORMAT   = __webpack_require__(11)
 	var asConfig = __webpack_require__(8)
 	var toMoment = __webpack_require__(7)
 	var assign = __webpack_require__(9)
@@ -895,7 +897,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var moment = __webpack_require__(2)
 	var assign = __webpack_require__(9)
 
-	var FORMAT   = __webpack_require__(10)
+	var FORMAT   = __webpack_require__(11)
 	var asConfig = __webpack_require__(8)
 	var toMoment = __webpack_require__(7)
 	var assign = __webpack_require__(9)
@@ -1087,7 +1089,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict'
 
 	var moment = __webpack_require__(2)
-	var CONFIG = __webpack_require__(11)
+	var CONFIG = __webpack_require__(10)
 
 	/**
 	 * This function will be used to convert a date to a moment.
@@ -1123,7 +1125,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var assign = __webpack_require__(9)
 
-	var CONFIG = __webpack_require__(11)
+	var CONFIG = __webpack_require__(10)
 	var KEYS   = Object.keys(CONFIG)
 
 	function copyList(src, target, list){
@@ -1202,33 +1204,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict'
 
-	var CONFIG   = __webpack_require__(11)
-	var toMoment = __webpack_require__(7)
-
-	function f(mom, format){
-	    return toMoment(mom).format(format)
-	}
-
-	module.exports = {
-	    day: function(mom, format) {
-	        return f(mom, format || CONFIG.dayFormat)
-	    },
-
-	    month: function(mom, format) {
-	        return f(mom, format || CONFIG.monthFormat)
-	    },
-
-	    year: function(mom, format) {
-	        return f(mom, format || CONFIG.yearFormat)
-	    }
-	}
-
-/***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
 	var getWeekDayNames = __webpack_require__(12)
 
 	// console.log(getWeekDayNames())
@@ -1259,7 +1234,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    navNext      : '›',
 
 	    //the view to render initially. Possible values are: 'month', 'year', 'decade'
-	    view: 'month',
+	    view: null,
 
 	    //the date to mark as selected in the date picker.
 	    //Can be a Date object, a moment object or a string.
@@ -1275,6 +1250,33 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    //if the date property is given as string, it will be parsed using this format
 	    dateFormat: 'YYYY-MM-DD'
+	}
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var CONFIG   = __webpack_require__(10)
+	var toMoment = __webpack_require__(7)
+
+	function f(mom, format){
+	    return toMoment(mom).format(format)
+	}
+
+	module.exports = {
+	    day: function(mom, format) {
+	        return f(mom, format || CONFIG.dayFormat)
+	    },
+
+	    month: function(mom, format) {
+	        return f(mom, format || CONFIG.monthFormat)
+	    },
+
+	    year: function(mom, format) {
+	        return f(mom, format || CONFIG.yearFormat)
+	    }
 	}
 
 /***/ },
