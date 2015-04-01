@@ -67,7 +67,8 @@ var DatePicker = React.createClass({
     getInitialState: function() {
         return {
             view: this.props.defaultView,
-            viewDate: this.props.defaultViewDate
+            viewDate: this.props.defaultViewDate,
+            defaultDate: this.props.defaultDate
         }
     },
 
@@ -118,7 +119,7 @@ var DatePicker = React.createClass({
                         this.props.viewDate:
                         this.state.viewDate
 
-        date = date || this.viewMoment || this.props.date || new Date()
+        date = date || this.viewMoment || this.getDate() || new Date()
 
         if (moment.isMoment(date)){
             //in order to strip the locale - the date picker may have had its locale changed
@@ -132,6 +133,18 @@ var DatePicker = React.createClass({
         return date
     },
 
+    getDate: function() {
+        var date
+
+        if (this.props.date != null){
+            date = this.props.date
+        } else {
+            date = this.state.defaultDate
+        }
+
+        return date? this.toMoment(date): null
+    },
+
     render: function() {
 
         var props = assign({}, this.props)
@@ -141,6 +154,8 @@ var DatePicker = React.createClass({
         }
 
         var view  = this.getViewFactory()
+
+        props.date = this.getDate()
 
         props.viewDate   = this.viewMoment = this.getViewDate()
         props.locale     = this.props.locale
@@ -407,6 +422,12 @@ var DatePicker = React.createClass({
         }
 
         var text = date.format(this.props.dateFormat)
+
+        if (this.props.date == null){
+            this.setState({
+                defaultDate: text
+            })
+        }
 
         ;(this.props.onChange || emptyFn)(text, date, event)
     },

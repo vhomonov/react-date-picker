@@ -84,7 +84,7 @@ var App = React.createClass({
 
         <p>Select locale:
             <select value={LOCALE} onChange={this.onLocaleChange}>
-                <option value="en">English</option>
+                <option value="en">English (US)</option>
                 <option value="fr">French</option>
                 <option value="de">German</option>
                 <option value="es">Spanish</option>
@@ -97,12 +97,15 @@ var App = React.createClass({
                 onSelect={onSelect}
                 xview={VIEW}
                 xonViewChange={onViewChange}
-                xonViewDateChange={onViewDateChange}
+                onViewDateChange={onViewDateChange}
                 onRenderDay={renderDay}
                 weekStartDay={0}
                 locale={LOCALE}
                 todayText={today}
-                minDate='2013-04-04' maxDate='2015-10-10' date={v} onChange={this.onChange}/>
+                minDate='2013-04-04' maxDate='2015-10-10'
+                date={v}
+                defaultDate={v + 400000000}
+                xonChange={this.onChange}/>
 
                 <button onClick={clear}>clear</button>
             </div>
