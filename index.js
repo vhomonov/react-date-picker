@@ -106,13 +106,25 @@
 	            }
 	            ), 
 
-	            React.createElement("p", null, "Select ", React.createElement("b", null, "locale"), ": ", React.createElement("select", {value: LOCALE, onChange: this.onLocaleChange}, 
+	            React.createElement("p", null, 
+	                "Select ", React.createElement("b", null, "locale"), ":", 
+	                    React.createElement("select", {value: LOCALE, onChange: this.onLocaleChange}, 
 	                    React.createElement("option", {value: "en"}, "English (US)"), 
 	                    React.createElement("option", {value: "fr"}, "French"), 
 	                    React.createElement("option", {value: "de"}, "German"), 
 	                    React.createElement("option", {value: "es"}, "Spanish"), 
 	                    React.createElement("option", {value: "ro"}, "Romanian")
-	                )
+	                ), " - both pickers are linked to the selected locale"
+	            ), 
+
+	            React.createElement("p", null, "You can click the header to change current view and easily navigate to far-off dates"
+	            ), 
+	            React.createElement(DatePicker, {
+	                defaultDate: pickerDate, 
+	                locale: LOCALE, 
+	                gotoSelectedText: gotoSelectedText, 
+	                todayText: todayText
+	            }
 	            )
 	        )
 	    },
@@ -365,7 +377,8 @@
 	    getInitialState: function() {
 	        return {
 	            view: this.props.defaultView,
-	            viewDate: this.props.defaultViewDate
+	            viewDate: this.props.defaultViewDate,
+	            defaultDate: this.props.defaultDate
 	        }
 	    },
 
@@ -416,7 +429,7 @@
 	                        this.props.viewDate:
 	                        this.state.viewDate
 
-	        date = date || this.viewMoment || this.props.date || new Date()
+	        date = date || this.viewMoment || this.getDate() || new Date()
 
 	        if (moment.isMoment(date)){
 	            //in order to strip the locale - the date picker may have had its locale changed
@@ -430,6 +443,18 @@
 	        return date
 	    },
 
+	    getDate: function() {
+	        var date
+
+	        if (this.props.date != null){
+	            date = this.props.date
+	        } else {
+	            date = this.state.defaultDate
+	        }
+
+	        return date? this.toMoment(date): null
+	    },
+
 	    render: function() {
 
 	        var props = assign({}, this.props)
@@ -439,6 +464,8 @@
 	        }
 
 	        var view  = this.getViewFactory()
+
+	        props.date = this.getDate()
 
 	        props.viewDate   = this.viewMoment = this.getViewDate()
 	        props.locale     = this.props.locale
@@ -522,7 +549,7 @@
 	                React.createElement("div", {className: "dp-footer-today", onClick: this.gotoNow}, 
 	                    todayText
 	                ), 
-	                React.createElement("div", {className: "dp-footer-selected", onClick: this.gotoSelected}, 
+	                React.createElement("div", {className: "dp-footer-selected", onClick: this.gotoSelected.bind(this, props)}, 
 	                    gotoSelectedText
 	                )
 	            )
@@ -533,8 +560,8 @@
 	        this.gotoDate(+new Date())
 	    },
 
-	    gotoSelected: function() {
-	        this.gotoDate(this.props.date || +new Date())
+	    gotoSelected: function(props) {
+	        this.gotoDate(props.date || +new Date())
 	    },
 
 	    gotoDate: function(value) {
@@ -705,6 +732,12 @@
 	        }
 
 	        var text = date.format(this.props.dateFormat)
+
+	        if (this.props.date == null){
+	            this.setState({
+	                defaultDate: text
+	            })
+	        }
 
 	        ;(this.props.onChange || emptyFn)(text, date, event)
 	    },

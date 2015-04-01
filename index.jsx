@@ -60,14 +60,26 @@ var App = React.createClass({
             >
             </DatePicker>
 
-            <p>Select <b>locale</b>: <select value={LOCALE} onChange={this.onLocaleChange}>
+            <p>
+                Select <b>locale</b>:
+                    <select value={LOCALE} onChange={this.onLocaleChange}>
                     <option value="en">English (US)</option>
                     <option value="fr">French</option>
                     <option value="de">German</option>
                     <option value="es">Spanish</option>
                     <option value="ro">Romanian</option>
-                </select>
+                </select> - both pickers are linked to the selected locale
             </p>
+
+            <p>You can click the header to change current view and easily navigate to far-off dates
+            </p>
+            <DatePicker
+                defaultDate={pickerDate}
+                locale={LOCALE}
+                gotoSelectedText={gotoSelectedText}
+                todayText={todayText}
+            >
+            </DatePicker>
         </div>
     },
 
