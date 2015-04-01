@@ -239,7 +239,7 @@ var DatePicker = React.createClass({
                 <div className="dp-footer-today" onClick={this.gotoNow}>
                     {todayText}
                 </div>
-                <div className="dp-footer-selected" onClick={this.gotoSelected}>
+                <div className="dp-footer-selected" onClick={this.gotoSelected.bind(this, props)}>
                     {gotoSelectedText}
                 </div>
             </div>
@@ -250,8 +250,8 @@ var DatePicker = React.createClass({
         this.gotoDate(+new Date())
     },
 
-    gotoSelected: function() {
-        this.gotoDate(this.props.date || +new Date())
+    gotoSelected: function(props) {
+        this.gotoDate(props.date || +new Date())
     },
 
     gotoDate: function(value) {

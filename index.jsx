@@ -103,9 +103,8 @@ var App = React.createClass({
                 locale={LOCALE}
                 todayText={today}
                 minDate='2013-04-04' maxDate='2015-10-10'
-                date={v}
-                defaultDate={v + 400000000}
-                xonChange={this.onChange}/>
+                defaultDate='2015-04-23'
+                />
 
                 <button onClick={clear}>clear</button>
             </div>

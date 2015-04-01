@@ -295,7 +295,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                React.createElement("div", {className: "dp-footer-today", onClick: this.gotoNow}, 
 	                    todayText
 	                ), 
-	                React.createElement("div", {className: "dp-footer-selected", onClick: this.gotoSelected}, 
+	                React.createElement("div", {className: "dp-footer-selected", onClick: this.gotoSelected.bind(this, props)}, 
 	                    gotoSelectedText
 	                )
 	            )
@@ -306,8 +306,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.gotoDate(+new Date())
 	    },
 
-	    gotoSelected: function() {
-	        this.gotoDate(this.props.date || +new Date())
+	    gotoSelected: function(props) {
+	        this.gotoDate(props.date || +new Date())
 	    },
 
 	    gotoDate: function(value) {
