@@ -45,7 +45,7 @@ var App = React.createClass({
             <code>npm install --save react-date-picker</code>
             <p>You can style the picker using the <b>date-picker</b> css class and other 'dp-*' prefixed classes.</p>
             <p>Just inspect the datepicker to see available classes.</p>
-            <p>Github: <a href="https://github.com/zippyui/react-date-picker">zippyui/react-date-picker</a></p>
+            <p>Github: <a href="https://github.com/zippyui/react-date-picker">github.com/zippyui/react-date-picker</a></p>
 
             <h2>Example with min date &amp; max date set. (-90 &amp; +90 days)</h2>
 
@@ -61,7 +61,7 @@ var App = React.createClass({
             </DatePicker>
 
             <p>Select <b>locale</b>: <select value={LOCALE} onChange={this.onLocaleChange}>
-                    <option value="en">English</option>
+                    <option value="en">English (US)</option>
                     <option value="fr">French</option>
                     <option value="de">German</option>
                     <option value="es">Spanish</option>

@@ -128,9 +128,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    getViewName: function() {
-	        return this.props.view != null?
+	        var view = this.props.view != null?
 	                    this.props.view:
-	                    this.state.view || 'month'
+	                    this.state.view
+
+	        return view || 'month'
 	    },
 
 	    addViewIndex: function(amount) {
@@ -1259,7 +1261,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    navNext      : '›',
 
 	    //the view to render initially. Possible values are: 'month', 'year', 'decade'
-	    view: 'month',
+	    view: null,
 
 	    //the date to mark as selected in the date picker.
 	    //Can be a Date object, a moment object or a string.

@@ -91,7 +91,7 @@
 	            React.createElement("code", null, "npm install --save react-date-picker"), 
 	            React.createElement("p", null, "You can style the picker using the ", React.createElement("b", null, "date-picker"), " css class and other 'dp-*' prefixed classes."), 
 	            React.createElement("p", null, "Just inspect the datepicker to see available classes."), 
-	            React.createElement("p", null, "Github: ", React.createElement("a", {href: "https://github.com/zippyui/react-date-picker"}, "zippyui/react-date-picker")), 
+	            React.createElement("p", null, "Github: ", React.createElement("a", {href: "https://github.com/zippyui/react-date-picker"}, "github.com/zippyui/react-date-picker")), 
 
 	            React.createElement("h2", null, "Example with min date & max date set. (-90 & +90 days)"), 
 
@@ -107,7 +107,7 @@
 	            ), 
 
 	            React.createElement("p", null, "Select ", React.createElement("b", null, "locale"), ": ", React.createElement("select", {value: LOCALE, onChange: this.onLocaleChange}, 
-	                    React.createElement("option", {value: "en"}, "English"), 
+	                    React.createElement("option", {value: "en"}, "English (US)"), 
 	                    React.createElement("option", {value: "fr"}, "French"), 
 	                    React.createElement("option", {value: "de"}, "German"), 
 	                    React.createElement("option", {value: "es"}, "Spanish"), 
@@ -370,9 +370,11 @@
 	    },
 
 	    getViewName: function() {
-	        return this.props.view != null?
+	        var view = this.props.view != null?
 	                    this.props.view:
-	                    this.state.view || 'month'
+	                    this.state.view
+
+	        return view || 'month'
 	    },
 
 	    addViewIndex: function(amount) {
@@ -1516,7 +1518,7 @@
 	    navNext      : '›',
 
 	    //the view to render initially. Possible values are: 'month', 'year', 'decade'
-	    view: 'month',
+	    view: null,
 
 	    //the date to mark as selected in the date picker.
 	    //Can be a Date object, a moment object or a string.
