@@ -213,7 +213,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        props.date = this.getDate()
 
-	        var dateString = props.date.format(this.props.dateFormat)
+	        var dateString = (props.date == null ? '' : props.date.format(this.props.dateFormat))
 
 	        props.viewDate   = this.viewMoment = this.getViewDate()
 	        props.locale     = this.props.locale
@@ -516,6 +516,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	})
 
 	module.exports = DatePicker
+
 
 /***/ },
 /* 1 */
