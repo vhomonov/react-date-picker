@@ -45,5 +45,8 @@ module.exports = {
     viewDate: null,
 
     //if the date property is given as string, it will be parsed using this format
-    dateFormat: 'YYYY-MM-DD'
+    dateFormat: 'YYYY-MM-DD',
+
+    onRenderDay: null,
+    renderDay: null,
 }

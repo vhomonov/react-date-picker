@@ -213,6 +213,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        props.date = this.getDate()
 
+	        var dateString = props.date.format(this.props.dateFormat)
+
 	        props.viewDate   = this.viewMoment = this.getViewDate()
 	        props.locale     = this.props.locale
 	        props.localeData = moment.localeData(props.locale)
@@ -230,6 +232,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var viewProps = props
 	        var viewProps = asConfig(props)
 
+	        viewProps.dateString = dateString
 	        viewProps.localeData = props.localeData
 	        viewProps.onSelect = this.handleSelect
 	        viewProps.onChange = this.handleChange
@@ -705,10 +708,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            classes.push('dp-value')
 	        }
 
+	        var mom = this.toMoment(date)
+
 	        var renderDayProps = {
 	            key      : dayText,
 	            text     : dayText,
-	            date     : date,
+	            date     : mom,
+	            moment   : mom,
 	            className: classes.join(' '),
 	            style    : {},
 	            onClick  : this.handleClick.bind(this, props, date, dateTimestamp),
@@ -1297,7 +1303,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    viewDate: null,
 
 	    //if the date property is given as string, it will be parsed using this format
-	    dateFormat: 'YYYY-MM-DD'
+	    dateFormat: 'YYYY-MM-DD',
+
+	    onRenderDay: null,
+	    renderDay: null,
 	}
 
 /***/ },

@@ -56,7 +56,8 @@ var App = React.createClass({
 
         function renderDay(props){
             props.className += ' aaa '
-            props.style = props.style || {}
+
+            props.style.color = 'red'
 
             return props
         }
