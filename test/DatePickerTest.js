@@ -1,6 +1,5 @@
 'use strict';
 
-var should = require('should')
 var React      = require('react/addons')
 var TestUtils  = React.addons.TestUtils
 var DatePicker = React.createFactory(require('../lib'))
@@ -58,7 +57,7 @@ describe('DatePicker', function(){
 
 	})
 
-    it('render defaultDate', function(){
+    it('render defaultDate and make sure click on date works', function(){
         var picker = render(DatePicker({defaultDate: '2014-03-25'}))
 
         findWithClass(picker, VALUE_CLASS)
@@ -66,6 +65,24 @@ describe('DatePicker', function(){
             .textContent
                 .should
                 .equal('25')
+
+
+        var arr = TestUtils.findAllInRenderedTree(picker, function(cmp){
+            return cmp.getDOMNode().textContent == '15'
+        })
+
+        arr.length
+            .should
+            .equal(1)
+
+
+        TestUtils.Simulate.click(arr[0])
+
+        findWithClass(picker, VALUE_CLASS)
+            .getDOMNode()
+            .textContent
+            .should.equal('15')
+
     })
 
 })

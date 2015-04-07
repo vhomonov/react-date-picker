@@ -162,6 +162,28 @@ If you don't use npm you can include any of the following:
  * `dist/react-date-picker.nomoment.js` - the full sources. NOTE: You'll need to include `React` AND `moment.js` separately
  * `dist/react-date-picker.nomoment.min.js` - minified & optimized version. NOTE: You'll need to include `React` AND `moment.js` separately
 
+## Tests
+
+Before running tests, make sure you refresh the `lib` folder, which is built from the `src` folder (jsx is transpiled to normal js) by doing
+```sh
+$ npm run lib
+```
+
+Now you can safely run tests with
+```sh
+$ npm test
+```
+or
+```sh
+$ make
+```
+
+For watch mode, run
+```sh
+$ make test-w
+```
+
+`react-date-picker` is setup with `CircleCI` https://circleci.com/gh/zippyui/react-date-picker so every time a test fails we are notified on the failure.
 ## License
 
 #### MIT
