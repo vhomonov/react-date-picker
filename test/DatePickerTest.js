@@ -65,7 +65,7 @@ describe('DatePicker', function(){
             .getDOMNode()
             .textContent
                 .should
-                .equal('23')
+                .equal('25')
     })
 
 })
