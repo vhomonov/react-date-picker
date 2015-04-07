@@ -67,6 +67,7 @@ var App = React.createClass({
                 todayText={today}
                 minDate='2013-04-04'
                 maxDate='2015-10-10'
+                dayFormat='DD'
                 date={v}
                 onChange={this.onChange}
                 />

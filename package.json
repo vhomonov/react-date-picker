@@ -44,7 +44,10 @@
     "stylus-loader": "~0.4.0",
     "url-loader": "~0.5.5",
     "webpack": "~1.4.8",
-    "webpack-dev-server": "~1.6.5"
+    "webpack-dev-server": "~1.6.5",
+    "jsdom": "^4.1.0",
+    "mocha": "^2.2.1",
+    "should": "^5.2.0"
   },
   "keywords": [
     "date",
