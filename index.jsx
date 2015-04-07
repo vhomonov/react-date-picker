@@ -44,38 +44,8 @@ var App = React.createClass({
     render: function(){
         var v = VALUE
 
-        function onNav(text, moment, view){
-            // console.log(arguments);
-            // console.log(moment, text, view)
-        }
-
-        function onSelect(text, moment, view){
-            // console.log('SELECT', arguments)
-            // console.log(moment, text, view)
-        }
-
-        function renderDay(props){
-            props.className += ' aaa '
-
-            props.style.color = 'red'
-
-            return props
-        }
-
         var clear = function(){
             VALUE = null
-            this.setState({})
-        }.bind(this)
-
-        var onViewChange = function(view){
-            VIEW = view
-            // console.log(arguments);
-            this.setState({})
-        }.bind(this)
-
-        var onViewDateChange = function(d){
-            console.log(arguments);
-            VIEW_DATE = d
             this.setState({})
         }.bind(this)
 
@@ -93,26 +63,20 @@ var App = React.createClass({
             </select>
         </p>
             <DatePicker
-
-                onNav={onNav}
-                onSelect={onSelect}
-                xview={VIEW}
-                xonViewChange={onViewChange}
-                onViewDateChange={onViewDateChange}
-                onRenderDay={renderDay}
-                weekStartDay={0}
                 locale={LOCALE}
                 todayText={today}
-                minDate='2013-04-04' maxDate='2015-10-10'
-                defaultDate='2015-04-23'
+                minDate='2013-04-04'
+                maxDate='2015-10-10'
+                date={v}
+                onChange={this.onChange}
                 />
 
                 <button onClick={clear}>clear</button>
             </div>
     },
 
-    onChange: function(date, dateString) {
-        // console.log(dateString, 'change')
+    onChange: function(dateString) {
+        console.log('selected ', dateString)
         VALUE = dateString
         this.setState({})
     }

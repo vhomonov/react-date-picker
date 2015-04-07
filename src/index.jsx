@@ -136,7 +136,7 @@ var DatePicker = React.createClass({
     getDate: function() {
         var date
 
-        if (this.props.date != null){
+        if (hasOwn(this.props, 'date')){
             date = this.props.date
         } else {
             date = this.state.defaultDate
@@ -426,7 +426,7 @@ var DatePicker = React.createClass({
 
         var text = date.format(this.props.dateFormat)
 
-        if (this.props.date == null){
+        if (!hasOwn(this.props, 'date')){
             this.setState({
                 defaultDate: text
             })
