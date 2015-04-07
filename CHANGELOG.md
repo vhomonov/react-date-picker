@@ -1,6 +1,10 @@
 react-date-picker
 =================
 
+#### v2.0.12
+
+ * add CI integration - see https://circleci.com/gh/zippyui/react-date-picker
+
 #### v2.0.0
 
  * `onChange`, `onSelect`, `onNav` are called with date string first, and then the moment instance. So the first 2 args are inverted from previous versions
