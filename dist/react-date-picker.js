@@ -192,7 +192,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    getDate: function() {
 	        var date
 
-	        if (this.props.date != null){
+	        if (hasOwn(this.props, 'date')){
 	            date = this.props.date
 	        } else {
 	            date = this.state.defaultDate
@@ -482,7 +482,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var text = date.format(this.props.dateFormat)
 
-	        if (this.props.date == null){
+	        if (!hasOwn(this.props, 'date')){
 	            this.setState({
 	                defaultDate: text
 	            })
