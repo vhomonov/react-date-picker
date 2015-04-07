@@ -21,11 +21,9 @@ function tryWithClass(root, cls){
 
 describe('DatePicker', function(){
 
-	beforeEach(function () {
-        require('./testdom')('<html><body></body></html>')
-    })
-
 	it('renders selected date - also make sure no crash on null date', function(){
+
+        require('./testdom')
 
 		var picker = render(
 			DatePicker({
