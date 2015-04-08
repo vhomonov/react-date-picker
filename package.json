@@ -1,6 +1,6 @@
 {
   "name": "react-date-picker",
-  "version": "2.0.12",
+  "version": "2.0.13",
   "description": "React Date Picker",
   "main": "lib/index.js",
   "scripts": {
@@ -64,8 +64,5 @@
   "bugs": {
     "url": "https://github.com/zippyui/react-date-picker/issues"
   },
-  "homepage": "https://github.com/zippyui/react-date-picker",
-  "engines": {
-    "iojs": ">= 1.1.0"
-  }
+  "homepage": "https://github.com/zippyui/react-date-picker"
 }

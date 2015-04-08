@@ -164,6 +164,8 @@ If you don't use npm you can include any of the following:
 
 ## Tests
 
+For testing, it is required that you have [io.js](https://iojs.org/) installed. The tests rely on https://www.npmjs.com/package/jsdom for a DOM implementation, which only works in `io.js` and not `node.js`
+
 Before running tests, make sure you refresh the `lib` folder, which is built from the `src` folder (jsx is transpiled to normal js) by doing
 ```sh
 $ npm run lib
