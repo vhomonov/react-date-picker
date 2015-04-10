@@ -448,7 +448,8 @@ th {
   box-orient: horizontal;
 }
 .u-flex-flow-column,
-.u-flex-column {
+.u-flex-column,
+.date-picker .dp-inner {
   flex-direction: column;
   -webkit-flex-flow: column;
   -moz-flex-flow: column;
@@ -467,7 +468,8 @@ th {
   display: -webkit-flex;
   display: flex;
 }
-.u-flex-column {
+.u-flex-column,
+.date-picker .dp-inner {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
