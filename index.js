@@ -446,7 +446,7 @@
 	    getDate: function() {
 	        var date
 
-	        if (this.props.date != null){
+	        if (hasOwn(this.props, 'date')){
 	            date = this.props.date
 	        } else {
 	            date = this.state.defaultDate
@@ -467,6 +467,8 @@
 
 	        props.date = this.getDate()
 
+	        var dateString = (props.date == null ? '' : props.date.format(this.props.dateFormat))
+
 	        props.viewDate   = this.viewMoment = this.getViewDate()
 	        props.locale     = this.props.locale
 	        props.localeData = moment.localeData(props.locale)
@@ -484,6 +486,7 @@
 	        var viewProps = props
 	        var viewProps = asConfig(props)
 
+	        viewProps.dateString = dateString
 	        viewProps.localeData = props.localeData
 	        viewProps.onSelect = this.handleSelect
 	        viewProps.onChange = this.handleChange
@@ -733,7 +736,7 @@
 
 	        var text = date.format(this.props.dateFormat)
 
-	        if (this.props.date == null){
+	        if (!hasOwn(this.props, 'date')){
 	            this.setState({
 	                defaultDate: text
 	            })
@@ -767,6 +770,7 @@
 	})
 
 	module.exports = DatePicker
+
 
 /***/ },
 /* 6 */
@@ -953,10 +957,13 @@
 	            classes.push('dp-value')
 	        }
 
+	        var mom = this.toMoment(date)
+
 	        var renderDayProps = {
 	            key      : dayText,
 	            text     : dayText,
-	            date     : date,
+	            date     : mom,
+	            moment   : mom,
 	            className: classes.join(' '),
 	            style    : {},
 	            onClick  : this.handleClick.bind(this, props, date, dateTimestamp),
@@ -1566,7 +1573,10 @@
 	    viewDate: null,
 
 	    //if the date property is given as string, it will be parsed using this format
-	    dateFormat: 'YYYY-MM-DD'
+	    dateFormat: 'YYYY-MM-DD',
+
+	    onRenderDay: null,
+	    renderDay: null,
 	}
 
 /***/ },
