@@ -60,9 +60,11 @@ var App = React.createClass({
             >
             </DatePicker>
 
+            <p style={{marginBottom: 10, color: 'gray', border: '1px solid gray', padding: 20, display: 'inline-block'}}>
+            Hey! Just in case you are interested in a DataGrid, check out <a href="http://zippyui.github.io/react-datagrid">zippyui.github.io/react-datagrid</a>
+            </p>
             <p>
-                Select <b>locale</b>:
-                    <select value={LOCALE} onChange={this.onLocaleChange}>
+                Select <b>locale</b>: <select value={LOCALE} onChange={this.onLocaleChange}>
                     <option value="en">English (US)</option>
                     <option value="fr">French</option>
                     <option value="de">German</option>
