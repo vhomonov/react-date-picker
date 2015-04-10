@@ -107,7 +107,7 @@
 	            ), 
 
 	            React.createElement("p", {style: {marginBottom: 10, color: 'gray', border: '1px solid gray', padding: 20, display: 'inline-block'}}, 
-	            "Hey! Just in case you are interested in a DataGrid, check out ", React.createElement("a", {href: "http://zippyui.github.io/react-datagrid"}, "zippyui.github.io/react-datagrid")
+	            "Hey! Just in case you are interested in a DataGrid, check out ", React.createElement("a", {href: "http://zippyui.github.io/react-datagrid", target: "_blank"}, "zippyui.github.io/react-datagrid")
 	            ), 
 	            React.createElement("p", null, 
 	                "Select ", React.createElement("b", null, "locale"), ": ", React.createElement("select", {value: LOCALE, onChange: this.onLocaleChange}, 
