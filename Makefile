@@ -1,8 +1,9 @@
 REPORTER = spec
 
 test:
-	./node_modules/.bin/mocha --recursive --reporter $(REPORTER) --require should
+	npm run test
 test-w:
-	./node_modules/.bin/mocha --recursive --reporter $(REPORTER) --require should --watch
+	npm run test-w
+
 
 .PHONY: test test-w

@@ -14,6 +14,8 @@
     "dist-nomoment": "./node_modules/.bin/webpack --progress --colors --config dist.nomoment.config.js",
     "dist-nomoment.min": "./node_modules/.bin/webpack --progress --colors --optimize-minimize --optimize-occurence-order --optimize-dedupe --config dist.nomoment.min.config.js",
     "lib": "./node_modules/.bin/gulp",
+    "test": "./node_modules/.bin/mocha --recursive --reporter spec --require should",
+    "test-w": "./node_modules/.bin/mocha --recursive --reporter $(REPORTER) --require should --watch",
     "build": "npm run build-style && npm run dist && npm run dist-nomoment && npm run dist.min && npm run dist-nomoment.min && npm run lib"
   },
   "contributors": [
