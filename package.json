@@ -38,16 +38,16 @@
     "gulp": "^3.8.11",
     "gulp-react": "^3.0.0",
     "http-server": "~0.7.2",
+    "jsdom": "^5.0.1",
     "json-loader": "~0.5.1",
     "jsx-loader": "^0.12.2",
+    "mocha": "^2.2.4",
+    "should": "^5.2.0",
     "style-loader": "~0.8.1",
     "stylus-loader": "~0.4.0",
     "url-loader": "~0.5.5",
     "webpack": "~1.4.8",
-    "webpack-dev-server": "~1.6.5",
-    "jsdom": "^4.1.0",
-    "mocha": "^2.2.1",
-    "should": "^5.2.0"
+    "webpack-dev-server": "~1.6.5"
   },
   "keywords": [
     "date",
