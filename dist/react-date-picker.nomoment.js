@@ -103,7 +103,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    getViewOrder: function() {
-	        return ['month', 'year', 'decade']
+	        return this.props.viewOrder || ['month', 'year', 'decade']
 	    },
 
 	    getDefaultProps: function() {
@@ -122,8 +122,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    getInitialState: function() {
 	        return {
-	            view: this.props.defaultView,
-	            viewDate: this.props.defaultViewDate,
+	            view       : this.props.defaultView,
+	            viewDate   : this.props.defaultViewDate,
 	            defaultDate: this.props.defaultDate
 	        }
 	    },
@@ -156,13 +156,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    getView: function() {
-	        return Views[this.getViewName()] || Views.month
+	        var views = this.props.views || Views
+	        return views[this.getViewName()] || views.month
 	    },
 
 	    getViewFactory: function() {
 	        var view = this.getView()
 
-	        if (React.createFactory){
+	        if (React.createFactory && view && view.prototype && typeof view.prototype.render == 'function'){
 	            view.__factory = view.__factory || React.createFactory(view)
 	            view = view.__factory
 	        }
@@ -276,17 +277,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var gotoSelectedText = this.props.gotoSelectedText || 'Go to selected'
 
 	        var footerProps = {
-	            todayText          : todayText,
-	            gotoSelectedText   : gotoSelectedText,
-	            onTodayClick       : this.gotoNow,
-	            onGotoSelectedClick: this.gotoSelected,
-	            date               : props.date,
-	            viewDate           : props.viewDate
+	            todayText       : todayText,
+	            gotoSelectedText: gotoSelectedText,
+	            gotoToday       : this.gotoNow,
+	            gotoSelected    : this.gotoSelected.bind(this, props),
+	            date            : props.date,
+	            viewDate        : props.viewDate
 	        }
 
 	        var result
-	        if (typeof this.props.renderFooter == 'function'){
-	            result = this.props.renderFooter(footerProps)
+	        if (typeof this.props.footerFactory == 'function'){
+	            result = this.props.footerFactory(footerProps)
 	        }
 
 	        if (result !== undefined){
@@ -295,10 +296,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        return (
 	            React.createElement("div", {className: "dp-footer"}, 
-	                React.createElement("div", {className: "dp-footer-today", onClick: this.gotoNow}, 
+	                React.createElement("div", {className: "dp-footer-today", onClick: footerProps.gotoToday}, 
 	                    todayText
 	                ), 
-	                React.createElement("div", {className: "dp-footer-selected", onClick: this.gotoSelected.bind(this, props)}, 
+	                React.createElement("div", {className: "dp-footer-selected", onClick: footerProps.gotoSelected}, 
 	                    gotoSelectedText
 	                )
 	            )
@@ -331,6 +332,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    renderHeader: function(view, props) {
+
+	        if (this.props.hideHeader){
+	            return
+	        }
 
 	        props = props || this.props
 
@@ -514,6 +519,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	})
+
+	DatePicker.views = Views
 
 	module.exports = DatePicker
 
