@@ -47,7 +47,7 @@ var DatePicker = React.createClass({
     },
 
     getViewOrder: function() {
-        return ['month', 'year', 'decade']
+        return this.props.viewOrder || ['month', 'year', 'decade']
     },
 
     getDefaultProps: function() {
@@ -66,8 +66,8 @@ var DatePicker = React.createClass({
 
     getInitialState: function() {
         return {
-            view: this.props.defaultView,
-            viewDate: this.props.defaultViewDate,
+            view       : this.props.defaultView,
+            viewDate   : this.props.defaultViewDate,
             defaultDate: this.props.defaultDate
         }
     },
@@ -100,13 +100,14 @@ var DatePicker = React.createClass({
     },
 
     getView: function() {
-        return Views[this.getViewName()] || Views.month
+        var views = this.props.views || Views
+        return views[this.getViewName()] || views.month
     },
 
     getViewFactory: function() {
         var view = this.getView()
 
-        if (React.createFactory){
+        if (React.createFactory && view && view.prototype && typeof view.prototype.render == 'function'){
             view.__factory = view.__factory || React.createFactory(view)
             view = view.__factory
         }
@@ -220,17 +221,17 @@ var DatePicker = React.createClass({
         var gotoSelectedText = this.props.gotoSelectedText || 'Go to selected'
 
         var footerProps = {
-            todayText          : todayText,
-            gotoSelectedText   : gotoSelectedText,
-            onTodayClick       : this.gotoNow,
-            onGotoSelectedClick: this.gotoSelected,
-            date               : props.date,
-            viewDate           : props.viewDate
+            todayText       : todayText,
+            gotoSelectedText: gotoSelectedText,
+            gotoToday       : this.gotoNow,
+            gotoSelected    : this.gotoSelected.bind(this, props),
+            date            : props.date,
+            viewDate        : props.viewDate
         }
 
         var result
-        if (typeof this.props.renderFooter == 'function'){
-            result = this.props.renderFooter(footerProps)
+        if (typeof this.props.footerFactory == 'function'){
+            result = this.props.footerFactory(footerProps)
         }
 
         if (result !== undefined){
@@ -239,10 +240,10 @@ var DatePicker = React.createClass({
 
         return (
             <div className="dp-footer">
-                <div className="dp-footer-today" onClick={this.gotoNow}>
+                <div className="dp-footer-today" onClick={footerProps.gotoToday}>
                     {todayText}
                 </div>
-                <div className="dp-footer-selected" onClick={this.gotoSelected.bind(this, props)}>
+                <div className="dp-footer-selected" onClick={footerProps.gotoSelected}>
                     {gotoSelectedText}
                 </div>
             </div>
@@ -275,6 +276,10 @@ var DatePicker = React.createClass({
     },
 
     renderHeader: function(view, props) {
+
+        if (this.props.hideHeader){
+            return
+        }
 
         props = props || this.props
 
@@ -458,5 +463,7 @@ var DatePicker = React.createClass({
     }
 
 })
+
+DatePicker.views = Views
 
 module.exports = DatePicker
