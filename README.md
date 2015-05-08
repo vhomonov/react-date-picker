@@ -1,6 +1,8 @@
 react-date-picker
 =================
 
+[![Join the chat at https://gitter.im/zippyui/react-date-picker](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/zippyui/react-date-picker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 > A carefully crafted date picker for React
 
 See demo at [zippyui.github.io/react-date-picker](http://zippyui.github.io/react-date-picker)
