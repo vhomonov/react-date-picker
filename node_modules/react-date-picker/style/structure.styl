@@ -10,14 +10,16 @@
  */
 
 .date-picker
+    table
+        border-spacing 0
+        border-collapse collapse
     .dp-inner
-    //     size 100%
-    //     -webkit-flex-flow column
-        @extend .u-flex-column
+        flex-flow column
+        display flex
 
     .dp-footer
-        -webkit-flex-flow row
-        @extend .u-flex-row
+        flex-flow row
+        display flex
 
     .dp-body
         flex 1

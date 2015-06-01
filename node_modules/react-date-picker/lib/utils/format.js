@@ -1,22 +1,22 @@
-'use strict'
+'use strict';
 
-var CONFIG   = require('../config')
-var toMoment = require('../toMoment')
+var CONFIG = require('../config');
+var toMoment = require('../toMoment');
 
-function f(mom, format){
-    return toMoment(mom).format(format)
+function f(mom, format) {
+    return toMoment(mom).format(format);
 }
 
 module.exports = {
-    day: function(mom, format) {
-        return f(mom, format || CONFIG.dayFormat)
+    day: function day(mom, format) {
+        return f(mom, format || CONFIG.dayFormat);
     },
 
-    month: function(mom, format) {
-        return f(mom, format || CONFIG.monthFormat)
+    month: function month(mom, format) {
+        return f(mom, format || CONFIG.monthFormat);
     },
 
-    year: function(mom, format) {
-        return f(mom, format || CONFIG.yearFormat)
+    year: function year(mom, format) {
+        return f(mom, format || CONFIG.yearFormat);
     }
-}
+};

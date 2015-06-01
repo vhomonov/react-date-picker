@@ -1,5 +1,6 @@
 body {
   margin: 20px;
+  font-family: sans-serif;
 }
 body .date-picker {
   margin-top: 20px;

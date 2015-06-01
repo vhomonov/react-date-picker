@@ -2,7 +2,7 @@
 module.exports = {
     entry: './index.jsx',
     output: {
-        publicPath: 'http://localhost:8090/assets'
+        publicPath: '/assets'
     },
     module: {
         loaders: require('./loaders.config')

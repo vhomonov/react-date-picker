@@ -9,8 +9,7 @@
     "build-css": "webpack --progress --colors --config build-css.config.js",
     "build-script": "webpack --progress --colors --config build-script.config.js",
     "build": "npm run build-script && npm run build-css",
-    "dev": "webpack-dev-server --progress --colors --port 8090",
-    "serve": "./node_modules/.bin/http-server"
+    "dev": "webpack-dev-server --progress --colors --port 8090"
   },
   "repository": {
     "type": "git",
@@ -25,13 +24,12 @@
   "dependencies": {
     "moment": "^2.9.0",
     "react": "^0.12.0",
-    "react-date-picker": "^2.0.15",
+    "react-date-picker": "^2.1.1",
     "react-time-picker": "^1.0.8"
   },
   "devDependencies": {
     "css-loader": "^0.9.0",
     "extract-text-webpack-plugin": "^0.3.3",
-    "http-server": "^0.7.2",
     "jsx-loader": "^0.12.0",
     "style-loader": "^0.8.1",
     "stylus-loader": "^0.4.0",

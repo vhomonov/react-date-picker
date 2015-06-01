@@ -1,24 +1,24 @@
-'use strict'
+'use strict';
 
-var React  = require('react')
-var moment = require('moment')
+var React = require('react');
+var moment = require('moment');
 
-var FORMAT   = require('./utils/format')
-var asConfig = require('./utils/asConfig')
-var toMoment = require('./toMoment')
-var assign = require('object-assign')
+var FORMAT = require('./utils/format');
+var asConfig = require('./utils/asConfig');
+var toMoment = require('./toMoment');
+var assign = require('object-assign');
 
-var TODAY
+var TODAY;
 
-function emptyFn(){}
+function emptyFn() {}
 
 var YearView = React.createClass({
 
     displayName: 'YearView',
 
-    getDefaultProps: function() {
+    getDefaultProps: function getDefaultProps() {
 
-        return asConfig()
+        return asConfig();
     },
 
     /**
@@ -27,41 +27,42 @@ var YearView = React.createClass({
      * @param  {Moment/Date/Number} value
      * @return {Moment[]}
      */
-    getMonthsInYear: function(value){
-        var start = moment(value).startOf('year')
-        var result = []
-        var i = 0
+    getMonthsInYear: function getMonthsInYear(value) {
+        var start = moment(value).startOf('year');
+        var result = [];
+        var i = 0;
 
-        for (; i < 12; i++){
-            result.push(moment(start))
-            start.add(1, 'month')
+        for (; i < 12; i++) {
+            result.push(moment(start));
+            start.add(1, 'month');
         }
 
-        return result
+        return result;
     },
 
-    render: function() {
+    render: function render() {
 
-        TODAY = +moment().startOf('day')
+        TODAY = +moment().startOf('day');
 
-        var props = assign({}, this.props)
+        var props = assign({}, this.props);
 
-        var viewMoment = props.viewMoment = moment(this.props.viewDate)
+        var viewMoment = props.viewMoment = moment(this.props.viewDate);
 
-        if (props.date){
-            props.moment = moment(props.date).startOf('month')
+        if (props.date) {
+            props.moment = moment(props.date).startOf('month');
         }
 
-        var monthsInView = this.getMonthsInYear(viewMoment)
+        var monthsInView = this.getMonthsInYear(viewMoment);
 
-        return (
-            React.createElement("table", {className: "dp-table dp-year-view"}, 
-                React.createElement("tbody", null, 
-                    this.renderMonths(props, monthsInView)
-
-                )
+        return React.createElement(
+            'table',
+            { className: 'dp-table dp-year-view' },
+            React.createElement(
+                'tbody',
+                null,
+                this.renderMonths(props, monthsInView)
             )
-        )
+        );
     },
 
     /**
@@ -69,51 +70,53 @@ var YearView = React.createClass({
      * @param  {Moment[]} days
      * @return {React.DOM}
      */
-    renderMonths: function(props, days) {
-        var nodes      = days.map(function(date){
-            return this.renderMonth(props, date)
-        }, this)
-        var len        = days.length
-        var buckets    = []
-        var bucketsLen = Math.ceil(len / 4)
+    renderMonths: function renderMonths(props, days) {
+        var nodes = days.map(function (date) {
+            return this.renderMonth(props, date);
+        }, this);
+        var len = days.length;
+        var buckets = [];
+        var bucketsLen = Math.ceil(len / 4);
 
-        var i = 0
+        var i = 0;
 
-        for ( ; i < bucketsLen; i++){
-            buckets.push(nodes.slice(i * 4, (i + 1) * 4))
+        for (; i < bucketsLen; i++) {
+            buckets.push(nodes.slice(i * 4, (i + 1) * 4));
         }
 
-        return buckets.map(function(bucket, i){
-            return React.createElement("tr", {key: "row" + i}, bucket)
-        })
+        return buckets.map(function (bucket, i) {
+            return React.createElement(
+                'tr',
+                { key: 'row' + i },
+                bucket
+            );
+        });
     },
 
-    renderMonth: function(props, date) {
-        var monthText = FORMAT.month(date, props.monthFormat)
-        var classes = ["dp-cell dp-month"]
+    renderMonth: function renderMonth(props, date) {
+        var monthText = FORMAT.month(date, props.monthFormat);
+        var classes = ['dp-cell dp-month'];
 
-        var dateTimestamp = +date
+        var dateTimestamp = +date;
 
-        if (dateTimestamp == props.moment){
-            classes.push('dp-value')
+        if (dateTimestamp == props.moment) {
+            classes.push('dp-value');
         }
 
-        return (
-            React.createElement("td", {key: monthText, className: classes.join(' '), onClick: this.handleClick.bind(this, props, date)}, 
-                monthText
-            )
-        )
+        return React.createElement(
+            'td',
+            { key: monthText, className: classes.join(' '), onClick: this.handleClick.bind(this, props, date) },
+            monthText
+        );
     },
 
-    handleClick: function(props, date, event) {
-        event.target.value = date
-
-        ;(props.onSelect || emptyFn)(date, event)
+    handleClick: function handleClick(props, date, event) {
+        event.target.value = date;(props.onSelect || emptyFn)(date, event);
     }
-})
+});
 
-YearView.getHeaderText = function(moment, props) {
-    return toMoment(moment, null, { locale: props.locale }).format('YYYY')
-}
+YearView.getHeaderText = function (moment, props) {
+    return toMoment(moment, null, { locale: props.locale }).format('YYYY');
+};
 
-module.exports = YearView
+module.exports = YearView;
