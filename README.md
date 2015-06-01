@@ -78,7 +78,7 @@ The second option is specifying the `locale` prop on the date picker. This assum
 ### Other i18n props
 
  * `weekDayNames` - either an array of week day names, or a function that returns an array. In case you specify `weekDayNames` as an array, it should have Sunday as the first day. If not specified, will be built with `momentjs`using `moment.weekdaysShort()`
- * `weekStartDay`: Number - Sun 0, Monday 1, etc... If not specified, the locale specific value will be used.
+ * `weekStartDay`: Number - Sun 0, Monday 1, etc... If not specified, the locale specific value will be uesd.
  * `locale`: String
  * todayText: String
  * gotoSelectedText: String
@@ -117,6 +117,25 @@ The second option is specifying the `locale` prop on the date picker. This assum
 
  * `navOnDateClick`: Boolean - defaults to true. If false, will not navigate to the date that was clicked, even if that date is in the prev/next month
 
+## Styling with css
+
+In order to change the date-picker border width/color with css, you'll have to specify a different border for the `.date-picker` and `.date-picker .dp-cell` classes.
+You'll also probably want `.dp-cell:first-child` left border to be 0 and `.dp-cell:last-child` right border to be 0
+
+```css
+.date-picker,
+.date-picker .dp-cell {
+    border: 1px solid red;
+}
+.date-picker .dp-cell:first-child {
+    border-left: 0px;
+}
+.date-picker .dp-cell:last-child {
+    border-right: 0px;
+}
+```
+
+
 ## Examples
 
 
@@ -146,10 +165,11 @@ When contributing, please work on the `src` dir.
 You'll need to run the following commands:
 
 ```sh
-$ npm run dev # starts webpack-dev-server, which does all the bundling and live reloading
+$ npm run dev
+# starts webpack-dev-server, which does all the bundling and live reloading
 ```
 
-Now navigate to `http://localhost:8080/`.
+Now navigate to [localhost:8080](http://localhost:8080)
 With this setup, you have an environment which live-reloads all your changes, so you have a rapid development cycle.
 
 In order to build a new production version, make sure you run `npm run build` (it builds the `lib` directory from the `src` directory, it concats all files and builds the `dist` directory, and also prepares the css files)

@@ -178,7 +178,7 @@ var DatePicker = React.createClass({
 
         return (
             <div className={className} style={props.style} {...this.props}>
-                <div className="dp-inner" style={{width: '100%', height: '100%', display: 'flex', flexFlow: 'column'}}>
+                <div className="dp-inner" style={{width: '100%', height: '100%'}}>
                     {this.renderHeader(view, props)}
 
                     <div className="dp-body" style={{flex: 1}}>

@@ -8,12 +8,12 @@ unselectable()
     user-select none
 
 .date-picker
-    font-family sans-serif
     overflow hidden
     background white
     font-size $dp-datepicker-font-size
     width $dp-datepicker-width
     height $dp-datepicker-height
+    border $dp-datepicker-border-width $dp-datepicker-border-style $dp-datepicker-border-color
 
     &
     & *
@@ -66,9 +66,6 @@ unselectable()
 
         &.dp-month
             ellipsis true
-
-    .dp-inner
-        border $dp-datepicker-border-width $dp-datepicker-border-style $dp-datepicker-border-color
 
     .dp-footer
         padding 3px
