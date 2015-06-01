@@ -1,12 +1,7 @@
-var CONFIG = require('./boilerplate.json')
-
-var scriptConfig = CONFIG.script || {}
-var mainFile     = scriptConfig.main || './index.jsx'
-
 module.exports = {
-    entry: mainFile,
+    entry: './index.jsx',
     output: {
-        publicPath: 'http://localhost:8090/assets'
+        publicPath: '/assets'
     },
     module: {
         loaders: require('./loaders.config')

@@ -146,7 +146,6 @@ When contributing, please work on the `src` dir.
 You'll need to run the following commands:
 
 ```sh
-$ npm run serve # starts a local http server
 $ npm run dev # starts webpack-dev-server, which does all the bundling and live reloading
 ```
 

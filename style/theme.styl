@@ -1,13 +1,29 @@
-.date-picker
+ellipsis()
+    text-overflow ellipsis
+    white-space nowrap
     overflow hidden
-    font-size $dp-datepicker-font-size
+
+unselectable()
+    touch-callout none
+    user-select none
+
+.date-picker
+    font-family sans-serif
+    overflow hidden
     background white
-    width 300px
-    height 300px
+    font-size $dp-datepicker-font-size
+    width $dp-datepicker-width
+    height $dp-datepicker-height
 
     &
     & *
         box-sizing border-box
+
+    .dp-table
+        border-style solid
+        border-width 1px
+        border-left 0px
+        border-right 0px
 
     .dp-cell
         text-align center
@@ -49,7 +65,7 @@
             background $dp-datepicker-day-in-range-bg
 
         &.dp-month
-            @extend .u-ellipsis
+            ellipsis true
 
     .dp-inner
         border $dp-datepicker-border-width $dp-datepicker-border-style $dp-datepicker-border-color
@@ -87,8 +103,8 @@
     .dp-nav-view
     .dp-nav-cell
     .dp-week-day-name
-        @extend .u-ellipsis
-        @extend .u-unselectable
+        ellipsis true
+        unselectable true
 
     .dp-week-day-name
         cursor default
@@ -115,4 +131,4 @@
     .dp-decade-view
     .dp-year-view
     .dp-month-view
-        @extend .u-unselectable
+        unselectable true
