@@ -11609,7 +11609,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var props = assign({}, this.props);
 
 	        this.toMoment = function (value, dateFormat) {
-	            // debugger
 	            return toMoment(value, dateFormat || props.dateFormat, { locale: props.locale });
 	        };
 
@@ -11746,8 +11745,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    renderWeekDayNames: function renderWeekDayNames() {
 	        var names = this.getWeekDayNames();
 
-	        return React.createElement('tr', { className: 'dp-row dp-week-day-names' }, names.map(function (name) {
-	            return React.createElement('td', { key: name, className: 'dp-cell dp-week-day-name' }, name);
+	        return React.createElement('tr', { className: 'dp-row dp-week-day-names' }, names.map(function (name, index) {
+	            return React.createElement('td', { key: index, className: 'dp-cell dp-week-day-name' }, name);
 	        }));
 	    },
 

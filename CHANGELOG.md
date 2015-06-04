@@ -1,10 +1,15 @@
 react-date-picker
 =================
+
+#### v2.1.3
+
+ * fix #33
+
 #### v2.1.0
 
  * remove normalize.css dependency
  * remove 'sans-serif'  font-family from css - font will be inherited from parent node
- 
+
 #### v2.0.12
 
  * add CI integration - see https://circleci.com/gh/zippyui/react-date-picker
