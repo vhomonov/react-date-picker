@@ -61,10 +61,10 @@ var MonthView = React.createClass({
      * @return {Moment[]}
      */
     getDaysInMonth: function(value){
-        var first = this.toMoment(value).startOf('month')
-        var start = this.getWeekStartMoment(first)
+        var first  = this.toMoment(value).startOf('month')
+        var start  = this.getWeekStartMoment(first)
         var result = []
-        var i = 0
+        var i      = 0
 
         if (first.add(-1, 'days').isBefore(start)){
             //make sure the last day of prev month is included
@@ -84,7 +84,6 @@ var MonthView = React.createClass({
         var props = assign({}, this.props)
 
         this.toMoment = function(value, dateFormat){
-            // debugger
             return toMoment(value, dateFormat || props.dateFormat, { locale: props.locale })
         }
 
@@ -230,7 +229,7 @@ var MonthView = React.createClass({
 
         return (
             <tr className="dp-row dp-week-day-names">
-                {names.map(name => <td key={name} className="dp-cell dp-week-day-name">{name}</td>)}
+                {names.map( (name, index) => <td key={index} className="dp-cell dp-week-day-name">{name}</td>)}
             </tr>
         )
     },
