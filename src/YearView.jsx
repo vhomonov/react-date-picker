@@ -99,7 +99,7 @@ var YearView = React.createClass({
         }
 
         return (
-            <td key={monthText} className={classes.join(' ')} onClick={this.handleClick.bind(this, props, date)}>
+            <td tabIndex="1" role="link" key={monthText} className={classes.join(' ')} onClick={this.handleClick.bind(this, props, date)}>
                 {monthText}
             </td>
         )

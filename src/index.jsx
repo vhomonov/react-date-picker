@@ -234,10 +234,10 @@ var DatePicker = React.createClass({
 
         return (
             <div className="dp-footer">
-                <div className="dp-footer-today" onClick={footerProps.gotoToday}>
+                <div tabIndex="1" role="link" className="dp-footer-today" onClick={footerProps.gotoToday}>
                     {todayText}
                 </div>
-                <div className="dp-footer-selected" onClick={footerProps.gotoSelected}>
+                <div tabIndex="2" role="link" className="dp-footer-selected" onClick={footerProps.gotoSelected}>
                     {gotoSelectedText}
                 </div>
             </div>

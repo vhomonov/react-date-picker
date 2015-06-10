@@ -1,6 +1,10 @@
 react-date-picker
 =================
 
+#### v2.1.4
+
+ * fix various accessibility issues
+
 #### v2.1.3
 
  * fix [#33](https://github.com/zippyui/react-date-picker/issues/33)

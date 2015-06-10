@@ -112,7 +112,7 @@ var DecadeView = React.createClass({
         }
 
         return (
-            <td key={yearText} className={classes.join(' ')} onClick={this.handleClick.bind(this, props, date)}>
+            <td role="link" tabIndex="1" key={yearText} className={classes.join(' ')} onClick={this.handleClick.bind(this, props, date)}>
                 {yearText}
             </td>
         )

@@ -25,18 +25,24 @@ module.exports = React.createClass({
             	<tbody>
 	                <tr className="dp-row">
 	                    <td
+	                    	tabIndex="1"
+	                        role="link"
 	                    	className="dp-prev-nav dp-nav-cell dp-cell"
 	                    	onClick={props.onPrev}
 	                    >{props.prevText}
 	                    </td>
 
 	                    <td
+	                    	tabIndex="2"
+	                        role="link"
 	                    	className="dp-nav-view dp-cell"
 	                    	colSpan={props.colspan}
 	                    	onClick={props.onChange}
 	                    >{props.children}</td>
 
 	                    <td
+	                    	tabIndex="3"
+	                        role="link"
 	                    	className="dp-next-nav dp-nav-cell dp-cell"
 	                    	onClick={props.onNext}
 	                    >{props.nextText}</td>
