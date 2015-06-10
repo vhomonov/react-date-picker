@@ -16,7 +16,7 @@ $ npm install react-date-picker
 ```
 
 ## Changelog
-
+.
 See [changelog](./CHANGELOG.md)
 
 ## Usage
