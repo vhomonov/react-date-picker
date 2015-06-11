@@ -55,15 +55,14 @@ var App = React.createClass({
                 locale   ={LOCALE}
                 date    ={VALUE}
                 onChange ={this.onChange}
-                onWeekChange = {this.onChange}
-                weekNumbers
+
             />
         </div>
     },
 
     onChange: function(value) {
         console.log('selected ', value)
-        VALUE = value
+        VALUE = Array.isArray(value) ? value[0] : value;
         this.setState({})
     }
 })

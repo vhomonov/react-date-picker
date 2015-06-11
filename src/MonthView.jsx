@@ -258,8 +258,6 @@ var MonthView = React.createClass({
 
     handleClick: function(props, date, timestamp, event) {
         
-        var weekDates = null;
-        
         if (props.minDate && timestamp < props.minDate){
             return
         }
@@ -267,16 +265,7 @@ var MonthView = React.createClass({
             return
         }
 
-        if (Array.isArray(date)) {
-          weekDates = date;
-          date = date[0]
-        }
-
         event.target.value = date
-
-        if (weekDates) {
-          ;(props.onWeekChange || emptyFn)(weekDates, event)
-        }
 
         ;(props.onChange || emptyFn)(date, event)
 
