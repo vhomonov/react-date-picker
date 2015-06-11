@@ -55,6 +55,8 @@ var App = React.createClass({
                 locale   ={LOCALE}
                 date    ={VALUE}
                 onChange ={this.onChange}
+                onWeekChange = {this.onChange}
+                weekNumbers
             />
         </div>
     },

@@ -123,23 +123,44 @@ var MonthView = React.createClass({
     },
 
     /**
+     * Render the week number cell
+     * @param  {Moment[]} days
+     * @param  {Number} firstDayOfWeekIndex
+     * @return {React.DOM}
+     */
+    renderWeekNumber: function (props, days, firstDayOfWeekIndex) {
+
+      var firstDayOfWeek = days[firstDayOfWeekIndex]
+      var week = firstDayOfWeek.weeks();
+      var dateTimestamp = +firstDayOfWeek
+      var weekDays = days.slice().splice(firstDayOfWeekIndex, 7)
+      return <td key={'week' + week} className="dp-cell dp-weeknumber" onClick={this.handleClick.bind(null, props, weekDays, dateTimestamp)}>{week}</td>
+
+    },
+
+    /**
      * Render the given array of days
      * @param  {Moment[]} days
      * @return {React.DOM}
      */
     renderDays: function(props, days) {
+
         var nodes = days.map(function(date){
             return this.renderDay(props, date)
         }, this)
 
+        var numberOfDays = 7
         var len        = days.length
         var buckets    = []
-        var bucketsLen = Math.ceil(len / 7)
+        var bucketsLen = Math.ceil(len / numberOfDays)
 
         var i = 0
 
         for ( ; i < bucketsLen; i++){
-            buckets.push(nodes.slice(i * 7, (i + 1) * 7))
+
+            var firstDayOfWeekIndex = i * numberOfDays;
+            var week = props.weekNumbers ? [this.renderWeekNumber(props, days, firstDayOfWeekIndex)] : []
+            buckets.push(week.concat(nodes.slice(firstDayOfWeekIndex, (i + 1) * numberOfDays)))
         }
 
         return buckets.map(function(bucket, i){
@@ -225,7 +246,8 @@ var MonthView = React.createClass({
     },
 
     renderWeekDayNames: function(){
-        var names = this.getWeekDayNames()
+        var weekNumber = this.props.weekNumbers ? [''] : []
+        var names = weekNumber.concat(this.getWeekDayNames())
 
         return (
             <tr className="dp-row dp-week-day-names">
@@ -235,6 +257,9 @@ var MonthView = React.createClass({
     },
 
     handleClick: function(props, date, timestamp, event) {
+        
+        var weekDates = null;
+        
         if (props.minDate && timestamp < props.minDate){
             return
         }
@@ -242,9 +267,19 @@ var MonthView = React.createClass({
             return
         }
 
+        if (Array.isArray(date)) {
+          weekDates = date;
+          date = date[0]
+        }
+
         event.target.value = date
 
+        if (weekDates) {
+          ;(props.onWeekChange || emptyFn)(weekDates, event)
+        }
+
         ;(props.onChange || emptyFn)(date, event)
+
     }
 })
 

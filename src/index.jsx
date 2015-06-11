@@ -171,10 +171,12 @@ var DatePicker = React.createClass({
         var viewProps = props
         var viewProps = asConfig(props)
 
+        viewProps.weekNumbers = this.props.weekNumbers
         viewProps.dateString = dateString
         viewProps.localeData = props.localeData
         viewProps.onSelect = this.handleSelect
         viewProps.onChange = this.handleChange
+        viewProps.onWeekChange = this.props.onWeekChange
 
         return (
             <div className={className} style={props.style} {...this.props}>
