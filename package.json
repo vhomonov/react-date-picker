@@ -22,7 +22,7 @@
   "dependencies": {
     "moment": "^2.8.0",
     "normalize.css": "~3.0.2",
-    "object-assign": "^2.0.0"
+    "object-assign": "^3.0.0"
   },
   "peerDependencies": {
     "moment": ">=2.8.0",
