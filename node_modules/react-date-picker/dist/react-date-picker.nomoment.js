@@ -7,7 +7,7 @@
 		exports["DatePicker"] = factory(require("React"), require("moment"));
 	else
 		root["DatePicker"] = factory(root["React"], root["moment"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_2__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -66,22 +66,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }return target;
 	};
 
-	var React = __webpack_require__(1);
+	var React = __webpack_require__(2);
 
-	var moment = __webpack_require__(2);
-	var assign = __webpack_require__(3);
-	var asConfig = __webpack_require__(4);
+	var moment = __webpack_require__(3);
+	var assign = __webpack_require__(9);
+	var asConfig = __webpack_require__(8);
 
-	var MonthView = __webpack_require__(7);
-	var YearView = __webpack_require__(10);
-	var DecadeView = __webpack_require__(11);
-	var Header = __webpack_require__(12);
+	var MonthView = __webpack_require__(11);
+	var YearView = __webpack_require__(1);
+	var DecadeView = __webpack_require__(12);
+	var Header = __webpack_require__(13);
 
-	var toMoment = __webpack_require__(9);
+	var toMoment = __webpack_require__(7);
 
 	var hasOwn = function hasOwn(obj, key) {
 	    return Object.prototype.hasOwnProperty.call(obj, key);
 	};
+
+	var onEnter = __webpack_require__(10);
 
 	var Views = {
 	    month: MonthView,
@@ -280,7 +282,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return result;
 	        }
 
-	        return React.createElement('div', { className: 'dp-footer' }, React.createElement('div', { className: 'dp-footer-today', onClick: footerProps.gotoToday }, todayText), React.createElement('div', { className: 'dp-footer-selected', onClick: footerProps.gotoSelected }, gotoSelectedText));
+	        return React.createElement('div', { className: 'dp-footer' }, React.createElement('div', {
+	            tabIndex: '1',
+	            role: 'link',
+	            className: 'dp-footer-today',
+	            onClick: footerProps.gotoToday,
+	            onKeyUp: onEnter(footerProps.gotoToday)
+	        }, todayText), React.createElement('div', {
+	            tabIndex: '1',
+	            role: 'link',
+	            className: 'dp-footer-selected',
+	            onClick: footerProps.gotoSelected,
+	            onKeyUp: onEnter(footerProps.gotoSelected)
+	        }, gotoSelectedText));
 	    },
 
 	    gotoNow: function gotoNow() {
@@ -499,9 +513,124 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
+	'use strict';
+
+	var React = __webpack_require__(2);
+	var moment = __webpack_require__(3);
+
+	var FORMAT = __webpack_require__(4);
+	var asConfig = __webpack_require__(8);
+	var toMoment = __webpack_require__(7);
+	var onEnter = __webpack_require__(10);
+	var assign = __webpack_require__(9);
+
+	var TODAY;
+
+	function emptyFn() {}
+
+	var YearView = React.createClass({
+
+	    displayName: 'YearView',
+
+	    getDefaultProps: function getDefaultProps() {
+
+	        return asConfig();
+	    },
+
+	    /**
+	     * Returns all the days in the specified month.
+	     *
+	     * @param  {Moment/Date/Number} value
+	     * @return {Moment[]}
+	     */
+	    getMonthsInYear: function getMonthsInYear(value) {
+	        var start = moment(value).startOf('year');
+	        var result = [];
+	        var i = 0;
+
+	        for (; i < 12; i++) {
+	            result.push(moment(start));
+	            start.add(1, 'month');
+	        }
+
+	        return result;
+	    },
+
+	    render: function render() {
+
+	        TODAY = +moment().startOf('day');
+
+	        var props = assign({}, this.props);
+
+	        var viewMoment = props.viewMoment = moment(this.props.viewDate);
+
+	        if (props.date) {
+	            props.moment = moment(props.date).startOf('month');
+	        }
+
+	        var monthsInView = this.getMonthsInYear(viewMoment);
+
+	        return React.createElement('table', { className: 'dp-table dp-year-view' }, React.createElement('tbody', null, this.renderMonths(props, monthsInView)));
+	    },
+
+	    /**
+	     * Render the given array of days
+	     * @param  {Moment[]} days
+	     * @return {React.DOM}
+	     */
+	    renderMonths: function renderMonths(props, days) {
+	        var nodes = days.map(function (date) {
+	            return this.renderMonth(props, date);
+	        }, this);
+	        var len = days.length;
+	        var buckets = [];
+	        var bucketsLen = Math.ceil(len / 4);
+
+	        var i = 0;
+
+	        for (; i < bucketsLen; i++) {
+	            buckets.push(nodes.slice(i * 4, (i + 1) * 4));
+	        }
+
+	        return buckets.map(function (bucket, i) {
+	            return React.createElement('tr', { key: 'row' + i }, bucket);
+	        });
+	    },
+
+	    renderMonth: function renderMonth(props, date) {
+	        var monthText = FORMAT.month(date, props.monthFormat);
+	        var classes = ['dp-cell dp-month'];
+
+	        var dateTimestamp = +date;
+
+	        if (dateTimestamp == props.moment) {
+	            classes.push('dp-value');
+	        }
+
+	        var onClick = this.handleClick.bind(this, props, date);
+
+	        return React.createElement('td', {
+	            tabIndex: '1',
+	            role: 'link',
+	            key: monthText,
+	            className: classes.join(' '),
+	            onClick: onClick,
+	            onKeyUp: onEnter(onClick)
+	        }, monthText);
+	    },
+
+	    handleClick: function handleClick(props, date, event) {
+	        event.target.value = date;(props.onSelect || emptyFn)(date, event);
+	    }
+	});
+
+	YearView.getHeaderText = function (moment, props) {
+	    return toMoment(moment, null, { locale: props.locale }).format('YYYY');
+	};
+
+	module.exports = YearView;
 
 /***/ },
 /* 2 */
@@ -513,46 +642,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */
 /***/ function(module, exports) {
 
-	'use strict';
-	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-	function ToObject(val) {
-		if (val == null) {
-			throw new TypeError('Object.assign cannot be called with null or undefined');
-		}
-
-		return Object(val);
-	}
-
-	function ownEnumerableKeys(obj) {
-		var keys = Object.getOwnPropertyNames(obj);
-
-		if (Object.getOwnPropertySymbols) {
-			keys = keys.concat(Object.getOwnPropertySymbols(obj));
-		}
-
-		return keys.filter(function (key) {
-			return propIsEnumerable.call(obj, key);
-		});
-	}
-
-	module.exports = Object.assign || function (target, source) {
-		var from;
-		var keys;
-		var to = ToObject(target);
-
-		for (var s = 1; s < arguments.length; s++) {
-			from = arguments[s];
-			keys = ownEnumerableKeys(Object(from));
-
-			for (var i = 0; i < keys.length; i++) {
-				to[keys[i]] = from[keys[i]];
-			}
-		}
-
-		return to;
-	};
-
+	module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
 
 /***/ },
 /* 4 */
@@ -560,47 +650,25 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict'
 
-	var assign = __webpack_require__(3)
+	var CONFIG   = __webpack_require__(5)
+	var toMoment = __webpack_require__(7)
 
-	var CONFIG = __webpack_require__(5)
-	var KEYS   = Object.keys(CONFIG)
-
-	function copyList(src, target, list){
-	    if (src){
-	        list.forEach(function(key){
-	            target[key] = src[key]
-	        })
-	    }
-
-	    return target
+	function f(mom, format){
+	    return toMoment(mom).format(format)
 	}
 
-	/**
-	 * Returns an object that copies from given source object
-	 * on the resulting object only the properties also found in cfg.
-	 *
-	 * If no cfg specified, CONFIG is assumed
-	 *
-	 * @param  {object} source
-	 * @param  {Object} [cfg] If not specied, CONFIG will be used
-	 *
-	 * @return {Object}
-	 */
-	module.exports = function asConfig(source, cfg){
+	module.exports = {
+	    day: function(mom, format) {
+	        return f(mom, format || CONFIG.dayFormat)
+	    },
 
-	    var keys = KEYS
+	    month: function(mom, format) {
+	        return f(mom, format || CONFIG.monthFormat)
+	    },
 
-	    if (cfg){
-	        keys = Object.keys(cfg)
+	    year: function(mom, format) {
+	        return f(mom, format || CONFIG.yearFormat)
 	    }
-
-	    cfg = cfg || CONFIG
-
-	    if (!source){
-	        return assign({}, cfg)
-	    }
-
-	    return copyList(source, assign({}, cfg), keys)
 	}
 
 /***/ },
@@ -666,7 +734,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict'
 
-	var moment = __webpack_require__(2)
+	var moment = __webpack_require__(3)
 
 	var DEFAULT_WEEK_START_DAY = moment().startOf('week').format('d') * 1
 
@@ -697,15 +765,159 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict'
+
+	var moment = __webpack_require__(3)
+	var CONFIG = __webpack_require__(5)
+
+	/**
+	 * This function will be used to convert a date to a moment.
+	 *
+	 * It accepts input as sring, date or moment
+	 *
+	 * @param  {String/Date/Moment} value
+	 * @param  {String} [dateFormat] if value is string, it will be parsed to a moment using this format
+	 * @param  {Object} [config]
+	 * @param  {Boolean} [config.strict] whether to perform strict parsing on strings
+	 * @return {Moment}
+	 */
+	module.exports = function(value, dateFormat, config){
+	    var strict = !!(config && config.strict)
+	    var locale = config && config.locale
+
+	    dateFormat = dateFormat || CONFIG.dateFormat
+
+	    if (typeof value == 'string'){
+	        return moment(value, dateFormat, locale, strict)
+	    }
+
+	    // return moment.isMoment(value)?
+	    // 			value:
+	    return moment(value == null? new Date(): value, undefined, locale, strict)
+	}
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict'
+
+	var assign = __webpack_require__(9)
+
+	var CONFIG = __webpack_require__(5)
+	var KEYS   = Object.keys(CONFIG)
+
+	function copyList(src, target, list){
+	    if (src){
+	        list.forEach(function(key){
+	            target[key] = src[key]
+	        })
+	    }
+
+	    return target
+	}
+
+	/**
+	 * Returns an object that copies from given source object
+	 * on the resulting object only the properties also found in cfg.
+	 *
+	 * If no cfg specified, CONFIG is assumed
+	 *
+	 * @param  {object} source
+	 * @param  {Object} [cfg] If not specied, CONFIG will be used
+	 *
+	 * @return {Object}
+	 */
+	module.exports = function asConfig(source, cfg){
+
+	    var keys = KEYS
+
+	    if (cfg){
+	        keys = Object.keys(cfg)
+	    }
+
+	    cfg = cfg || CONFIG
+
+	    if (!source){
+	        return assign({}, cfg)
+	    }
+
+	    return copyList(source, assign({}, cfg), keys)
+	}
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	'use strict';
+	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+	function ToObject(val) {
+		if (val == null) {
+			throw new TypeError('Object.assign cannot be called with null or undefined');
+		}
+
+		return Object(val);
+	}
+
+	function ownEnumerableKeys(obj) {
+		var keys = Object.getOwnPropertyNames(obj);
+
+		if (Object.getOwnPropertySymbols) {
+			keys = keys.concat(Object.getOwnPropertySymbols(obj));
+		}
+
+		return keys.filter(function (key) {
+			return propIsEnumerable.call(obj, key);
+		});
+	}
+
+	module.exports = Object.assign || function (target, source) {
+		var from;
+		var keys;
+		var to = ToObject(target);
+
+		for (var s = 1; s < arguments.length; s++) {
+			from = arguments[s];
+			keys = ownEnumerableKeys(Object(from));
+
+			for (var i = 0; i < keys.length; i++) {
+				to[keys[i]] = from[keys[i]];
+			}
+		}
+
+		return to;
+	};
+
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
 	'use strict';
 
-	var React = __webpack_require__(1);
-	var moment = __webpack_require__(2);
-	var assign = __webpack_require__(3);
+	module.exports = function onKeyUp(fn){
+	  return function(event){
+	    if (event.key == 'Enter'){
+	      fn(event)
+	    }
+	  }
+	}
 
-	var FORMAT = __webpack_require__(8);
-	var asConfig = __webpack_require__(4);
-	var toMoment = __webpack_require__(9);
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(2);
+	var moment = __webpack_require__(3);
+	var assign = __webpack_require__(9);
+
+	var FORMAT = __webpack_require__(4);
+	var asConfig = __webpack_require__(8);
+	var onEnter = __webpack_require__(10);
+	var toMoment = __webpack_require__(7);
 
 	var TODAY;
 
@@ -862,15 +1074,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        var mom = this.toMoment(date);
+	        var onClick = this.handleClick.bind(this, props, date, dateTimestamp);
 
 	        var renderDayProps = {
+	            role: 'link',
+	            tabIndex: 1,
 	            key: dayText,
 	            text: dayText,
 	            date: mom,
 	            moment: mom,
 	            className: classes.join(' '),
 	            style: {},
-	            onClick: this.handleClick.bind(this, props, date, dateTimestamp),
+	            onClick: onClick,
+	            onKeyUp: onEnter(onClick),
 	            children: dayText
 	        };
 
@@ -943,192 +1159,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	// clone.add(this.props.weekStartDay, 'days')
 
 /***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var CONFIG   = __webpack_require__(5)
-	var toMoment = __webpack_require__(9)
-
-	function f(mom, format){
-	    return toMoment(mom).format(format)
-	}
-
-	module.exports = {
-	    day: function(mom, format) {
-	        return f(mom, format || CONFIG.dayFormat)
-	    },
-
-	    month: function(mom, format) {
-	        return f(mom, format || CONFIG.monthFormat)
-	    },
-
-	    year: function(mom, format) {
-	        return f(mom, format || CONFIG.yearFormat)
-	    }
-	}
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict'
-
-	var moment = __webpack_require__(2)
-	var CONFIG = __webpack_require__(5)
-
-	/**
-	 * This function will be used to convert a date to a moment.
-	 *
-	 * It accepts input as sring, date or moment
-	 *
-	 * @param  {String/Date/Moment} value
-	 * @param  {String} [dateFormat] if value is string, it will be parsed to a moment using this format
-	 * @param  {Object} [config]
-	 * @param  {Boolean} [config.strict] whether to perform strict parsing on strings
-	 * @return {Moment}
-	 */
-	module.exports = function(value, dateFormat, config){
-	    var strict = !!(config && config.strict)
-	    var locale = config && config.locale
-
-	    dateFormat = dateFormat || CONFIG.dateFormat
-
-	    if (typeof value == 'string'){
-	        return moment(value, dateFormat, locale, strict)
-	    }
-
-	    // return moment.isMoment(value)?
-	    // 			value:
-	    return moment(value == null? new Date(): value, undefined, locale, strict)
-	}
-
-/***/ },
-/* 10 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var React = __webpack_require__(1);
-	var moment = __webpack_require__(2);
+	var React = __webpack_require__(2);
+	var moment = __webpack_require__(3);
+	var assign = __webpack_require__(9);
 
-	var FORMAT = __webpack_require__(8);
-	var asConfig = __webpack_require__(4);
-	var toMoment = __webpack_require__(9);
-	var assign = __webpack_require__(3);
-
-	var TODAY;
-
-	function emptyFn() {}
-
-	var YearView = React.createClass({
-
-	    displayName: 'YearView',
-
-	    getDefaultProps: function getDefaultProps() {
-
-	        return asConfig();
-	    },
-
-	    /**
-	     * Returns all the days in the specified month.
-	     *
-	     * @param  {Moment/Date/Number} value
-	     * @return {Moment[]}
-	     */
-	    getMonthsInYear: function getMonthsInYear(value) {
-	        var start = moment(value).startOf('year');
-	        var result = [];
-	        var i = 0;
-
-	        for (; i < 12; i++) {
-	            result.push(moment(start));
-	            start.add(1, 'month');
-	        }
-
-	        return result;
-	    },
-
-	    render: function render() {
-
-	        TODAY = +moment().startOf('day');
-
-	        var props = assign({}, this.props);
-
-	        var viewMoment = props.viewMoment = moment(this.props.viewDate);
-
-	        if (props.date) {
-	            props.moment = moment(props.date).startOf('month');
-	        }
-
-	        var monthsInView = this.getMonthsInYear(viewMoment);
-
-	        return React.createElement('table', { className: 'dp-table dp-year-view' }, React.createElement('tbody', null, this.renderMonths(props, monthsInView)));
-	    },
-
-	    /**
-	     * Render the given array of days
-	     * @param  {Moment[]} days
-	     * @return {React.DOM}
-	     */
-	    renderMonths: function renderMonths(props, days) {
-	        var nodes = days.map(function (date) {
-	            return this.renderMonth(props, date);
-	        }, this);
-	        var len = days.length;
-	        var buckets = [];
-	        var bucketsLen = Math.ceil(len / 4);
-
-	        var i = 0;
-
-	        for (; i < bucketsLen; i++) {
-	            buckets.push(nodes.slice(i * 4, (i + 1) * 4));
-	        }
-
-	        return buckets.map(function (bucket, i) {
-	            return React.createElement('tr', { key: 'row' + i }, bucket);
-	        });
-	    },
-
-	    renderMonth: function renderMonth(props, date) {
-	        var monthText = FORMAT.month(date, props.monthFormat);
-	        var classes = ['dp-cell dp-month'];
-
-	        var dateTimestamp = +date;
-
-	        if (dateTimestamp == props.moment) {
-	            classes.push('dp-value');
-	        }
-
-	        return React.createElement('td', { key: monthText, className: classes.join(' '), onClick: this.handleClick.bind(this, props, date) }, monthText);
-	    },
-
-	    handleClick: function handleClick(props, date, event) {
-	        event.target.value = date;(props.onSelect || emptyFn)(date, event);
-	    }
-	});
-
-	YearView.getHeaderText = function (moment, props) {
-	    return toMoment(moment, null, { locale: props.locale }).format('YYYY');
-	};
-
-	module.exports = YearView;
-
-/***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var moment = __webpack_require__(2);
-	var assign = __webpack_require__(3);
-
-	var FORMAT = __webpack_require__(8);
-	var asConfig = __webpack_require__(4);
-	var toMoment = __webpack_require__(9);
-	var assign = __webpack_require__(3);
+	var FORMAT = __webpack_require__(4);
+	var asConfig = __webpack_require__(8);
+	var toMoment = __webpack_require__(7);
+	var onEnter = __webpack_require__(10);
+	var assign = __webpack_require__(9);
 
 	var TODAY;
 
@@ -1226,7 +1270,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            classes.push('dp-next');
 	        }
 
-	        return React.createElement('td', { key: yearText, className: classes.join(' '), onClick: this.handleClick.bind(this, props, date) }, yearText);
+	        var onClick = this.handleClick.bind(this, props, date);
+
+	        return React.createElement('td', {
+	            role: 'link',
+	            tabIndex: '1',
+	            key: yearText,
+	            className: classes.join(' '),
+	            onClick: onClick,
+	            onKeyUp: onEnter(onClick)
+	        }, yearText);
 	    },
 
 	    handleClick: function handleClick(props, date, event) {
@@ -1246,14 +1299,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = DecadeView;
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var React = __webpack_require__(1);
+	var React = __webpack_require__(2);
 
 	var P = React.PropTypes;
+
+	var onEnter = __webpack_require__(10);
 
 	module.exports = React.createClass({
 
@@ -1272,15 +1327,24 @@ return /******/ (function(modules) { // webpackBootstrap
 			var props = this.props;
 
 			return React.createElement('div', { className: 'dp-header' }, React.createElement('table', { className: 'dp-nav-table' }, React.createElement('tbody', null, React.createElement('tr', { className: 'dp-row' }, React.createElement('td', {
+				tabIndex: '1',
+				role: 'link',
 				className: 'dp-prev-nav dp-nav-cell dp-cell',
-				onClick: props.onPrev
+				onClick: props.onPrev,
+				onKeyUp: onEnter(props.onPrev)
 			}, props.prevText), React.createElement('td', {
+				tabIndex: '1',
+				role: 'link',
 				className: 'dp-nav-view dp-cell',
 				colSpan: props.colspan,
-				onClick: props.onChange
+				onClick: props.onChange,
+				onKeyUp: onEnter(props.onChange)
 			}, props.children), React.createElement('td', {
+				tabIndex: '1',
+				role: 'link',
 				className: 'dp-next-nav dp-nav-cell dp-cell',
-				onClick: props.onNext
+				onClick: props.onNext,
+				onKeyUp: onEnter(props.onNext)
 			}, props.nextText)))));
 		}
 

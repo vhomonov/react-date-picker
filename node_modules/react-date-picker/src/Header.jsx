@@ -37,7 +37,7 @@ module.exports = React.createClass({
 
 	                    <td
 	                    	tabIndex="1"
-	                        role="link"
+	                      role="link"
 	                    	className="dp-nav-view dp-cell"
 	                    	colSpan={props.colspan}
 	                    	onClick={props.onChange}

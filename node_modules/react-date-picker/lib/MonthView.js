@@ -6,6 +6,7 @@ var assign = require('object-assign');
 
 var FORMAT = require('./utils/format');
 var asConfig = require('./utils/asConfig');
+var onEnter = require('./onEnter');
 var toMoment = require('./toMoment');
 
 var TODAY;
@@ -176,15 +177,19 @@ var MonthView = React.createClass({
         }
 
         var mom = this.toMoment(date);
+        var onClick = this.handleClick.bind(this, props, date, dateTimestamp);
 
         var renderDayProps = {
+            role: 'link',
+            tabIndex: 1,
             key: dayText,
             text: dayText,
             date: mom,
             moment: mom,
             className: classes.join(' '),
             style: {},
-            onClick: this.handleClick.bind(this, props, date, dateTimestamp),
+            onClick: onClick,
+            onKeyUp: onEnter(onClick),
             children: dayText
         };
 

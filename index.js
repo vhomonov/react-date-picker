@@ -181,7 +181,7 @@
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(13)();
+	exports = module.exports = __webpack_require__(14)();
 	exports.push([module.id, "body {\n  margin: 20px;\n  font-family: sans-serif;\n}\nbody .date-picker {\n  margin-top: 20px;\n}\n", ""]);
 
 /***/ },
@@ -317,8 +317,8 @@
 	var React = __webpack_require__(1);
 
 	var moment = __webpack_require__(6);
-	var assign = __webpack_require__(14);
-	var asConfig = __webpack_require__(12);
+	var assign = __webpack_require__(15);
+	var asConfig = __webpack_require__(13);
 
 	var MonthView = __webpack_require__(7);
 	var YearView = __webpack_require__(8);
@@ -330,6 +330,8 @@
 	var hasOwn = function hasOwn(obj, key) {
 	    return Object.prototype.hasOwnProperty.call(obj, key);
 	};
+
+	var onEnter = __webpack_require__(12);
 
 	var Views = {
 	    month: MonthView,
@@ -551,12 +553,24 @@
 	            { className: 'dp-footer' },
 	            React.createElement(
 	                'div',
-	                { className: 'dp-footer-today', onClick: footerProps.gotoToday },
+	                {
+	                    tabIndex: '1',
+	                    role: 'link',
+	                    className: 'dp-footer-today',
+	                    onClick: footerProps.gotoToday,
+	                    onKeyUp: onEnter(footerProps.gotoToday)
+	                },
 	                todayText
 	            ),
 	            React.createElement(
 	                'div',
-	                { className: 'dp-footer-selected', onClick: footerProps.gotoSelected },
+	                {
+	                    tabIndex: '1',
+	                    role: 'link',
+	                    className: 'dp-footer-selected',
+	                    onClick: footerProps.gotoSelected,
+	                    onKeyUp: onEnter(footerProps.gotoSelected)
+	                },
 	                gotoSelectedText
 	            )
 	        );
@@ -794,10 +808,11 @@
 
 	var React = __webpack_require__(1);
 	var moment = __webpack_require__(6);
-	var assign = __webpack_require__(14);
+	var assign = __webpack_require__(15);
 
-	var FORMAT = __webpack_require__(15);
-	var asConfig = __webpack_require__(12);
+	var FORMAT = __webpack_require__(16);
+	var asConfig = __webpack_require__(13);
+	var onEnter = __webpack_require__(12);
 	var toMoment = __webpack_require__(11);
 
 	var TODAY;
@@ -968,15 +983,19 @@
 	        }
 
 	        var mom = this.toMoment(date);
+	        var onClick = this.handleClick.bind(this, props, date, dateTimestamp);
 
 	        var renderDayProps = {
+	            role: 'link',
+	            tabIndex: 1,
 	            key: dayText,
 	            text: dayText,
 	            date: mom,
 	            moment: mom,
 	            className: classes.join(' '),
 	            style: {},
-	            onClick: this.handleClick.bind(this, props, date, dateTimestamp),
+	            onClick: onClick,
+	            onKeyUp: onEnter(onClick),
 	            children: dayText
 	        };
 
@@ -1065,10 +1084,11 @@
 	var React = __webpack_require__(1);
 	var moment = __webpack_require__(6);
 
-	var FORMAT = __webpack_require__(15);
-	var asConfig = __webpack_require__(12);
+	var FORMAT = __webpack_require__(16);
+	var asConfig = __webpack_require__(13);
 	var toMoment = __webpack_require__(11);
-	var assign = __webpack_require__(14);
+	var onEnter = __webpack_require__(12);
+	var assign = __webpack_require__(15);
 
 	var TODAY;
 
@@ -1165,9 +1185,18 @@
 	            classes.push('dp-value');
 	        }
 
+	        var onClick = this.handleClick.bind(this, props, date);
+
 	        return React.createElement(
 	            'td',
-	            { key: monthText, className: classes.join(' '), onClick: this.handleClick.bind(this, props, date) },
+	            {
+	                tabIndex: '1',
+	                role: 'link',
+	                key: monthText,
+	                className: classes.join(' '),
+	                onClick: onClick,
+	                onKeyUp: onEnter(onClick)
+	            },
 	            monthText
 	        );
 	    },
@@ -1191,12 +1220,13 @@
 
 	var React = __webpack_require__(1);
 	var moment = __webpack_require__(6);
-	var assign = __webpack_require__(14);
+	var assign = __webpack_require__(15);
 
-	var FORMAT = __webpack_require__(15);
-	var asConfig = __webpack_require__(12);
+	var FORMAT = __webpack_require__(16);
+	var asConfig = __webpack_require__(13);
 	var toMoment = __webpack_require__(11);
-	var assign = __webpack_require__(14);
+	var onEnter = __webpack_require__(12);
+	var assign = __webpack_require__(15);
 
 	var TODAY;
 
@@ -1306,9 +1336,18 @@
 	            classes.push('dp-next');
 	        }
 
+	        var onClick = this.handleClick.bind(this, props, date);
+
 	        return React.createElement(
 	            'td',
-	            { key: yearText, className: classes.join(' '), onClick: this.handleClick.bind(this, props, date) },
+	            {
+	                role: 'link',
+	                tabIndex: '1',
+	                key: yearText,
+	                className: classes.join(' '),
+	                onClick: onClick,
+	                onKeyUp: onEnter(onClick)
+	            },
 	            yearText
 	        );
 	    },
@@ -1338,6 +1377,8 @@
 	var React = __webpack_require__(1);
 
 	var P = React.PropTypes;
+
+	var onEnter = __webpack_require__(12);
 
 	module.exports = React.createClass({
 
@@ -1370,31 +1411,34 @@
 							React.createElement(
 								'td',
 								{
-									role: 'link',
 									tabIndex: '1',
+									role: 'link',
 									className: 'dp-prev-nav dp-nav-cell dp-cell',
-									onClick: props.onPrev
+									onClick: props.onPrev,
+									onKeyUp: onEnter(props.onPrev)
 								},
 								props.prevText
 							),
 							React.createElement(
 								'td',
 								{
+									tabIndex: '1',
 									role: 'link',
-									tabIndex: '2',
 									className: 'dp-nav-view dp-cell',
 									colSpan: props.colspan,
-									onClick: props.onChange
+									onClick: props.onChange,
+									onKeyUp: onEnter(props.onChange)
 								},
 								props.children
 							),
 							React.createElement(
 								'td',
 								{
+									tabIndex: '1',
 									role: 'link',
-									tabIndex: '3',
 									className: 'dp-next-nav dp-nav-cell dp-cell',
-									onClick: props.onNext
+									onClick: props.onNext,
+									onKeyUp: onEnter(props.onNext)
 								},
 								props.nextText
 							)
@@ -1406,7 +1450,6 @@
 
 	});
 
-
 /***/ },
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
@@ -1414,7 +1457,7 @@
 	'use strict';
 
 	var moment = __webpack_require__(6);
-	var CONFIG = __webpack_require__(16);
+	var CONFIG = __webpack_require__(17);
 
 	/**
 	 * This function will be used to convert a date to a moment.
@@ -1448,9 +1491,23 @@
 
 	'use strict';
 
-	var assign = __webpack_require__(14);
+	module.exports = function onKeyUp(fn) {
+	  return function (event) {
+	    if (event.key == 'Enter') {
+	      fn(event);
+	    }
+	  };
+	};
 
-	var CONFIG = __webpack_require__(16);
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var assign = __webpack_require__(15);
+
+	var CONFIG = __webpack_require__(17);
 	var KEYS = Object.keys(CONFIG);
 
 	function copyList(src, target, list) {
@@ -1492,7 +1549,7 @@
 	};
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function() {
@@ -1513,7 +1570,7 @@
 	}
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1558,12 +1615,12 @@
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var CONFIG = __webpack_require__(16);
+	var CONFIG = __webpack_require__(17);
 	var toMoment = __webpack_require__(11);
 
 	function f(mom, format) {
@@ -1585,12 +1642,12 @@
 	};
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var getWeekDayNames = __webpack_require__(17);
+	var getWeekDayNames = __webpack_require__(18);
 
 	// console.log(getWeekDayNames())
 
@@ -1642,7 +1699,7 @@
 	};
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
