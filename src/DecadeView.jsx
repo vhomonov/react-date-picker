@@ -7,7 +7,8 @@ var assign = require('object-assign')
 var FORMAT   = require('./utils/format')
 var asConfig = require('./utils/asConfig')
 var toMoment = require('./toMoment')
-var assign = require('object-assign')
+var onEnter  = require('./onEnter')
+var assign   = require('object-assign')
 
 var TODAY
 
@@ -111,8 +112,17 @@ var DecadeView = React.createClass({
             classes.push('dp-next')
         }
 
+        var onClick = this.handleClick.bind(this, props, date)
+
         return (
-            <td role="link" tabIndex="1" key={yearText} className={classes.join(' ')} onClick={this.handleClick.bind(this, props, date)}>
+            <td
+                role="link"
+                tabIndex="1"
+                key={yearText}
+                className={classes.join(' ')}
+                onClick={onClick}
+                onKeyUp={onEnter(onClick)}
+            >
                 {yearText}
             </td>
         )

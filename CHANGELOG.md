@@ -1,6 +1,10 @@
 react-date-picker
 =================
 
+#### v2.1.5
+
+ * fix various accessibility issues
+
 #### v2.1.4
 
  * fix various accessibility issues

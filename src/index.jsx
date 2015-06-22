@@ -17,6 +17,8 @@ var hasOwn = function(obj, key){
     return Object.prototype.hasOwnProperty.call(obj, key)
 }
 
+var onEnter = require('./onEnter');
+
 var Views = {
     month : MonthView,
     year  : YearView,
@@ -211,7 +213,7 @@ var DatePicker = React.createClass({
             console.warn('Please use "gotoSelectedText" prop instead of "gotoSelected"!')
         }
 
-        var todayText    = this.props.todayText || 'Today'
+        var todayText        = this.props.todayText || 'Today'
         var gotoSelectedText = this.props.gotoSelectedText || 'Go to selected'
 
         var footerProps = {
@@ -234,10 +236,22 @@ var DatePicker = React.createClass({
 
         return (
             <div className="dp-footer">
-                <div tabIndex="1" role="link" className="dp-footer-today" onClick={footerProps.gotoToday}>
+                <div
+                    tabIndex="1"
+                    role="link"
+                    className="dp-footer-today"
+                    onClick={footerProps.gotoToday}
+                    onKeyUp={onEnter(footerProps.gotoToday)}
+                >
                     {todayText}
                 </div>
-                <div tabIndex="2" role="link" className="dp-footer-selected" onClick={footerProps.gotoSelected}>
+                <div
+                    tabIndex="1"
+                    role="link"
+                    className="dp-footer-selected"
+                    onClick={footerProps.gotoSelected}
+                    onKeyUp={onEnter(footerProps.gotoSelected)}
+                >
                     {gotoSelectedText}
                 </div>
             </div>

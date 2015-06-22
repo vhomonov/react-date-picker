@@ -6,7 +6,8 @@ var moment = require('moment')
 var FORMAT   = require('./utils/format')
 var asConfig = require('./utils/asConfig')
 var toMoment = require('./toMoment')
-var assign = require('object-assign')
+var onEnter  = require('./onEnter')
+var assign   = require('object-assign')
 
 var TODAY
 
@@ -58,7 +59,6 @@ var YearView = React.createClass({
             <table className="dp-table dp-year-view">
                 <tbody>
                     {this.renderMonths(props, monthsInView)}
-
                 </tbody>
             </table>
         )
@@ -98,8 +98,17 @@ var YearView = React.createClass({
             classes.push('dp-value')
         }
 
+        var onClick = this.handleClick.bind(this, props, date)
+
         return (
-            <td tabIndex="1" role="link" key={monthText} className={classes.join(' ')} onClick={this.handleClick.bind(this, props, date)}>
+            <td
+                tabIndex="1"
+                role="link"
+                key={monthText}
+                className={classes.join(' ')}
+                onClick={onClick}
+                onKeyUp={onEnter(onClick)}
+            >
                 {monthText}
             </td>
         )

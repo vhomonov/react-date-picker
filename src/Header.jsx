@@ -4,6 +4,8 @@ var React = require('react')
 
 var P = React.PropTypes
 
+var onEnter = require('./onEnter')
+
 module.exports = React.createClass({
 
 	displayName: 'DatePickerHeader',
@@ -26,25 +28,28 @@ module.exports = React.createClass({
 	                <tr className="dp-row">
 	                    <td
 	                    	tabIndex="1"
-	                        role="link"
+	                      role="link"
 	                    	className="dp-prev-nav dp-nav-cell dp-cell"
 	                    	onClick={props.onPrev}
+	                    	onKeyUp={onEnter(props.onPrev)}
 	                    >{props.prevText}
 	                    </td>
 
 	                    <td
-	                    	tabIndex="2"
+	                    	tabIndex="1"
 	                        role="link"
 	                    	className="dp-nav-view dp-cell"
 	                    	colSpan={props.colspan}
 	                    	onClick={props.onChange}
+	                    	onKeyUp={onEnter(props.onChange)}
 	                    >{props.children}</td>
 
 	                    <td
-	                    	tabIndex="3"
-	                        role="link"
+	                    	tabIndex="1"
+	                      role="link"
 	                    	className="dp-next-nav dp-nav-cell dp-cell"
 	                    	onClick={props.onNext}
+	                    	onKeyUp={onEnter(props.onNext)}
 	                    >{props.nextText}</td>
 	                </tr>
             	</tbody>
