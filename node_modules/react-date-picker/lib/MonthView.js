@@ -81,7 +81,6 @@ var MonthView = React.createClass({
         var props = assign({}, this.props);
 
         this.toMoment = function (value, dateFormat) {
-            // debugger
             return toMoment(value, dateFormat || props.dateFormat, { locale: props.locale });
         };
 
@@ -234,10 +233,10 @@ var MonthView = React.createClass({
         return React.createElement(
             'tr',
             { className: 'dp-row dp-week-day-names' },
-            names.map(function (name) {
+            names.map(function (name, index) {
                 return React.createElement(
                     'td',
-                    { key: name, className: 'dp-cell dp-week-day-name' },
+                    { key: index, className: 'dp-cell dp-week-day-name' },
                     name
                 );
             })

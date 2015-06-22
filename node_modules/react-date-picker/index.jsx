@@ -51,6 +51,7 @@ var App = React.createClass({
             </p>
 
             <DatePicker
+            weekDayNames={['S','M','T','W','T','F','S']}
                 locale   ={LOCALE}
                 date    ={VALUE}
                 onChange ={this.onChange}

@@ -49,7 +49,7 @@
 	__webpack_require__(2)
 
 	var React      = __webpack_require__(1)
-	var DatePicker = __webpack_require__(4)
+	var DatePicker = __webpack_require__(5)
 
 	var DAY = 1000 * 60 * 60 * 24
 	var NOW = +new Date
@@ -164,7 +164,7 @@
 	var content = __webpack_require__(3);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(5)(content);
+	var update = __webpack_require__(4)(content);
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
@@ -186,6 +186,128 @@
 
 /***/ },
 /* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {};
+
+	module.exports = function(list) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+		var styles = listToStyles(list);
+		addStylesToDom(styles);
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+
+	function addStylesToDom(styles) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j]));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j]));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			// var sourceMap = item[3];
+			var part = {css: css, media: media/*, sourceMap: sourceMap*/};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+
+	function addStyle(obj) {
+		var styleElement = document.createElement("style");
+		var head = document.head || document.getElementsByTagName("head")[0];
+		styleElement.type = "text/css";
+		head.appendChild(styleElement);
+		applyToTag(styleElement, obj);
+		return function(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media /*&& newObj.sourceMap === obj.sourceMap*/)
+					return;
+				applyToTag(styleElement, obj = newObj);
+			} else {
+				head.removeChild(styleElement);
+			}
+		};
+	};
+
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+		// var sourceMap = obj.sourceMap;
+
+		// No browser support
+		// if(sourceMap && typeof btoa === "function") {
+			// try {
+				// css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(JSON.stringify(sourceMap)) + " */";
+			// } catch(e) {}
+		// }
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+
+	}
+
+
+/***/ },
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -659,128 +781,6 @@
 	module.exports = DatePicker;
 
 /***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-		MIT License http://www.opensource.org/licenses/mit-license.php
-		Author Tobias Koppers @sokra
-	*/
-	var stylesInDom = {};
-
-	module.exports = function(list) {
-		if(false) {
-			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
-		}
-		var styles = listToStyles(list);
-		addStylesToDom(styles);
-		return function update(newList) {
-			var mayRemove = [];
-			for(var i = 0; i < styles.length; i++) {
-				var item = styles[i];
-				var domStyle = stylesInDom[item.id];
-				domStyle.refs--;
-				mayRemove.push(domStyle);
-			}
-			if(newList) {
-				var newStyles = listToStyles(newList);
-				addStylesToDom(newStyles);
-			}
-			for(var i = 0; i < mayRemove.length; i++) {
-				var domStyle = mayRemove[i];
-				if(domStyle.refs === 0) {
-					for(var j = 0; j < domStyle.parts.length; j++)
-						domStyle.parts[j]();
-					delete stylesInDom[domStyle.id];
-				}
-			}
-		};
-	}
-
-	function addStylesToDom(styles) {
-		for(var i = 0; i < styles.length; i++) {
-			var item = styles[i];
-			var domStyle = stylesInDom[item.id];
-			if(domStyle) {
-				domStyle.refs++;
-				for(var j = 0; j < domStyle.parts.length; j++) {
-					domStyle.parts[j](item.parts[j]);
-				}
-				for(; j < item.parts.length; j++) {
-					domStyle.parts.push(addStyle(item.parts[j]));
-				}
-			} else {
-				var parts = [];
-				for(var j = 0; j < item.parts.length; j++) {
-					parts.push(addStyle(item.parts[j]));
-				}
-				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
-			}
-		}
-	}
-
-	function listToStyles(list) {
-		var styles = [];
-		var newStyles = {};
-		for(var i = 0; i < list.length; i++) {
-			var item = list[i];
-			var id = item[0];
-			var css = item[1];
-			var media = item[2];
-			// var sourceMap = item[3];
-			var part = {css: css, media: media/*, sourceMap: sourceMap*/};
-			if(!newStyles[id])
-				styles.push(newStyles[id] = {id: id, parts: [part]});
-			else
-				newStyles[id].parts.push(part);
-		}
-		return styles;
-	}
-
-	function addStyle(obj) {
-		var styleElement = document.createElement("style");
-		var head = document.head || document.getElementsByTagName("head")[0];
-		styleElement.type = "text/css";
-		head.appendChild(styleElement);
-		applyToTag(styleElement, obj);
-		return function(newObj) {
-			if(newObj) {
-				if(newObj.css === obj.css && newObj.media === obj.media /*&& newObj.sourceMap === obj.sourceMap*/)
-					return;
-				applyToTag(styleElement, obj = newObj);
-			} else {
-				head.removeChild(styleElement);
-			}
-		};
-	};
-
-	function applyToTag(styleElement, obj) {
-		var css = obj.css;
-		var media = obj.media;
-		// var sourceMap = obj.sourceMap;
-
-		// No browser support
-		// if(sourceMap && typeof btoa === "function") {
-			// try {
-				// css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(JSON.stringify(sourceMap)) + " */";
-			// } catch(e) {}
-		// }
-		if(media) {
-			styleElement.setAttribute("media", media)
-		}
-		if (styleElement.styleSheet) {
-			styleElement.styleSheet.cssText = css;
-		} else {
-			while(styleElement.firstChild) {
-				styleElement.removeChild(styleElement.firstChild);
-			}
-			styleElement.appendChild(document.createTextNode(css));
-		}
-
-	}
-
-
-/***/ },
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -796,7 +796,7 @@
 	var moment = __webpack_require__(6);
 	var assign = __webpack_require__(14);
 
-	var FORMAT = __webpack_require__(16);
+	var FORMAT = __webpack_require__(15);
 	var asConfig = __webpack_require__(12);
 	var toMoment = __webpack_require__(11);
 
@@ -873,7 +873,6 @@
 	        var props = assign({}, this.props);
 
 	        this.toMoment = function (value, dateFormat) {
-	            // debugger
 	            return toMoment(value, dateFormat || props.dateFormat, { locale: props.locale });
 	        };
 
@@ -1026,10 +1025,10 @@
 	        return React.createElement(
 	            'tr',
 	            { className: 'dp-row dp-week-day-names' },
-	            names.map(function (name) {
+	            names.map(function (name, index) {
 	                return React.createElement(
 	                    'td',
-	                    { key: name, className: 'dp-cell dp-week-day-name' },
+	                    { key: index, className: 'dp-cell dp-week-day-name' },
 	                    name
 	                );
 	            })
@@ -1066,7 +1065,7 @@
 	var React = __webpack_require__(1);
 	var moment = __webpack_require__(6);
 
-	var FORMAT = __webpack_require__(16);
+	var FORMAT = __webpack_require__(15);
 	var asConfig = __webpack_require__(12);
 	var toMoment = __webpack_require__(11);
 	var assign = __webpack_require__(14);
@@ -1194,7 +1193,7 @@
 	var moment = __webpack_require__(6);
 	var assign = __webpack_require__(14);
 
-	var FORMAT = __webpack_require__(16);
+	var FORMAT = __webpack_require__(15);
 	var asConfig = __webpack_require__(12);
 	var toMoment = __webpack_require__(11);
 	var assign = __webpack_require__(14);
@@ -1371,6 +1370,8 @@
 							React.createElement(
 								'td',
 								{
+									role: 'link',
+									tabIndex: '1',
 									className: 'dp-prev-nav dp-nav-cell dp-cell',
 									onClick: props.onPrev
 								},
@@ -1379,6 +1380,8 @@
 							React.createElement(
 								'td',
 								{
+									role: 'link',
+									tabIndex: '2',
 									className: 'dp-nav-view dp-cell',
 									colSpan: props.colspan,
 									onClick: props.onChange
@@ -1388,6 +1391,8 @@
 							React.createElement(
 								'td',
 								{
+									role: 'link',
+									tabIndex: '3',
 									className: 'dp-next-nav dp-nav-cell dp-cell',
 									onClick: props.onNext
 								},
@@ -1401,6 +1406,7 @@
 
 	});
 
+
 /***/ },
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
@@ -1408,7 +1414,7 @@
 	'use strict';
 
 	var moment = __webpack_require__(6);
-	var CONFIG = __webpack_require__(15);
+	var CONFIG = __webpack_require__(16);
 
 	/**
 	 * This function will be used to convert a date to a moment.
@@ -1444,7 +1450,7 @@
 
 	var assign = __webpack_require__(14);
 
-	var CONFIG = __webpack_require__(15);
+	var CONFIG = __webpack_require__(16);
 	var KEYS = Object.keys(CONFIG);
 
 	function copyList(src, target, list) {
@@ -1511,6 +1517,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
 	function ToObject(val) {
 		if (val == null) {
@@ -1520,6 +1527,18 @@
 		return Object(val);
 	}
 
+	function ownEnumerableKeys(obj) {
+		var keys = Object.getOwnPropertyNames(obj);
+
+		if (Object.getOwnPropertySymbols) {
+			keys = keys.concat(Object.getOwnPropertySymbols(obj));
+		}
+
+		return keys.filter(function (key) {
+			return propIsEnumerable.call(obj, key);
+		});
+	}
+
 	module.exports = Object.assign || function (target, source) {
 		var from;
 		var keys;
@@ -1527,7 +1546,7 @@
 
 		for (var s = 1; s < arguments.length; s++) {
 			from = arguments[s];
-			keys = Object.keys(Object(from));
+			keys = ownEnumerableKeys(Object(from));
 
 			for (var i = 0; i < keys.length; i++) {
 				to[keys[i]] = from[keys[i]];
@@ -1540,6 +1559,33 @@
 
 /***/ },
 /* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var CONFIG = __webpack_require__(16);
+	var toMoment = __webpack_require__(11);
+
+	function f(mom, format) {
+	    return toMoment(mom).format(format);
+	}
+
+	module.exports = {
+	    day: function day(mom, format) {
+	        return f(mom, format || CONFIG.dayFormat);
+	    },
+
+	    month: function month(mom, format) {
+	        return f(mom, format || CONFIG.monthFormat);
+	    },
+
+	    year: function year(mom, format) {
+	        return f(mom, format || CONFIG.yearFormat);
+	    }
+	};
+
+/***/ },
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1592,33 +1638,7 @@
 	    dateFormat: 'YYYY-MM-DD',
 
 	    onRenderDay: null,
-	    renderDay: null };
-
-/***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var CONFIG = __webpack_require__(15);
-	var toMoment = __webpack_require__(11);
-
-	function f(mom, format) {
-	    return toMoment(mom).format(format);
-	}
-
-	module.exports = {
-	    day: function day(mom, format) {
-	        return f(mom, format || CONFIG.dayFormat);
-	    },
-
-	    month: function month(mom, format) {
-	        return f(mom, format || CONFIG.monthFormat);
-	    },
-
-	    year: function year(mom, format) {
-	        return f(mom, format || CONFIG.yearFormat);
-	    }
+	    renderDay: null
 	};
 
 /***/ },

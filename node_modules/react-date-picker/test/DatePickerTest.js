@@ -85,4 +85,19 @@ describe('DatePicker', function(){
 
     })
 
+    it('weekDayNames should be rendered correctly, even if there are two identical labels', function(){
+        var weekDayNames = ['S','M','T','W','T','F','S']
+        var picker = render(DatePicker({
+            defaultDate : '2014-03-25',
+            weekDayNames: weekDayNames
+        }))
+
+        findWithClass(picker, 'dp-week-day-names')
+            .getDOMNode()
+            .textContent
+                .should
+                .equal(weekDayNames.join(''))
+
+    })
+
 })
