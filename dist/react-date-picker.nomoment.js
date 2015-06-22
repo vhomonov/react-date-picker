@@ -499,21 +499,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
 /***/ },
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	module.exports = __WEBPACK_EXTERNAL_MODULE_2__;
 
 /***/ },
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
+	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
 	function ToObject(val) {
 		if (val == null) {
@@ -523,6 +524,18 @@ return /******/ (function(modules) { // webpackBootstrap
 		return Object(val);
 	}
 
+	function ownEnumerableKeys(obj) {
+		var keys = Object.getOwnPropertyNames(obj);
+
+		if (Object.getOwnPropertySymbols) {
+			keys = keys.concat(Object.getOwnPropertySymbols(obj));
+		}
+
+		return keys.filter(function (key) {
+			return propIsEnumerable.call(obj, key);
+		});
+	}
+
 	module.exports = Object.assign || function (target, source) {
 		var from;
 		var keys;
@@ -530,7 +543,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		for (var s = 1; s < arguments.length; s++) {
 			from = arguments[s];
-			keys = Object.keys(Object(from));
+			keys = ownEnumerableKeys(Object(from));
 
 			for (var i = 0; i < keys.length; i++) {
 				to[keys[i]] = from[keys[i]];
