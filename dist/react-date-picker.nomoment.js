@@ -1008,6 +1008,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        this.weekStartDay = props.weekStartDay = weekStartDay;
 
+	        if (props.minDate && moment.isMoment(props.minDate)) {
+	            props.minDate.startOf('day');
+	        }
+
 	        props.minDate && (props.minDate = +this.toMoment(props.minDate, dateFormat));
 	        props.maxDate && (props.maxDate = +this.toMoment(props.maxDate, dateFormat));
 
