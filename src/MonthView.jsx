@@ -6,7 +6,7 @@ var assign = require('object-assign')
 
 var FORMAT   = require('./utils/format')
 var asConfig = require('./utils/asConfig')
-var onEnter  = require('./onEnter');
+var onEnter  = require('./onEnter')
 var toMoment = require('./toMoment')
 
 var TODAY
@@ -100,6 +100,10 @@ var MonthView = React.createClass({
         }
 
         this.weekStartDay = props.weekStartDay = weekStartDay
+
+        if (props.minDate && moment.isMoment(props.minDate)){
+            props.minDate.startOf('day');
+        }
 
         props.minDate && (props.minDate = +this.toMoment(props.minDate, dateFormat))
         props.maxDate && (props.maxDate = +this.toMoment(props.maxDate, dateFormat))

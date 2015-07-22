@@ -2,6 +2,7 @@
 
 require('./index.styl')
 
+var moment = require('moment');
 var React      = require('react')
 var DatePicker = require('./src/index')
 
@@ -51,7 +52,8 @@ var App = React.createClass({
             </p>
 
             <DatePicker
-            weekDayNames={['S','M','T','W','T','F','S']}
+                minDate={moment()}
+                weekDayNames={['S','M','T','W','T','F','S']}
                 locale   ={LOCALE}
                 date    ={VALUE}
                 onChange ={this.onChange}
