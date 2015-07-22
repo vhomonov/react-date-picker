@@ -1,6 +1,10 @@
 react-date-picker
 =================
 
+#### v2.1.6
+
+ * fix [#41 - minDate wrong when passing momentjs instance](https://github.com/zippyui/react-date-picker/issues/41)
+
 #### v2.1.5
 
  * fix various accessibility issues and add tab navigation - accept PR [#35](https://github.com/zippyui/react-date-picker/pull/35)
