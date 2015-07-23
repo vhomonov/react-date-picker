@@ -1,7 +1,7 @@
 {
   "name": "react-date-picker",
-  "version": "2.1.8",
-  "description": "React Date Picker",
+  "version": "2.1.9",
+  "description": "A carefully crafted date picker for React",
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha --recursive --reporter spec --require should",

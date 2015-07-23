@@ -6,7 +6,7 @@ react-date-picker
 
 <img src="http://npm.packagequality.com/badge/react-date-picker.png"/>
 
-> A carefully crafted date picker for React
+> A date picker built especially for React, with love.
 
 [![Date picker](./react-date-picker.png)](http://zippyui.github.io/react-date-picker)
 
