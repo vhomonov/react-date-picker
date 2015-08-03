@@ -62,11 +62,9 @@ var DecadeView = React.createClass({
         var yearsInView = this.getYearsInDecade(viewMoment)
 
         return (
-            <table className="dp-table dp-decade-view">
-                <tbody>
-                    {this.renderYears(props, yearsInView)}
-                </tbody>
-            </table>
+            <div className="dp-table dp-decade-view">
+                {this.renderYears(props, yearsInView)}
+            </div>
         )
     },
 
@@ -90,7 +88,7 @@ var DecadeView = React.createClass({
         }
 
         return buckets.map(function(bucket, i){
-            return <tr key={"row" + i} >{bucket}</tr>
+            return <div key={"row" + i} className="dp-row">{bucket}</div>
         })
     },
 
@@ -115,7 +113,7 @@ var DecadeView = React.createClass({
         var onClick = this.handleClick.bind(this, props, date)
 
         return (
-            <td
+            <div
                 role="link"
                 tabIndex="1"
                 key={yearText}
@@ -124,7 +122,7 @@ var DecadeView = React.createClass({
                 onKeyUp={onEnter(onClick)}
             >
                 {yearText}
-            </td>
+            </div>
         )
     },
 

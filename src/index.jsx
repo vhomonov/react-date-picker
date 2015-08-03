@@ -180,17 +180,13 @@ var DatePicker = React.createClass({
 
         return (
             <div className={className} style={props.style} {...this.props}>
-                <div className="dp-inner" style={{width: '100%', height: '100%'}}>
-                    {this.renderHeader(view, props)}
+                {this.renderHeader(view, props)}
 
-                    <div className="dp-body" style={{flex: 1}}>
-                        <div className="dp-anim-target">
-                        {view(viewProps)}
-                        </div>
-                    </div>
-
-                    {this.renderFooter(props)}
+                <div className="dp-body" style={{flex: 1}}>
+                    {view(viewProps)}
                 </div>
+
+                {this.renderFooter(props)}
             </div>
         )
     },

@@ -105,12 +105,10 @@ var MonthView = React.createClass({
     var daysInView = this.getDaysInMonth(viewMoment)
 
     return (
-        <table className="dp-table dp-month-view">
-            <tbody>
-                {this.renderWeekDayNames()}
-                {this.renderDays(props, daysInView)}
-            </tbody>
-        </table>
+        <div className="dp-table dp-month-view">
+            {this.renderWeekDayNames()}
+            {this.renderDays(props, daysInView)}
+        </div>
     )
   },
 
@@ -135,7 +133,7 @@ var MonthView = React.createClass({
     }
 
     return buckets.map(function(bucket, i){
-      return <tr key={"row" + i} className="dp-week dp-row">{bucket}</tr>
+      return <div key={"row" + i} className="dp-week dp-row">{bucket}</div>
     })
   },
 
@@ -185,7 +183,7 @@ var MonthView = React.createClass({
       renderDayProps = props.onRenderDay(renderDayProps)
     }
 
-    var defaultRenderFunction = React.DOM.td
+    var defaultRenderFunction = React.DOM.div
     var renderFunction = props.renderDay || defaultRenderFunction
 
     var result = renderFunction(renderDayProps)
@@ -224,9 +222,9 @@ var MonthView = React.createClass({
     var names = this.getWeekDayNames()
 
     return (
-      <tr className="dp-row dp-week-day-names">
-        {names.map( (name, index) => <td key={index} className="dp-cell dp-week-day-name">{name}</td>)}
-      </tr>
+      <div className="dp-row dp-week-day-names">
+        {names.map( (name, index) => <div key={index} className="dp-cell dp-week-day-name">{name}</div>)}
+      </div>
     )
   },
 

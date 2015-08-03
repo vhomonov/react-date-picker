@@ -1,6 +1,9 @@
 react-date-picker
 =================
 
+#### 3.0.0
+ * Implement picker using `flex` layout (replacing `table` layout). This allows the picker to fill all available space and not rely on fixed height.
+
 #### v2.1.7
 
  * fix [#41 - minDate wrong when passing momentjs instance](https://github.com/zippyui/react-date-picker/issues/41)
