@@ -105,6 +105,7 @@ describe('DatePicker', function(){
         var minDate = moment('2015-07-15').add(1,'h');
 
         var picker = render(DatePicker({
+            defaultDate: '2015-07-15',
             minDate: minDate
         }))
 
