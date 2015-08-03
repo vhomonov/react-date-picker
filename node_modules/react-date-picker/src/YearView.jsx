@@ -56,11 +56,9 @@ var YearView = React.createClass({
         var monthsInView = this.getMonthsInYear(viewMoment)
 
         return (
-            <table className="dp-table dp-year-view">
-                <tbody>
-                    {this.renderMonths(props, monthsInView)}
-                </tbody>
-            </table>
+            <div className="dp-table dp-year-view">
+                {this.renderMonths(props, monthsInView)}
+            </div>
         )
     },
 
@@ -84,7 +82,7 @@ var YearView = React.createClass({
         }
 
         return buckets.map(function(bucket, i){
-            return <tr key={"row" + i} >{bucket}</tr>
+            return <div key={"row" + i} className="dp-row">{bucket}</div>
         })
     },
 
@@ -101,7 +99,7 @@ var YearView = React.createClass({
         var onClick = this.handleClick.bind(this, props, date)
 
         return (
-            <td
+            <div
                 tabIndex="1"
                 role="link"
                 key={monthText}
@@ -110,7 +108,7 @@ var YearView = React.createClass({
                 onKeyUp={onEnter(onClick)}
             >
                 {monthText}
-            </td>
+            </div>
         )
     },
 

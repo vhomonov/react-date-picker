@@ -10,6 +10,11 @@ var NOW = +new Date
 
 var pickerDate = NOW
 
+var sizeStyle = {
+    width: 300,
+    minHeight: 280
+}
+
 var LOCALE = 'en'
 
 var TODAY = {
@@ -50,6 +55,7 @@ var App = React.createClass({
             <h2>Example with min date &amp; max date set. (-90 &amp; +90 days)</h2>
 
             <DatePicker
+                style={sizeStyle}
                 minDate={NOW - 90 * DAY}
                 maxDate={NOW + 90 * DAY}
                 date={pickerDate}
@@ -76,6 +82,7 @@ var App = React.createClass({
             <p>You can click the header to change current view and easily navigate to far-off dates
             </p>
             <DatePicker
+                style={sizeStyle}
                 defaultDate={pickerDate}
                 locale={LOCALE}
                 gotoSelectedText={gotoSelectedText}

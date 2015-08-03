@@ -1,16 +1,21 @@
+'use strict';
+
+var entry = require('./entry')
+
 module.exports = {
-    entry: './src/index.jsx',
+    entry: entry,
     output: {
-        path         : __dirname + "/dist",
+        path         : __dirname + "/../dist",
         libraryTarget: 'umd',
         library      : 'DatePicker',
-        filename     : require('./DIST_FILE_NAME') + '.js'
+        filename     : require('../DIST_FILE_NAME') + '.nomoment.min.js'
     },
     module: {
         loaders: require('./loaders.config')
     },
     externals: {
-        'react': 'React'
+        'react' : 'React',
+        'moment': 'moment'
     },
     resolve: {
         // Allow to omit extensions when requiring these files

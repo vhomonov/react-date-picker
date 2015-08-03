@@ -179,21 +179,13 @@ var DatePicker = React.createClass({
         return React.createElement(
             'div',
             _extends({ className: className, style: props.style }, this.props),
+            this.renderHeader(view, props),
             React.createElement(
                 'div',
-                { className: 'dp-inner', style: { width: '100%', height: '100%' } },
-                this.renderHeader(view, props),
-                React.createElement(
-                    'div',
-                    { className: 'dp-body', style: { flex: 1 } },
-                    React.createElement(
-                        'div',
-                        { className: 'dp-anim-target' },
-                        view(viewProps)
-                    )
-                ),
-                this.renderFooter(props)
-            )
+                { className: 'dp-body', style: { flex: 1 } },
+                view(viewProps)
+            ),
+            this.renderFooter(props)
         );
     },
 
@@ -479,5 +471,124 @@ var DatePicker = React.createClass({
 });
 
 DatePicker.views = Views;
+
+var PT = React.PropTypes;
+
+DatePicker.propTypes = {
+
+    /**
+     * Function to be called when user selects a date.
+     *
+     * Called with the following params:
+     *
+     * @param {String} dateText Date formatted as string
+     * @param {Moment} moment Moment.js instance
+     * @param {Event} event
+     *
+     * @type {Function}
+     */
+    onChange: PT.func,
+
+    /**
+     * Function to be called when the user navigates to the next/prev month/year/decade
+     *
+     * Called with the following params:
+     *
+     * @param {String} dateText Date formatted as string
+     * @param {Moment} moment Moment.js instance
+     * @param {String} view The name of the current view (eg: "month")
+     * @param {Number} direction 1 or -1. 1 if the right arrow, to nav to next period was pressed. -1 if the left arrow, to nav to the prev period was pressed.
+     * @param {Event} event
+     *
+     * @type {Function}
+     */
+    onNav: PT.func,
+
+    /**
+     * Function to be called when the user selects a year/month.
+     *
+     * Called with the following params:
+     *
+     * @param {String} dateText Date formatted as string
+     * @param {Moment} moment Moment.js instance
+     * @param {String} view The name of the view displayed after following the selection. For now, either "year" or "month"
+     *
+     * @type {Function}
+     */
+    onSelect: PT.func,
+
+    /**
+     * A function that should return a React DOM for the day cell. The first param is the props object.
+     * You can use this to have full control over what gets rendered for a day.
+     *
+     * @param {Object} dayProps The props object passed to day rendering
+     *
+     * @type {Function}
+     */
+    renderDay: PT.func,
+
+    /**
+     * A function that can manipulate the props object for a day, and SHOULD return a props object (a new one, or the same).
+     * Use this for CUSTOM DAY STYLING.
+     * You can use this to take full control over the styles/css classes/attributes applied to the day cell in the month view.
+     *
+     * @param {Object} dayProps
+     * @return {Object} dayProps
+     *
+     * @type {Function}
+     */
+    onRenderDay: PT.func,
+
+    /******************************************/
+    /********** VIEW-related props ************/
+    /******************************************/
+
+    /**
+     * The default view to show in the picker. This is an uncontrolled prop.
+     * If none specified, the default view will be "month"
+     *
+     * @type {String}
+     */
+    defaultView: PT.string,
+
+    /**
+     * The view to show in the picker. This is a CONTROLLED prop!
+     *
+     * When using this controlled prop, make sure you update it when `onViewChange` function is called
+     * if you want to navigate to another view, as expected.
+     *
+     * @type {String}
+     */
+    view: PT.string,
+
+    /**
+     * A function to be called when navigating to another view date.
+     *
+     * Called with the following params:
+     *
+     * @param {String} dateText Date formatted as string
+     * @param {Moment} moment Moment.js instance
+     * @param {String} view the name of the view displayed after the navigation occurs.
+     *
+     * @type {Function}
+     */
+    onViewDateChange: PT.func,
+
+    /**
+     * A function to be called when the view is changed.
+     * If you're using the controlled `view` prop, make sure you update the `view` prop in this function if you want to navigate to another view, as expected.
+     *
+     * @param {String} nextView One of "month", "year", "decade"
+     *
+     * @type {Function}
+     */
+    onViewChange: PT.func,
+
+    /**
+     * Defaults to true. If specified as false, will not navigate to the date that was clicked, even if that date is in the prev/next month
+     * @type {Boolean}
+     */
+    navOnDateClick: PT.bool
+};
 
 module.exports = DatePicker;
