@@ -240,7 +240,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        viewProps.onSelect = this.handleSelect;
 	        viewProps.onChange = this.handleChange;
 
-	        return React.createElement('div', _extends({ className: className, style: props.style }, this.props), React.createElement('div', { className: 'dp-inner', style: { width: '100%', height: '100%' } }, this.renderHeader(view, props), React.createElement('div', { className: 'dp-body', style: { flex: 1 } }, React.createElement('div', { className: 'dp-anim-target' }, view(viewProps))), this.renderFooter(props)));
+	        return React.createElement('div', _extends({ className: className, style: props.style }, this.props), this.renderHeader(view, props), React.createElement('div', { className: 'dp-body', style: { flex: 1 } }, view(viewProps)), this.renderFooter(props));
 	    },
 
 	    prepareStyle: function prepareStyle(props) {
@@ -509,6 +509,125 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	DatePicker.views = Views;
 
+	var PT = React.PropTypes;
+
+	DatePicker.propTypes = {
+
+	    /**
+	     * Function to be called when user selects a date.
+	     *
+	     * Called with the following params:
+	     *
+	     * @param {String} dateText Date formatted as string
+	     * @param {Moment} moment Moment.js instance
+	     * @param {Event} event
+	     *
+	     * @type {Function}
+	     */
+	    onChange: PT.func,
+
+	    /**
+	     * Function to be called when the user navigates to the next/prev month/year/decade
+	     *
+	     * Called with the following params:
+	     *
+	     * @param {String} dateText Date formatted as string
+	     * @param {Moment} moment Moment.js instance
+	     * @param {String} view The name of the current view (eg: "month")
+	     * @param {Number} direction 1 or -1. 1 if the right arrow, to nav to next period was pressed. -1 if the left arrow, to nav to the prev period was pressed.
+	     * @param {Event} event
+	     *
+	     * @type {Function}
+	     */
+	    onNav: PT.func,
+
+	    /**
+	     * Function to be called when the user selects a year/month.
+	     *
+	     * Called with the following params:
+	     *
+	     * @param {String} dateText Date formatted as string
+	     * @param {Moment} moment Moment.js instance
+	     * @param {String} view The name of the view displayed after following the selection. For now, either "year" or "month"
+	     *
+	     * @type {Function}
+	     */
+	    onSelect: PT.func,
+
+	    /**
+	     * A function that should return a React DOM for the day cell. The first param is the props object.
+	     * You can use this to have full control over what gets rendered for a day.
+	     *
+	     * @param {Object} dayProps The props object passed to day rendering
+	     *
+	     * @type {Function}
+	     */
+	    renderDay: PT.func,
+
+	    /**
+	     * A function that can manipulate the props object for a day, and SHOULD return a props object (a new one, or the same).
+	     * Use this for CUSTOM DAY STYLING.
+	     * You can use this to take full control over the styles/css classes/attributes applied to the day cell in the month view.
+	     *
+	     * @param {Object} dayProps
+	     * @return {Object} dayProps
+	     *
+	     * @type {Function}
+	     */
+	    onRenderDay: PT.func,
+
+	    /******************************************/
+	    /********** VIEW-related props ************/
+	    /******************************************/
+
+	    /**
+	     * The default view to show in the picker. This is an uncontrolled prop.
+	     * If none specified, the default view will be "month"
+	     *
+	     * @type {String}
+	     */
+	    defaultView: PT.string,
+
+	    /**
+	     * The view to show in the picker. This is a CONTROLLED prop!
+	     *
+	     * When using this controlled prop, make sure you update it when `onViewChange` function is called
+	     * if you want to navigate to another view, as expected.
+	     *
+	     * @type {String}
+	     */
+	    view: PT.string,
+
+	    /**
+	     * A function to be called when navigating to another view date.
+	     *
+	     * Called with the following params:
+	     *
+	     * @param {String} dateText Date formatted as string
+	     * @param {Moment} moment Moment.js instance
+	     * @param {String} view the name of the view displayed after the navigation occurs.
+	     *
+	     * @type {Function}
+	     */
+	    onViewDateChange: PT.func,
+
+	    /**
+	     * A function to be called when the view is changed.
+	     * If you're using the controlled `view` prop, make sure you update the `view` prop in this function if you want to navigate to another view, as expected.
+	     *
+	     * @param {String} nextView One of "month", "year", "decade"
+	     *
+	     * @type {Function}
+	     */
+	    onViewChange: PT.func,
+
+	    /**
+	     * Defaults to true. If specified as false, will not navigate to the date that was clicked, even if that date is in the prev/next month
+	     * @type {Boolean}
+	     */
+	    navOnDateClick: PT.bool
+	};
+
 	module.exports = DatePicker;
 
 /***/ },
@@ -572,7 +691,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var monthsInView = this.getMonthsInYear(viewMoment);
 
-	        return React.createElement('table', { className: 'dp-table dp-year-view' }, React.createElement('tbody', null, this.renderMonths(props, monthsInView)));
+	        return React.createElement('div', { className: 'dp-table dp-year-view' }, this.renderMonths(props, monthsInView));
 	    },
 
 	    /**
@@ -595,7 +714,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        return buckets.map(function (bucket, i) {
-	            return React.createElement('tr', { key: 'row' + i }, bucket);
+	            return React.createElement('div', { key: 'row' + i, className: 'dp-row' }, bucket);
 	        });
 	    },
 
@@ -611,7 +730,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var onClick = this.handleClick.bind(this, props, date);
 
-	        return React.createElement('td', {
+	        return React.createElement('div', {
 	            tabIndex: '1',
 	            role: 'link',
 	            key: monthText,
@@ -1017,7 +1136,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var daysInView = this.getDaysInMonth(viewMoment);
 
-	    return React.createElement('table', { className: 'dp-table dp-month-view' }, React.createElement('tbody', null, this.renderWeekDayNames(), this.renderDays(props, daysInView)));
+	    return React.createElement('div', { className: 'dp-table dp-month-view' }, this.renderWeekDayNames(), this.renderDays(props, daysInView));
 	  },
 
 	  /**
@@ -1041,7 +1160,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    return buckets.map(function (bucket, i) {
-	      return React.createElement('tr', { key: 'row' + i, className: 'dp-week dp-row' }, bucket);
+	      return React.createElement('div', { key: 'row' + i, className: 'dp-week dp-row' }, bucket);
 	    });
 	  },
 
@@ -1091,7 +1210,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      renderDayProps = props.onRenderDay(renderDayProps);
 	    }
 
-	    var defaultRenderFunction = React.DOM.td;
+	    var defaultRenderFunction = React.DOM.div;
 	    var renderFunction = props.renderDay || defaultRenderFunction;
 
 	    var result = renderFunction(renderDayProps);
@@ -1129,8 +1248,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  renderWeekDayNames: function renderWeekDayNames() {
 	    var names = this.getWeekDayNames();
 
-	    return React.createElement('tr', { className: 'dp-row dp-week-day-names' }, names.map(function (name, index) {
-	      return React.createElement('td', { key: index, className: 'dp-cell dp-week-day-name' }, name);
+	    return React.createElement('div', { className: 'dp-row dp-week-day-names' }, names.map(function (name, index) {
+	      return React.createElement('div', { key: index, className: 'dp-cell dp-week-day-name' }, name);
 	    }));
 	  },
 
@@ -1220,7 +1339,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var yearsInView = this.getYearsInDecade(viewMoment);
 
-	        return React.createElement('table', { className: 'dp-table dp-decade-view' }, React.createElement('tbody', null, this.renderYears(props, yearsInView)));
+	        return React.createElement('div', { className: 'dp-table dp-decade-view' }, this.renderYears(props, yearsInView));
 	    },
 
 	    /**
@@ -1243,7 +1362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        return buckets.map(function (bucket, i) {
-	            return React.createElement('tr', { key: 'row' + i }, bucket);
+	            return React.createElement('div', { key: 'row' + i, className: 'dp-row' }, bucket);
 	        });
 	    },
 
@@ -1267,7 +1386,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        var onClick = this.handleClick.bind(this, props, date);
 
-	        return React.createElement('td', {
+	        return React.createElement('div', {
 	            role: 'link',
 	            tabIndex: '1',
 	            key: yearText,
@@ -1300,48 +1419,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	var React = __webpack_require__(2);
-
 	var P = React.PropTypes;
-
 	var onEnter = __webpack_require__(10);
 
 	module.exports = React.createClass({
 
-		displayName: 'DatePickerHeader',
+	  displayName: 'DatePickerHeader',
 
-		propTypes: {
-			onChange: P.func,
-			onPrev: P.func,
-			onNext: P.func,
-			colspan: P.number,
-			children: P.node
-		},
+	  propTypes: {
+	    onChange: P.func,
+	    onPrev: P.func,
+	    onNext: P.func,
+	    colspan: P.number,
+	    children: P.node
+	  },
 
-		render: function render() {
+	  render: function render() {
 
-			var props = this.props;
+	    var props = this.props;
 
-			return React.createElement('div', { className: 'dp-header' }, React.createElement('table', { className: 'dp-nav-table' }, React.createElement('tbody', null, React.createElement('tr', { className: 'dp-row' }, React.createElement('td', {
-				tabIndex: '1',
-				role: 'link',
-				className: 'dp-prev-nav dp-nav-cell dp-cell',
-				onClick: props.onPrev,
-				onKeyUp: onEnter(props.onPrev)
-			}, props.prevText), React.createElement('td', {
-				tabIndex: '1',
-				role: 'link',
-				className: 'dp-nav-view dp-cell',
-				colSpan: props.colspan,
-				onClick: props.onChange,
-				onKeyUp: onEnter(props.onChange)
-			}, props.children), React.createElement('td', {
-				tabIndex: '1',
-				role: 'link',
-				className: 'dp-next-nav dp-nav-cell dp-cell',
-				onClick: props.onNext,
-				onKeyUp: onEnter(props.onNext)
-			}, props.nextText)))));
-		}
+	    return React.createElement('div', { className: 'dp-header' }, React.createElement('div', { className: 'dp-nav-table' }, React.createElement('div', { className: 'dp-row' }, React.createElement('div', {
+	      tabIndex: '1',
+	      role: 'link',
+	      className: 'dp-prev-nav dp-nav-cell dp-cell',
+	      onClick: props.onPrev,
+	      onKeyUp: onEnter(props.onPrev)
+	    }, props.prevText), React.createElement('div', {
+	      tabIndex: '1',
+	      role: 'link',
+	      className: 'dp-nav-view dp-cell',
+	      colSpan: props.colspan,
+	      onClick: props.onChange,
+	      onKeyUp: onEnter(props.onChange)
+	    }, props.children), React.createElement('div', {
+	      tabIndex: '1',
+	      role: 'link',
+	      className: 'dp-next-nav dp-nav-cell dp-cell',
+	      onClick: props.onNext,
+	      onKeyUp: onEnter(props.onNext)
+	    }, props.nextText))));
+	  }
 
 	});
 
