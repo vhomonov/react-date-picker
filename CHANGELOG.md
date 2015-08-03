@@ -1,6 +1,9 @@
 react-date-picker
 =================
 
+#### 3.0.1
+ * Fix styling issues introduced in `3.0.0`
+ 
 #### 3.0.0
  * Implement picker using `flex` layout (replacing `table` layout). This allows the picker to fill all available space and not rely on fixed height.
 
