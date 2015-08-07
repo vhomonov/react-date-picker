@@ -54,10 +54,10 @@ var App = React.createClass({
             <DatePicker
               style={{width: 350, height: 300}}
               minDate={moment()}
-              weekDayNames={['S','M','T','W','T','F','S']}
-              locale   ={LOCALE}
-              date    ={VALUE}
-              onChange ={this.onChange}
+              locale={LOCALE}
+              date={VALUE}
+              hideFooter={true}
+              onChange={this.onChange}
             />
         </div>
     },

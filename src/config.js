@@ -24,10 +24,10 @@ module.exports = {
     yearFormat: 'YYYY',
 
     //text for navigating to prev period
-    navPrev      : '‹',
+    navPrev      : '',
 
     //text for navigating to next period
-    navNext      : '›',
+    navNext      : '',
 
     //the view to render initially. Possible values are: 'month', 'year', 'decade'
     view: null,
