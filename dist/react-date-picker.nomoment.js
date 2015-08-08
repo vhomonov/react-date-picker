@@ -844,8 +844,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    dateFormat: 'YYYY-MM-DD',
 
 	    onRenderDay: null,
-	    renderDay: null,
+	    renderDay: null
 	}
+
 
 /***/ },
 /* 6 */
