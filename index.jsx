@@ -1,6 +1,7 @@
 'use strict'
 
-require('./index.styl')
+require('./style/base.styl')
+require('./style/theme/hackerone/index.styl');
 
 var moment = require('moment');
 var React      = require('react')
@@ -54,10 +55,9 @@ var App = React.createClass({
             <DatePicker
               style={{width: 350, height: 300}}
               minDate={moment()}
-              weekDayNames={['S','M','T','W','T','F','S']}
-              locale   ={LOCALE}
-              date    ={VALUE}
-              onChange ={this.onChange}
+              locale={LOCALE}
+              date={VALUE}
+              onChange={this.onChange}
             />
         </div>
     },

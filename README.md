@@ -18,6 +18,48 @@ Click for [LIVE DEMO](http://zippyui.github.io/react-date-picker)
 $ npm install react-date-picker
 ```
 
+## Usage
+
+Require the css
+```jsx
+
+require('react-date-picker/index.css');
+
+var DatePicker = require('react-date-picker');
+
+```
+
+```jsx
+
+var date = '2014-10-10' //or Date.now()
+
+function onChange(dateString, moment){
+    //...
+}
+
+<DatePicker
+    minDate='2014-04-04'
+    maxDate='2015-10-10'
+    date={date}
+    onChange={onChange}
+/>
+```
+
+## Theming
+
+Theming is done by requiring a specific css file.
+
+By default, `react-date-picker/index.css` contains both structural styles and the default theme.
+
+If you want to load a specific theme, make sure you load
+```jsx
+require('react-date-picker/base.css')
+```
+first (which contains only structural css rules), and then any css theme file. For now, there are two themes available:
+ 
+ * `react-date-picker/theme/default.css`
+ * `react-date-picker/theme/hackerone.css`
+
 ## Changelog
 
 See [changelog](./CHANGELOG.md)
@@ -35,19 +77,7 @@ The preferred **React** version for `react-date-picker` is  >=0.12. The initial 
 ### Example
 
 ```jsx
-var date = '2014-10-10' //or Date.now()
 
-function onChange(dateString, moment){
-    //...
-}
-
-<DatePicker
-    minDate='2014-04-04'
-    maxDate='2015-10-10'
-    date={date}
-    onChange={onChange}
-/>
-```
 
 ## I18n and localization
 

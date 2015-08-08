@@ -8,22 +8,7 @@
  This software cannot be used/copied/distributed without the express permission from staff at zippyui.com
 
  */
-
-row()
-  display flex
-  flex-flow row
-  flex 1
-
-column()
-  display flex
-  flex-flow column
-  flex 1
-
-cell()
-  display flex
-  align-items center
-  justify-content center
-  flex 1
+@import './utils.styl'
 
 .date-picker
   display flex
@@ -56,6 +41,5 @@ cell()
     width 100%
     .dp-cell
       flex 7
-    .dp-cell:first-child
-    .dp-cell:last-child
+    .dp-nav-cell
       flex 1
