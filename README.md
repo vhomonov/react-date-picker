@@ -74,11 +74,6 @@ If you use the files from the `dist` directory, (eg: `dist/react-date-picker.js`
 
 The preferred **React** version for `react-date-picker` is  >=0.12. The initial version of `react-date-picker` worked with React 0.11.2 as well, but I do not intend to continue to support it, in order to be able to focus on advancing the current features and developing other high-quality React components.
 
-### Example
-
-```jsx
-
-
 ## I18n and localization
 
 For rendering the date picker with a custom locale, there are two options
