@@ -166,6 +166,25 @@ You'll also probably want `.dp-cell:first-child` left border to be 0 and `.dp-ce
 
 ## Examples
 
+![hackerone theme](./react-date-picker-theme-hackerone.png)
+
+Change `style/index.styl` to include `@import './theme/hackerone/index.styl'` instead of `@import './theme/hackerone/index.styl'` and rebuild.
+
+![hackerone theme with no footer](./react-date-picker-theme-hackerone-no-footer.png)
+
+Follow the directions above to enable the `hackerone` theme and set `hideFooter={true}` on your `DatePicker` instance.
+
+```
+<DatePicker
+  style={{width: 350, height: 300}}
+  minDate={moment()}
+  locale={LOCALE}
+  date={VALUE}
+  hideFooter={true}
+  onChange={this.onChange}
+/>
+```
+
 
 #### Custom styling of day cells
 
