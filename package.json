@@ -6,14 +6,23 @@
   "scripts": {
     "test": "mocha --recursive --reporter spec --require should",
     "dev": "webpack-dev-server --progress --port 8080 --config build/webpack.config.js",
-    "build-style": "webpack --progress --config build/build-style.config.js",
+
+    "build-css": "npm run build-css-index && npm run build-css-base && npm run build-themes",
+
+    "build-css-index": "webpack --progress --config build/build-css-index.config.js",
+    "build-css-base": "webpack --progress --config build/build-css-base.config.js",
+
+    "build-themes": "npm run build-theme-default && npm run build-theme-hackerone",
+    "build-theme-default": "webpack --progress --config build/build-theme-default.config.js",
+    "build-theme-hackerone": "webpack --progress --config build/build-theme-hackerone.config.js",
+
     "dist": "webpack --progress --config build/dist.config.js",
     "dist.min": "webpack --progress -p --config build/dist.min.config.js",
     "dist-nomoment": "webpack --progress --config build/dist.nomoment.config.js",
     "dist-nomoment.min": "webpack --progress -p --config build/dist.nomoment.min.config.js",
     "lib": "gulp",
     "test-w": "mocha --recursive --reporter spec --require should --watch",
-    "build": "npm run build-style && npm run dist && npm run dist-nomoment && npm run dist.min && npm run dist-nomoment.min && npm run lib"
+    "build": "npm run build-css && npm run dist && npm run dist-nomoment && npm run dist.min && npm run dist-nomoment.min && npm run lib"
   },
   "contributors": [],
   "author": "ZippyUI <contact@zippyui.com>",
@@ -25,7 +34,7 @@
   },
   "peerDependencies": {
     "moment": ">=2.8.0",
-    "react": ">=0.12.0 || 0.13.0-beta.1 || 0.13.0-rc1 || 0.13.0-rc2 || 0.14.0-beta1"
+    "react": ">=0.12.0 || ^0.14.0-alpha"
   },
   "devDependencies": {
     "babel-loader": "^5.3.2",

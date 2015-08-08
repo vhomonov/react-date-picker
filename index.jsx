@@ -1,6 +1,7 @@
 'use strict'
 
-require('./index.styl')
+require('./style/base.styl')
+require('./style/theme/hackerone/index.styl');
 
 var moment = require('moment');
 var React      = require('react')
@@ -56,7 +57,6 @@ var App = React.createClass({
               minDate={moment()}
               locale={LOCALE}
               date={VALUE}
-              hideFooter={true}
               onChange={this.onChange}
             />
         </div>

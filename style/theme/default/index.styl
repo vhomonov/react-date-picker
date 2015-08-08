@@ -1,11 +1,15 @@
-ellipsis()
-  text-overflow ellipsis
-  white-space nowrap
-  overflow hidden
+/*
 
-unselectable()
-  touch-callout none
-  user-select none
+ This file is part of the ZippyUI Framework
+
+ Copyright (c) 2011 ZippyUI.com
+
+ All rights reserved to zippyui.com
+ This software cannot be used/copied/distributed without the express permission from staff at zippyui.com
+
+ */
+@import '../../utils.styl'
+@import './constants.styl'
 
 .date-picker
   overflow hidden
@@ -14,35 +18,22 @@ unselectable()
   width $dp-datepicker-width
   height $dp-datepicker-height
   border $dp-datepicker-border-width $dp-datepicker-border-style $dp-datepicker-border-color
-  border-radius $dp-datepicker-border-radius
-
-  .dp-header
-    background $dp-datepicker-header-background
-    .dp-cell
-      color $dp-datepicker-header-color
-      &:hover
-        background $dp-datepicker-header-over-background
 
   .dp-table
     border-color $dp-datepicker-border-color
 
     .dp-row
-      border-top $dp-datepicker-row-border-width $dp-datepicker-row-border-style $dp-datepicker-row-border-color
-      &.dp-week-day-names
-        background $dp-datepicker-week-day-names-background
-        border-bottom $dp-datepicker-week-day-names-border-width $dp-datepicker-week-day-names-border-style $dp-datepicker-week-day-names-border-color
-        border-top none
-        color $dp-datepicker-week-day-names-color
+      border-top $dp-datepicker-border-width $dp-datepicker-border-style $dp-datepicker-border-color
+      &:last-child
+        border-bottom $dp-datepicker-border-width $dp-datepicker-border-style $dp-datepicker-border-color
 
     .dp-cell
       cursor pointer
       padding $dp-datepicker-cell-padding
       background $dp-datepicker-day-bg
-      border-radius $dp-datepicker-day-border-radius
-      margin $dp-datepicker-day-margin
 
       &:not(:first-child)
-        border-left $dp-datepicker-cell-border-width $dp-datepicker-cell-border-style $dp-datepicker-cell-border-color
+        border-left $dp-datepicker-border-width $dp-datepicker-border-style $dp-datepicker-border-color
 
       &.dp-prev
       &.dp-next
@@ -68,7 +59,8 @@ unselectable()
         background $dp-datepicker-value-bg
 
       &.dp-current
-        font-weight $dp-datepicker-today-font-weight
+        color $dp-datepicker-today-color
+        background $dp-datepicker-today-bg
 
       &.dp-in-range.dp-current
       &.dp-in-range.dp-value
@@ -78,14 +70,14 @@ unselectable()
         ellipsis true
 
       &.dp-week-day-name
+        font-weight bold
         cursor default
         background inherit
-        border $dp-datepicker-week-day-name-border
 
   .dp-footer
     padding 3px
     justify-content center
-    border-top $dp-datepicker-border-width $dp-datepicker-border-style $dp-datepicker-border-color
+    border-top-width 0px
 
     .dp-footer-selected
     .dp-footer-today
@@ -95,9 +87,6 @@ unselectable()
 
   .dp-body
     overflow hidden
-
-  .dp-cell
-    outline none
 
   .dp-nav-view
   .dp-nav-cell
@@ -109,21 +98,10 @@ unselectable()
   .dp-nav-cell
     cursor pointer
 
-  .dp-nav-table .dp-nav-cell.dp-cell
-    border $dp-datepicker-header-cell-border
-    padding 0
-    margin-top 5px
-    width 0
-    height 0
-    &.dp-prev-nav
-      border-right-color $dp-datepicker-nav-bg
-      &:hover
-        border-right-color $dp-datepicker-nav-over-bg
-    &.dp-next-nav
-      border-left-color $dp-datepicker-nav-bg
-      &:hover
-        border-left-color $dp-datepicker-nav-over-bg
-
+  .dp-nav-cell
+    background $dp-datepicker-nav-bg
+    &:hover
+      background $dp-datepicker-nav-over-bg
 
   .dp-nav-view
     background $dp-datepicker-month-name-bg
@@ -132,6 +110,8 @@ unselectable()
 
   .dp-nav-table
     .dp-cell
+      border-top-width 0px
+      border-bottom-width 0px
       padding $dp-datepicker-header-padding
       font-weight bold
 

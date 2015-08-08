@@ -1,6 +1,9 @@
 react-date-picker
 =================
 
+#### 3.1.0
+ * Add theme (`hackerone`) and theme addition easy
+ 
 #### 3.0.1
  * Fix styling issues introduced in `3.0.0`
  
