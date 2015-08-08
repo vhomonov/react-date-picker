@@ -2,7 +2,9 @@ react-date-picker
 =================
 
 #### 3.1.0
- * Add theme (`hackerone`) and theme addition easy
+ * Add theme (`hackerone`) and made theme addition easy
+ * accept PR [#44](https://github.com/zippyui/react-date-picker/pull/44)
+ * accept PR [#45](https://github.com/zippyui/react-date-picker/pull/45)
  
 #### 3.0.1
  * Fix styling issues introduced in `3.0.0`
