@@ -11,7 +11,7 @@ react-date-picker
 [![Date picker](./react-date-picker.png)](http://zippyui.github.io/react-date-picker)
 [![hackerone theme](./react-date-picker-theme-hackerone.png)](http://zippyui.github.io/react-date-picker)
 
-Click for [LIVE DEMO](http://zippyui.github.io/react-date-picker)
+Click for [LIVE DEMO!](http://zippyui.github.io/react-date-picker)
 
 ## Install
 
