@@ -65,7 +65,7 @@ first (which contains only structural css rules), and then any css theme file. F
 ![hackerone theme](./react-date-picker-theme-hackerone.png)
 
 ```jsx
-require('react-date-picker/index.css');
+require('react-date-picker/base.css');
 require('react-date-picker/theme/hackerone.css');
 var DatePicker = require('react-date-picker');
 
