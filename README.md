@@ -60,6 +60,23 @@ first (which contains only structural css rules), and then any css theme file. F
  * `react-date-picker/theme/default.css`
  * `react-date-picker/theme/hackerone.css`
 
+### hackerone theme
+ 
+![hackerone theme](./react-date-picker-theme-hackerone.png)
+
+```jsx
+require('react-date-picker/index.css');
+require('react-date-picker/theme/hackerone.css');
+var DatePicker = require('react-date-picker');
+
+<DatePicker
+    minDate='2014-04-04'
+    maxDate='2015-10-10'
+    date={date}
+    onChange={onChange}
+/>
+```
+
 ## Changelog
 
 See [changelog](./CHANGELOG.md)
@@ -161,28 +178,6 @@ You'll also probably want `.dp-cell:first-child` left border to be 0 and `.dp-ce
 .date-picker .dp-cell:last-child {
     border-right: 0px;
 }
-```
-
-
-## Examples
-
-![hackerone theme](./react-date-picker-theme-hackerone.png)
-
-Change `style/index.styl` to include `@import './theme/hackerone/index.styl'` instead of `@import './theme/hackerone/index.styl'` and rebuild.
-
-![hackerone theme with no footer](./react-date-picker-theme-hackerone-no-footer.png)
-
-Follow the directions above to enable the `hackerone` theme and set `hideFooter={true}` on your `DatePicker` instance.
-
-```
-<DatePicker
-  style={{width: 350, height: 300}}
-  minDate={moment()}
-  locale={LOCALE}
-  date={VALUE}
-  hideFooter={true}
-  onChange={this.onChange}
-/>
 ```
 
 
