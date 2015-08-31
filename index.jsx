@@ -1,6 +1,7 @@
 'use strict'
 
-require('./index.css')
+require('./base.css')
+require('./theme/hackerone.css')
 
 var moment = require('moment');
 var React      = require('react')
@@ -52,7 +53,7 @@ var App = React.createClass({
             </p>
 
             <DatePicker
-              style={{width: 350, height: 300}}
+              style={{width: 250, height: 300}}
               minDate={moment()}
               locale={LOCALE}
               date={VALUE}
