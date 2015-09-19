@@ -240,13 +240,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        viewProps.onSelect = this.handleSelect;
 	        viewProps.onChange = this.handleChange;
 
-	        return React.createElement('div', _extends({ className: className, style: props.style }, this.props), this.renderHeader(view, props), React.createElement('div', { className: 'dp-body', style: { flex: 1 } }, view(viewProps)), this.renderFooter(props));
+	        return React.createElement('div', _extends({}, this.props, { className: className, style: props.style }), this.renderHeader(view, props), React.createElement('div', { className: 'dp-body', style: { flex: 1 } }, view(viewProps)), this.renderFooter(props));
 	    },
 
 	    prepareStyle: function prepareStyle(props) {
-	        var style = assign({}, props.defaultStyle, props.style);
-
-	        return style;
+	        return assign({}, props.defaultStyle, props.style);
 	    },
 
 	    renderFooter: function renderFooter(props) {
