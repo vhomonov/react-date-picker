@@ -982,11 +982,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      classes.push('dp-next');
 	    }
 
+	    var beforeMinDate;
+
 	    if (props.minDate && date < props.minDate) {
 	      classes.push('dp-disabled dp-before-min');
+	      beforeMinDate = true;
 	    }
+
+	    var afterMaxDate;
 	    if (props.maxDate && date > props.maxDate) {
 	      classes.push('dp-disabled dp-after-max');
+	      afterMaxDate = true;
 	    }
 
 	    if (dateTimestamp == props.moment) {
@@ -1009,6 +1015,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      onKeyUp: onEnter(onClick),
 	      children: dayText
 	    };
+
+	    if (beforeMinDate) {
+	      renderDayProps.isDisabled = true;
+	      renderDayProps.beforeMinDate = true;
+	    }
+	    if (afterMaxDate) {
+	      renderDayProps.isDisabled = true;
+	      renderDayProps.afterMaxDate = true;
+	    }
 
 	    if (typeof props.onRenderDay === 'function') {
 	      renderDayProps = props.onRenderDay(renderDayProps);
