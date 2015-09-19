@@ -1,6 +1,11 @@
 react-date-picker
 =================
 
+#### 3.1.4
+ * add `isDisabled` prop to props passed in `renderDay`
+ * add `beforeMinDate` prop to props passed in `renderDay` - only set if the day to be rendered is before the specified `minDate`
+ * add `afterMaxDate` prop to props passed in `renderDay` - only set if the day to be rendered is after the specified `maxDate`
+
 #### 3.1.0
  * Add theme (`hackerone`) and made theme addition easy
  * accept PR [#44](https://github.com/zippyui/react-date-picker/pull/44)

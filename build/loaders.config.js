@@ -4,27 +4,27 @@ module.exports = [
   {
     test: /\.jsx$/,
     exclude: /node_modules/,
-    loader: 'babel-loader'
+    loader: 'babel'
   },
   {
     test: /\.jsx$/,
     exclude: /node_modules/,
-    loader: 'babel-loader'
+    loader: 'babel'
   },
   {
     test: /\.json$/,
-    loader: 'json-loader'
+    loader: 'json'
   },
   {
     test: /\.styl$/,
-    loader: 'style-loader!css-loader!stylus-loader'
+    loader: 'style!css!autoprefixer!stylus'
   },
   {
     test: /\.css$/,
-    loader: 'style-loader!css-loader'
+    loader: 'style!css!autoprefixer'
   },
   {
     test: /\.png$/,
-    loader: 'url-loader?mimetype=image/png'
+    loader: 'url?mimetype=image/png'
   }
 ]
