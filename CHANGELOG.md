@@ -1,6 +1,9 @@
 react-date-picker
 =================
 
+#### 3.1.5
+ * fix `style` and `className` props to also keep `date-picker` className if a className is provided.
+ 
 #### 3.1.4
  * add `isDisabled` prop to props passed in `renderDay`
  * add `beforeMinDate` prop to props passed in `renderDay` - only set if the day to be rendered is before the specified `minDate`
