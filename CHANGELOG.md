@@ -1,6 +1,9 @@
 react-date-picker
 =================
 
+#### 3.1.6
+ * update `object-assign` to `4.0.1`
+ 
 #### 3.1.5
  * fix `style` and `className` props to also keep `date-picker` className if a className is provided.
  
