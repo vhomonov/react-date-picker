@@ -12,7 +12,7 @@ var pickerDate = NOW
 
 var sizeStyle = {
     width: 300,
-    minHeight: 280
+    height: 280
 }
 
 var LOCALE = 'en'
