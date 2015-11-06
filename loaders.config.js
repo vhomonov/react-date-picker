@@ -1,11 +1,11 @@
 module.exports = [
     {
         test: /\.jsx$/,
-        loader: 'jsx-loader?insertPragma=React.DOM&harmony'
+        loader: 'babel-loader'
     },
     {
         test: /\.js$/,
-        loader: 'jsx-loader?harmony'
+        loader: 'babel-loader'
     },
     {
         test: /\.json$/,
@@ -13,11 +13,11 @@ module.exports = [
     },
     {
         test: /\.styl$/,
-        loader: 'style-loader!css-loader!stylus-loader'
+        loader: 'style!css!autoprefixer!stylus'
     },
     {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        loader: 'style!css!autoprefixer'
     },
     {
         test: /\.png$/,

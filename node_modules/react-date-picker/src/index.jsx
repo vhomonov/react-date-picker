@@ -179,7 +179,7 @@ var DatePicker = React.createClass({
         viewProps.onChange = this.handleChange
 
         return (
-            <div className={className} style={props.style} {...this.props}>
+            <div {...this.props} className={className} style={props.style} >
                 {this.renderHeader(view, props)}
 
                 <div className="dp-body" style={{flex: 1}}>
@@ -192,9 +192,7 @@ var DatePicker = React.createClass({
     },
 
     prepareStyle: function(props) {
-        var style = assign({}, props.defaultStyle, props.style)
-
-        return style
+        return assign({}, props.defaultStyle, props.style)
     },
 
     renderFooter: function(props) {
