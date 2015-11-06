@@ -90,10 +90,6 @@
 }
 .date-picker .dp-footer {
   padding: 3px;
-  -webkit-justify-content: center;
-  -webkit-box-pack: center;
-  flex-pack: center;
-  -ms-flex-pack: center;
   justify-content: center;
   border-top: 1px solid #aeaeae;
 }
@@ -116,10 +112,6 @@
   white-space: nowrap;
   overflow: hidden;
   touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
   user-select: none;
 }
 .date-picker .dp-nav-view,
@@ -156,26 +148,13 @@
   font-weight: bold;
 }
 .date-picker .dp-nav-table .dp-nav-cell {
-  -webkit-box-flex: 0;
-  -moz-box-flex: 0;
-  -ms-box-flex: 0;
-  -ms-flex: 0;
-  -webkit-flex: 0;
   flex: 0;
   touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
   user-select: none;
 }
 .date-picker .dp-decade-view,
 .date-picker .dp-year-view,
 .date-picker .dp-month-view {
   touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
   user-select: none;
 }
