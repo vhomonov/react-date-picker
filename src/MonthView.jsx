@@ -59,7 +59,7 @@ var MonthView = React.createClass({
         beforeFirst.isBefore(start)
         // and it doen't start with a full week before and the week has at least 1 day from current month (default)
         &&
-        (this.props.showFirstRowIfEmpty || !start.isSame(first))
+        (this.props.alwaysShowPrevWeek || !start.isSame(first))
       ){
         start.add(-1, 'weeks')
     } 

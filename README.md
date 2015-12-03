@@ -126,15 +126,15 @@ The second option is specifying the `locale` prop on the date picker. This assum
  * `weekDayNames` - either an array of week day names, or a function that returns an array. In case you specify `weekDayNames` as an array, it should have Sunday as the first day. If not specified, will be built with `momentjs`using `moment.weekdaysShort()`
  * `weekStartDay`: Number - Sun 0, Monday 1, etc... If not specified, the locale specific value will be uesd.
  * `locale`: String
- * todayText: String
- * gotoSelectedText: String
+ * `todayText`: String
+ * `gotoSelectedText`: String
 
 ## Props
 
- * hideFooter: Boolean - by default footer is shown, so specify this to true if you don't want the footer
- * hideHeader: Boolean - by default header is shown, so specify this to true if you don't want the header
- * date    : Date / String / Moment / Number - for controlled behavior. Make sure you also specify an `onChange` prop
- * defaultDate: Date / String / Moment / Number - for uncontrolled behavior
+ * `hideFooter`: Boolean - by default footer is shown, so specify this to true if you don't want the footer
+ * `hideHeader`: Boolean - by default header is shown, so specify this to true if you don't want the header
+ * `date`    : Date / String / Moment / Number - for controlled behavior. Make sure you also specify an `onChange` prop
+ * `defaultDate`: Date / String / Moment / Number - for uncontrolled behavior
  * `minDate` : Date / String / Moment / Number
  * `maxDate` : Date / String / Moment / Number
  * `dateFormat`: String [see moment.js formats](http://momentjs.com/docs/#/displaying/format/). Default date format is 'YYYY-MM-DD'
@@ -162,6 +162,7 @@ The second option is specifying the `locale` prop on the date picker. This assum
  * `onViewChange`: Function - function called when the view is changed. If using the controlled `view` version, make sure you update the `view` prop in this function if you want to navigate to another view as expected.
 
  * `navOnDateClick`: Boolean - defaults to true. If false, will not navigate to the date that was clicked, even if that date is in the prev/next month
+ * `alwaysShowPrevWeek` Boolean - defaults to false. If false, when the month starts on the first day of the week (`weekStartDay`), no days from the previous month will be displayed. Otherwise the first row will display the last week from the previous month. 
 
 ## Styling with css
 

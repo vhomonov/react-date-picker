@@ -50,5 +50,5 @@ module.exports = {
     onRenderDay: null,
     renderDay: null,
 
-    showFirstRowIfEmpty: false
+    alwaysShowPrevWeek: false
 }
