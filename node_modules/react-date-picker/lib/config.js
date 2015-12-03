@@ -48,5 +48,7 @@ module.exports = {
     dateFormat: 'YYYY-MM-DD',
 
     onRenderDay: null,
-    renderDay: null
+    renderDay: null,
+
+    alwaysShowPrevWeek: false
 };

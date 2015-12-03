@@ -12242,7 +12242,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    dateFormat: 'YYYY-MM-DD',
 
 	    onRenderDay: null,
-	    renderDay: null
+	    renderDay: null,
+
+	    alwaysShowPrevWeek: false
 	}
 
 
@@ -12338,12 +12340,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	   */
 	  getDaysInMonth: function getDaysInMonth(value) {
 	    var first = this.toMoment(value).startOf('month');
+	    var beforeFirst = this.toMoment(value).startOf('month').add(-1, 'days');
 	    var start = this.getWeekStartMoment(first);
 	    var result = [];
 	    var i = 0;
 
-	    if (first.add(-1, 'days').isBefore(start)) {
-	      //make sure the last day of prev month is included
+	    if (beforeFirst.isBefore(start)
+	    // and it doen't start with a full week before and the week has at least 1 day from current month (default)
+	     && (this.props.alwaysShowPrevWeek || !start.isSame(first))) {
 	      start.add(-1, 'weeks');
 	    }
 
