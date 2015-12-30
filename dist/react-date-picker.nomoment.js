@@ -114,6 +114,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    getDefaultProps: function getDefaultProps() {
 	        var props = assign({}, asConfig(), {
+	            isDatePicker: true,
 	            navOnDateClick: true,
 	            defaultStyle: {
 	                boxSizing: 'border-box'

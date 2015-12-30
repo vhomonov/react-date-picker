@@ -48,6 +48,7 @@ var DatePicker = React.createClass({
 
     getDefaultProps: function() {
         var props = assign({}, asConfig(), {
+            isDatePicker: true,
             navOnDateClick: true,
             defaultStyle: {
                 boxSizing: 'border-box'
