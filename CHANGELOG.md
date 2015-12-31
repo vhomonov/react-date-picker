@@ -1,6 +1,9 @@
 react-date-picker
 =================
 
+#### 4.0.0
+ * React 0.14 as peer dep
+ 
 #### 3.1.9
  * accept PR [#56](https://github.com/zippyui/react-date-picker/pull/56) - fixes[#55 - if 1st day is sunday, first week is entire previous month](https://github.com/zippyui/react-date-picker/issues/55)
  * add `alwaysShowPrevWeek` prop
