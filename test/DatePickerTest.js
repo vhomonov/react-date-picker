@@ -21,7 +21,7 @@ function tryWithClass(root, cls){
 
 describe('DatePicker', function(){
 
-	it('renders selected date - also make sure no crash on null date', function(){
+	xit('renders selected date - also make sure no crash on null date', function(){
 
         require('./testdom')()
 
