@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import Component from 'react-class';
 import { render } from 'react-dom';
@@ -88,6 +86,7 @@ class App extends Component {
       <p>You can click the header to change current view and easily navigate to far-off dates
       </p>
       <DatePicker
+        weekNumbers
         style={sizeStyle}
         defaultDate={pickerDate}
         locale={LOCALE}
