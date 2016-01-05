@@ -55,7 +55,8 @@ var App = React.createClass({
             <DatePicker
             xweekStartDay={3}
             locale="ro"
-            xweekNumbers
+            weekNumberName="x"
+            weekNumbers
             xweekDayNames={['S','M','T','W','T','F','S']}
             renderWeekNumber={(p) => {
               p.children = 'W' + p.week

@@ -291,7 +291,7 @@ var MonthView = React.createClass({
   },
 
     renderWeekDayNames: function(){
-      var weekNumber = this.props.weekNumbers ? [''] : []
+      var weekNumber = this.props.weekNumbers ? [this.props.weekNumberName] : []
       var names = weekNumber.concat(this.getWeekDayNames())
 
       return <div className="dp-row dp-week-day-names">

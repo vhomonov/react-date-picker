@@ -146,6 +146,7 @@ The second option is specifying the `locale` prop on the date picker. This assum
  * `onRenderDay`: Function - (optional) A function that can manipulate the props object for a day, and SHOULD return a new props object. Use this for custom day styling. You can use this to take full control over the styles/css classes/attributes applied to the day cell in the month view.
  * `views`: Object - an object that maps view names to factory functions. See the exported `DatePicker.views`
  * `weekNumbers`: Boolean (default false) - Shows weeknumbers - it's locale aware.
+ * `weekNumberName`: String / ReactElement (defaults to '') - What to render in the view header cell, above all week numbers.
  * `renderWeekNumber`: Function - A function to render week number. Has the same behavior as `renderDay`.
  * `onWeekChange`: Function(weekDates, event) - When a week is clicked you get an array of the dates in that week
 

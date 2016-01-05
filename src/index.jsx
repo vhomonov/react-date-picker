@@ -48,6 +48,7 @@ var DatePicker = React.createClass({
 
     getDefaultProps: function() {
         var props = assign({}, asConfig(), {
+            weekNumberName: 'a',
             isDatePicker: true,
             navOnDateClick: true,
             defaultStyle: {
@@ -175,6 +176,7 @@ var DatePicker = React.createClass({
         var viewProps = asConfig(props)
 
         viewProps.weekNumbers = this.props.weekNumbers
+        viewProps.weekNumberName = this.props.weekNumberName
         viewProps.dateString = dateString
         viewProps.localeData = props.localeData
         viewProps.onSelect = this.handleSelect
