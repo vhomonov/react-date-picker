@@ -48,7 +48,7 @@ var DatePicker = React.createClass({
 
     getDefaultProps: function() {
         var props = assign({}, asConfig(), {
-            weekNumberName: 'a',
+            weekNumberName: '',
             isDatePicker: true,
             navOnDateClick: true,
             defaultStyle: {
