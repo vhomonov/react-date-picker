@@ -57,7 +57,7 @@ var MonthView = React.createClass({
 
     if (
         beforeFirst.isBefore(start)
-        // and it doen't start with a full week before and the week has at least 1 day from current month (default)
+        // and it doesn't start with a full week before and the week has at least 1 day from current month (default)
         &&
         (this.props.alwaysShowPrevWeek || !start.isSame(first))
       ){
@@ -119,46 +119,75 @@ var MonthView = React.createClass({
 
   /**
    * Render the week number cell
-   * @param  {Moment[]} days
-   * @param  {Number} firstDayOfWeekIndex
+   * @param  {Moment[]} days The days in a week
    * @return {React.DOM}
    */
-  renderWeekNumber: function (props, days, firstDayOfWeekIndex) {
+  renderWeekNumber: function (props, days) {
 
-    var firstDayOfWeek = days[firstDayOfWeekIndex]
+    var firstDayOfWeek = days[0]
     var week = firstDayOfWeek.weeks();
     var dateTimestamp = +firstDayOfWeek
-    var weekDays = days.slice().splice(firstDayOfWeekIndex, 7)
-    return <td key={'week' + week} className="dp-cell dp-weeknumber" onClick={this.handleClick.bind(null, props, weekDays, dateTimestamp)}>{week}</td>
+
+    const weekNumberProps = {
+      key: 'week',
+      className: 'dp-cell dp-weeknumber',
+
+      //week number
+      week: week,
+
+      //the days in this week
+      days: days,
+
+      date: firstDayOfWeek,
+      children: week
+    }
+
+    const renderWeekNumber = props.renderWeekNumber
+    var result
+
+    if (renderWeekNumber){
+      result = renderWeekNumber(weekNumberProps)
+    }
+
+    if (result === undefined){
+      result = <div {...weekNumberProps} />
+    }
+
+    return result
 
   },
 
-    /**
-     * Render the given array of days
-     * @param  {Moment[]} days
-     * @return {React.DOM}
-     */
-    renderDays: function(props, days) {
-        var nodes = days.map(function(date){
-            return this.renderDay(props, date)
-        }, this)
+  /**
+   * Render the given array of days
+   * @param  {Moment[]} days
+   * @return {React.DOM}
+   */
+  renderDays: function(props, days) {
+    var nodes = days.map(function(date){
+        return this.renderDay(props, date)
+    }, this)
 
-        var len        = days.length
-        var buckets    = []
-        var bucketsLen = Math.ceil(len / 7)
+    var len        = days.length
+    var buckets    = []
+    var bucketsLen = Math.ceil(len / 7)
 
     var i = 0
+    var weekStart
+    var weekEnd
 
-        for ( ; i < bucketsLen; i++){
-            buckets.push(nodes.slice(i * 7, (i + 1) * 7))
-        }
+    for ( ; i < bucketsLen; i++){
 
-      //for ( ; i < bucketsLen; i++){
-      //
-      //  var firstDayOfWeekIndex = i * numberOfDays;
-      //  var week = props.weekNumbers ? [this.renderWeekNumber(props, days, firstDayOfWeekIndex)] : []
-      //  buckets.push(week.concat(nodes.slice(firstDayOfWeekIndex, (i + 1) * numberOfDays)))
-      //}
+        weekStart = i * 7
+        weekEnd = (i + 1) * 7
+
+        buckets.push(
+          [
+            props.weekNumbers && this.renderWeekNumber(props, days.slice(weekStart, weekEnd))
+          ].concat(
+            nodes.slice(weekStart, weekEnd)
+          )
+        )
+    }
 
     return buckets.map(function(bucket, i){
       return <div key={"row" + i} className="dp-week dp-row">{bucket}</div>
@@ -262,18 +291,15 @@ var MonthView = React.createClass({
   },
 
     renderWeekDayNames: function(){
-        var weekNumber = this.props.weekNumbers ? [''] : []
-        var names = weekNumber.concat(this.getWeekDayNames())
+      var weekNumber = this.props.weekNumbers ? [''] : []
+      var names = weekNumber.concat(this.getWeekDayNames())
 
-    return (
-      <div className="dp-row dp-week-day-names">
+      return <div className="dp-row dp-week-day-names">
         {names.map( (name, index) => <div key={index} className="dp-cell dp-week-day-name">{name}</div>)}
       </div>
-    )
   },
 
     handleClick: function(props, date, timestamp, event) {
-
         if (props.minDate && timestamp < props.minDate){
             return
         }

@@ -1,13 +1,15 @@
 'use strict'
 
 require('./base.css')
-require('./theme/hackerone.css')
+require('./theme/default.css')
 
 var moment = require('moment');
 var React      = require('react')
 var DatePicker = require('./src/index')
 
-var VALUE = Date.now()
+var render = require('react-dom').render
+
+var VALUE = new Date(2016, 0, 1)
 var LOCALE = 'en'
 
 var TODAY = {
@@ -27,8 +29,6 @@ var GO2SELECTED = {
 }
 
 function emptyFn(){}
-
-console.log('test')
 
 var App = React.createClass({
 
@@ -53,8 +53,13 @@ var App = React.createClass({
             </p>
 
             <DatePicker
-            weekDayNames={['S','M','T','W','T','F','S']}
-                locale   ={LOCALE}
+            xweekStartDay={3}
+            locale="ro"
+            xweekNumbers
+            xweekDayNames={['S','M','T','W','T','F','S']}
+            renderWeekNumber={(p) => {
+              p.children = 'W' + p.week
+            }}
                 date    ={VALUE}
                 onChange ={this.onChange}
 
@@ -69,4 +74,4 @@ var App = React.createClass({
     }
 })
 
-React.render(<App />, document.getElementById('content'))
+render(<App />, document.getElementById('content'))

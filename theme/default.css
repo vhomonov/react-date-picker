@@ -26,9 +26,11 @@
   border-bottom: 1px solid #a8a8a8;
 }
 .date-picker .dp-table .dp-cell {
-  cursor: pointer;
   padding: 5px;
   background: inherit;
+}
+.date-picker .dp-table .dp-cell:not(.dp-weeknumber) {
+  cursor: pointer;
 }
 .date-picker .dp-table .dp-cell:not(:first-child) {
   border-left: 1px solid #a8a8a8;
@@ -41,7 +43,7 @@
 .date-picker .dp-table .dp-cell.dp-in-range {
   background: #e2f0ff;
 }
-.date-picker .dp-table .dp-cell:hover {
+.date-picker .dp-table .dp-cell:not(.dp-weeknumber):hover {
   color: inherit;
   font-weight: inherit;
   background: #eee;

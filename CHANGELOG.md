@@ -1,6 +1,9 @@
 react-date-picker
 =================
 
+#### 4.0.2 
+ * add `weekNumbers` boolean prop - defaults to false - accepting PR [#36](https://github.com/zippyui/react-date-picker/pull/36) - thanks Christian Alfoni. Also add `renderWeekNumber` prop
+
 #### 4.0.0
  * React 0.14 as peer dep
  
