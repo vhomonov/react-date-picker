@@ -57,12 +57,12 @@ var MonthView = React.createClass({
 
     if (
         beforeFirst.isBefore(start)
-        // and it doen't start with a full week before and the week has at least 1 day from current month (default)
+        // and it doesn't start with a full week before and the week has at least 1 day from current month (default)
         &&
         (this.props.alwaysShowPrevWeek || !start.isSame(first))
       ){
         start.add(-1, 'weeks')
-    } 
+    }
 
     for (; i < 42; i++){
         result.push(this.toMoment(start))
@@ -118,6 +118,46 @@ var MonthView = React.createClass({
   },
 
   /**
+   * Render the week number cell
+   * @param  {Moment[]} days The days in a week
+   * @return {React.DOM}
+   */
+  renderWeekNumber: function (props, days) {
+
+    var firstDayOfWeek = days[0]
+    var week = firstDayOfWeek.weeks();
+    var dateTimestamp = +firstDayOfWeek
+
+    const weekNumberProps = {
+      key: 'week',
+      className: 'dp-cell dp-weeknumber',
+
+      //week number
+      week: week,
+
+      //the days in this week
+      days: days,
+
+      date: firstDayOfWeek,
+      children: week
+    }
+
+    const renderWeekNumber = props.renderWeekNumber
+    var result
+
+    if (renderWeekNumber){
+      result = renderWeekNumber(weekNumberProps)
+    }
+
+    if (result === undefined){
+      result = <div {...weekNumberProps} />
+    }
+
+    return result
+
+  },
+
+  /**
    * Render the given array of days
    * @param  {Moment[]} days
    * @return {React.DOM}
@@ -132,9 +172,21 @@ var MonthView = React.createClass({
     var bucketsLen = Math.ceil(len / 7)
 
     var i = 0
+    var weekStart
+    var weekEnd
 
     for ( ; i < bucketsLen; i++){
-        buckets.push(nodes.slice(i * 7, (i + 1) * 7))
+
+        weekStart = i * 7
+        weekEnd = (i + 1) * 7
+
+        buckets.push(
+          [
+            props.weekNumbers && this.renderWeekNumber(props, days.slice(weekStart, weekEnd))
+          ].concat(
+            nodes.slice(weekStart, weekEnd)
+          )
+        )
     }
 
     return buckets.map(function(bucket, i){
@@ -238,28 +290,28 @@ var MonthView = React.createClass({
     return names
   },
 
-  renderWeekDayNames: function(){
-    var names = this.getWeekDayNames()
+    renderWeekDayNames: function(){
+      var weekNumber = this.props.weekNumbers ? [''] : []
+      var names = weekNumber.concat(this.getWeekDayNames())
 
-    return (
-      <div className="dp-row dp-week-day-names">
+      return <div className="dp-row dp-week-day-names">
         {names.map( (name, index) => <div key={index} className="dp-cell dp-week-day-name">{name}</div>)}
       </div>
-    )
   },
 
-  handleClick: function(props, date, timestamp, event) {
-    if (props.minDate && timestamp < props.minDate){
-      return
-    }
-    if (props.maxDate && timestamp > props.maxDate){
-      return
-    }
+    handleClick: function(props, date, timestamp, event) {
+        if (props.minDate && timestamp < props.minDate){
+            return
+        }
+        if (props.maxDate && timestamp > props.maxDate){
+            return
+        }
 
     event.target.value = date
 
-    ;(props.onChange || emptyFn)(date, event)
-  }
+        ;(props.onChange || emptyFn)(date, event)
+
+    }
 })
 
 MonthView.getHeaderText = function(moment, props) {
