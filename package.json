@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-css": "webpack --progress --colors --config build-css.config.js",
     "build-script": "webpack --progress --colors --config build-script.config.js",
-    "build": "npm run build-script && npm run build-css",
+    "build": "npm run copy-files && npm run build-script && npm run build-css",
+    "copy-files": "gulp",
     "dev": "webpack-dev-server --progress --colors --port 8090"
   },
   "repository": {
@@ -25,7 +26,7 @@
     "moment": "^2.9.0",
     "react": "^0.14.2",
     "react-class": "^1.2.2",
-    "react-date-picker": "^4.0.3",
+    "react-date-picker": "^4.0.5",
     "react-dom": "^0.14.2",
     "react-time-picker": "^1.0.8"
   },
@@ -34,6 +35,8 @@
     "babel-loader": "^5.3.3",
     "css-loader": "^0.9.0",
     "extract-text-webpack-plugin": "^0.3.3",
+    "gulp": "^3.9.0",
+    "gulp-file": "^0.2.0",
     "jsx-loader": "^0.12.0",
     "style-loader": "^0.8.1",
     "stylus-loader": "^0.4.0",

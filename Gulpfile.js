@@ -1,10 +1,15 @@
-var gulp  = require('gulp');
-var react = require('gulp-react');
+var gulp  = require('gulp')
+var file  = require('gulp-file')
 
-gulp.task('default', function () {
-    return gulp.src('./src/**')
-        .pipe(react({
-            harmony: true
-        }))
-        .pipe(gulp.dest('./lib'));
-});
+gulp.task('copy-files', function(){
+  gulp.src('./node_modules/react/dist/react.min.js')
+   .pipe(gulp.dest('./'))
+  gulp.src('./node_modules/react-dom/dist/react-dom.min.js')
+   .pipe(gulp.dest('./'))
+  gulp.src('./node_modules/moment/min/moment-with-locales.min.js')
+    .pipe(gulp.dest('./'))
+  gulp.src('./node_modules/react-date-picker/**')
+    .pipe(gulp.dest('./react-date-picker/'))
+})
+
+gulp.task('default', ['copy-files'])
