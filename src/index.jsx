@@ -174,10 +174,12 @@ var DatePicker = React.createClass({
         var viewProps = props
         var viewProps = asConfig(props)
 
+        viewProps.weekNumbers = this.props.weekNumbers
         viewProps.dateString = dateString
         viewProps.localeData = props.localeData
         viewProps.onSelect = this.handleSelect
         viewProps.onChange = this.handleChange
+        viewProps.onWeekChange = this.props.onWeekChange
 
         return (
             <div {...this.props} className={className} style={props.style} >
@@ -414,6 +416,14 @@ var DatePicker = React.createClass({
     },
 
     handleChange: function(date, event) {
+
+        var weekDates = null;
+        
+        if (Array.isArray(date)) {
+          weekDates = date;
+          date = date[0]
+        }
+
         date = this.toMoment(date)
 
         if (this.props.navOnDateClick){
@@ -440,7 +450,12 @@ var DatePicker = React.createClass({
             })
         }
 
-        ;(this.props.onChange || emptyFn)(text, date, event)
+        if (weekDates) {
+          ;(this.props.onWeekChange || emptyFn)(weekDates, event)
+        } else {
+          ;(this.props.onChange || emptyFn)(text, date, event)
+        }
+
     },
 
     handleSelect: function(date, event) {
