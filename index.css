@@ -230,6 +230,12 @@
 .date-picker .dp-nav-view:hover {
   background: #eee;
 }
+.date-picker .dp-weekend.dp-weekend-highlight,
+.date-picker .dp-weekend.dp-weekend-highlight.dp-value,
+.date-picker .dp-weekend.dp-weekend-highlight.dp-value:hover,
+.date-picker .dp-weekend.dp-weekend-highlight:hover {
+  color: #bf0909;
+}
 .date-picker .dp-nav-table .dp-cell {
   border-top-width: 0px;
   border-bottom-width: 0px;

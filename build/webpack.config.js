@@ -16,5 +16,11 @@ module.exports = {
   resolve: {
     // Allow to omit extensions when requiring these files
     extensions: ['', '.js', '.jsx']
+  },
+  devServer: {
+    publicPath: '/assets',
+    filename: 'bundle.js',
+    port: 8080,
+    host: '0.0.0.0'
   }
 }

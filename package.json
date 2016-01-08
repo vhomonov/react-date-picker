@@ -1,11 +1,11 @@
 {
   "name": "react-date-picker",
-  "version": "4.0.5",
+  "version": "4.0.6",
   "description": "A carefully crafted date picker for React",
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha --recursive --reporter spec --require should",
-    "dev": "webpack-dev-server --progress --port 8080 --config build/webpack.config.js",
+    "dev": "webpack-dev-server --progress --config build/webpack.config.js",
     "build-css": "npm run build-css-index && npm run build-css-base && npm run build-themes",
     "build-css-index": "webpack --progress --config build/build-css-index.config.js",
     "build-css-base": "webpack --progress --config build/build-css-base.config.js",
@@ -42,6 +42,7 @@
     "json-loader": "^0.5.2",
     "mocha": "^2.2.4",
     "node-libs-browser": "^0.5.2",
+    "react-dom": ">=0.14.0",
     "react-hot-loader": "^1.2.8",
     "should": "^6.0.3",
     "style-loader": "^0.12.3",

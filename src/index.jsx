@@ -48,6 +48,7 @@ var DatePicker = React.createClass({
 
     getDefaultProps: function() {
         var props = assign({}, asConfig(), {
+            highlightWeekends: false,
             weekNumberName: '',
             isDatePicker: true,
             navOnDateClick: true,
@@ -175,6 +176,7 @@ var DatePicker = React.createClass({
         var viewProps = props
         var viewProps = asConfig(props)
 
+        viewProps.highlightWeekends = this.props.highlightWeekends
         viewProps.weekNumbers = this.props.weekNumbers
         viewProps.weekNumberName = this.props.weekNumberName
         viewProps.dateString = dateString
@@ -477,6 +479,7 @@ DatePicker.views = Views
 var PT = React.PropTypes
 
 DatePicker.propTypes = {
+    highlightWeekends: PT.bool,
 
     /**
      * Function to be called when user selects a date.

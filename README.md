@@ -1,8 +1,7 @@
 react-date-picker
 =================
 
-[![Join the chat at https://gitter.im/zippyui/react-date-picker](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/zippyui/react-date-picker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Circle CI](https://circleci.com/gh/zippyui/react-date-picker/tree/master.svg?style=svg)](https://circleci.com/gh/zippyui/react-date-picker/tree/master)
+<!-- [![Circle CI](https://circleci.com/gh/zippyui/react-date-picker/tree/master.svg?style=svg)](https://circleci.com/gh/zippyui/react-date-picker/tree/master) -->
 
 <img src="http://npm.packagequality.com/badge/react-date-picker.png"/>
 
@@ -167,6 +166,10 @@ The second option is specifying the `locale` prop on the date picker. This assum
 
  * `navOnDateClick`: Boolean - defaults to true. If false, will not navigate to the date that was clicked, even if that date is in the prev/next month
  * `alwaysShowPrevWeek` Boolean - defaults to false. If false, when the month starts on the first day of the week (`weekStartDay`), no days from the previous month will be displayed. Otherwise the first row will display the last week from the previous month. 
+
+## Other props
+
+ * `highlightWeekends`: Boolean - defaults to false. By default, weekend days have the `'dp-weekend'` className, but this will also add the `'dp-weekend-hightlight'` className with a default redish color.
 
 ## Styling with css
 

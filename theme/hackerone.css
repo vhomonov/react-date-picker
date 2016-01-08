@@ -105,6 +105,14 @@
 .date-picker .dp-cell {
   outline: none;
 }
+.date-picker .dp-weekend.dp-weekend-highlight,
+.date-picker .dp-weekend.dp-weekend-highlight:hover {
+  color: #bf0909;
+}
+.date-picker .dp-weekend.dp-weekend-highlight.dp-value,
+.date-picker .dp-weekend.dp-weekend-highlight.dp-value:hover {
+  color: #efe3e3;
+}
 .date-picker .dp-nav-view,
 .date-picker .dp-nav-cell,
 .date-picker .dp-week-day-name {

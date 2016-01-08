@@ -1,6 +1,9 @@
 react-date-picker
 =================
 
+#### 4.0.6 
+ * add `highlightWeekends` prop. Defaults to false.
+
 #### 4.0.4
  * add `weekNumberName` prop
  

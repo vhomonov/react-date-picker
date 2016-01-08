@@ -1,7 +1,7 @@
 'use strict'
 
-require('./base.css')
-require('./theme/default.css')
+require('./style/base.styl')
+require('./style/theme/hackerone/index.styl')
 
 var moment = require('moment');
 var React      = require('react')
@@ -54,6 +54,7 @@ var App = React.createClass({
 
             <DatePicker
             xweekStartDay={3}
+            highlightWeekends
             locale="ro"
             weekNumberName="x"
             weekNumbers

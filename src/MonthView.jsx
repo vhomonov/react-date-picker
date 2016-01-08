@@ -228,6 +228,13 @@ var MonthView = React.createClass({
     var mom = this.toMoment(date)
     var onClick = this.handleClick.bind(this, props, date, dateTimestamp)
 
+    var weekDay = mom.day()
+
+    if (weekDay === 0 /* Sunday */ || weekDay === 6 /* Saturday */){
+      classes.push('dp-weekend')
+      props.highlightWeekends && classes.push('dp-weekend-highlight')
+    }
+
     var renderDayProps = {
       role     : 'link',
       tabIndex : 1,
