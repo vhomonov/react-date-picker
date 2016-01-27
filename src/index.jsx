@@ -185,6 +185,9 @@ var DatePicker = React.createClass({
         viewProps.onChange = this.handleChange
         viewProps.onWeekChange = this.props.onWeekChange
         viewProps.renderWeekNumber = this.props.renderWeekNumber
+        viewProps.date = this.props.date
+        viewProps.range = this.props.range
+        viewProps.onChange = this.props.onChange
 
         return (
             <div {...this.props} className={className} style={props.style} >
@@ -265,7 +268,7 @@ var DatePicker = React.createClass({
     },
 
     gotoSelected: function(props) {
-        this.gotoDate(props.date || +new Date())
+        this.gotoDate(props.range? props.range[0] : props.date || +new Date())
     },
 
     gotoDate: function(value) {

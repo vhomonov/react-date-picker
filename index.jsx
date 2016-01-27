@@ -9,7 +9,9 @@ var DatePicker = require('./src/index')
 
 var render = require('react-dom').render
 
-var VALUE = new Date(2016, 0, 1)
+//var range = ['2016-01-27', null]
+var range = null
+var date = moment().format('YYYY-MM-DD')
 var LOCALE = 'en'
 
 var TODAY = {
@@ -31,7 +33,6 @@ var GO2SELECTED = {
 function emptyFn(){}
 
 var App = React.createClass({
-
     displayName: 'App',
 
     onLocaleChange: function(event) {
@@ -41,6 +42,9 @@ var App = React.createClass({
     },
 
     render: function(){
+        range = this.props.range || range
+        date = this.props.date || date
+
         return <div style={{margin: 10}}>
 
             <p>Select locale: <select value={LOCALE} onChange={this.onLocaleChange}>
@@ -58,20 +62,57 @@ var App = React.createClass({
             locale="ro"
             weekNumberName="x"
             weekNumbers
+            date={date}
+            range={range}
+            onChange={this.onChange}
             xweekDayNames={['S','M','T','W','T','F','S']}
             renderWeekNumber={(p) => {
               p.children = 'W' + p.week
             }}
-                date    ={VALUE}
-                onChange ={this.onChange}
 
             />
         </div>
     },
 
-    onChange: function(value) {
-        console.log('selected ', value)
-        VALUE = value
+    createRangeVector: function(value, event){
+        if (range[0] && range[1]){
+            if (event.shiftKey){
+                if (value < range[0]){
+                    return [value, range[0]]
+                } else if (value > range [1]){
+                    return [range[1], value]
+                } else {
+                    return [value, null]
+                }
+            } else {
+                return [value, null]
+            }
+        } else if (value > range[0]){
+            return [range[0], value]
+        } else {
+            return [value, range[0]]
+        }
+        return range
+    }, 
+
+
+    onChange: function(value, event) {
+        console.log('selected ', value.format('YYYY-MM-DD'))
+
+        if (this.props.onRangeChange && range){
+            this.props.onRangeChange(
+                this.createRangeVector(value, event)
+            )
+        }else if (this.props.onChange && date){
+            this.props.onChange(value)
+        } else {
+            if (range){
+                range = this.createRangeVector(value, event)
+            } else if (date){
+                date = value
+            }
+        }
+        console.log(range)
         this.setState({})
     }
 })
