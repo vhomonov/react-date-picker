@@ -86,11 +86,6 @@ var YearView = React.createClass({
                 return this.renderMonth(props, date)
             }, this)
         } 
-
-        // var nodes      = days.map(function(date){
-        //     return this.renderMonth(props, date)
-        // }, this)
-
         
         var len        = days.length
         var buckets    = []

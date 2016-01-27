@@ -93,10 +93,6 @@ var DecadeView = React.createClass({
         }, this)
         } 
 
-        // var nodes      = days.map(function(date, index, arr){
-        //     return this.renderYear(props, date, index, arr)
-        // }, this)
-
         var len        = days.length
         var buckets    = []
         var bucketsLen = Math.ceil(len / 4)

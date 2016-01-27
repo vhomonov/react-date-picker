@@ -10,7 +10,6 @@ var MonthView  = require('./MonthView')
 var YearView   = require('./YearView')
 var DecadeView = require('./DecadeView')
 var Header     = require('./Header')
-
 var toMoment   = require('./toMoment')
 
 var hasOwn = function(obj, key){

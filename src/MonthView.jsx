@@ -242,22 +242,31 @@ var MonthView = React.createClass({
       props.highlightWeekends && classes.push('dp-weekend-highlight')
     }
 
-    if (props.range){
+    if (props.range) {
       const thisDay = this.toMoment(dateTimestamp)
-      if (thisDay.isBetween(beginRange, endRange, 'days') || thisDay.isBetween(endRange, beginRange, 'days')){
-        if (weekDay === 0 || weekDay === 6){
+
+      if (thisDay.isBetween(beginRange, endRange, 'days') || thisDay.isBetween(endRange, beginRange, 'days')) {
+
+        if(!thisDay.isBetween(this.monthFirst.subtract(1, 'hours'), this.monthLast.add(1, 'minutes'), 'days')) {
+          classes.push('dp-in-selected-range-not-in-month')
+        } else if (weekDay === 0 || weekDay === 6) {
           classes.push('dp-weekend-in-selected-range')
-          // classes.push('dp-weekend')
-          // props.highlightWeekends && classes.push('dp-weekend-highlight')
-        } else if (dateTimestamp != TODAY){
+        } else if (dateTimestamp != TODAY) {
           classes.push('dp-in-selected-range')
         } else {
           classes.push('dp-current-in-selected-range')
         }
       }
-      if (dateTimestamp == beginRange || dateTimestamp == endRange ){
+
+      if (thisDay.format('YYYYMMDD') == beginRange.format('YYYYMMDD')) {
         classes.push('dp-value')
       }
+      if (endRange){
+        if (thisDay.format('YYYYMMDD') == endRange.format('YYYYMMDD')) {
+          classes.push('dp-value')
+        }
+      }
+
     } else {
       if (dateTimestamp == props.moment){
         classes.push('dp-value')

@@ -1,7 +1,7 @@
 'use strict'
 
 require('./style/base.styl')
-require('./style/theme/hackerone/index.styl')
+require('./style/theme/default/index.styl')
 
 var moment = require('moment');
 var React      = require('react')
@@ -9,8 +9,7 @@ var DatePicker = require('./src/index')
 
 var render = require('react-dom').render
 
-//var range = ['2016-01-27', null]
-var range = null
+var range = [moment(), null]
 var date = moment().format('YYYY-MM-DD')
 var LOCALE = 'en'
 
@@ -42,7 +41,7 @@ var App = React.createClass({
     },
 
     render: function(){
-        range = this.props.range || range
+        range = this.props.range || null
         date = this.props.date || date
 
         return <div style={{margin: 10}}>
@@ -105,14 +104,11 @@ var App = React.createClass({
             )
         }else if (this.props.onChange && date){
             this.props.onChange(value)
-        } else {
-            if (range){
-                range = this.createRangeVector(value, event)
-            } else if (date){
-                date = value
-            }
+        } else if (range){
+            range = this.createRangeVector(value, event)
+        } else if (date){
+            date = value
         }
-        console.log(range)
         this.setState({})
     }
 })
