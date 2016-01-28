@@ -12,6 +12,9 @@ var DecadeView = require('./DecadeView')
 var Header     = require('./Header')
 var toMoment   = require('./toMoment')
 
+var selectedRange = [moment()]
+var selectedDate = moment()
+
 var hasOwn = function(obj, key){
     return Object.prototype.hasOwnProperty.call(obj, key)
 }
@@ -175,6 +178,9 @@ var DatePicker = React.createClass({
         var viewProps = props
         var viewProps = asConfig(props)
 
+        selectedRange = this.props.range || (this.props.onRangeChange? selectedRange : null)
+        selectedDate = this.props.date || (this.props.onChange? selectedDate : null)
+
         viewProps.highlightWeekends = this.props.highlightWeekends
         viewProps.weekNumbers = this.props.weekNumbers
         viewProps.weekNumberName = this.props.weekNumberName
@@ -184,9 +190,9 @@ var DatePicker = React.createClass({
         viewProps.onChange = this.handleChange
         viewProps.onWeekChange = this.props.onWeekChange
         viewProps.renderWeekNumber = this.props.renderWeekNumber
-        viewProps.date = this.props.date
-        viewProps.range = this.props.range
-        viewProps.onChange = this.props.onChange
+        viewProps.date = selectedDate
+        viewProps.range = selectedRange
+        viewProps.onChange = this.onChange
 
         return (
             <div {...this.props} className={className} style={props.style} >
@@ -219,6 +225,8 @@ var DatePicker = React.createClass({
 
         var todayText        = this.props.todayText || 'Today'
         var gotoSelectedText = this.props.gotoSelectedText || 'Go to selected'
+        var gotoBeginRange   = 'Go to range start date'
+        var gotoEndRange     = 'Go to range end date'
 
         var footerProps = {
             todayText       : todayText,
@@ -229,6 +237,16 @@ var DatePicker = React.createClass({
             viewDate        : props.viewDate
         }
 
+        var dateButton = <div
+            tabIndex="1"
+            role="link"
+            className="dp-footer-selected"
+            onClick={footerProps.gotoSelected}
+            onKeyUp={onEnter(footerProps.gotoSelected)}
+        >
+            {gotoSelectedText}
+        </div>
+
         var result
         if (typeof this.props.footerFactory == 'function'){
             result = this.props.footerFactory(footerProps)
@@ -238,28 +256,26 @@ var DatePicker = React.createClass({
             return result
         }
 
-        return (
-            <div className="dp-footer">
-                <div
-                    tabIndex="1"
-                    role="link"
-                    className="dp-footer-today"
-                    onClick={footerProps.gotoToday}
-                    onKeyUp={onEnter(footerProps.gotoToday)}
-                >
-                    {todayText}
-                </div>
-                <div
-                    tabIndex="1"
-                    role="link"
-                    className="dp-footer-selected"
-                    onClick={footerProps.gotoSelected}
-                    onKeyUp={onEnter(footerProps.gotoSelected)}
-                >
-                    {gotoSelectedText}
-                </div>
+        return <div className="dp-footer">
+            <div
+                tabIndex="1"
+                role="link"
+                className="dp-footer-today"
+                onClick={footerProps.gotoToday}
+                onKeyUp={onEnter(footerProps.gotoToday)}
+            >
+                {todayText}
             </div>
-        )
+            <div
+                tabIndex="1"
+                role="link"
+                className="dp-footer-selected"
+                onClick={footerProps.gotoSelected}
+                onKeyUp={onEnter(footerProps.gotoSelected)}
+            >
+                {gotoSelectedText}
+            </div>
+        </div>
     },
 
     gotoNow: function() {
@@ -267,7 +283,7 @@ var DatePicker = React.createClass({
     },
 
     gotoSelected: function(props) {
-        this.gotoDate(props.range? props.range[0] : props.date || +new Date())
+        this.gotoDate(props.date || +new Date())
     },
 
     gotoDate: function(value) {
@@ -472,6 +488,39 @@ var DatePicker = React.createClass({
             var text = viewMoment.format(this.props.dateFormat)
             this.props.onSelect(text, viewMoment, view, event)
         }
+    },
+
+    onChange: function(value, event) {
+        console.log('selected ', value.format('YYYY-MM-DD'))
+
+        if (selectedDate) {
+            selectedDate = value
+            this.setState({})
+        } else {
+            selectedRange = this.createRangeArray(value)
+            this.setState({})
+        }
+
+        if (this.props.onRangeChange && selectedRange) {
+            this.props.onRangeChange(
+                this.createRangeArray(value)
+            )
+        }else if (this.props.onChange && selectedDate) {
+            this.props.onChange(value)
+        }
+
+    },
+
+    createRangeArray: function(value) {
+
+        if (selectedRange[0] && selectedRange[1]) {
+            return [value, null]
+        } else if (value > selectedRange[0]) {
+            return [selectedRange[0], value]
+        } else {
+            return [value, selectedRange[0]]
+        }
+        return selectedRange
     }
 
 })

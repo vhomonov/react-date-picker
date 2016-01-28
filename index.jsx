@@ -1,7 +1,7 @@
 'use strict'
 
 require('./style/base.styl')
-require('./style/theme/default/index.styl')
+require('./style/theme/hackerone/index.styl')
 
 var moment = require('moment');
 var React      = require('react')
@@ -9,8 +9,9 @@ var DatePicker = require('./src/index')
 
 var render = require('react-dom').render
 
-var range = [moment(), null]
-var date = moment().format('YYYY-MM-DD')
+var range = ['2016-01-04', '2016-01-09']
+var date = moment().add(2, 'days').format('YYYY-MM-DD')
+
 var LOCALE = 'en'
 
 var TODAY = {
@@ -41,7 +42,7 @@ var App = React.createClass({
     },
 
     render: function(){
-        range = this.props.range || null
+        range = this.props.range || range
         date = this.props.date || date
 
         return <div style={{margin: 10}}>
@@ -61,9 +62,10 @@ var App = React.createClass({
             locale="ro"
             weekNumberName="x"
             weekNumbers
-            date={date}
-            range={range}
-            onChange={this.onChange}
+            range
+            //date={date}
+            //onChange={this.onChange}
+            onRangeChange={this.onChange}
             xweekDayNames={['S','M','T','W','T','F','S']}
             renderWeekNumber={(p) => {
               p.children = 'W' + p.week
@@ -73,42 +75,9 @@ var App = React.createClass({
         </div>
     },
 
-    createRangeVector: function(value, event){
-        if (range[0] && range[1]){
-            if (event.shiftKey){
-                if (value < range[0]){
-                    return [value, range[0]]
-                } else if (value > range [1]){
-                    return [range[1], value]
-                } else {
-                    return [value, null]
-                }
-            } else {
-                return [value, null]
-            }
-        } else if (value > range[0]){
-            return [range[0], value]
-        } else {
-            return [value, range[0]]
-        }
-        return range
-    }, 
-
-
-    onChange: function(value, event) {
-        console.log('selected ', value.format('YYYY-MM-DD'))
-
-        if (this.props.onRangeChange && range){
-            this.props.onRangeChange(
-                this.createRangeVector(value, event)
-            )
-        }else if (this.props.onChange && date){
-            this.props.onChange(value)
-        } else if (range){
-            range = this.createRangeVector(value, event)
-        } else if (date){
-            date = value
-        }
+    onChange: function(value, event){
+        range = value
+        date = value
         this.setState({})
     }
 })
