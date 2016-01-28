@@ -12,7 +12,7 @@ var DecadeView = require('./DecadeView')
 var Header     = require('./Header')
 var toMoment   = require('./toMoment')
 
-var selectedRange = [moment()]
+var selectedRange = []
 var selectedDate = moment()
 
 var hasOwn = function(obj, key){
@@ -179,7 +179,7 @@ var DatePicker = React.createClass({
         var viewProps = asConfig(props)
 
         selectedRange = this.props.range || (this.props.onRangeChange? selectedRange : null)
-        selectedDate = this.props.date || (this.props.onChange? selectedDate : null)
+        selectedDate = this.props.date   || (this.props.onChange?      selectedDate  : null)
 
         viewProps.highlightWeekends = this.props.highlightWeekends
         viewProps.weekNumbers = this.props.weekNumbers
@@ -493,13 +493,6 @@ var DatePicker = React.createClass({
     onChange: function(value, event) {
         console.log('selected ', value.format('YYYY-MM-DD'))
 
-        if (selectedDate) {
-            selectedDate = value
-            this.setState({})
-        } else {
-            selectedRange = this.createRangeArray(value)
-            this.setState({})
-        }
 
         if (this.props.onRangeChange && selectedRange) {
             this.props.onRangeChange(
@@ -508,19 +501,27 @@ var DatePicker = React.createClass({
         }else if (this.props.onChange && selectedDate) {
             this.props.onChange(value)
         }
+        if (selectedDate) {
+            selectedDate = value
+            this.setState({})
+        } else {
+            selectedRange = this.createRangeArray(value)
+            this.setState({})
+        }
 
     },
 
     createRangeArray: function(value) {
-
+        if (selectedRange.length == 0){
+            return [moment(), value]
+        }
         if (selectedRange[0] && selectedRange[1]) {
             return [value, null]
-        } else if (value > selectedRange[0]) {
-            return [selectedRange[0], value]
-        } else {
-            return [value, selectedRange[0]]
         }
-        return selectedRange
+        if (value > selectedRange[0]) {
+            return [selectedRange[0], value]
+        }
+        return [value, selectedRange[0]]
     }
 
 })

@@ -62,10 +62,10 @@ var App = React.createClass({
             locale="ro"
             weekNumberName="x"
             weekNumbers
-            range
+            //range={range}
             //date={date}
             //onChange={this.onChange}
-            onRangeChange={this.onChange}
+            //onRangeChange={this.onChange}
             xweekDayNames={['S','M','T','W','T','F','S']}
             renderWeekNumber={(p) => {
               p.children = 'W' + p.week
@@ -76,8 +76,8 @@ var App = React.createClass({
     },
 
     onChange: function(value, event){
-        range = value
-        date = value
+        //range = value
+        //date = value
         this.setState({})
     }
 })
