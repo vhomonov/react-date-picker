@@ -133,11 +133,13 @@ The second option is specifying the `locale` prop on the date picker. This assum
  * `hideFooter`: Boolean - by default footer is shown, so specify this to true if you don't want the footer
  * `hideHeader`: Boolean - by default header is shown, so specify this to true if you don't want the header
  * `date`    : Date / String / Moment / Number - for controlled behavior. Make sure you also specify an `onChange` prop
+ * `range`    : Date / String / Moment / Number - for controlled behaviour make sure you also specify an `onRangeChange` prop
  * `defaultDate`: Date / String / Moment / Number - for uncontrolled behavior
  * `minDate` : Date / String / Moment / Number
  * `maxDate` : Date / String / Moment / Number
  * `dateFormat`: String [see moment.js formats](http://momentjs.com/docs/#/displaying/format/). Default date format is 'YYYY-MM-DD'
- * `onChange`: Function(dateText, moment, event) - called when the user selects a date
+ * `onChange`: Function (dateText, moment, event) - called when the user selects a date
+ * `onRangechange1: Function (arrayText, arratMoment, event) - called when the user selects a range
 
  * `onSelect`: Function(dateText, moment, view) - called when the user selects a year/month
  * `onNav`: Function(dateText, moment, view, direction) - called when the user navigates to the next/previous month/year/decade.

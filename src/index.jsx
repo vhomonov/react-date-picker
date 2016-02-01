@@ -143,7 +143,6 @@ var DatePicker = React.createClass({
         } else {
             date = this.state.defaultDate
         }
-
         return date? this.toMoment(date): null
     },
 
@@ -152,11 +151,14 @@ var DatePicker = React.createClass({
 
         if (hasOwn(this.props, 'range')){
           range = this.props.range
-        } else {
+        } else if (this.state.defaultRange) {
           range = this.state.defaultRange
         }
-
-      return range.map(r => r? this.toMoment(r): null) || null
+        if(range){
+          return range.map(r => r? this.toMoment(r): null) || null
+        } else {
+          return null
+        }
     },
 
     render: function() {
@@ -469,7 +471,7 @@ var DatePicker = React.createClass({
           ;(this.props.onChange || emptyFn)(text, date, event)
 
       if (this.p.range){
-        this.handleRangeChange(date)
+        this.handleRangeChange(date, event)
       }
     },
 
@@ -494,7 +496,7 @@ var DatePicker = React.createClass({
       return date.format(this.props.dateFormat)
     })
 
-    this.props.onRangeChange(rangeText, range)
+    this.props.onRangeChange(rangeText, range, event)
   },
 
     handleSelect: function(date, event) {

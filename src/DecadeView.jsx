@@ -57,7 +57,7 @@ var DecadeView = React.createClass({
 
         var viewMoment = props.viewMoment = moment(this.props.viewDate)
 
-        if (props.date){
+        if (!this.props.range){
             props.moment = moment(props.date).startOf('year')
         }
 
@@ -116,7 +116,7 @@ var DecadeView = React.createClass({
           }
         }
 
-        if (dateTimestamp == props.moment){
+        if (dateTimestamp == props.moment && !props.range){
             classes.push('dp-value')
         }
 

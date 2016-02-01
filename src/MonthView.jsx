@@ -112,7 +112,7 @@ var MonthView = React.createClass({
     this.monthLast  = this.toMoment(viewMoment).endOf('month')
 
     if (props.date){
-        props.moment = this.toMoment(props.date).startOf('day')
+        props.moment = this.props.range? null : this.toMoment(props.date).startOf('day')
     }
 
     var daysInView = this.getDaysInMonth(viewMoment)
@@ -210,6 +210,11 @@ var MonthView = React.createClass({
     var classes = ["dp-cell dp-day"]
 
     var dateTimestamp = +date
+    var mom = this.toMoment(date)
+    var onClick = this.handleClick.bind(this, props, date, dateTimestamp)
+
+    const range = this.state.range || this.props.range
+    var beforeMinDate
 
     if (dateTimestamp == TODAY){
       classes.push('dp-current')
@@ -219,7 +224,6 @@ var MonthView = React.createClass({
       classes.push('dp-next')
     }
 
-    var beforeMinDate
 
     if (props.minDate && date < props.minDate){
       classes.push('dp-disabled dp-before-min')
@@ -234,12 +238,9 @@ var MonthView = React.createClass({
 
     if (dateTimestamp == props.moment){
       classes.push('dp-value')
+
     }
 
-    var mom = this.toMoment(date)
-    var onClick = this.handleClick.bind(this, props, date, dateTimestamp)
-
-    const range = this.state.range || this.props.range
 
     if (range){
 

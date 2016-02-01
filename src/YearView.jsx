@@ -50,7 +50,7 @@ var YearView = React.createClass({
 
         var viewMoment = props.viewMoment = moment(this.props.viewDate)
 
-        if (props.date){
+        if (!this.props.range){
             props.moment = moment(props.date).startOf('month')
         }
 

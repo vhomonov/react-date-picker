@@ -10,7 +10,7 @@ var DatePicker = require('./src/index')
 var render = require('react-dom').render
 
 var range = ['2016-02-01', '2016-02-09']
-var date = moment().add(2, 'days').format('YYYY-MM-DD')
+var date = moment().add(2, 'days')
 
 var LOCALE = 'en'
 
@@ -57,21 +57,26 @@ var App = React.createClass({
             </p>
 
             <DatePicker
-              highlightWeekends
+              xweekStartDay={3}
+              highlightWeekends={true}
               locale="ro"
-              defaultRange={range}
-              //date={date}
-              //onChange={this.onChange}
-              onRangeChange={this.onRangeChange}
-
+              weekNumberName="x"
+              weekNumbers
+              //defaultRange={range}
+              defaultDate={date}
+              //onChange={this.onRangeChange}
+              //onRangeChange={this.onRangeChange}
+              xweekDayNames={['S','M','T','W','T','F','S']}
+              renderWeekNumber={(p) => {
+                p.children = 'W' + p.week
+                }}
             />
         </div>
     },
 
     onRangeChange: function(rangeValue){
         //range = rangeValue
-        //date = value
-      console.log(rangeValue)
+        //date = rangeValue
         //this.setState({})
     }
 })
