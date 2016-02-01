@@ -43,6 +43,10 @@ var YearView = React.createClass({
 
     render: function() {
 
+        this.toMoment = function(value, dateFormat){
+            return toMoment(value, dateFormat || props.dateFormat, { locale: props.locale })
+        }
+
         TODAY = +moment().startOf('day')
 
         var props = assign({}, this.props)
@@ -68,9 +72,21 @@ var YearView = React.createClass({
      * @return {React.DOM}
      */
     renderMonths: function(props, days) {
-        var nodes      = days.map(function(date){
-            return this.renderMonth(props, date)
-        }, this)
+        var nodes
+
+        if (props.range){
+            const beginRange = this.toMoment(props.range[0])
+            const endRange = props.range[1]? this.toMoment(props.range[1]) : null
+
+            nodes      = days.map(function(date){
+                return this.renderMonth(props, date, beginRange, endRange)
+            }, this)
+        } else {
+            nodes      = days.map(function(date){
+                return this.renderMonth(props, date)
+            }, this)
+        } 
+        
         var len        = days.length
         var buckets    = []
         var bucketsLen = Math.ceil(len / 4)
@@ -86,14 +102,28 @@ var YearView = React.createClass({
         })
     },
 
-    renderMonth: function(props, date) {
+    renderMonth: function(props, date, beginRange, endRange) {
         var monthText = FORMAT.month(date, props.monthFormat)
         var classes = ["dp-cell dp-month"]
 
         var dateTimestamp = +date
 
-        if (dateTimestamp == props.moment){
+        if (props.range){
+          const thisDay = this.toMoment(dateTimestamp)
+          if (thisDay.isBetween(beginRange, endRange, 'months') || thisDay.isBetween(endRange, beginRange, 'months')){
+            classes.push('dp-in-selected-range')
+          }
+          if (thisDay.format('YYYYMM') == beginRange.format('YYYYMM')){
             classes.push('dp-value')
+          }
+          if (endRange){
+            if (thisDay.format('YYYYMM') == endRange.format('YYYYMM'))
+                classes.push('dp-value')
+          }
+        } else {
+            if (dateTimestamp == props.moment){
+                classes.push('dp-value')
+            }
         }
 
         var onClick = this.handleClick.bind(this, props, date)
