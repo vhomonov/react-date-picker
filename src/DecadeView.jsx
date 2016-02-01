@@ -10,6 +10,8 @@ var toMoment = require('./toMoment')
 var onEnter  = require('./onEnter')
 var assign   = require('object-assign')
 
+var isInRange = require('./utils/isInRange')
+
 var TODAY
 
 function emptyFn(){}
@@ -49,10 +51,6 @@ var DecadeView = React.createClass({
 
     render: function() {
 
-        this.toMoment = function(value, dateFormat){
-            return toMoment(value, dateFormat || props.dateFormat, { locale: props.locale })
-        }
-
         TODAY = +moment().startOf('day')
 
         var props = assign({}, this.props)
@@ -78,21 +76,9 @@ var DecadeView = React.createClass({
      * @return {React.DOM}
      */
     renderYears: function(props, days) {
-        var nodes
-
-         if (props.range){
-            const beginRange = this.toMoment(props.range[0])
-            const endRange = props.range[1]? this.toMoment(props.range[1]) : null
-
-            nodes      = days.map(function(date, index, arr){
-            return this.renderYear(props, date, index, arr, beginRange, endRange)
-        }, this)
-        } else {
-            nodes      = days.map(function(date, index, arr){
+        var nodes      = days.map(function(date, index, arr){
             return this.renderYear(props, date, index, arr)
         }, this)
-        } 
-
         var len        = days.length
         var buckets    = []
         var bucketsLen = Math.ceil(len / 4)
@@ -108,30 +94,31 @@ var DecadeView = React.createClass({
         })
     },
 
-    renderYear: function(props, date, index, arr, beginRange, endRange) {
+    renderYear: function(props, date, index, arr) {
         var yearText = FORMAT.year(date, props.yearFormat)
         var classes = ["dp-cell dp-year"]
 
         var dateTimestamp = +date
 
-        if (props.range){
-          const thisDay = this.toMoment(dateTimestamp)
-          if (thisDay.isBetween(beginRange, endRange, 'years') || thisDay.isBetween(endRange, beginRange, 'years')){
-            classes.push('dp-in-selected-range')
+        if (props.range) {
+          const start = date
+          const end = moment(start).endOf('year')
+
+          const [rangeStart, rangeEnd] = props.range
+
+          if (
+            isInRange(start, props.range) ||
+            isInRange(end, props.range) ||
+            rangeStart && isInRange(rangeStart, [start, end]) ||
+            rangeEnd && isInRange(rangeEnd, [start, end])
+          ){
+            classes.push('dp-in-range')
           }
-          if (thisDay.format('YYYY') == beginRange.format('YYYY')){
-            classes.push('dp-value')
-          }
-          if (endRange){
-            if (thisDay.format('YYYY') == endRange.format('YYYY'))
-                classes.push('dp-value')
-          }
-        } else {
-            if (dateTimestamp == props.moment){
-                classes.push('dp-value')
-            }
         }
 
+        if (dateTimestamp == props.moment){
+            classes.push('dp-value')
+        }
 
         if (!index){
             classes.push('dp-prev')

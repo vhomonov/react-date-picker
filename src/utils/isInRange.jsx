@@ -1,17 +1,12 @@
 module.exports = function(moment, [start, end]){
-  if (start, end){
-    return moment.isBetween(start, end)
-  }
 
-  if (!start && !end){
+  if (!moment){
     return false
   }
 
-  if (!end){
-    //there's no end
-    return moment.isAfter(start)
+  if (start, end){
+    return start.isSameOrBefore(moment) && end.isSameOrAfter(moment)
   }
 
-  //there's no start
-  return moment.isBefore(end)
+  return false
 }

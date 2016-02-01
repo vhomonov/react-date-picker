@@ -9,6 +9,8 @@ var asConfig = require('./utils/asConfig')
 var onEnter  = require('./onEnter')
 var toMoment = require('./toMoment')
 
+var isInRange = require('./utils/isInRange')
+
 var TODAY
 
 function emptyFn(){}
@@ -33,6 +35,12 @@ var MonthView = React.createClass({
 
   getDefaultProps: function() {
     return asConfig()
+  },
+
+  getInitialState(){
+    return {
+      range: null
+    }
   },
 
   getWeekStartMoment: function(value){
@@ -73,6 +81,7 @@ var MonthView = React.createClass({
   },
 
   render: function() {
+
     var props = assign({}, this.props)
 
     this.toMoment = function(value, dateFormat){
@@ -109,13 +118,16 @@ var MonthView = React.createClass({
     var daysInView = this.getDaysInMonth(viewMoment)
 
     return (
-        <div className="dp-table dp-month-view">
+        <div className="dp-table dp-month-view" onMouseLeave={props.highlightRangeOnMouseMove && this.handleViewMouseLeave}>
             {this.renderWeekDayNames()}
             {this.renderDays(props, daysInView)}
         </div>
     )
   },
 
+  handleViewMouseLeave(){
+    this.state.range && this.setState({ range: null })
+  },
   /**
    * Render the week number cell
    * @param  {Moment[]} days The days in a week
@@ -162,20 +174,9 @@ var MonthView = React.createClass({
    * @return {React.DOM}
    */
   renderDays: function(props, days) {
-    var nodes
-
-    if (props.range){
-      const beginRange = this.toMoment(props.range[0])
-      const endRange = props.range[1]? this.toMoment(props.range[1]) : null
-
-      nodes = days.map(function(date){
-        return this.renderDay(props, date, beginRange, endRange)
-      }, this)
-    } else {
-      var nodes = days.map(function(date){
+    var nodes = days.map(function(date){
         return this.renderDay(props, date)
-      }, this)
-    }
+    }, this)
 
     var len        = days.length
     var buckets    = []
@@ -204,8 +205,7 @@ var MonthView = React.createClass({
     })
   },
 
-  renderDay: function(props, date, beginRange, endRange) {
-
+  renderDay: function(props, date) {
     var dayText = FORMAT.day(date, props.dayFormat)
     var classes = ["dp-cell dp-day"]
 
@@ -232,45 +232,37 @@ var MonthView = React.createClass({
       afterMaxDate = true
     }
 
+    if (dateTimestamp == props.moment){
+      classes.push('dp-value')
+    }
+
     var mom = this.toMoment(date)
     var onClick = this.handleClick.bind(this, props, date, dateTimestamp)
+
+    const range = this.state.range || this.props.range
+
+    if (range){
+
+      const start = mom
+      const end = moment(start).endOf('day')
+
+      const [rangeStart, rangeEnd] = range
+
+      if (
+        isInRange(start, range) ||
+        isInRange(end, range) ||
+        rangeStart && isInRange(rangeStart, [start, end]) ||
+        rangeEnd && isInRange(rangeEnd, [start, end])
+      ) {
+        classes.push('dp-in-range')
+      }
+    }
 
     var weekDay = mom.day()
 
     if (weekDay === 0 /* Sunday */ || weekDay === 6 /* Saturday */){
       classes.push('dp-weekend')
       props.highlightWeekends && classes.push('dp-weekend-highlight')
-    }
-
-    if (props.range) {
-      const thisDay = this.toMoment(dateTimestamp)
-
-      if (thisDay.isBetween(beginRange, endRange, 'days') || thisDay.isBetween(endRange, beginRange, 'days')) {
-
-        if(!thisDay.isBetween(this.monthFirst.subtract(1, 'hours'), this.monthLast.add(1, 'minutes'), 'days')) {
-          classes.push('dp-in-selected-range-not-in-month')
-        } else if (weekDay === 0 || weekDay === 6) {
-          classes.push('dp-weekend-in-selected-range')
-        } else if (dateTimestamp != TODAY) {
-          classes.push('dp-in-selected-range')
-        } else {
-          classes.push('dp-current-in-selected-range')
-        }
-      }
-
-      if (thisDay.format('YYYYMMDD') == beginRange.format('YYYYMMDD')) {
-        classes.push('dp-value')
-      }
-      if (endRange){
-        if (thisDay.format('YYYYMMDD') == endRange.format('YYYYMMDD')) {
-          classes.push('dp-value')
-        }
-      }
-
-    } else {
-      if (dateTimestamp == props.moment){
-        classes.push('dp-value')
-      }
     }
 
     var renderDayProps = {
@@ -285,6 +277,10 @@ var MonthView = React.createClass({
       onClick  : onClick,
       onKeyUp  : onEnter(onClick),
       children : dayText
+    }
+
+    if (props.range && props.highlightRangeOnMouseMove){
+      renderDayProps.onMouseEnter = this.handleDayMouseEnter.bind(this, renderDayProps)
     }
 
     if (beforeMinDate){
@@ -310,6 +306,22 @@ var MonthView = React.createClass({
     }
 
     return result
+  },
+
+  handleDayMouseEnter: function(dayProps){
+    const range = this.props.range
+
+    if (range && range.length == 1){
+      const [start] = range
+
+      this.setState({
+        range: [start, dayProps.date].sort((a, b) => a - b)
+      })
+    } else if (this.state.range){
+      this.setState({
+        range: null
+      })
+    }
   },
 
   getWeekDayNames: function(props) {
@@ -353,7 +365,9 @@ var MonthView = React.createClass({
         }
 
         event.target.value = date
+
         ;(props.onChange || emptyFn)(date, event)
+
 
     }
 })
