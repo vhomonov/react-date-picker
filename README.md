@@ -140,7 +140,7 @@ The second option is specifying the `locale` prop on the date picker. This assum
  * `maxDate` : Date / String / Moment / Number
  * `dateFormat`: String [see moment.js formats](http://momentjs.com/docs/#/displaying/format/). Default date format is 'YYYY-MM-DD'
  * `onChange`: Function (dateText, moment, event) - called when the user selects a date
- * `onRangechange1: Function (arrayText, arratMoment, event) - called when the user selects a range
+ * `onRangechange`: Function (arrayText, arratMoment, event) - called when the user selects a range
 
  * `onSelect`: Function(dateText, moment, view) - called when the user selects a year/month
  * `onNav`: Function(dateText, moment, view, direction) - called when the user navigates to the next/previous month/year/decade.
