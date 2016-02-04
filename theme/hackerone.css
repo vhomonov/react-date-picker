@@ -1,5 +1,4 @@
 /*
-
  This file is part of the ZippyUI Framework
 
  Copyright (c) 2011 ZippyUI.com
@@ -48,13 +47,16 @@
 .date-picker .dp-table .dp-cell:not(:first-child) {
   border-left: 0 solid transparent;
 }
+.date-picker .dp-table .dp-cell.dp-weeknumber,
+.date-picker .dp-table .dp-cell.dp-weeknumber:hover {
+  color: #8d8d8d;
+  background: none;
+  cursor: auto;
+}
 .date-picker .dp-table .dp-cell.dp-prev,
 .date-picker .dp-table .dp-cell.dp-next {
   color: #5c5c5c;
   background: inherit;
-}
-.date-picker .dp-table .dp-cell.dp-in-range {
-  background: #e2f0ff;
 }
 .date-picker .dp-table .dp-cell:hover {
   color: inherit;
@@ -74,9 +76,8 @@
 .date-picker .dp-table .dp-cell.dp-current {
   font-weight: bold;
 }
-.date-picker .dp-table .dp-cell.dp-in-range.dp-current,
-.date-picker .dp-table .dp-cell.dp-in-range.dp-value {
-  background: #e2f0ff;
+.date-picker .dp-table .dp-cell.dp-in-range {
+  background: #6eb8f1;
 }
 .date-picker .dp-table .dp-cell.dp-month {
   text-overflow: ellipsis;

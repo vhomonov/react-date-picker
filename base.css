@@ -75,6 +75,12 @@
       -ms-flex: 1;
           flex: 1;
 }
+.date-picker .dp-week-day-names {
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
+}
 .date-picker .dp-cell {
   display: -webkit-box;
   display: -webkit-flex;

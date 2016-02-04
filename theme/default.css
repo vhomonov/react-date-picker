@@ -1,5 +1,4 @@
 /*
-
  This file is part of the ZippyUI Framework
 
  Copyright (c) 2011 ZippyUI.com
@@ -38,9 +37,6 @@
   color: #5c5c5c;
   background: inherit;
 }
-.date-picker .dp-table .dp-cell.dp-in-range {
-  background: #e2f0ff;
-}
 .date-picker .dp-table .dp-cell:hover {
   color: inherit;
   font-weight: inherit;
@@ -60,8 +56,11 @@
   color: #2e99eb;
   background: inherit;
 }
-.date-picker .dp-table .dp-cell.dp-in-range.dp-current,
-.date-picker .dp-table .dp-cell.dp-in-range.dp-value {
+.date-picker .dp-table .dp-cell.dp-in-range {
+  font-weight: bold;
+  background: #eee;
+}
+.date-picker .dp-table .dp-cell.dp-value {
   background: #e2f0ff;
 }
 .date-picker .dp-table .dp-cell.dp-month {
