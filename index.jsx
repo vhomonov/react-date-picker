@@ -57,19 +57,16 @@ var App = React.createClass({
             </p>
 
             <DatePicker
+            style={{height: 250}}
               xweekStartDay={3}
               highlightWeekends={true}
-              locale="ro"
-              weekNumberName="x"
+              locale="en"
               weekNumbers
               //defaultRange={range}
               defaultDate={date}
               //onChange={this.onRangeChange}
               //onRangeChange={this.onRangeChange}
               xweekDayNames={['S','M','T','W','T','F','S']}
-              renderWeekNumber={(p) => {
-                p.children = 'W' + p.week
-                }}
             />
         </div>
     },

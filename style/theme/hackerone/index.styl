@@ -48,6 +48,11 @@
       &:not(:first-child)
         border-left $dp-datepicker-cell-border-width $dp-datepicker-cell-border-style $dp-datepicker-cell-border-color
 
+      &.dp-weeknumber
+      &.dp-weeknumber:hover
+        color lighten($dp-datepicker-day-other-month-color, 30%)
+        background none
+        cursor auto
       &.dp-prev
       &.dp-next
         color $dp-datepicker-day-other-month-color
@@ -73,7 +78,7 @@
 
       &.dp-in-range
         background $dp-datepicker-value-selected-range-bg
-        
+
       &.dp-month
         ellipsis true
 
