@@ -377,4 +377,4 @@ MonthView.getHeaderText = function(moment, props) {
   return toMoment(moment, null, {locale: props.locale}).format('MMMM YYYY')
 }
 
-export default MonthView
+module.exports = MonthView
