@@ -29,4 +29,6 @@ node_modules
 .lock-wscript
 
 .idea
+/*.sublime-project
+/*.sublime-workspace
 dist
