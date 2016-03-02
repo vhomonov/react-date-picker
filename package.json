@@ -1,6 +1,6 @@
 {
   "name": "react-date-picker",
-  "version": "4.0.8",
+  "version": "4.0.9",
   "description": "A carefully crafted date picker for React",
   "main": "lib/index.js",
   "scripts": {
@@ -16,9 +16,11 @@
     "dist.min": "webpack --progress -p --config build/dist.min.config.js",
     "dist-nomoment": "webpack --progress --config build/dist.nomoment.config.js",
     "dist-nomoment.min": "webpack --progress -p --config build/dist.nomoment.min.config.js",
-    "lib": "`npm bin`/babel --out-dir lib src",
+    "lib": "babel --out-dir lib src",
     "test-w": "mocha --recursive --reporter spec --require should --watch",
-    "build": "npm run build-css && npm run dist && npm run dist-nomoment && npm run dist.min && npm run dist-nomoment.min && npm run lib"
+    "build": "npm run build-css && npm run dist && npm run dist-nomoment && npm run dist.min && npm run dist-nomoment.min && npm run lib",
+
+    "prepublish": "npm run build"
   },
   "contributors": [],
   "author": "ZippyUI <contact@zippyui.com>",
