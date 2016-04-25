@@ -1,4 +1,4 @@
-module.exports = function(moment, [start, end]){
+export default (moment, [start, end]) => {
 
   if (!moment){
     return false

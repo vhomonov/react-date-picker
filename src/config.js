@@ -1,54 +1,50 @@
-'use strict'
+import getWeekDayNames from './utils/getWeekDayNames'
 
-var getWeekDayNames = require('./utils/getWeekDayNames')
+export default {
 
-// console.log(getWeekDayNames())
+  //the names of week days to be displayed in month view - first should be sunday
+  weekDayNames: getWeekDayNames,
 
-module.exports = {
+  //the day to display as first day of week. defaults to 0, which is sunday
+  weekStartDay: null,
 
-    //the names of week days to be displayed in month view - first should be sunday
-    weekDayNames: getWeekDayNames,
+  locale: null,
 
-    //the day to display as first day of week. defaults to 0, which is sunday
-    weekStartDay: null,
+  //the format in which days should be displayed in month view
+  dayFormat: 'D',
 
-    locale: null,
+  //the format in which months should be displayed in year view
+  monthFormat: 'MMMM',
 
-    //the format in which days should be displayed in month view
-    dayFormat: 'D',
+  //the format in which years should be displayed in decade view
+  yearFormat: 'YYYY',
 
-    //the format in which months should be displayed in year view
-    monthFormat: 'MMMM',
+  //text for navigating to prev period
+  navPrev: '‹',
 
-    //the format in which years should be displayed in decade view
-    yearFormat: 'YYYY',
+  //text for navigating to next period
+  navNext: '›',
 
-    //text for navigating to prev period
-    navPrev      : '‹',
+  //the view to render initially. Possible values are: 'month', 'year', 'decade'
+  view: null,
 
-    //text for navigating to next period
-    navNext      : '›',
+  //the date to mark as selected in the date picker.
+  //Can be a Date object, a moment object or a string.
+  //If it's a string, it will be parsed using dateFormat
+  date: null,
 
-    //the view to render initially. Possible values are: 'month', 'year', 'decade'
-    view: null,
+  minDate: null,
 
-    //the date to mark as selected in the date picker.
-    //Can be a Date object, a moment object or a string.
-    //If it's a string, it will be parsed using dateFormat
-    date: null,
+  maxDate: null,
 
-    minDate: null,
+  //the date where to open the picker. defaults to today if no date and no viewDate specified
+  viewDate: null,
 
-    maxDate: null,
+  //if the date property is given as string, it will be parsed using this format
+  dateFormat: 'YYYY-MM-DD',
 
-    //the date where to open the picker. defaults to today if no date and no viewDate specified
-    viewDate: null,
+  onRenderDay: null,
+  renderDay: null,
 
-    //if the date property is given as string, it will be parsed using this format
-    dateFormat: 'YYYY-MM-DD',
-
-    onRenderDay: null,
-    renderDay: null,
-
-    alwaysShowPrevWeek: false
+  alwaysShowPrevWeek: false
 }

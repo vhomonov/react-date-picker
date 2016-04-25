@@ -1,24 +1,13 @@
-'use strict';
+import React, { PropTypes } from 'react'
+import Component from 'react-class'
 
-var React = require('react')
-var P = React.PropTypes
-var onEnter = require('./onEnter')
+import onEnter from './onEnter'
 
-module.exports = React.createClass({
+export default class DatePickerHeader extends Component {
 
-  displayName: 'DatePickerHeader',
+  render() {
 
-  propTypes: {
-    onChange: P.func,
-    onPrev  : P.func,
-    onNext  : P.func,
-    colspan : P.number,
-    children: P.node
-  },
-
-  render: function() {
-
-    var props = this.props
+    const props = this.props
 
     return <div className="dp-header">
       <div className="dp-nav-table">
@@ -49,8 +38,16 @@ module.exports = React.createClass({
             onKeyUp={onEnter(props.onNext)}
           >{props.nextText}</div>
         </div>
-        </div>
       </div>
+    </div>
   }
+}
 
-})
+DatePickerHeader.propTypes = {
+  onChange: PropTypes.func,
+  onPrev: PropTypes.func,
+  onNext: PropTypes.func,
+  colspan: PropTypes.number,
+  children: PropTypes.node
+}
+

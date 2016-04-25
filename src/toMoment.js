@@ -1,7 +1,5 @@
-'use strict'
-
-var moment = require('moment')
-var CONFIG = require('./config')
+import moment from 'moment'
+import CONFIG from './config'
 
 /**
  * This function will be used to convert a date to a moment.
@@ -14,17 +12,15 @@ var CONFIG = require('./config')
  * @param  {Boolean} [config.strict] whether to perform strict parsing on strings
  * @return {Moment}
  */
-module.exports = function(value, dateFormat, config){
-    var strict = !!(config && config.strict)
-    var locale = config && config.locale
+export default (value, dateFormat, config) => {
+  const strict = !!(config && config.strict)
+  const locale = config && config.locale
 
-    dateFormat = dateFormat || CONFIG.dateFormat
+  dateFormat = dateFormat || CONFIG.dateFormat
 
-    if (typeof value == 'string'){
-        return moment(value, dateFormat, locale, strict)
-    }
+  if (typeof value == 'string'){
+    return moment(value, dateFormat, locale, strict)
+  }
 
-    // return moment.isMoment(value)?
-    // 			value:
-    return moment(value == null? new Date(): value, undefined, locale, strict)
+  return moment(value == null? new Date(): value, undefined, locale, strict)
 }

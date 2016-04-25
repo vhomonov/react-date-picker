@@ -1,22 +1,19 @@
-'use strict'
+import CONFIG from '../config'
+import toMoment from '../toMoment'
 
-var CONFIG   = require('../config')
-var toMoment = require('../toMoment')
+const f = (mom, format) => toMoment(mom).format(format)
 
-function f(mom, format){
-    return toMoment(mom).format(format)
-}
+export default {
 
-module.exports = {
-    day: function(mom, format) {
-        return f(mom, format || CONFIG.dayFormat)
-    },
+  day(mom, format) {
+    return f(mom, format || CONFIG.dayFormat)
+  },
 
-    month: function(mom, format) {
-        return f(mom, format || CONFIG.monthFormat)
-    },
+  month(mom, format) {
+    return f(mom, format || CONFIG.monthFormat)
+  },
 
-    year: function(mom, format) {
-        return f(mom, format || CONFIG.yearFormat)
-    }
+  year(mom, format) {
+    return f(mom, format || CONFIG.yearFormat)
+  }
 }
