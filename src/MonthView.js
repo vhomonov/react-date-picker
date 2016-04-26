@@ -314,7 +314,7 @@ export default class MonthView extends Component {
   }
 
   confirm(date){
-    this.goto(this.toMoment(date))
+    this.goto({ dateMoment: this.toMoment(date) })
   }
 
   navigate(dir){
@@ -328,7 +328,7 @@ export default class MonthView extends Component {
     if (props.activeDate){
       const nextMoment = this.toMoment(props.activeDate).add(dir, 'day')
 
-      this.gotoViewDate(+nextMoment)
+      this.gotoViewDate({ dateMoment: nextMoment})
     }
   }
 
@@ -365,33 +365,28 @@ export default class MonthView extends Component {
 
   }
 
-  goto(dateParam, event){
-
-    let { dateMoment, timestamp } = dateParam
-
-    if (!dateMoment){
-      dateMoment = dateParam
-    }
+  goto({ dateMoment, timestamp }, event){
 
     if (!timestamp){
       timestamp = +dateMoment
     }
 
-    this.gotoViewDate(timestamp)
+    this.gotoViewDate({ dateMoment, timestamp })
 
+    this.onChange({ dateMoment, timestamp }, event)
+  }
+
+  onChange({ dateMoment, timestamp }, event){
     if (this.props.date == null){
       this.setState({
         date: timestamp
       })
     }
 
-    ;(this.props.onChange || emptyFn)({ dateMoment, timestamp }, event)
+    this.props.onChange({ dateMoment, timestamp }, event)
   }
 
-  gotoViewDate(timestamp){
-
-    const dateMoment = this.toMoment(timestamp)
-
+  onViewDateChange({ dateMoment, timestamp }){
     if (this.props.viewDate == null && this.props.navOnDateClick){
       this.setState({
         viewDate: timestamp
@@ -399,7 +394,9 @@ export default class MonthView extends Component {
     }
 
     this.props.onViewDateChange({ dateMoment, timestamp})
+  }
 
+  onActiveDateChange({ dateMoment, timestamp }){
     if (this.props.activeDate == null){
       this.setState({
         activeDate: timestamp
@@ -407,6 +404,16 @@ export default class MonthView extends Component {
     }
 
     this.props.onActiveDateChange({ dateMoment, timestamp })
+  }
+
+  gotoViewDate({ dateMoment, timestamp }){
+
+    if (!timestamp){
+      timestamp = +dateMoment
+    }
+
+    this.onViewDateChange({ dateMoment, timestamp })
+    this.onActiveDateChange({ dateMoment, timestamp })
 
   }
 }
