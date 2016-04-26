@@ -1,7 +1,11 @@
 'use strict'
 
-require('./index.css')
-require('./theme/hackerone.css')
+// require('./index.css')
+// require('./theme/hackerone.css')
+//
+require('./style/index.scss')
+
+import MonthView from './src/MonthView'
 
 var moment = require('moment');
 var React      = require('react')
@@ -10,7 +14,7 @@ var DatePicker = require('./src/index')
 var render = require('react-dom').render
 
 var range = ['2016-02-01', '2016-02-09']
-var date = moment().add(2, 'days')
+var date = moment().add(-10, 'days')
 
 var LOCALE = 'en'
 
@@ -47,6 +51,12 @@ var App = React.createClass({
 
         return <div style={{margin: 10}}>
 
+          <MonthView
+            locale="ro"
+            style={{height: 400}}
+            defaultActiveDate="2016-02-10"
+            defaultDate="2016-02-10"
+          />
             <p>Select locale: <select value={LOCALE} onChange={this.onLocaleChange}>
                     <option value="en">English (US)</option>
                     <option value="fr">French</option>
@@ -56,18 +66,6 @@ var App = React.createClass({
                 </select>
             </p>
 
-            <DatePicker
-            style={{height: 250}}
-              xweekStartDay={3}
-              highlightWeekends={true}
-              locale="en"
-              weekNumbers
-              //defaultRange={range}
-              defaultDate={date}
-              //onChange={this.onRangeChange}
-              //onRangeChange={this.onRangeChange}
-              xweekDayNames={['S','M','T','W','T','F','S']}
-            />
         </div>
     },
 

@@ -1,6 +1,7 @@
 @import '~react-flex/index.scss';
 
-.react-date-picker {
+.react-date-picker,
+.react-date-picker__basic-month-view {
 
   *,
   *:before,
@@ -63,5 +64,44 @@
     .dp-nav-cell {
       flex: 1;
     }
+  }
+}
+
+
+.react-date-picker__month-view,
+.react-date-picker__basic-month-view {
+
+  display: flex;
+  flex-flow: column;
+  flex: 1;
+
+  .dp-value {
+    border: 1px solid blue;
+  }
+  .dp-active {
+    background: gray;
+  }
+
+  &-week-day-name {
+    padding: 5px;
+  }
+
+  &-cell {
+    flex: 1;
+
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-row {
+    display: flex;
+    flex-flow: row;
+    flex: 1;
+  }
+
+  &-week-day-names {
+    flex: none;
   }
 }

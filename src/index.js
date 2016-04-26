@@ -401,7 +401,11 @@ class DatePicker extends Component {
   }
 
   handleChange(date, event) {
-    date = this.toMoment(date)
+    if (date.dateMoment && date.timestamp){
+      date = date.dateMoment
+    } else {
+      date = this.toMoment(date)
+    }
 
     if (this.props.navOnDateClick){
       const viewDate = this.toMoment(this.getViewDate())
