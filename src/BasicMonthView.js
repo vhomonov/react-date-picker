@@ -25,6 +25,19 @@ const RENDER_DAY = (props) => {
   return <div {...props} />
 }
 
+const getWeekStartDay = (props) => {
+
+  const locale = props.locale
+  let weekStartDay = props.weekStartDay
+
+  if (weekStartDay == null){
+    const localeData = props.localeData || moment.localeData(locale)
+    weekStartDay = localeData._week? localeData._week.dow: null
+  }
+
+  return weekStartDay
+}
+
 /**
  * Gets a moment that points to the first day of the week
  *
@@ -38,7 +51,10 @@ const RENDER_DAY = (props) => {
  */
 const getWeekStartMoment = (value, props) => {
 
-  const { locale, dateFormat, weekStartDay } = props
+  const locale = props.locale
+  const dateFormat = props.dateFormat
+
+  const weekStartDay = getWeekStartDay(props)
 
   return toMoment(value, {
     locale,
@@ -59,7 +75,7 @@ const getWeekStartMoment = (value, props) => {
  *
  * @return {Moment[]}
  */
-const getDaysInMonth = (value, props) => {
+const getDaysInMonthView = (value, props) => {
 
   const { locale, dateFormat } = props
   const toMomentParam = { locale, dateFormat }
@@ -156,13 +172,7 @@ class BasicMonthView extends Component {
 
     props.viewMoment = props.viewMoment || this.toMoment(props.viewDate)
 
-    const { weekStartDay, locale } = props
-
-    if (weekStartDay == null){
-
-      const localeData = props.localeData || moment.localeData(locale)
-      props.weekStartDay = localeData._week? localeData._week.dow: null
-    }
+    props.weekStartDay = getWeekStartDay(props)
 
     props.className = this.prepareClassName(props)
 
@@ -183,7 +193,7 @@ class BasicMonthView extends Component {
 
     const { viewMoment } = props
 
-    const daysInView = getDaysInMonth(viewMoment, props)
+    const daysInView = props.daysInView || getDaysInMonthView(viewMoment, props)
 
     return <div
       {...props}
@@ -312,7 +322,11 @@ class BasicMonthView extends Component {
   renderWeekDayNames(){
 
     const props  = this.p
-    const { weekNumbers, weekNumberName, renderWeekDayNames, renderWeekDayName, weekStartDay } = props
+    const { weekNumbers, weekNumberName, weekDayNames, renderWeekDayNames, renderWeekDayName, weekStartDay } = props
+
+    if (weekDayNames === false){
+      return null
+    }
 
     const names = [weekNumbers? weekNumberName: null].concat(getWeekDayNames(props))
 
@@ -369,6 +383,14 @@ BasicMonthView.propTypes = {
   //the name to give to the week number column
   weekNumberName: PropTypes.string,
 
+  weekDayNames: (props, propName) => {
+    const value = props[propName]
+
+    if (typeof value != 'function' && value !== false){
+      return new Error(`"weekDayNames" should either be a function or the boolean "false"`)
+    }
+  },
+
   renderWeekDayNames: PropTypes.func,
   renderWeekDayName: PropTypes.func,
 
@@ -394,6 +416,7 @@ BasicMonthView.defaultProps = {
 export default BasicMonthView
 
 export {
+  getWeekStartDay,
   getWeekStartMoment,
-  getDaysInMonth
+  getDaysInMonthView
 }

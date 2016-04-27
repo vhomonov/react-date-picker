@@ -52,9 +52,11 @@ var App = React.createClass({
         return <div style={{margin: 10}}>
 
           <MonthView
-            locale="ro"
+            locale={LOCALE}
             style={{height: 400}}
-            defaultActiveDate="2016-02-10"
+            defaultActiveDate="2016-06-6"
+
+            defaultViewDate="2016-02-10"
             defaultDate="2016-02-10"
           />
             <p>Select locale: <select value={LOCALE} onChange={this.onLocaleChange}>

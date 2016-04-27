@@ -71,23 +71,17 @@
 .react-date-picker__month-view,
 .react-date-picker__basic-month-view {
 
+  outline: none;
   display: flex;
   flex-flow: column;
   flex: 1;
 
-  .dp-value {
-    border: 1px solid blue;
-  }
-  .dp-active {
-    background: gray;
-  }
-
   &-week-day-name {
-    padding: 5px;
+    padding: 5px 0px;
   }
 
   &-cell {
-    flex: 1;
+    flex: 1 0 auto;
 
     display: flex;
     flex-flow: row;

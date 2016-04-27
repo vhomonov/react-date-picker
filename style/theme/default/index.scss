@@ -1,154 +1,71 @@
-@import './constants';
+$BLUE: rgb(52, 154, 239) !default;
+$DAY_SIZE: 40px !default;
 
-.react-date-picker,
-.date-picker {
-  overflow: hidden;
-  background: white;
-  font-size: $dp-datepicker-font-size;
-  width: $dp-datepicker-width;
-  height: $dp-datepicker-height;
-  border: $dp-datepicker-border-width $dp-datepicker-border-style $dp-datepicker-border-color;
+.react-date-picker__month-view {
 
-  .dp-table {
-    border-color: $dp-datepicker-border-color;
+  &-week-number {
+    color: #B1B1B1;
+  }
 
-    .dp-row {
-      border-top: $dp-datepicker-border-width $dp-datepicker-border-style $dp-datepicker-border-color;
-      &:last-child {
-        border-bottom: $dp-datepicker-border-width $dp-datepicker-border-style $dp-datepicker-border-color;
-      }
-    }
+  &-day-text {
 
-    .dp-cell {
+  }
+
+  &-cell {
+    min-width: $DAY_SIZE;
+    // margin: 2px;
+  }
+
+  &-day {
+
+    .react-date-picker__month-view-day-text {
+      border: 2px solid transparent;
+      border-radius: 50%;
       cursor: pointer;
-      padding: $dp-datepicker-cell-padding;
-      background: $dp-datepicker-day-bg;
+      text-align: center;
 
-      &:not(:first-child) {
-        border-left: $dp-datepicker-border-width $dp-datepicker-border-style $dp-datepicker-border-color;
+      min-width: $DAY_SIZE;
+      min-height: $DAY_SIZE;
+
+      max-width: $DAY_SIZE;
+      max-height: $DAY_SIZE;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      // &:hover {
+      //   border: 2px solid $BLUE;
+      // }
+
+    }
+
+    &--value {
+      .react-date-picker__month-view-day-text {
+        border: 2px solid transparent;
+        background: $BLUE padding-box;
+        color: white;
       }
+    }
 
-      &.dp-prev,
-      &.dp-next {
-        color: $dp-datepicker-day-other-month-color;
-        background: $dp-datepicker-day-other-month-bg;
-      }
-
-      &:hover {
-        color: $dp-datepicker-cell-over-color;
-        font-weight: $dp-datepicker-cell-over-font-weight;
-        background: $dp-datepicker-cell-over-background;
-      }
-
-      &.dp-disabled {
-        cursor: default;
-        color: $dp-datepicker-day-disabled-color;
-        background: $dp-datepicker-day-disabled-bg;
-      }
-
-      &.dp-value {
-        color: $dp-datepicker-value-color;
-        font-weight: $dp-datepicker-value-font-weight;
-        background: $dp-datepicker-value-bg;
-      }
-
-      &.dp-current {
-        color: $dp-datepicker-today-color;
-        background: $dp-datepicker-today-bg;
-      }
-
-      &.dp-in-range {
-        font-weight: $dp-datepicker-value-font-weight;
-        background: $dp-datepicker-value-bg;
-      }
-
-      &.dp-value {
-        background: $dp-datepicker-day-in-range-bg;
-      }
-
-      &.dp-month {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-      }
-
-      &.dp-week-day-name {
-        font-weight: bold;
-        cursor: default;
-        background: inherit;
+    &--active {
+      .react-date-picker__month-view-day-text {
+        border: 2px solid $BLUE;
       }
     }
   }
 
-  .dp-footer {
-    padding: 3px;
-    justify-content: center;
-    border-top-width: 0px;
+  &-day--prev-month,
+  &-day--next-month {
+    color: gray;
+  }
 
-    .dp-footer-selected,
-    .dp-footer-today {
-      padding: 5px 15px;
-      border-width: 1px;
-      cursor: pointer;
+  &-day--weekend-highlight {
+    color: red;
 
+    &.react-date-picker__month-view-day--prev-month,
+    &.react-date-picker__month-view-day--next-month {
+      color: #BB4343;
     }
-  }
-
-  .dp-body {
-    overflow: hidden;
-  }
-
-  .dp-nav-view,
-  .dp-nav-cell,
-  .dp-week-day-name {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    touch-callout: none;
-    user-select: none;
-  }
-
-  .dp-nav-view,
-  .dp-nav-cell {
-    cursor: pointer;
-  }
-
-  .dp-nav-cell {
-    background: $dp-datepicker-nav-bg;
-    &:hover {
-      background: $dp-datepicker-nav-over-bg;
-    }
-  }
-
-  .dp-nav-view {
-    background: $dp-datepicker-month-name-bg;
-    &:hover {
-      background: $dp-datepicker-month-name-over-bg;
-    }
-  }
-
-  .dp-weekend.dp-weekend-highlight,
-  .dp-weekend.dp-weekend-highlight.dp-value,
-  .dp-weekend.dp-weekend-highlight.dp-value:hover,
-  .dp-weekend.dp-weekend-highlight:hover {
-    color: $dp-datepicker-weekend-highlight-color;
-  }
-
-  .dp-nav-table {
-    .dp-cell {
-      border-top-width: 0px;
-      border-bottom-width: 0px;
-      padding: $dp-datepicker-header-padding;
-      font-weight: bold;
-    }
-  }
-
-  .dp-decade-view,
-  .dp-year-view,
-  .dp-month-view {
-    touch-callout: none;
-    user-select: none;
   }
 }
-
-
