@@ -61,7 +61,6 @@ export default class MonthView extends Component {
     }
 
     TODAY = +this.toMoment().startOf('day')
-
   }
 
   prepareDate(props){
@@ -151,10 +150,7 @@ export default class MonthView extends Component {
 
     const daysInView = props.daysInView
 
-    const outOfView = moment.isBefore(daysInView[0]) ||
-                      moment.isAfter(daysInView[daysInView.length - 1])
-
-    return !outOfView
+    return isInRange(moment, { range: daysInView, inclusive: false })
   }
 
   handleViewMouseLeave(){
