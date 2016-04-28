@@ -53,12 +53,16 @@ var App = React.createClass({
 
         return <div style={{margin: 10}}>
 
+          <NavigationView
+
+          >
             <MonthView
               locale={LOCALE}
               style={{height: 400}}
               defaultActiveDate="2016-06-6"
               defaultDate="2016-02-10"
             />
+          </NavigationView>
 
           <MultiMonthView
             size={6}

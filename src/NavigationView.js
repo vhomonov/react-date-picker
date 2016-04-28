@@ -42,7 +42,7 @@ export default class NavigationView extends Component {
         childProps.viewDate
     })
 
-    const view = React.cloneElement(child, assign(cloneProps, childProps, {
+    const view = React.cloneElement(child, assign(cloneProps, {
       viewDate,
       onViewDateChange: this.onViewDateChange
     }))
