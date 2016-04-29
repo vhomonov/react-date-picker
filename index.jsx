@@ -7,6 +7,7 @@ require('./style/index.scss')
 
 import MonthView from './src/MonthView'
 import NavigationView from './src/NavigationView'
+import NavBar from './src/NavBar'
 import MultiMonthView from './src/MultiMonthView'
 
 var moment = require('moment');
@@ -53,29 +54,31 @@ var App = React.createClass({
 
         return <div style={{margin: 10}}>
 
-          <NavigationView
+        <NavBar secondary defaultViewDate="2016-06-03" />
 
-          >
-            <MonthView
-              locale={LOCALE}
-              style={{height: 400}}
-              defaultActiveDate="2016-06-6"
-              defaultDate="2016-02-10"
-            />
-          </NavigationView>
+        <MonthView
+          minDate="2016-10-10"
+          maxDate="2016-11-11"
+          locale={LOCALE}
+          style={{height: 400}}
+          defaultActiveDate="2016-06-6"
+          defaultDate="2016-02-10"
+        >
 
-          <MultiMonthView
-            size={6}
-            viewDate="2016-01-31"
-          />
-            <p>Select locale: <select value={LOCALE} onChange={this.onLocaleChange}>
-                    <option value="en">English (US)</option>
-                    <option value="fr">French</option>
-                    <option value="de">German</option>
-                    <option value="es">Spanish</option>
-                    <option value="ro">Romanian</option>
-                </select>
-            </p>
+        </MonthView>
+
+        <MultiMonthView
+          size={4}
+        />
+
+        <p>Select locale: <select value={LOCALE} onChange={this.onLocaleChange}>
+                <option value="en">English (US)</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="es">Spanish</option>
+                <option value="ro">Romanian</option>
+            </select>
+        </p>
 
         </div>
     },

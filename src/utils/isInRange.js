@@ -3,7 +3,7 @@ export default (moment, configOrRange) => {
   let range = configOrRange
   let inclusive = true
 
-  if (typeof configOrRange == 'object'){
+  if (!Array.isArray(configOrRange) && typeof configOrRange == 'object'){
     range = configOrRange.range
 
     if (configOrRange.inclusive !== undefined){

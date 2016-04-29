@@ -17,7 +17,8 @@
     "moment": ">=2.8.0",
     "object-assign": "^4.0.1",
     "react-class": "^2.0.0",
-    "react-flex": "^2.1.0"
+    "react-flex": "^2.1.0",
+    "react-inline-block": "^2.0.0"
   },
   "peerDependencies": {
     "react": ">=0.14.0 || >=15.0.0-0"

@@ -195,16 +195,24 @@ class BasicMonthView extends Component {
 
     const daysInView = props.daysInView || getDaysInMonthView(viewMoment, props)
 
+    let children = [
+      this.renderWeekDayNames(),
+      this.renderDays(props, daysInView)
+    ]
+
+    if (props.renderChildren){
+      children = props.renderChildren(children, props)
+    }
+
     return <div
       {...props}
 
       weekStartDay={null}
       value={null}
       defaultValue={null}
-    >
-      {this.renderWeekDayNames()}
-      {this.renderDays(props, daysInView)}
-    </div>
+
+      children={children}
+    />
   }
 
   /**

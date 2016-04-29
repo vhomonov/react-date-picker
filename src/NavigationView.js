@@ -2,13 +2,24 @@ import React, { PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
 import Component from 'react-class'
 
-import { Flex } from 'react-flex'
+import { Flex, Item } from 'react-flex'
+import InlineBlock from 'react-inline-block'
+
 import moment from 'moment'
 import assign from 'object-assign'
 
 import toMoment from './toMoment'
 import join from './join'
 import bemFactory from './bemFactory'
+
+const ARROWS = {
+  [-1]: <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/>
+        <path d="M0-.5h24v24H0z" fill="none"/>
+      </svg>
+}
+
+const bem = bemFactory('react-date-picker__navigation')
 
 export default class NavigationView extends Component {
 
@@ -43,11 +54,12 @@ export default class NavigationView extends Component {
     })
 
     const view = React.cloneElement(child, assign(cloneProps, {
-      viewDate,
-      onViewDateChange: this.onViewDateChange
+      viewDate
     }))
 
-    const props = this.p = view.props
+    const props = this.p = assign({}, view.props)
+
+    props.viewMoment = this.toMoment(viewDate)
 
     return <Flex
       column
@@ -70,25 +82,59 @@ export default class NavigationView extends Component {
 
   renderNavigation(){
     if (this.props.renderNavigation){
-      return this.props.renderNavigation()
+      return this.props.renderNavigation({
+        viewDate: props.viewDate
+      })
     }
 
-    return <Flex column>
-        <div style={{textAlign: 'center'}}>
-          {this.renderHeaderDate()}
-        </div>
-      </Flex>
+    return <Flex row>
+      {this.renderNavBefore()}
+      <Item style={{textAlign: 'center'}}>
+        {this.renderHeaderDate()}
+      </Item>
+      {this.renderNavAfter()}
+    </Flex>
+  }
+
+  renderNavBefore(){
+    return this.renderNav(-1)
+  }
+
+  renderNavAfter(){
+    return this.renderNav(1)
+  }
+
+  renderNav(dir){
+    const className = bem(`arrow--${dir == -1? 'prev': 'next'}`)
+
+    return <InlineBlock className={className} onClick={this.onNavClick.bind(this, dir)}>
+      {ARROWS[dir]}
+    </InlineBlock>
+  }
+
+  onNavClick(dir){
+
+    const props = this.p
+    const viewMoment = props.viewMoment
+
+    const dateMoment = this.toMoment(viewMoment).add(dir, 'month')
+    const timestamp = +dateMoment
+
+    this.onViewDateChange({
+      dateMoment,
+      timestamp
+    })
   }
 
   renderHeaderDate(){
     const props = this.p
-    const mom = this.toMoment(props.viewDate)
+    const moment = props.viewMoment
 
     if (this.props.renderHeaderDate){
-      return this.props.renderHeaderDate(mom)
+      return this.props.renderHeaderDate(moment)
     }
 
-    return mom.format(props.headerDateFormat)
+    return moment.format(props.headerDateFormat)
   }
 
   onViewDateChange({ dateMoment, timestamp }){
@@ -104,7 +150,9 @@ export default class NavigationView extends Component {
 }
 
 NavigationView.defaultProps = {
-  headerDateFormat: 'MMM YYYY'
+  headerDateFormat: 'MMM YYYY',
+
+  onViewDateChange: () => {}
 }
 
 NavigationView.propTypes = {

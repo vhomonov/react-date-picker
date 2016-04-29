@@ -9,6 +9,7 @@ import toMoment from './toMoment'
 import join from './join'
 import isInRange from './utils/isInRange'
 
+import NavBar from './NavBar'
 import bemFactory from './bemFactory'
 
 import BasicMonthView, { getDaysInMonthView } from './BasicMonthView'
@@ -86,6 +87,7 @@ export default class MonthView extends Component {
     const activeDate = props.activeDate === undefined?
         //only fallback to date if activeDate not specified
         (this.state.activeDate || this.prepareDate(props)):
+
         props.activeDate
 
     const daysInView = props.daysInView
@@ -97,8 +99,9 @@ export default class MonthView extends Component {
       if (!this.isInView(activeMoment, props)){
 
         const date = this.prepareDate(props)
+        const dateMoment = this.toMoment(date)
 
-        if (date && this.isInView(this.toMoment(date), props)){
+        if (date && this.isInView(dateMoment, props) && this.isValidActiveDate(+dateMoment)){
           return date
         }
 
@@ -106,31 +109,43 @@ export default class MonthView extends Component {
       }
     }
 
-
-    return activeDate
+    return this.isValidActiveDate(+activeDate)? activeDate: null
   }
 
   prepareProps(thisProps){
-    const props = assign({}, thisProps)
-
-    props.viewMoment = this.toMoment(this.prepareViewDate(props))
-    props.viewMonthStart = this.toMoment(props.viewMoment).startOf('month')
-    props.viewMonthEnd  = this.toMoment(props.viewMoment).endOf('month')
+    const props = this.p = assign({}, thisProps)
 
     const { minDate, maxDate } = props
 
     if (minDate){
-      props.minDate = +this.toMoment(props.minDate).startOf('day')
+      props.minDateMoment = this.toMoment(props.minDate).startOf('day')
+      props.minDate = +props.minDateMoment
     }
 
     if (maxDate){
-      props.maxDate = +this.toMoment(props.maxDate)
+      props.maxDateMoment = this.toMoment(props.maxDate)
+      props.maxDate = +props.maxDateMoment
     }
+
+    props.viewMoment = props.viewMoment || this.toMoment(this.prepareViewDate(props))
+
+    if (props.constrainViewDate && props.minDate && props.viewMoment.isBefore(props.minDate)){
+      props.minContrained = true
+      props.viewMoment = this.toMoment(props.minDate)
+    }
+
+    if (props.constrainViewDate && props.maxDate && props.viewMoment.isAfter(props.maxDate)){
+      props.maxConstrained = true
+      props.viewMoment = this.toMoment(props.maxDate)
+    }
+
+    props.viewMonthStart = this.toMoment(props.viewMoment).startOf('month')
+    props.viewMonthEnd  = this.toMoment(props.viewMoment).endOf('month')
 
     const date = this.prepareDate(props)
 
     if (date){
-      props.moment = props.range? null: this.toMoment(date).startOf('day')
+      props.moment = props.moment || (props.range? null: this.toMoment(date).startOf('day'))
       props.timestamp = props.moment? +props.moment: null
     }
 
@@ -167,11 +182,29 @@ export default class MonthView extends Component {
 
     return join(
       timestamp == TODAY && this.bem('day--today'),
+
       before && this.bem('day--prev-month'),
+      before && !props.showDaysBeforeMonth && this.bem('day--hidden'),
+
       after && this.bem('day--next-month'),
+      after && !props.showDaysAfterMonth && this.bem('day--hidden'),
+
       thisMonth && this.bem('day--this-month')
     )
 
+  }
+
+  isValidActiveDate(timestamp, props){
+    props = props || this.p
+
+    if (props.minDate && timestamp < props.minDate){
+      return false
+    }
+    if (props.maxDate && timestamp > props.maxDate){
+      return false
+    }
+
+    return true
   }
 
   prepareMinMaxProps(timestamp, props){
@@ -184,17 +217,23 @@ export default class MonthView extends Component {
     const { minDate, maxDate } = props
 
     if (minDate && timestamp < minDate){
-      classes.push('dp-disabled dp-before-min')
+      classes.push(
+        this.bem('day--disabled'),
+        this.bem('day--disabled-min')
+      )
       isBeforeMinDate = true
     }
 
     if (maxDate && timestamp > maxDate){
-      classes.push('dp-disabled dp-after-max')
+      classes.push(
+        this.bem('day--disabled'),
+        this.bem('day--disabled-max')
+      )
       isAfterMaxDate = true
     }
 
     return {
-      className: classes.join(''),
+      className: join(classes),
       isBeforeMinDate,
       isAfterMaxDate,
       isDisabled: isBeforeMinDate || isAfterMaxDate
@@ -263,7 +302,7 @@ export default class MonthView extends Component {
       onClick: this.handleClick.bind(this, eventParam)
     }
 
-    if (props.activateOnHover && this.props.activeDate !== null) {
+    if (!minMaxProps.isDisabled && props.activateOnHover && this.props.activeDate !== null) {
       events.onMouseEnter = this.onDayTextMouseEnter.bind(this, eventParam)
     }
 
@@ -338,6 +377,7 @@ export default class MonthView extends Component {
 
     return <BasicMonthView
       tabIndex={0}
+      renderChildren={this.renderChildren}
       {...props}
 
       onKeyDown={this.onViewKeyDown}
@@ -357,6 +397,67 @@ export default class MonthView extends Component {
       viewMoment={props.viewMoment}
       onMouseLeave={props.highlightRangeOnMouseMove && this.handleViewMouseLeave}
     />
+  }
+
+  renderChildren(children){
+
+    const props = this.p
+    const navBar = this.renderNavBar(props)
+
+    if (navBar) {
+      children = [
+        navBar,
+        children
+      ]
+    }
+
+    return children
+  }
+
+  renderNavBar(){
+    const props = this.p
+
+    const prevDisabled = props.minContrained || (props.minDateMoment && props.viewMoment.format('YYYY-MM') == props.minDateMoment.format('YYYY-MM'))
+    const nextDisabled = props.maxContrained || (props.maxDateMoment && props.viewMoment.format('YYYY-MM') == props.maxDateMoment.format('YYYY-MM'))
+
+    const childNavBar = React.Children.toArray(props.children).filter(c => c && c.props && c.props.isDatePickerNavBar)[0]
+
+    if (!childNavBar){
+
+      if (props.navigation){
+        return <NavBar
+          prevDisabled={prevDisabled}
+          nextDisabled={nextDisabled}
+          secondary
+          viewMoment={props.viewMoment}
+          onViewDateChange={this.onViewDateChange}
+        />
+      }
+
+      return null
+    }
+
+    const navBarProps = assign({}, childNavBar.props, {
+      viewMoment: props.viewMoment,
+      prevDisabled,
+      nextDisabled
+    })
+
+    const prevOnViewDateChange = navBarProps.onViewDateChange
+    let onViewDateChange = this.onViewDateChange
+
+    if (prevOnViewDateChange){
+      onViewDateChange = (...args) => {
+        prevOnViewDateChange(...args)
+        this.onViewDateChange(...args)
+      }
+    }
+
+    navBarProps.onViewDateChange = onViewDateChange
+
+    if (navBarProps){
+      return <NavBar {...navBarProps} />
+    }
   }
 
   onFocus(){
@@ -393,22 +494,25 @@ export default class MonthView extends Component {
       return
     }
 
-    this.navigate(dir)
+    this.navigate(dir, event)
   }
 
   confirm(date){
     this.goto({ dateMoment: this.toMoment(date) })
   }
 
-  navigate(dir){
+  navigate(dir, event){
 
     const props = this.p
 
     if (props.navigate){
-      return props.navigate(dir)
+      return props.navigate(dir, event)
     }
 
     if (props.activeDate){
+
+      event.preventDefault()
+
       const nextMoment = this.toMoment(props.activeDate).add(dir, 'day')
 
       this.gotoViewDate({ dateMoment: nextMoment})
@@ -459,6 +563,10 @@ export default class MonthView extends Component {
     this.onChange({ dateMoment, timestamp }, event)
   }
 
+  format(moment){
+    return moment.format(this.props.dateFormat)
+  }
+
   onChange({ dateMoment, timestamp }, event){
     if (this.props.date === undefined){
       this.setState({
@@ -466,7 +574,7 @@ export default class MonthView extends Component {
       })
     }
 
-    this.props.onChange({ dateMoment, timestamp }, event)
+    this.props.onChange({ dateMoment, timestamp, date: this.format(dateMoment) }, event)
   }
 
   onViewDateChange({ dateMoment, timestamp }){
@@ -480,6 +588,11 @@ export default class MonthView extends Component {
   }
 
   onActiveDateChange({ dateMoment, timestamp }){
+
+    if (!this.isValidActiveDate(timestamp)){
+      return
+    }
+
     if (this.props.activeDate === undefined){
       this.setState({
         activeDate: timestamp
@@ -509,11 +622,17 @@ MonthView.defaultProps = {
   onViewDateChange: () => {},
   onActiveDateChange: () => {},
 
-  activateOnHover: true,
+  activateOnHover: false,
   contrainActiveInView: true,
 
+  showDaysBeforeMonth: true,
+  showDaysAfterMonth: true,
+
   highlightWeekends: true,
-  navOnDateClick: true
+  navOnDateClick: true,
+  navigation: true,
+
+  constrainViewDate: true
 }
 
 MonthView.propTypes = {

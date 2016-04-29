@@ -1,5 +1,6 @@
 $BLUE: rgb(52, 154, 239) !default;
 $DAY_SIZE: 40px !default;
+$DISABLED_DAY_COLOR: #D8D8D8 !default;
 
 .react-date-picker__month-view {
 
@@ -48,6 +49,7 @@ $DAY_SIZE: 40px !default;
       }
     }
 
+    // &--active:not(.react-date-picker__month-view-day--disabled) {
     &--active {
       .react-date-picker__month-view-day-text {
         border: 2px solid $BLUE;
@@ -66,6 +68,15 @@ $DAY_SIZE: 40px !default;
     &.react-date-picker__month-view-day--prev-month,
     &.react-date-picker__month-view-day--next-month {
       color: #BB4343;
+    }
+  }
+
+  &-day--disabled {
+    color: $DISABLED_DAY_COLOR;
+
+    &.react-date-picker__month-view-day--prev-month,
+    &.react-date-picker__month-view-day--next-month {
+      color: $DISABLED_DAY_COLOR;
     }
   }
 }

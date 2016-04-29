@@ -67,6 +67,28 @@
   }
 }
 
+.react-date-picker__nav-bar {
+  &-arrow {
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+
+    &--disabled {
+      fill: #BFBFBF;
+      cursor: default;
+    }
+  }
+
+  &-date {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  svg {
+    vertical-align: middle;
+  }
+}
 
 .react-date-picker__month-view,
 .react-date-picker__basic-month-view {
@@ -78,6 +100,14 @@
 
   &-week-day-name {
     padding: 5px 0px;
+  }
+
+  &-day--hidden {
+    visibility: hidden;
+  }
+
+  &-day--disabled {
+    color: #BFBFBF;
   }
 
   &-cell {
