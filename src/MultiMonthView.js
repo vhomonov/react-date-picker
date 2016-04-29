@@ -39,7 +39,6 @@ export default class MultiMonthView extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-
     if (nextProps.locale != this.props.locale || nextProps.dateFormat != this.props.dateFormat){
       this.updateToMoment(nextProps)
     }
@@ -84,9 +83,7 @@ export default class MultiMonthView extends Component {
     props.viewMoment = this.toMoment(this.prepareViewDate(props))
 
     props.viewStart = this.toMoment(props.viewMoment).startOf('month')
-    props.viewEnd  = this.toMoment(props.viewStart).add(props.size - 1, 'month').endOf('month')
-
-    console.log(props.viewStart.format('YYYY-MM'), props.viewEnd.format('YYYY-MM'))
+    props.viewEnd = this.toMoment(props.viewStart).add(props.size - 1, 'month').endOf('month')
 
     const activeDate = this.prepareActiveDate(props)
 
@@ -128,7 +125,7 @@ export default class MultiMonthView extends Component {
       return this.renderView(index, props.size)
     })
 
-    return <Flex row children={children} />
+    return <Flex row wrap={false} children={children} />
   }
 
   renderView(index, size){
