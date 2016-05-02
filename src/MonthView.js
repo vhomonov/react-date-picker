@@ -92,7 +92,7 @@ export default class MonthView extends Component {
 
     const daysInView = props.daysInView
 
-    if (activeDate && daysInView && props.contrainActiveInView){
+    if (activeDate && daysInView && props.constrainActiveInView){
 
       const activeMoment = this.toMoment(activeDate)
 
@@ -154,7 +154,7 @@ export default class MonthView extends Component {
     const activeDate = this.prepareActiveDate(props)
 
     if (activeDate){
-      props.activeDate = +this.toMoment(activeDate)
+      props.activeDate = +this.toMoment(activeDate).startOf('day')
     }
 
     return props
@@ -424,14 +424,14 @@ export default class MonthView extends Component {
 
     if (!childNavBar){
 
-      if (props.navigation){
-        return <NavBar
-          prevDisabled={prevDisabled}
-          nextDisabled={nextDisabled}
-          secondary
-          viewMoment={props.viewMoment}
-          onViewDateChange={this.onViewDateChange}
-        />
+      if (props.navigation || props.renderNavBar){
+        return this.renderNavBarComponent({
+          prevDisabled,
+          nextDisabled,
+          secondary: true,
+          viewMoment: props.viewMoment,
+          onViewDateChange: this.onViewDateChange
+        })
       }
 
       return null
@@ -456,8 +456,16 @@ export default class MonthView extends Component {
     navBarProps.onViewDateChange = onViewDateChange
 
     if (navBarProps){
-      return <NavBar {...navBarProps} />
+      return this.renderNavBarComponent(navBarProps)
     }
+  }
+
+  renderNavBarComponent(navBarProps){
+    if (this.props.renderNavBar){
+      return this.props.renderNavBar(navBarProps)
+    }
+
+    return <NavBar {...navBarProps} />
   }
 
   onFocus(){
@@ -479,8 +487,8 @@ export default class MonthView extends Component {
       this.props.onKeyDown(event)
     }
 
-    if (key == 'Enter' && this.p.activeDate){
-      this.confirm(this.p.activeDate)
+    if (key == 'Enter'){
+      this.p.activeDate && this.confirm(this.p.activeDate, event)
     }
 
     const dir = ({
@@ -497,8 +505,12 @@ export default class MonthView extends Component {
     this.navigate(dir, event)
   }
 
-  confirm(date){
-    this.goto({ dateMoment: this.toMoment(date) })
+  confirm(date, event){
+    if (this.props.confirm){
+      return this.props.confirm(date, event)
+    }
+
+    this.goto({ dateMoment: this.toMoment(date) }, event)
   }
 
   navigate(dir, event){
@@ -574,7 +586,9 @@ export default class MonthView extends Component {
       })
     }
 
-    this.props.onChange({ dateMoment, timestamp, date: this.format(dateMoment) }, event)
+    if (this.props.onChange){
+      this.props.onChange({ dateMoment, timestamp, date: this.format(dateMoment) }, event)
+    }
   }
 
   onViewDateChange({ dateMoment, timestamp }){
@@ -618,12 +632,11 @@ MonthView.defaultProps = {
   defaultClassName: 'react-date-picker__month-view',
   dateFormat: 'YYYY-MM-DD',
 
-  onChange: () => {},
   onViewDateChange: () => {},
   onActiveDateChange: () => {},
 
   activateOnHover: false,
-  contrainActiveInView: true,
+  constrainActiveInView: true,
 
   showDaysBeforeMonth: true,
   showDaysAfterMonth: true,
@@ -637,8 +650,4 @@ MonthView.defaultProps = {
 
 MonthView.propTypes = {
   navOnDateClick: PropTypes.bool
-}
-
-MonthView.getHeaderText = (moment, props) => {
-  return toMoment(moment, {locale: props.locale}).format('MMMM YYYY')
 }

@@ -19,9 +19,11 @@ export default (moment, configOrRange) => {
   }
 
   if (start && end){
+    const insideRange = start.isBefore(moment) && end.isAfter(moment)
+
     return inclusive?
-      start.isSameOrBefore(moment) && end.isSameOrAfter(moment):
-      start.isBefore(moment) && end.isAfter(moment)
+      insideRange || start.isSame(moment) || end.isSame(moment):
+      insideRange
   }
 
   return false
