@@ -57,8 +57,8 @@ var App = React.createClass({
         <NavBar secondary defaultViewDate="2016-06-03" />
 
         <MonthView
-          xminDate="2016-10-10"
-          xmaxDate="2016-11-11"
+          minDate="2016-10-10"
+          maxDate="2016-11-11"
           locale={LOCALE}
           style={{height: 400}}
           defaultActiveDate="2016-06-6"
