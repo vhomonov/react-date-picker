@@ -39,6 +39,7 @@ var GO2SELECTED = {
 
 function emptyFn(){}
 
+let R = ['2016-05-10']
 var App = React.createClass({
     displayName: 'App',
 
@@ -57,17 +58,24 @@ var App = React.createClass({
         <NavBar secondary defaultViewDate="2016-06-03" />
 
         <MonthView
-          minDate="2016-10-10"
-          maxDate="2016-11-11"
+          xminDate="2016-10-10"
+          xmaxDate="2016-11-11"
           locale={LOCALE}
+          xrange={R}
+          defaultRange={[]}
+          xonRangeChange={this.onRangeChange}
           style={{height: 400}}
-          defaultActiveDate="2016-06-6"
-          defaultDate="2016-02-10"
+          xdefaultActiveDate="2016-06-6"
+          xdefaultDate="2016-02-10"
         >
 
         </MonthView>
 
         <MultiMonthView
+          xdefaultRange={['2016-05-06']}
+          range={R}
+          xdefaultRange={[]}
+          onRangeChange={this.onRangeChange}
           size={4}
         />
 
@@ -83,7 +91,15 @@ var App = React.createClass({
         </div>
     },
 
-    onRangeChange: function(rangeValue){
+    onRangeChange: function(range, r){
+
+      if (r.length){
+        if (r[1].timestamp - r[0].timestamp < 1000 * 60 *60*24 * 3)
+        return range[0]
+      }
+      console.log(range)
+      R = range
+      this.setState({})
         //range = rangeValue
         //date = rangeValue
         //this.setState({})

@@ -51,7 +51,7 @@ export default class NavBar extends Component {
 
     const secondary = props.secondary
 
-    const className = join(props.className, bem())
+    const className = join(props.className, bem(), bem(`theme-${props.theme}`))
 
     return <Flex row {...props} className={className} viewDate={null}>
 
@@ -186,6 +186,8 @@ export default class NavBar extends Component {
 
 NavBar.defaultProps = {
   arrows: {},
+
+  theme: 'default',
 
   isDatePickerNavBar: true,
 

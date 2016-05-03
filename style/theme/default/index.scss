@@ -2,38 +2,47 @@ $BLUE: rgb(52, 154, 239) !default;
 $DAY_SIZE: 40px !default;
 $DISABLED_DAY_COLOR: #D8D8D8 !default;
 
-.react-date-picker__nav-bar-arrow {
-  position: relative;
+$ACTIVE_IN_RANGE_COLOR: lighten($BLUE, 20%) !default;
+$ACTIVE_RANGE_LIMITS_COLOR: lighten($BLUE, 10%) !default;
 
-  &:not(.react-date-picker__nav-bar-arrow--disabled) {
-    &:hover{
-      opacity: 0.7;
-    }
+.react-date-picker__nav-bar-theme-default {
 
-    &:active {
-      top: 1px;
+  .react-date-picker__nav-bar-arrow {
+    position: relative;
+
+    &:not(.react-date-picker__nav-bar-arrow--disabled) {
+      &:hover{
+        opacity: 0.7;
+      }
+
+      &:active {
+        top: 1px;
+      }
     }
   }
 
 }
-.react-date-picker__month-view {
+$base: 'react-date-picker__month-view';
 
-  &-week-number {
+.#{$base}-theme-default {
+
+  .#{$base}-week-number {
     color: #B1B1B1;
   }
 
-  &-day-text {
+  .#{$base}-day-text {
 
   }
 
-  &-cell {
+  .#{$base}-cell {
     min-width: $DAY_SIZE;
-    // margin: 2px;
   }
 
-  &-day {
+  .#{$base}-day {
 
-    .react-date-picker__month-view-day-text {
+    position: relative;
+
+    .#{$base}-day-text {
       border: 2px solid transparent;
       border-radius: 50%;
       cursor: pointer;
@@ -48,48 +57,101 @@ $DISABLED_DAY_COLOR: #D8D8D8 !default;
       display: flex;
       align-items: center;
       justify-content: center;
-
-      // &:hover {
-      //   border: 2px solid $BLUE;
-      // }
-
     }
 
+    &--in-range {
+      overflow: hidden;
+      .#{$base}-day-text {
+        position: relative;
+        &:after,
+        &:before {
+          position: absolute;
+          height: 100%;
+          top: 0px;
+          bottom: 0px;
+          width: 500%;
+          background: $BLUE;
+          z-index: -1;
+          content: '';
+        }
+
+        &:before {
+          right: 50%;
+        }
+        &:after {
+          left: 50%;
+        }
+      }
+
+      &.#{$base}-day--range-start {
+        .#{$base}-day-text {
+          &:before {
+            display: none;
+          }
+        }
+      }
+
+      &.#{$base}-day--range-end {
+        .#{$base}-day-text {
+          &:after {
+            display: none;
+          }
+        }
+      }
+
+      &.#{$base}-day--active:not(
+        .#{$base}-day--range-start
+      ):not(
+        .#{$base}-day--range-end
+      ) {
+        .#{$base}-day-text {
+          background: $ACTIVE_IN_RANGE_COLOR padding-box;
+        }
+      }
+    }
+
+    &--in-range,
     &--value {
-      .react-date-picker__month-view-day-text {
+      .#{$base}-day-text {
         border: 2px solid transparent;
         background: $BLUE padding-box;
         color: white;
       }
     }
 
-    // &--active:not(.react-date-picker__month-view-day--disabled) {
+    &--range-start,
+    &--range-end {
+      .#{$base}-day-text {
+        background: $ACTIVE_RANGE_LIMITS_COLOR padding-box;
+      }
+    }
+
     &--active {
-      .react-date-picker__month-view-day-text {
+      .#{$base}-day-text {
         border: 2px solid $BLUE;
       }
     }
   }
 
-  &-day--prev-month,
-  &-day--next-month {
+  .#{$base}-day--prev-month,
+  .#{$base}-day--next-month {
     color: gray;
   }
 
-  &-day--weekend-highlight {
+  .#{$base}-day--weekend-highlight {
     color: red;
 
-    &.react-date-picker__month-view-day--prev-month,
-    &.react-date-picker__month-view-day--next-month {
+    &.#{$base}-day--prev-month,
+    &.#{$base}-day--next-month {
       color: #BB4343;
     }
   }
 
-  &-day--disabled {
+  .#{$base}-day--disabled {
     color: $DISABLED_DAY_COLOR;
 
-    &.react-date-picker__month-view-day--prev-month,
-    &.react-date-picker__month-view-day--next-month {
+    &.#{$base}-day--prev-month,
+    &.#{$base}-day--next-month {
       color: $DISABLED_DAY_COLOR;
     }
   }

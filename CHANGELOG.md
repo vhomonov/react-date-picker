@@ -5,6 +5,7 @@ react-date-picker
 
  * switch from `Stylus` to `SASS` styling
  * refactor code to use ES6 everywhere
+ * modify `onChange` and `onRangeChange`
 
 #### 4.0.6 
  * add `highlightWeekends` prop. Defaults to false.

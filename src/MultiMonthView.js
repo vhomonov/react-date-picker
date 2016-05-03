@@ -8,6 +8,7 @@ import InlineBlock from 'react-inline-block'
 import moment from 'moment'
 import assign from 'object-assign'
 
+import clampRange from './clampRange'
 import NavBar from './NavBar'
 import toMoment from './toMoment'
 import join from './join'
@@ -29,6 +30,7 @@ export default class MultiMonthView extends Component {
     super(props)
 
     this.state = {
+      range: props.defaultRange,
       date: props.defaultDate,
       activeDate: props.defaultActiveDate,
       viewDate: props.defaultViewDate
@@ -72,17 +74,24 @@ export default class MultiMonthView extends Component {
             props.date
   }
 
+  prepareRange(props){
+    return this.state.range || props.range
+  }
+
   prepareActiveDate(props){
+
+    const fallbackDate = this.prepareDate(props) || ((this.prepareRange(props) || [])[0])
+
     const activeDate = props.activeDate === undefined?
             //only fallback to date if activeDate not specified
-            this.state.activeDate || this.prepareDate(props):
+            this.state.activeDate || fallbackDate:
             props.activeDate
 
     if (activeDate && props.inViewStart && props.inViewEnd && props.constrainActiveInView){
       const activeMoment = this.toMoment(activeDate)
 
       if (!isInRange(activeMoment, [props.inViewStart, props.inViewEnd])){
-        const date = this.prepareDate(props)
+        const date = fallbackDate
         const dateMoment = this.toMoment(date)
 
         if (date && isInRange(dateMoment, [props.inViewStart, props.inViewEnd])){
@@ -107,7 +116,7 @@ export default class MultiMonthView extends Component {
     const size = props.size
 
     while (index < size){
-      const mom = this.toMoment(viewMoment).add(index, 'month')
+      const mom = this.toMoment(viewMoment).startOf('day').add(index, 'month')
       const days = getDaysInMonthView(mom, props)
 
       viewMoments.push(mom)
@@ -151,6 +160,15 @@ export default class MultiMonthView extends Component {
 
     props.date = this.prepareDate(props)
 
+    if (!props.date){
+      const range = this.prepareRange(props)
+
+      if (range){
+        props.range = range.map(d => this.toMoment(d).startOf('day'))
+        props.rangeStart = this.state.rangeStart || (props.range.length == 1? props.range[0]: null)
+      }
+    }
+
     return props
   }
 
@@ -190,19 +208,14 @@ export default class MultiMonthView extends Component {
 
     const props = this.p
     const viewMoment = props.viewMoments[index]
-    // let activeDate = props.activeDate && this.toMoment(props.activeDate)
 
-    // if (activeDate){
+    let range
 
-    //   const viewMomentStart = this.toMoment(viewMoment).startOf('month')
-    //   const viewMomentEnd = this.toMoment(viewMoment).endOf('month')
-
-    //   const range = [viewMomentStart, viewMomentEnd]
-
-    //   if (!isInRange(activeDate, { range, inclusive: true })){
-    //     activeDate = null
-    //   }
-    // }
+    if (props.range){
+      range = props.rangeStart && props.range.length == 0?
+                [props.rangeStart]:
+                props.range
+    }
 
     return <MonthView
       {...this.props}
@@ -219,7 +232,12 @@ export default class MultiMonthView extends Component {
       onViewDateChange={this.onAdjustViewDateChange}
 
       date={props.date}
+      defaultDate={null}
       onChange={this.onChange}
+
+      range={range}
+      defaultRange={null}
+      onRangeChange={this.onRangeChange}
 
       viewMoment={viewMoment}
 
@@ -228,36 +246,43 @@ export default class MultiMonthView extends Component {
       showDaysBeforeMonth={index == 0}
       showDaysAfterMonth={index == size - 1}
 
-      confirm={this.confirm}
+      select={this.select}
 
       renderNavBar={this.renderNavBar.bind(this, index, viewMoment)}
     />
   }
 
-  confirm(date, event){
+  select({ dateMoment, timestamp }){
+    if (!dateMoment){
+      return
+    }
+
     const props = this.p
 
-    if (props.confirm){
-      return props.confirm(date, event)
+    const visibleRange = [props.inViewStart, props.inViewEnd]
+
+    if (!isInRange(dateMoment, {range: visibleRange, inclusive: true})){
+      return
     }
 
-    const dateMoment = date && this.toMoment(date)
+    this.onAdjustViewDateChange({ dateMoment, timestamp })
+    this.onActiveDateChange({ dateMoment, timestamp})
 
-    if (dateMoment){
-      const range = [props.inViewStart, props.inViewEnd]
+    const range = props.range
 
-      if (!isInRange(dateMoment, {range, inclusive: true})){
-        return
-      }
-    }
-
-    if (dateMoment){
-      const timestamp = +dateMoment
-
-      this.onAdjustViewDateChange({ dateMoment, timestamp })
-      this.onActiveDateChange({ dateMoment, timestamp})
+    if (range){
+      this.selectRange({ dateMoment, timestamp })
+    } else {
       this.onChange({ dateMoment, timestamp }, event)
     }
+  }
+
+  selectRange({ dateMoment, timestamp }){
+    return MonthView.prototype.selectRange.call(this, { dateMoment, timestamp })
+  }
+
+  onRangeChange(range, event){
+    return MonthView.prototype.onRangeChange.call(this, range)
   }
 
   renderNavBar(index, viewMoment){
@@ -363,6 +388,17 @@ export default class MultiMonthView extends Component {
 
   onActiveDateChange({ dateMoment, timestamp }){
 
+    const props = this.p
+    const range = props.range
+
+    if (range && props.rangeStart){
+
+      this.setState({
+        rangeStart: props.rangeStart,
+        range: clampRange([props.rangeStart, dateMoment])
+      })
+    }
+
     if (this.props.activeDate === undefined ){
       this.setState({
         activeDate: timestamp
@@ -383,10 +419,10 @@ export default class MultiMonthView extends Component {
 
   }
 
-  goto({ dateMoment, timestamp }){
-    this.gotoViewDate({ dateMoment, timestamp })
-    this.onChange({ dateMoment, timestamp })
-  }
+  // goto({ dateMoment, timestamp }){
+  //   this.gotoViewDate({ dateMoment, timestamp })
+  //   this.onChange({ dateMoment, timestamp })
+  // }
 
   onChange({ dateMoment, timestamp }, event){
     if (this.props.date === undefined){
