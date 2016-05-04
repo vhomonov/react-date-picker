@@ -1,0 +1,172 @@
+// $GRAY: #00B0FF !default;
+$GRAY: #49483E !default;
+$WHITE: #fff !default;
+
+$DAY_SIZE: 40px !default;
+$DISABLED_DAY_COLOR: #BBB !default;
+
+$BACKGROUND: #272822 !default;
+// $HEADER_BACKGROUND: #3F51B5 !default
+$HEADER_BACKGROUND: #272822 !default
+
+$ACTIVE_IN_RANGE_COLOR: #75715E !default;
+$ACTIVE_RANGE_LIMITS_COLOR: #75715E !default;
+
+.react-date-picker__nav-bar-theme-default {
+  background: $HEADER_BACKGROUND;
+  color: $WHITE;
+
+  .react-date-picker__nav-bar-arrow {
+    position: relative;
+    fill: $WHITE;
+
+    &:not(.react-date-picker__nav-bar-arrow--disabled) {
+      &:hover{
+        opacity: 0.7;
+        fill: #f00;
+      }
+
+      &:active {
+        top: 1px;
+      }
+    }
+  }
+
+}
+$base: 'react-date-picker__month-view';
+
+.#{$base}-theme-default {
+  background: $BACKGROUND;
+  color: $WHITE;
+  .#{$base}-week-number {
+    color: #B1B1B1;
+  }
+
+  .#{$base}-day-text {
+
+  }
+
+  .#{$base}-cell {
+    min-width: $DAY_SIZE;
+  }
+
+  .#{$base}-day {
+
+    position: relative;
+
+    .#{$base}-day-text {
+      border: 2px solid transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+
+      min-width: $DAY_SIZE;
+      min-height: $DAY_SIZE;
+
+      max-width: $DAY_SIZE;
+      max-height: $DAY_SIZE;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &--in-range {
+      overflow: hidden;
+      .#{$base}-day-text {
+        position: relative;
+        &:after,
+        &:before {
+          position: absolute;
+          height: 100%;
+          top: 0px;
+          bottom: 0px;
+          width: 500%;
+          z-index: -1;
+          content: '';
+          background: $GRAY;
+        }
+
+        &:before {
+          right: 50%;
+        }
+        &:after {
+          left: 50%;
+        }
+      }
+
+      &.#{$base}-day--range-start {
+        .#{$base}-day-text {
+          border-radius: 4px;
+          &:before {
+            display: none;
+          }
+        }
+      }
+
+      &.#{$base}-day--range-end {
+        .#{$base}-day-text {
+          border-radius: 4px;
+          &:after {
+            display: none;
+          }
+        }
+      }
+
+      &.#{$base}-day--active:not(
+        .#{$base}-day--range-start
+      ):not(
+        .#{$base}-day--range-end
+      ) {
+        .#{$base}-day-text {
+          background: $ACTIVE_IN_RANGE_COLOR padding-box;
+        }
+      }
+    }
+
+    &--in-range,
+    &--value {
+      .#{$base}-day-text {
+        border: 2px solid transparent;
+        background: $GRAY padding-box;
+        color: white;
+      }
+    }
+
+    &--range-start,
+    &--range-end {
+      .#{$base}-day-text {
+        background: $ACTIVE_RANGE_LIMITS_COLOR padding-box;
+      }
+    }
+
+    &--active {
+      .#{$base}-day-text {
+        border: 2px solid $GRAY;
+      }
+    }
+  }
+
+  .#{$base}-day--prev-month,
+  .#{$base}-day--next-month {
+    color: gray;
+  }
+
+  .#{$base}-day--weekend-highlight {
+    color: red;
+
+    &.#{$base}-day--prev-month,
+    &.#{$base}-day--next-month {
+      color: #BB4343;
+    }
+  }
+
+  .#{$base}-day--disabled {
+    color: $DISABLED_DAY_COLOR;
+
+    &.#{$base}-day--prev-month,
+    &.#{$base}-day--next-month {
+      color: $DISABLED_DAY_COLOR;
+    }
+  }
+}
