@@ -1,5 +1,5 @@
-// $VIOLET: #00B0FF !default;
-$VIOLET: #3F51B5 !default;
+// $NAVY_BLUE: #00B0FF !default;
+$NAVY_BLUE: #3F51B5 !default;
 
 $DAY_SIZE: 40px !default;
 $DISABLED_DAY_COLOR: #BBB !default;
@@ -9,7 +9,7 @@ $BACKGROUND: #fff !default;
 $HEADER_BACKGROUND: #00B0FF !default
 
 $ACTIVE_IN_RANGE_COLOR: #00B0FF !default;
-$ACTIVE_RANGE_LIMITS_COLOR: lighten($VIOLET, 10%) !default;
+$ACTIVE_RANGE_LIMITS_COLOR: lighten($NAVY_BLUE, 10%) !default;
 
 .react-date-picker__nav-bar-theme-default {
   background: $HEADER_BACKGROUND;
@@ -22,7 +22,7 @@ $ACTIVE_RANGE_LIMITS_COLOR: lighten($VIOLET, 10%) !default;
     &:not(.react-date-picker__nav-bar-arrow--disabled) {
       &:hover{
         opacity: 0.7;
-        fill: $VIOLET;
+        fill: $NAVY_BLUE;
       }
 
       &:active {
@@ -82,7 +82,7 @@ $base: 'react-date-picker__month-view';
           width: 500%;
           z-index: -1;
           content: '';
-          background: $VIOLET;
+          background: $NAVY_BLUE;
         }
 
         &:before {
@@ -126,7 +126,7 @@ $base: 'react-date-picker__month-view';
     &--value {
       .#{$base}-day-text {
         border: 2px solid transparent;
-        background: $VIOLET padding-box;
+        background: $NAVY_BLUE padding-box;
         color: white;
       }
     }
@@ -140,7 +140,7 @@ $base: 'react-date-picker__month-view';
 
     &--active {
       .#{$base}-day-text {
-        border: 2px solid $VIOLET;
+        border: 2px solid $NAVY_BLUE;
       }
     }
   }
