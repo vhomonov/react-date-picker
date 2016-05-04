@@ -45,6 +45,25 @@ export default class MultiMonthView extends Component {
     if (nextProps.locale != this.props.locale || nextProps.dateFormat != this.props.dateFormat){
       this.updateToMoment(nextProps)
     }
+
+    // if (nextProps.viewDate && !nextProps.forceViewUpdate){
+
+    //   //this is here in order not to change view if already in view
+    //   const viewMoment = this.toMoment(nextProps.viewDate)
+
+    //   if (this.isInRange(viewMoment) && !nextProps.forceViewUpdate){
+    //     console.log(this.format(viewMoment), this.format(this.p.viewStart), this.format(this.p.viewEnd))
+    //     this.setState({
+    //       propViewDate: this.p.viewMoment
+    //     })
+    //   } else {
+    //     debugger
+    //     this.setState({
+    //       propViewDate: null
+    //     })
+    //   }
+    // }
+
   }
 
   updateToMoment(props){
@@ -60,7 +79,7 @@ export default class MultiMonthView extends Component {
   prepareViewDate(props){
     return props.viewDate === undefined?
             this.state.viewDate:
-            props.viewDate
+            this.state.propViewDate || props.viewDate
   }
 
   prepareDate(props){
@@ -174,6 +193,7 @@ export default class MultiMonthView extends Component {
 
   render(){
 
+    this.views = []
     const props = this.p = this.prepareProps(this.props)
     const size = props.size
 
@@ -184,6 +204,11 @@ export default class MultiMonthView extends Component {
       column
       alignItems="stretch"
       {...props}
+      className={join(
+        props.className,
+        'react-date-picker__multi-month-view',
+        props.theme && `react-date-picker__multi-month-view--theme-${props.theme}`
+      )}
       children={children}
     />
   }
@@ -218,6 +243,7 @@ export default class MultiMonthView extends Component {
     }
 
     return <MonthView
+      ref={view => this.views[index] = view}
       {...this.props}
 
       index={index}
@@ -285,6 +311,11 @@ export default class MultiMonthView extends Component {
     return MonthView.prototype.onRangeChange.call(this, range)
   }
 
+  onViewKeyDown(){
+    const view = this.views[0]
+    view && view.onViewKeyDown.apply(view, arguments)
+  }
+
   renderNavBar(index, viewMoment){
 
     const navBarProps = {
@@ -310,6 +341,7 @@ export default class MultiMonthView extends Component {
   }
 
   onMonthNavigate(index, dir, event){
+
     const props = this.p
 
     event.preventDefault()
@@ -375,6 +407,10 @@ export default class MultiMonthView extends Component {
     return isInRange(moment, [this.p.viewStart, this.p.viewEnd])
   }
 
+  isInView(moment){
+    return this.isInRange(moment)
+  }
+
   onViewDateChange({ dateMoment, timestamp }){
 
     if (this.props.viewDate === undefined ){
@@ -383,7 +419,10 @@ export default class MultiMonthView extends Component {
       })
     }
 
-    this.props.onViewDateChange({ dateMoment, timestamp})
+    if (this.props.onViewDateChange){
+      const dateString = this.format(dateMoment)
+      this.props.onViewDateChange(dateString, { dateMoment, dateString, timestamp})
+    }
   }
 
   onActiveDateChange({ dateMoment, timestamp }){
@@ -405,7 +444,10 @@ export default class MultiMonthView extends Component {
       })
     }
 
-    this.props.onActiveDateChange({ dateMoment, timestamp})
+    if (this.props.onActiveDateChange){
+      const dateString = this.format(dateMoment)
+      this.props.onActiveDateChange(dateString, { dateMoment, dateString, timestamp })
+    }
   }
 
   gotoViewDate({ dateMoment, timestamp }){
@@ -419,10 +461,9 @@ export default class MultiMonthView extends Component {
 
   }
 
-  // goto({ dateMoment, timestamp }){
-  //   this.gotoViewDate({ dateMoment, timestamp })
-  //   this.onChange({ dateMoment, timestamp })
-  // }
+  format(moment){
+    return moment.format(this.props.dateFormat)
+  }
 
   onChange({ dateMoment, timestamp }, event){
     if (this.props.date === undefined){
@@ -432,7 +473,8 @@ export default class MultiMonthView extends Component {
     }
 
     if (this.props.onChange){
-      this.props.onChange({ dateMoment, timestamp }, event)
+      const dateString = this.format(dateMoment)
+      this.props.onChange(dateString, { dateMoment, dateString, timestamp }, event)
     }
   }
 }
@@ -441,11 +483,12 @@ MultiMonthView.defaultProps = {
   perRow: 2,
   size: 4,
 
+  isDatePicker: true,
+  forceViewUpdate: false,
+
   constrainActiveInView: true,
 
-  dateFormat: 'YYYY-MM-DD',
-  onActiveDateChange: () => {},
-  onViewDateChange: () => {}
+  dateFormat: 'YYYY-MM-DD'
 }
 
 MultiMonthView.propTypes = {

@@ -1,11 +1,19 @@
 $BLUE: rgb(52, 154, 239) !default;
 $DAY_SIZE: 40px !default;
 $DISABLED_DAY_COLOR: #D8D8D8 !default;
+$BORDER_COLOR: gray !default;
 
 $ACTIVE_IN_RANGE_COLOR: lighten($BLUE, 20%) !default;
 $ACTIVE_RANGE_LIMITS_COLOR: lighten($BLUE, 10%) !default;
 
-.react-date-picker__nav-bar-theme-default {
+.react-date-picker__nav-bar--theme-default {
+
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  .react-date-picker__nav-bar-secondary-arrow {
+    margin-right: 7px;
+  }
 
   .react-date-picker__nav-bar-arrow {
     position: relative;
@@ -24,7 +32,14 @@ $ACTIVE_RANGE_LIMITS_COLOR: lighten($BLUE, 10%) !default;
 }
 $base: 'react-date-picker__month-view';
 
-.#{$base}-theme-default {
+.#{$base}--theme-default {
+
+  background: white;
+  border: 1px solid $BORDER_COLOR;
+
+  .#{$base}-week-day-names {
+    text-transform: uppercase;
+  }
 
   .#{$base}-week-number {
     color: #B1B1B1;
@@ -158,5 +173,13 @@ $base: 'react-date-picker__month-view';
     &.#{$base}-day--next-month {
       color: $DISABLED_DAY_COLOR;
     }
+  }
+}
+
+.react-date-picker__multi-month-view {
+  border: 1px solid $BORDER_COLOR;
+
+  .#{$base} {
+    border: none;
   }
 }

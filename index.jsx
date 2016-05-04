@@ -9,6 +9,7 @@ import MonthView from './src/MonthView'
 import NavigationView from './src/NavigationView'
 import NavBar from './src/NavBar'
 import MultiMonthView from './src/MultiMonthView'
+import DateField from './src/DateField'
 
 var moment = require('moment');
 var React      = require('react')
@@ -49,11 +50,36 @@ var App = React.createClass({
         this.setState({})
     },
 
+    getInitialState(){
+      return {
+        date: '2016-10-03',
+        text: 'atext'
+      }
+    },
+
+    onChange(date){
+      this.setState({
+        date
+      })
+    },
+
+    onTextChange(text){
+      this.setState({
+        text
+      })
+    },
+
     render: function(){
         range = this.props.range || range
         date = this.props.date || date
 
         return <div style={{margin: 10}}>
+        <input />
+        <DateField value={this.state.date} onChange={this.onChange}>
+          <input className="xxx" onChange={this.onTextChange}/>
+          <MonthView />
+        </DateField>
+        <input defaultValue="dadas"/>
 
         <NavBar secondary defaultViewDate="2016-06-03" />
 
@@ -61,8 +87,9 @@ var App = React.createClass({
           minDate="2016-10-10"
           maxDate="2016-11-11"
           locale={LOCALE}
+          onChange={() => {debugger}}
           xrange={R}
-          defaultRange={[]}
+          xdefaultRange={[]}
           onRenderDay={(props) => {
             props.onClick = () => {
               console.log(props.dateMoment.format('YYYY-MM-DD'), props.disabled)

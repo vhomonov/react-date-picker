@@ -51,7 +51,7 @@ export default class NavBar extends Component {
 
     const secondary = props.secondary
 
-    const className = join(props.className, bem(), bem(`theme-${props.theme}`))
+    const className = join(props.className, bem(), bem(null, `theme-${props.theme}`))
 
     return <Flex row {...props} className={className} viewDate={null}>
 
@@ -83,10 +83,12 @@ export default class NavBar extends Component {
 
     const name = dir < 0? 'prev': 'next'
     const disabled = dir < 0? props.prevDisabled: props.nextDisabled
+    const secondary = Math.abs(dir) == 2
 
     const className = [
       bem(`arrow`),
       bem(`arrow--${name}`),
+      secondary && bem('secondary-arrow'),
       disabled && bem('arrow--disabled')
     ]
 
@@ -94,7 +96,7 @@ export default class NavBar extends Component {
 
     let children
 
-    if (Math.abs(dir) == 2){
+    if (secondary){
       const secondArrow = <InlineBlock style={{position: 'absolute', [dir < 0? 'left': 'left']: 7}}>{arrow}</InlineBlock>
 
       children = dir < 0? [secondArrow, arrow]: [secondArrow, arrow]

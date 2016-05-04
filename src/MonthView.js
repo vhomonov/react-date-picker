@@ -130,7 +130,8 @@ export default class MonthView extends Component {
   prepareClassName(props){
     return join(
       props.className,
-      this.bem(`theme-${props.theme}`)
+      this.bem(),
+      this.bem(null, `theme-${props.theme}`)
     )
   }
 
@@ -565,16 +566,20 @@ export default class MonthView extends Component {
     return <NavBar {...navBarProps} />
   }
 
-  onFocus(){
+  onFocus(event){
     this.setState({
       focused: true
     })
+
+    this.props.onFocus(event)
   }
 
-  onBlur(){
+  onBlur(event){
     this.setState({
       focused: false
     })
+
+    this.props.onBlur(event)
   }
 
   onViewKeyDown(event){
@@ -759,7 +764,12 @@ export default class MonthView extends Component {
       })
     }
 
-    this.props.onViewDateChange({ dateMoment, timestamp})
+    if (this.props.onViewDateChange){
+      const dateString = this.format(dateMoment)
+
+      this.props.onViewDateChange(dateString, { dateMoment, dateString, timestamp})
+    }
+
   }
 
   onActiveDateChange({ dateMoment, timestamp }){
@@ -791,7 +801,11 @@ export default class MonthView extends Component {
       })
     }
 
-    this.props.onActiveDateChange({ dateMoment, timestamp })
+    if (this.props.onActiveDateChange){
+      const dateString = this.format(dateMoment)
+      this.props.onActiveDateChange(dateString, { dateMoment, timestamp, dateString })
+    }
+
   }
 
   gotoViewDate({ dateMoment, timestamp }){
@@ -812,8 +826,8 @@ MonthView.defaultProps = {
 
   theme: 'default',
 
-  onViewDateChange: () => {},
-  onActiveDateChange: () => {},
+  onBlur: () => {},
+  onFocus: () => {},
 
   partialRange: true,
 
@@ -827,10 +841,16 @@ MonthView.defaultProps = {
   navOnDateClick: true,
   navigation: true,
 
-  constrainViewDate: true
+  constrainViewDate: true,
+
+  isDatePicker: true
 }
 
 MonthView.propTypes = {
   navOnDateClick: PropTypes.bool,
-  isDisabledDay: PropTypes.func
+  isDisabledDay: PropTypes.func,
+
+  onChange: PropTypes.func,
+  onViewDateChange: PropTypes.func,
+  onActiveDateChange: PropTypes.func
 }
