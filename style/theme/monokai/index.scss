@@ -1,3 +1,4 @@
+$NAME: "monokai";
 $GRAY: #49483E !default;
 
 $DAY_SIZE: 40px !default;
@@ -9,7 +10,7 @@ $HEADER_BACKGROUND: #272822 !default
 $ACTIVE_IN_RANGE_COLOR: #75715E !default;
 $ACTIVE_RANGE_LIMITS_COLOR: #75715E !default;
 
-.react-date-picker__nav-bar-theme-default {
+.react-date-picker__nav-bar-theme-#{$NAME} {
   background: $HEADER_BACKGROUND;
   color: #fff;
 
@@ -32,7 +33,7 @@ $ACTIVE_RANGE_LIMITS_COLOR: #75715E !default;
 }
 $base: 'react-date-picker__month-view';
 
-.#{$base}-theme-default {
+.#{$base}-theme-#{$NAME} {
   background: $BACKGROUND;
   color: #fff;
   .#{$base}-week-number {

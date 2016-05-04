@@ -1,3 +1,4 @@
+$NAME: "contrast";
 $VIOLET: #4E25E7 !default;
 $DAY_SIZE: 40px !default;
 $DISABLED_DAY_COLOR: #BBB !default;
@@ -8,7 +9,7 @@ $HEADER_BACKGROUND: darken($BACKGROUND, 1%) !default
 $ACTIVE_IN_RANGE_COLOR: lighten($VIOLET, 20%) !default;
 $ACTIVE_RANGE_LIMITS_COLOR: lighten($VIOLET, 10%) !default;
 
-.react-date-picker__nav-bar-theme-default {
+.react-date-picker__nav-bar-theme-#{$NAME} {
   background: $HEADER_BACKGROUND;
   color: #fff;
 
@@ -31,7 +32,7 @@ $ACTIVE_RANGE_LIMITS_COLOR: lighten($VIOLET, 10%) !default;
 }
 $base: 'react-date-picker__month-view';
 
-.#{$base}-theme-default {
+.#{$base}-theme-#{$NAME} {
   background: $BACKGROUND;
   color: #fff;
 

@@ -1,3 +1,4 @@
+$NAME: "hackerone";
 $DAY_SIZE: 40px !default;
 $DISABLED_DAY_COLOR: #BBB !default;
 
@@ -7,7 +8,7 @@ $HEADER_BACKGROUND: #F0F0F0 !default
 $ACTIVE_RANGE_LIMITS_COLOR: #1D5D90 !default;
 $ACTIVE_IN_RANGE_COLOR: #1D5D90  !default;
 
-.react-date-picker__nav-bar-theme-default {
+.react-date-picker__nav-bar-theme-#{$NAME} {
   background: $HEADER_BACKGROUND;
   color: #000;
 
@@ -30,7 +31,7 @@ $ACTIVE_IN_RANGE_COLOR: #1D5D90  !default;
 }
 $base: 'react-date-picker__month-view';
 
-.#{$base}-theme-default {
+.#{$base}-theme-#{$NAME} {
   .#{$base}-week-number {
     color: #B1B1B1;
   }

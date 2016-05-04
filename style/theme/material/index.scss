@@ -1,3 +1,4 @@
+$NAME: "material";
 $NAVY_BLUE: #3F51B5 !default;
 
 $DAY_SIZE: 40px !default;
@@ -9,7 +10,7 @@ $HEADER_BACKGROUND: #00B0FF !default
 $ACTIVE_IN_RANGE_COLOR: #00B0FF !default;
 $ACTIVE_RANGE_LIMITS_COLOR: lighten($NAVY_BLUE, 10%) !default;
 
-.react-date-picker__nav-bar-theme-default {
+.react-date-picker__nav-bar-theme-#{$NAME} {
   background: $HEADER_BACKGROUND;
   color: #000;
 
@@ -32,7 +33,7 @@ $ACTIVE_RANGE_LIMITS_COLOR: lighten($NAVY_BLUE, 10%) !default;
 }
 $base: 'react-date-picker__month-view';
 
-.#{$base}-theme-default {
+.#{$base}-theme-#{$NAME} {
 
   .#{$base}-week-number {
     color: #B1B1B1;
