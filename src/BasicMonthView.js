@@ -288,7 +288,12 @@ class BasicMonthView extends Component {
       )
     }
 
-    return buckets.map((bucket, i) => <div key={"row" + i} className={`${this.bem('row')} dp-week dp-row`}>{bucket}</div>)
+    return buckets.map((bucket, i) => <div
+      key={"row" + i}
+      className={`${this.bem('row')} dp-week dp-row`}
+    >
+      {bucket}
+    </div>)
   }
 
   renderDay(props, dateMoment) {

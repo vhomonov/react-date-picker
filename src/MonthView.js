@@ -137,6 +137,7 @@ export default class MonthView extends Component {
   prepareProps(thisProps){
     const props = this.p = assign({}, thisProps)
 
+    props.dayPropsMap = {}
     props.className = this.prepareClassName(props)
 
     const { minDate, maxDate } = props
@@ -228,12 +229,18 @@ export default class MonthView extends Component {
   isValidActiveDate(timestamp, props){
     props = props || this.p
 
-    if (props.minDate && timestamp < props.minDate){
+    const dayProps = props.dayPropsMap[timestamp]
+
+    if (dayProps && dayProps.disabled){
       return false
     }
-    if (props.maxDate && timestamp > props.maxDate){
-      return false
-    }
+
+    // if (props.minDate && timestamp < props.minDate){
+    //   return false
+    // }
+    // if (props.maxDate && timestamp > props.maxDate){
+    //   return false
+    // }
 
     return true
   }
@@ -249,7 +256,6 @@ export default class MonthView extends Component {
 
     if (minDate && timestamp < minDate){
       classes.push(
-        this.bem('day--disabled'),
         this.bem('day--disabled-min')
       )
       isBeforeMinDate = true
@@ -257,7 +263,6 @@ export default class MonthView extends Component {
 
     if (maxDate && timestamp > maxDate){
       classes.push(
-        this.bem('day--disabled'),
         this.bem('day--disabled-max')
       )
       isAfterMaxDate = true
@@ -267,7 +272,7 @@ export default class MonthView extends Component {
       className: join(classes),
       isBeforeMinDate,
       isAfterMaxDate,
-      isDisabled: isBeforeMinDate || isAfterMaxDate
+      disabled: isBeforeMinDate || isAfterMaxDate
     }
   }
 
@@ -347,21 +352,10 @@ export default class MonthView extends Component {
 
     const currentTimestamp = props.timestamp
 
-    const eventParam = { timestamp, dateMoment }
-
-    let events = {
-      onClick: this.handleClick.bind(this, eventParam)
-    }
-
-    if (!minMaxProps.isDisabled && props.activateOnHover && this.props.activeDate !== null) {
-      events.onMouseEnter = this.onDayTextMouseEnter.bind(this, eventParam)
-    }
-
-    return assign(
+    assign(
       result,
       minMaxProps,
       rangeProps,
-      events,
       {
         children: <div className={this.bem('day-text')}>
           {renderDayProps.day}
@@ -377,6 +371,12 @@ export default class MonthView extends Component {
         ])
       }
     )
+
+    if (!result.disabled && props.isDisabledDay){
+      result.disabled = props.isDisabledDay(renderDayProps, props)
+    }
+
+    return result
   }
 
   focus(){
@@ -410,6 +410,41 @@ export default class MonthView extends Component {
     if (typeof props.onRenderDay === 'function'){
       renderProps = props.onRenderDay(renderProps)
     }
+
+    if (renderProps.disabled){
+      renderProps.className = join(
+        this.bem('day--disabled'),
+        renderProps.className
+      )
+    } else {
+      const eventParam = { dateMoment, timestamp }
+
+      const onClick = this.handleClick.bind(this, eventParam)
+      const prevOnClick = renderProps.onClick
+
+      renderProps.onClick = prevOnClick?
+                              (...args) => {
+                                prevOnClick(...args)
+                                onClick(...args)
+                              }
+                              :
+                              onClick
+
+      if (props.activateOnHover && this.props.activeDate !== null) {
+        const onMouseEnter = this.onDayTextMouseEnter.bind(this, eventParam)
+        const prevOnMouseEnter = renderProps.onMouseEnter
+
+        renderProps.onMouseEnter = prevOnMouseEnter?
+                                    (...args) => {
+                                      prevOnMouseEnter(...args)
+                                      onMouseEnter(...args)
+                                    }
+                                    :
+                                    onMouseEnter
+      }
+    }
+
+    props.dayPropsMap[timestamp] = renderProps
 
     const renderFunction = props.renderDay || RENDER_DAY
 
@@ -796,5 +831,6 @@ MonthView.defaultProps = {
 }
 
 MonthView.propTypes = {
-  navOnDateClick: PropTypes.bool
+  navOnDateClick: PropTypes.bool,
+  isDisabledDay: PropTypes.func
 }

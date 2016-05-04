@@ -58,11 +58,20 @@ var App = React.createClass({
         <NavBar secondary defaultViewDate="2016-06-03" />
 
         <MonthView
-          xminDate="2016-10-10"
-          xmaxDate="2016-11-11"
+          minDate="2016-10-10"
+          maxDate="2016-11-11"
           locale={LOCALE}
           xrange={R}
           defaultRange={[]}
+          onRenderDay={(props) => {
+            props.onClick = () => {
+              console.log(props.dateMoment.format('YYYY-MM-DD'), props.disabled)
+            }
+            return props
+          }}
+          isDisabledDay={(props) => {
+            return props.dateMoment.format('YYYY-MM-DD') == '2016-10-20'
+          }}
           xonRangeChange={this.onRangeChange}
           style={{height: 400}}
           xdefaultActiveDate="2016-06-6"

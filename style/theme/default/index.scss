@@ -150,6 +150,10 @@ $base: 'react-date-picker__month-view';
   .#{$base}-day--disabled {
     color: $DISABLED_DAY_COLOR;
 
+    .#{$base}-day-text {
+      cursor: default;
+    }
+
     &.#{$base}-day--prev-month,
     &.#{$base}-day--next-month {
       color: $DISABLED_DAY_COLOR;
