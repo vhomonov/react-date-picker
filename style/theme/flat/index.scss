@@ -110,8 +110,17 @@ $base: 'react-date-picker__month-view';
 
       &.#{$base}-day--active {
         .#{$base}-day-text {
-          background: $ACTIVE_IN_RANGE_COLOR padding-box;
           border-color: #444;
+        }
+      }
+      
+      &.#{$base}-day--active:not(
+        .#{$base}-day--range-start
+      ):not(
+        .#{$base}-day--range-end
+      ) {
+        .#{$base}-day-text {
+          background: $ACTIVE_IN_RANGE_COLOR padding-box;
         }
       }
     }
