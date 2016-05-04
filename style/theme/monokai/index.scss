@@ -1,12 +1,9 @@
-// $GRAY: #00B0FF !default;
 $GRAY: #49483E !default;
-$WHITE: #fff !default;
 
 $DAY_SIZE: 40px !default;
 $DISABLED_DAY_COLOR: #BBB !default;
 
 $BACKGROUND: #272822 !default;
-// $HEADER_BACKGROUND: #3F51B5 !default
 $HEADER_BACKGROUND: #272822 !default
 
 $ACTIVE_IN_RANGE_COLOR: #75715E !default;
@@ -14,11 +11,11 @@ $ACTIVE_RANGE_LIMITS_COLOR: #75715E !default;
 
 .react-date-picker__nav-bar-theme-default {
   background: $HEADER_BACKGROUND;
-  color: $WHITE;
+  color: #fff;
 
   .react-date-picker__nav-bar-arrow {
     position: relative;
-    fill: $WHITE;
+    fill: #fff;
 
     &:not(.react-date-picker__nav-bar-arrow--disabled) {
       &:hover{
@@ -37,7 +34,7 @@ $base: 'react-date-picker__month-view';
 
 .#{$base}-theme-default {
   background: $BACKGROUND;
-  color: $WHITE;
+  color: #fff;
   .#{$base}-week-number {
     color: #B1B1B1;
   }
