@@ -1,0 +1,79 @@
+
+.react-date-picker__nav-bar-theme-default {
+  background: #272822;
+  color: #fff;
+}
+
+.react-date-picker__nav-bar-arrow {
+  position: relative;
+  fill: #fff;
+}
+
+.react-date-picker__nav-bar-arrow:not(.react-date-picker__nav-bar-arrow--disabled):hover {
+  opacity: 0.7;
+  fill: #f00;
+}
+  
+.react-date-picker__month-view-week-number {
+  color: #B1B1B1;
+}
+
+.react-date-picker__month-view-cell {
+  min-width: 40px;
+}
+
+.react-date-picker__month-view-theme-default {
+  background: #272822;
+  color: #fff;
+}
+
+.react-date-picker__month-view-theme-default 
+ .react-date-picker__month-view-day--in-range 
+  .react-date-picker__month-view-day-text:after, 
+.react-date-picker__month-view-theme-default
+ .react-date-picker__month-view-day--in-range
+  .react-date-picker__month-view-day-text:before{
+  background: #f00;
+}
+
+.react-date-picker__month-view-theme-default
+ .react-date-picker__month-view-day--in-range
+  .react-date-picker__month-view-day-text, 
+.react-date-picker__month-view-theme-default
+ .react-date-picker__month-view-day--value
+  .react-date-picker__month-view-day-text {
+    border-radius: 4px;
+    background: #49483E padding-box;
+    color: #000;
+}
+ 
+.react-date-picker__month-view-theme-default
+ .react-date-picker__month-view-day--range-start
+  .react-date-picker__month-view-day-text, 
+.react-date-picker__month-view-theme-default
+ .react-date-picker__month-view-day--range-end
+  .react-date-picker__month-view-day-text {
+  background: #75715E padding-box;
+}
+
+.react-date-picker__month-view-theme-default
+ .react-date-picker__month-view-day--active
+  .react-date-picker__month-view-day-text {
+  border-radius: 4px;
+  border-color: #49483E;
+}
+
+
+.react-date-picker__month-view-theme-default
+ .react-date-picker__month-view-day--in-range.react-date-picker__month-view-day--active:not(
+  .react-date-picker__month-view-day--range-start ):not(
+   .react-date-picker__month-view-day--range-end )
+    .react-date-picker__month-view-day-text {
+  background: #75715E;
+}
+
+.react-date-picker__month-view-theme-default
+ .react-date-picker__month-view-day--in-range.react-date-picker__month-view-day--active
+  .react-date-picker__month-view-day-text{
+  border-color: #49483E;
+}
