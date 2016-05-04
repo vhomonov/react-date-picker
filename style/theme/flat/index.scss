@@ -1,4 +1,4 @@
-$GRAY: #10C4B2 !default;
+$GREEN: #10C4B2 !default;
 
 $DAY_SIZE: 40px !default;
 $DISABLED_DAY_COLOR: #BBB !default;
@@ -79,7 +79,7 @@ $base: 'react-date-picker__month-view';
           width: 500%;
           z-index: -1;
           content: '';
-          background: $GRAY;
+          background: $GREEN;
         }
 
         &:before {
@@ -120,7 +120,7 @@ $base: 'react-date-picker__month-view';
     &--value {
       .#{$base}-day-text {
         border: 2px solid transparent;
-        background: $GRAY padding-box;
+        background: $GREEN padding-box;
       }
     }
 
@@ -133,7 +133,7 @@ $base: 'react-date-picker__month-view';
 
     &--active {
       .#{$base}-day-text {
-        border: 2px solid $GRAY;
+        border: 2px solid $GREEN;
       }
     }
   }
