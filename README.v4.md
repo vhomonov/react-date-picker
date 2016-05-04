@@ -12,7 +12,7 @@ react-date-picker
 [![Date picker](./react-date-picker.png)](http://zippyui.github.io/react-date-picker)
 [![hackerone theme](./react-date-picker-theme-hackerone.png)](http://zippyui.github.io/react-date-picker)
 
-Click for [LIVE DEMO!](http://zippyui.com/docs/react-date-picker/examples)
+Click for [LIVE DEMO!](http://zippyui.github.io/react-date-picker)
 
 ## Install
 
@@ -22,35 +22,30 @@ $ npm install react-date-picker
 
 ## Usage
 
-Require the css!!!
+Require the css
 ```jsx
 
-import 'react-date-picker/index.css'
+require('react-date-picker/index.css');
+
+var DatePicker = require('react-date-picker');
+
 ```
 
 ```jsx
 
-import DatePicker from 'react-date-picker'
+var date = '2014-10-10' //or Date.now()
 
-let date = '2014-10-10' //or Date.now()
-
-function onChange(dateString, { dateMoment, timestamp}){
-  //...
+function onChange(dateString, moment){
+    //...
 }
 
 <DatePicker
-  minDate='2014-04-04'
-  maxDate='2015-10-10'
-  date={date}
-  onChange={onChange}
+    minDate='2014-04-04'
+    maxDate='2015-10-10'
+    date={date}
+    onChange={onChange}
 />
 ```
-
-## Changelog
-
-See [changelog](./CHANGELOG.md)
-
-For the old `v4` README, see [v4](./README.v4.md)
 
 ## Theming
 
@@ -60,17 +55,43 @@ By default, `react-date-picker/index.css` contains both structural styles and th
 
 If you want to load a specific theme, make sure you load
 ```jsx
-import 'react-date-picker/base.css'
+require('react-date-picker/base.css')
 ```
-first (which contains only structural css rules), and then any css theme file. For now, there is one theme available, named very obviously `"default"`:
+first (which contains only structural css rules), and then any css theme file. For now, there are two themes available:
  
  * `react-date-picker/theme/default.css`
+ * `react-date-picker/theme/hackerone.css`
+
+### hackerone theme
+ 
+![hackerone theme](./react-date-picker-theme-hackerone.png)
+
+```jsx
+require('react-date-picker/base.css');
+require('react-date-picker/theme/hackerone.css');
+var DatePicker = require('react-date-picker');
+
+<DatePicker
+    minDate='2014-04-04'
+    maxDate='2015-10-10'
+    date={date}
+    onChange={onChange}
+/>
+```
+
+## Changelog
+
+See [changelog](./CHANGELOG.md)
 
 ## Usage
 
 ### NOTES:
 
-Don't forget to include index.css or index.sass!
+Don't forget to include index.css or index.styl! ( require('react-date-picker/index.css') )
+
+If you use the files from the `dist` directory, (eg: `dist/react-date-picker.js`), you will need to make sure you have both `React` and `moment` global variables, so make sure you include [ReactJS](https://www.npmjs.com/package/react) and [MomentJS](https://www.npmjs.com/package/moment)
+
+The preferred **React** version for `react-date-picker` is  >=0.12. The initial version of `react-date-picker` worked with React 0.11.2 as well, but I do not intend to continue to support it, in order to be able to focus on advancing the current features and developing other high-quality React components.
 
 ## I18n and localization
 
@@ -84,12 +105,12 @@ Example:
 
 ```jsx
 //make sure you require this first!
-const nl = require('moment/locale/nl')
+var nl = require('moment/locale/nl')
 
 //and then require the date picker - it will use
 //the locale you previously required
 
-import DatePicker from 'react-date-picker'
+var DatePicker = require('react-date-picker')
 ```
 
 #### locale prop
@@ -158,23 +179,40 @@ The second option is specifying the `locale` prop on the date picker. This assum
 
 ## Styling with css
 
+In order to change the date-picker border width/color with css, you'll have to specify a different border for the `.date-picker` and `.date-picker .dp-cell` classes.
+You'll also probably want `.dp-cell:first-child` left border to be 0 and `.dp-cell:last-child` right border to be 0
+
+```css
+.date-picker,
+.date-picker .dp-cell {
+    border: 1px solid red;
+}
+.date-picker .dp-cell:first-child {
+    border-left: 0px;
+}
+.date-picker .dp-cell:last-child {
+    border-right: 0px;
+}
+```
+
+
 #### Custom styling of day cells
 
 ```jsx
 
-const onRenderDay = (props) => {
-  if (props.date.isBefore('2010-01-01')){
-    props.className += ' invalid'
-  }
+function onRenderDay(props){
+    if (props.date.isBefore('2010-01-01')){
+        props.className += ' invalid'
+    }
 
-  props.style.border = '1px solid red'
+    props.style.border = '1px solid red'
 
-  return props
+    return props
 }
 
 <DatePicker
-  onChange={this.onChange}
-  onRenderDay={onRenderDay}
+    onChange={this.onChange}
+    onRenderDay={onRenderDay}
 />
 ```
 ## Contributing
@@ -184,7 +222,6 @@ When contributing, please work on the `src` dir.
 You'll need to run the following commands:
 
 ```sh
-$ npm i # install all depedencies
 $ npm run dev
 # starts webpack-dev-server, which does all the bundling and live reloading
 ```
@@ -192,10 +229,43 @@ $ npm run dev
 Now navigate to [localhost:8080](http://localhost:8080)
 With this setup, you have an environment which live-reloads all your changes, so you have a rapid development cycle.
 
+In order to build a new production version, make sure you run `npm run build` (it builds the `lib` directory from the `src` directory, it concats all files and builds the `dist` directory, and also prepares the css files)
+
 ## Other
 
 `react-date-picker` uses the awesome `moment.js` library ( Big thanks!)
 
+If you don't use npm you can include any of the following:
+
+ * `dist/react-date-picker.js` - the full sources. NOTE: You'll need to include `React` separately
+ * `dist/react-date-picker.min.js` - minified & optimized version. NOTE: You'll need to include `React` separately
+ * `dist/react-date-picker.nomoment.js` - the full sources. NOTE: You'll need to include `React` AND `moment.js` separately
+ * `dist/react-date-picker.nomoment.min.js` - minified & optimized version. NOTE: You'll need to include `React` AND `moment.js` separately
+
+## Tests
+
+For testing, it is required that you have [io.js](https://iojs.org/) installed. The tests rely on https://www.npmjs.com/package/jsdom for a DOM implementation, which only works in `io.js` and not `node.js`
+
+Before running tests, make sure you refresh the `lib` folder, which is built from the `src` folder (jsx is transpiled to normal js) by doing
+```sh
+$ npm run lib
+```
+
+Now you can safely run tests with
+```sh
+$ npm test
+```
+or
+```sh
+$ make
+```
+
+For watch mode, run
+```sh
+$ make test-w
+```
+
+`react-date-picker` is setup with `CircleCI` https://circleci.com/gh/zippyui/react-date-picker so every time a test fails we are notified on the failure.
 ## License
 
 #### MIT

@@ -1,7 +1,14 @@
 'use strict'
 
-require('./style/base.styl')
-require('./style/theme/hackerone/index.styl')
+// require('./index.css')
+// require('./theme/hackerone.css')
+//
+require('./style/index.scss')
+
+import MonthView from './src/MonthView'
+import NavigationView from './src/NavigationView'
+import NavBar from './src/NavBar'
+import MultiMonthView from './src/MultiMonthView'
 
 var moment = require('moment');
 var React      = require('react')
@@ -10,7 +17,7 @@ var DatePicker = require('./src/index')
 var render = require('react-dom').render
 
 var range = ['2016-02-01', '2016-02-09']
-var date = moment().add(2, 'days')
+var date = moment().add(-10, 'days')
 
 var LOCALE = 'en'
 
@@ -32,6 +39,7 @@ var GO2SELECTED = {
 
 function emptyFn(){}
 
+let R = ['2016-05-10']
 var App = React.createClass({
     displayName: 'App',
 
@@ -47,31 +55,51 @@ var App = React.createClass({
 
         return <div style={{margin: 10}}>
 
-            <p>Select locale: <select value={LOCALE} onChange={this.onLocaleChange}>
-                    <option value="en">English (US)</option>
-                    <option value="fr">French</option>
-                    <option value="de">German</option>
-                    <option value="es">Spanish</option>
-                    <option value="ro">Romanian</option>
-                </select>
-            </p>
+        <NavBar secondary defaultViewDate="2016-06-03" />
 
-            <DatePicker
-            style={{height: 250}}
-              xweekStartDay={3}
-              highlightWeekends={true}
-              locale="en"
-              weekNumbers
-              //defaultRange={range}
-              defaultDate={date}
-              //onChange={this.onRangeChange}
-              //onRangeChange={this.onRangeChange}
-              xweekDayNames={['S','M','T','W','T','F','S']}
-            />
+        <MonthView
+          xminDate="2016-10-10"
+          xmaxDate="2016-11-11"
+          locale={LOCALE}
+          xrange={R}
+          defaultRange={[]}
+          xonRangeChange={this.onRangeChange}
+          style={{height: 400}}
+          xdefaultActiveDate="2016-06-6"
+          xdefaultDate="2016-02-10"
+        >
+
+        </MonthView>
+
+        <MultiMonthView
+          xdefaultRange={['2016-05-06']}
+          range={R}
+          xdefaultRange={[]}
+          onRangeChange={this.onRangeChange}
+          size={4}
+        />
+
+        <p>Select locale: <select value={LOCALE} onChange={this.onLocaleChange}>
+                <option value="en">English (US)</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="es">Spanish</option>
+                <option value="ro">Romanian</option>
+            </select>
+        </p>
+
         </div>
     },
 
-    onRangeChange: function(rangeValue){
+    onRangeChange: function(range, r){
+
+      if (r.length){
+        if (r[1].timestamp - r[0].timestamp < 1000 * 60 *60*24 * 3)
+        return range[0]
+      }
+      console.log(range)
+      R = range
+      this.setState({})
         //range = rangeValue
         //date = rangeValue
         //this.setState({})

@@ -1,13 +1,6 @@
-'use strict';
-
 module.exports = [
   {
-    test: /\.jsx$/,
-    exclude: /node_modules/,
-    loader: 'babel'
-  },
-  {
-    test: /\.jsx$/,
+    test: /\.(js|jsx)$/,
     exclude: /node_modules/,
     loader: 'babel'
   },
@@ -16,12 +9,13 @@ module.exports = [
     loader: 'json'
   },
   {
-    test: /\.styl$/,
-    loader: 'style!css!autoprefixer!stylus'
+    test: /\.scss$/,
+    exclude: /node_modules/,
+    loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader'
   },
   {
     test: /\.css$/,
-    loader: 'style!css!autoprefixer'
+    loader: 'style-loader!css-loader!autoprefixer-loader'
   },
   {
     test: /\.png$/,

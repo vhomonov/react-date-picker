@@ -1,10 +1,8 @@
-'use strict'
+import moment from 'moment'
 
-var moment = require('moment')
+const DEFAULT_WEEK_START_DAY = moment().startOf('week').format('d') * 1
 
-var DEFAULT_WEEK_START_DAY = moment().startOf('week').format('d') * 1
-
-module.exports = function getWeekDayNames(startDay, locale){
+export default function getWeekDayNames(startDay, locale){
 
 	var weekDays
 

@@ -1,0 +1,158 @@
+$BLUE: rgb(52, 154, 239) !default;
+$DAY_SIZE: 40px !default;
+$DISABLED_DAY_COLOR: #D8D8D8 !default;
+
+$ACTIVE_IN_RANGE_COLOR: lighten($BLUE, 20%) !default;
+$ACTIVE_RANGE_LIMITS_COLOR: lighten($BLUE, 10%) !default;
+
+.react-date-picker__nav-bar-theme-default {
+
+  .react-date-picker__nav-bar-arrow {
+    position: relative;
+
+    &:not(.react-date-picker__nav-bar-arrow--disabled) {
+      &:hover{
+        opacity: 0.7;
+      }
+
+      &:active {
+        top: 1px;
+      }
+    }
+  }
+
+}
+$base: 'react-date-picker__month-view';
+
+.#{$base}-theme-default {
+
+  .#{$base}-week-number {
+    color: #B1B1B1;
+  }
+
+  .#{$base}-day-text {
+
+  }
+
+  .#{$base}-cell {
+    min-width: $DAY_SIZE;
+  }
+
+  .#{$base}-day {
+
+    position: relative;
+
+    .#{$base}-day-text {
+      border: 2px solid transparent;
+      border-radius: 50%;
+      cursor: pointer;
+      text-align: center;
+
+      min-width: $DAY_SIZE;
+      min-height: $DAY_SIZE;
+
+      max-width: $DAY_SIZE;
+      max-height: $DAY_SIZE;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &--in-range {
+      overflow: hidden;
+      .#{$base}-day-text {
+        position: relative;
+        &:after,
+        &:before {
+          position: absolute;
+          height: 100%;
+          top: 0px;
+          bottom: 0px;
+          width: 500%;
+          background: $BLUE;
+          z-index: -1;
+          content: '';
+        }
+
+        &:before {
+          right: 50%;
+        }
+        &:after {
+          left: 50%;
+        }
+      }
+
+      &.#{$base}-day--range-start {
+        .#{$base}-day-text {
+          &:before {
+            display: none;
+          }
+        }
+      }
+
+      &.#{$base}-day--range-end {
+        .#{$base}-day-text {
+          &:after {
+            display: none;
+          }
+        }
+      }
+
+      &.#{$base}-day--active:not(
+        .#{$base}-day--range-start
+      ):not(
+        .#{$base}-day--range-end
+      ) {
+        .#{$base}-day-text {
+          background: $ACTIVE_IN_RANGE_COLOR padding-box;
+        }
+      }
+    }
+
+    &--in-range,
+    &--value {
+      .#{$base}-day-text {
+        border: 2px solid transparent;
+        background: $BLUE padding-box;
+        color: white;
+      }
+    }
+
+    &--range-start,
+    &--range-end {
+      .#{$base}-day-text {
+        background: $ACTIVE_RANGE_LIMITS_COLOR padding-box;
+      }
+    }
+
+    &--active {
+      .#{$base}-day-text {
+        border: 2px solid $BLUE;
+      }
+    }
+  }
+
+  .#{$base}-day--prev-month,
+  .#{$base}-day--next-month {
+    color: gray;
+  }
+
+  .#{$base}-day--weekend-highlight {
+    color: red;
+
+    &.#{$base}-day--prev-month,
+    &.#{$base}-day--next-month {
+      color: #BB4343;
+    }
+  }
+
+  .#{$base}-day--disabled {
+    color: $DISABLED_DAY_COLOR;
+
+    &.#{$base}-day--prev-month,
+    &.#{$base}-day--next-month {
+      color: $DISABLED_DAY_COLOR;
+    }
+  }
+}

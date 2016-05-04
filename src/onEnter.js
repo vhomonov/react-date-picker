@@ -1,7 +1,5 @@
-'use strict';
-
-module.exports = function onKeyUp(fn){
-  return function(event){
+export default (fn) => {
+  return (event) => {
     if (event.key == 'Enter'){
       fn(event)
     }
