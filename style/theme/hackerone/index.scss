@@ -114,6 +114,17 @@ $base: 'react-date-picker__month-view';
           color: #000;
         }
       }
+
+      &.#{$base}-day--active:not(
+        .#{$base}-day--range-start
+      ):not(
+        .#{$base}-day--range-end
+      ) {
+        .#{$base}-day-text {
+          background: $ACTIVE_IN_RANGE_COLOR padding-box;
+        }
+      }
+
     }
 
     &--in-range,
