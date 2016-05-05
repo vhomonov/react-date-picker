@@ -1,47 +1,38 @@
-$BLUE: rgb(52, 154, 239) !default;
-$DAY_SIZE: 40px !default;
-$DISABLED_DAY_COLOR: #D8D8D8 !default;
-$BORDER_COLOR: gray !default;
+$THEME_NAME: 'default' !default;
 
-$ACTIVE_IN_RANGE_COLOR: lighten($BLUE, 20%) !default;
-$ACTIVE_RANGE_LIMITS_COLOR: lighten($BLUE, 10%) !default;
+$FIELD_BORDER_COLOR: gray !default;
+$ICON_COLOR: gray !default;
+$ICON_COLOR_HOVER: darken($ICON_COLOR, 20%);
+
+$CALENDAR_ICON_COLOR: $ICON_COLOR !default;
+$CLEAR_ICON_COLOR: $ICON_COLOR !default;
+
+$CALENDAR_ICON_COLOR_HOVER: $ICON_COLOR_HOVER !default;
+$CLEAR_ICON_COLOR_HOVER: $ICON_COLOR_HOVER !default;
+
+$DAY_SIZE: 40px !default;
+$DAY_COLOR_DISABLED: #D8D8D8 !default;
+$DAY_COLOR_HOVER: #D8EDFF !default;
+$VIEW_BORDER_COLOR: gray !default;
+
+$ACTIVE_COLOR: rgb(52, 154, 239) !default;
+$ACTIVE_IN_RANGE_COLOR: lighten($ACTIVE_COLOR, 20%) !default;
+$ACTIVE_RANGE_LIMITS_COLOR: lighten($ACTIVE_COLOR, 10%) !default;
 
 $NAV_BAR_ARROW_COLOR: darken(gray, 10%) !default;
 $NAV_BAR_ARROW_COLOR_HOVER: lighten(gray, 10%) !default;
 
-.react-date-picker__nav-bar--theme-default {
-
-  padding-top: 5px;
-  padding-bottom: 5px;
-
-  .react-date-picker__nav-bar-secondary-arrow {
-    margin-right: 7px;
-  }
-
-  .react-date-picker__nav-bar-arrow {
-    position: relative;
-    fill: $NAV_BAR_ARROW_COLOR;
-
-    &:not(.react-date-picker__nav-bar-arrow--disabled) {
-      &:hover {
-        fill: $NAV_BAR_ARROW_COLOR_HOVER;
-      }
-
-      &:active {
-        top: 1px;
-      }
-    }
-  }
-
-}
+@import './field.scss';
+@import './navbar.scss';
 
 $base: 'react-date-picker__month-view';
 
-.#{$base}--theme-default {
+.#{$base}--theme-#{$THEME_NAME} {
 
   background: white;
   position: relative;
-  border: 1px solid $BORDER_COLOR;
+  border: 1px solid $VIEW_BORDER_COLOR;
+  overflow: hidden;
 
   .#{$base}-week-day-names {
     text-transform: uppercase;
@@ -78,6 +69,10 @@ $base: 'react-date-picker__month-view';
       display: flex;
       align-items: center;
       justify-content: center;
+
+      &:hover {
+        background: $DAY_COLOR_HOVER padding-box;
+      }
     }
 
     &--in-range {
@@ -91,7 +86,7 @@ $base: 'react-date-picker__month-view';
           top: 0px;
           bottom: 0px;
           width: 500%;
-          background: $BLUE;
+          background: $ACTIVE_COLOR;
           z-index: -1;
           content: '';
         }
@@ -120,13 +115,13 @@ $base: 'react-date-picker__month-view';
         }
       }
 
-      &.#{$base}-day--active:not(
-        .#{$base}-day--range-start
-      ):not(
-        .#{$base}-day--range-end
-      ) {
+      &.#{$base}-day--active:not(.#{$base}-day--range-start):not(.#{$base}-day--range-end) {
         .#{$base}-day-text {
           background: $ACTIVE_IN_RANGE_COLOR padding-box;
+
+          &:hover {
+            background: $ACTIVE_IN_RANGE_COLOR padding-box;
+          }
         }
       }
     }
@@ -135,8 +130,12 @@ $base: 'react-date-picker__month-view';
     &--value {
       .#{$base}-day-text {
         border: 2px solid transparent;
-        background: $BLUE padding-box;
+        background: $ACTIVE_COLOR padding-box;
         color: white;
+
+        &:hover {
+          background: $ACTIVE_COLOR padding-box;
+        }
       }
     }
 
@@ -144,12 +143,16 @@ $base: 'react-date-picker__month-view';
     &--range-end {
       .#{$base}-day-text {
         background: $ACTIVE_RANGE_LIMITS_COLOR padding-box;
+
+        &:hover {
+          background: $ACTIVE_RANGE_LIMITS_COLOR padding-box;
+        }
       }
     }
 
     &--active {
       .#{$base}-day-text {
-        border: 2px solid $BLUE;
+        border: 2px solid $ACTIVE_COLOR;
       }
     }
   }
@@ -169,21 +172,25 @@ $base: 'react-date-picker__month-view';
   }
 
   .#{$base}-day--disabled {
-    color: $DISABLED_DAY_COLOR;
+    color: $DAY_COLOR_DISABLED;
 
     .#{$base}-day-text {
       cursor: default;
+
+      &:hover {
+        background: none;
+      }
     }
 
     &.#{$base}-day--prev-month,
     &.#{$base}-day--next-month {
-      color: $DISABLED_DAY_COLOR;
+      color: $DAY_COLOR_DISABLED;
     }
   }
 }
 
 .react-date-picker__multi-month-view {
-  border: 1px solid $BORDER_COLOR;
+  border: 1px solid $VIEW_BORDER_COLOR;
 
   .#{$base} {
     border: none;

@@ -1,0 +1,36 @@
+.react-date-field--theme-#{$THEME_NAME} {
+  border: 1px solid $FIELD_BORDER_COLOR;
+
+  .react-date-field__calendar-icon {
+    border: 3px solid $CALENDAR_ICON_COLOR;
+  }
+
+  .react-date-field__clear-icon {
+    color: $CLEAR_ICON_COLOR;
+    fill: $CLEAR_ICON_COLOR;
+  }
+
+  .react-date-field__clear-icon:hover {
+    color: $CLEAR_ICON_COLOR_HOVER;
+    fill: $CLEAR_ICON_COLOR_HOVER;
+  }
+
+  .react-date-field__calendar-icon:hover {
+    border-color: $CALENDAR_ICON_COLOR_HOVER;
+
+    &:after,
+    &:before,
+    .react-date-field__calendar-icon-inner {
+      background: $CALENDAR_ICON_COLOR_HOVER;
+    }
+  }
+
+  .react-date-field__calendar-icon:after,
+  .react-date-field__calendar-icon:before {
+    background: $CALENDAR_ICON_COLOR;
+  }
+
+  .react-date-field__calendar-icon-inner {
+    background: $CALENDAR_ICON_COLOR;
+  }
+}

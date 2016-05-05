@@ -332,6 +332,8 @@ export default class DateField extends Component {
           }
         },
 
+        theme: props.theme || pickerProps.theme,
+
         className: join(pickerProps.className, 'react-date-field__picker'),
 
         defaultDate: props.valid? props.date: null,
@@ -595,6 +597,8 @@ DateField.defaultProps = {
   strict: true,
   expandOnFocus: true,
   collapseOnChange: true,
+
+  theme: 'default',
 
   onBlur: () => {},
   onFocus: () => {},
