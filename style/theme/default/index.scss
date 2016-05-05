@@ -19,13 +19,32 @@ $ACTIVE_COLOR: rgb(52, 154, 239) !default;
 $ACTIVE_IN_RANGE_COLOR: lighten($ACTIVE_COLOR, 20%) !default;
 $ACTIVE_RANGE_LIMITS_COLOR: lighten($ACTIVE_COLOR, 10%) !default;
 
+$WEEK_DAY_NAMES_TEXT_TRANSFORM: uppercase !default;
+
 $NAV_BAR_ARROW_COLOR: darken(gray, 10%) !default;
 $NAV_BAR_ARROW_COLOR_HOVER: lighten(gray, 10%) !default;
+$NAV_BAR_ARROW_COLOR_DISABLED: #C5C5C5;
 
 @import './field.scss';
 @import './navbar.scss';
 
 $base: 'react-date-picker__month-view';
+
+.react-date-picker__transition-month-view--theme-#{$THEME_NAME} {
+  border: 1px solid $VIEW_BORDER_COLOR;
+  .#{$base}--theme-#{$THEME_NAME} {
+    border: none;
+  }
+}
+
+.react-date-picker__navigation-view--theme-#{$THEME_NAME} {
+  border: 1px solid $VIEW_BORDER_COLOR;
+
+  .react-date-picker__month-view,
+  .react-date-picker__multi-month-view {
+    border: none;
+  }
+}
 
 .#{$base}--theme-#{$THEME_NAME} {
 
@@ -35,7 +54,7 @@ $base: 'react-date-picker__month-view';
   overflow: hidden;
 
   .#{$base}-week-day-names {
-    text-transform: uppercase;
+    text-transform: $WEEK_DAY_NAMES_TEXT_TRANSFORM;
   }
 
   .#{$base}-week-number {

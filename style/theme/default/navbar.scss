@@ -11,6 +11,10 @@
     position: relative;
     fill: $NAV_BAR_ARROW_COLOR;
 
+    &--disabled {
+      fill: $NAV_BAR_ARROW_COLOR_DISABLED;
+    }
+
     &:not(.react-date-picker__nav-bar-arrow--disabled) {
       &:hover {
         fill: $NAV_BAR_ARROW_COLOR_HOVER;

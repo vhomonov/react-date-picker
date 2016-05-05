@@ -44,7 +44,8 @@ export default class NavBar extends Component {
 
   render() {
 
-    const props = this.props
+    const props = this.p = assign({}, this.props)
+
     const viewMoment = props.viewMoment || this.toMoment(
       this.prepareViewDate(props)
     )
@@ -79,11 +80,27 @@ export default class NavBar extends Component {
 
 
   renderNav(dir, viewMoment){
-    const props = this.props
+    const props = this.p
 
     const name = dir < 0? 'prev': 'next'
-    const disabled = dir < 0? props.prevDisabled: props.nextDisabled
+    let disabled = dir < 0? props.prevDisabled: props.nextDisabled
     const secondary = Math.abs(dir) == 2
+
+    if (dir < 0 && props.minDate){
+      const gotoMoment = this.getGotoMoment(dir, viewMoment).endOf('month')
+
+      if (gotoMoment.isBefore(this.toMoment(props.minDate))){
+        disabled = true
+      }
+    }
+
+    if (dir > 0 && props.maxDate){
+      const gotoMoment = this.getGotoMoment(dir, viewMoment).startOf('month')
+
+      if (gotoMoment.isAfter(this.toMoment(props.maxDate))){
+        disabled = true
+      }
+    }
 
     const className = [
       bem(`arrow`),
@@ -109,7 +126,7 @@ export default class NavBar extends Component {
       name,
       disabled,
       className: join(className),
-      onClick: this.onNavClick.bind(this, dir, viewMoment),
+      onClick: !disabled && this.onNavClick.bind(this, dir, viewMoment),
       children
     }
 
@@ -130,6 +147,19 @@ export default class NavBar extends Component {
       disabled={null}
       name={null}
     />
+  }
+
+  getGotoMoment(dir, viewMoment){
+    viewMoment = viewMoment || this.p.viewMoment
+
+    const sign = dir < 0? -1: 1
+    const abs = Math.abs(dir)
+
+    const mom = this.toMoment(viewMoment)
+
+    mom.add(sign, abs == 1? 'month': 'year')
+
+    return mom
   }
 
   onNavClick(dir, viewMoment, event){
@@ -181,7 +211,10 @@ export default class NavBar extends Component {
       })
     }
 
-    this.props.onViewDateChange({ dateMoment, timestamp})
+    if (this.props.onViewDateChange){
+      const dateString = dateMoment.format(this.props.dateFormat)
+      this.props.onViewDateChange(dateString, { dateString, dateMoment, timestamp})
+    }
   }
 
 }

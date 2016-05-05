@@ -7,6 +7,7 @@ require('./style/index.scss')
 
 import MonthView from './src/MonthView'
 import NavigationView from './src/NavigationView'
+import TransitionView from './src/TransitionView'
 import NavBar from './src/NavBar'
 import MultiMonthView from './src/MultiMonthView'
 import DateField from './src/DateField'
@@ -86,34 +87,56 @@ var App = React.createClass({
         <br />
         <input defaultValue="dadas"/>
 
-        <NavBar secondary defaultViewDate="2016-06-03" />
+        navview
+          <MonthView
+            className="xxx"
+            minDate="2016-10-10"
+            maxDate="2016-11-11"
+            locale={LOCALE}
+            xrange={R}
+            xdefaultRange={[]}
+            onRenderDay={(props) => {
+              props.onClick = () => {
+                console.log(props.dateMoment.format('YYYY-MM-DD'), props.disabled)
+              }
+              return props
+            }}
+            isDisabledDay={(props) => {
+              return props.dateMoment.format('YYYY-MM-DD') == '2016-10-20'
+            }}
+            xonRangeChange={this.onRangeChange}
+            style={{height: 400}}
+            xdefaultActiveDate="2016-06-6"
+            xdefaultDate="2016-02-10"
+          />
+        transition view
 
-        <MonthView
-          minDate="2016-10-10"
-          maxDate="2016-11-11"
-          locale={LOCALE}
-          xrange={R}
-          xdefaultRange={[]}
-          onRenderDay={(props) => {
-            props.onClick = () => {
-              console.log(props.dateMoment.format('YYYY-MM-DD'), props.disabled)
-            }
-            return props
-          }}
-          isDisabledDay={(props) => {
-            return props.dateMoment.format('YYYY-MM-DD') == '2016-10-20'
-          }}
-          xonRangeChange={this.onRangeChange}
-          style={{height: 400}}
-          xdefaultActiveDate="2016-06-6"
-          xdefaultDate="2016-02-10"
-        >
+        <TransitionView style={{marginBottom: 20}} >
+          <MonthView
+            maxDate="2016-07-11"
+            locale={LOCALE}
+            xrange={R}
+            xdefaultRange={[]}
+            onRenderDay={(props) => {
+              props.onClick = () => {
+                console.log(props.dateMoment.format('YYYY-MM-DD'), props.disabled)
+              }
+              return props
+            }}
+            isDisabledDay={(props) => {
+              return props.dateMoment.format('YYYY-MM-DD') == '2016-10-20'
+            }}
+            xonRangeChange={this.onRangeChange}
+            style={{height: 400}}
+            defaultRange={[]}
+          >
 
-        </MonthView>
+          </MonthView>
+        </TransitionView>
 
         <MultiMonthView
-          range={R}
-          xdefaultRange={[]}
+        maxDate="2016-06-24"
+          defaultRange={[]}
           onRangeChange={this.onRangeChange}
           size={4}
         />
@@ -136,7 +159,7 @@ var App = React.createClass({
         if (r[1].timestamp - r[0].timestamp < 1000 * 60 *60*24 * 3)
         return range[0]
       }
-      console.log(range)
+      // console.log(range)
       R = range
       this.setState({})
         //range = rangeValue

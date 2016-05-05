@@ -4,6 +4,7 @@ import Component from 'react-class'
 
 import { Flex, Item } from 'react-flex'
 import InlineBlock from 'react-inline-block'
+import NavBar from './NavBar'
 
 import moment from 'moment'
 import assign from 'object-assign'
@@ -26,53 +27,38 @@ export default class NavigationView extends Component {
   constructor(props){
     super(props)
 
+    this.mounted = false
+
+    const child = React.Children.toArray(this.props.children)[0]
+
     this.state = {
-      viewDate: props.defaultViewDate
+      viewDate: child.props.defaultViewDate
     }
   }
 
-  prepareViewDate(props){
-    return props.viewDate === undefined?
-            this.state.viewDate:
-            props.viewDate
+  componentDidMount(){
+    this.mounted = true
   }
 
-  render() {
-
+  componentWillMount(){
     const child = React.Children.toArray(this.props.children)[0]
-    const childProps = child.props || {}
 
-    const cloneProps = assign({}, this.props)
+    const prepareProps = child.type && child.type.prototype && child.type.prototype.prepareProps
 
-    delete cloneProps.style
-    delete cloneProps.className
+    if (prepareProps){
 
-    const viewDate = this.prepareViewDate({
-      viewDate: this.props.viewDate !== undefined?
-        this.props.viewDate:
-        childProps.viewDate
-    })
+      const preparedProps = prepareProps.call({
+        toMoment: this.toMoment
+      }, child.props, this.state)
 
-    const view = React.cloneElement(child, assign(cloneProps, {
-      viewDate
-    }))
-
-    const props = this.p = assign({}, view.props)
-
-    props.viewMoment = this.toMoment(viewDate)
-
-    return <Flex
-      column
-      alignItems="stretch"
-      {...props}
-    >
-      {this.renderNavigation()}
-      {view}
-    </Flex>
+      this.setState({
+        viewMoment: preparedProps.viewMoment
+      })
+    }
   }
 
   toMoment(value, props){
-    props = props || this.p
+    props = props || this.props
 
     return toMoment(value, {
       locale: props.locale,
@@ -80,73 +66,68 @@ export default class NavigationView extends Component {
     })
   }
 
-  renderNavigation(){
-    if (this.props.renderNavigation){
-      return this.props.renderNavigation({
-        viewDate: props.viewDate
-      })
-    }
+  render() {
+    const props = this.props
 
-    return <Flex row>
-      {this.renderNavBefore()}
-      <Item style={{textAlign: 'center'}}>
-        {this.renderHeaderDate()}
-      </Item>
-      {this.renderNavAfter()}
+    const child = this.child = React.Children.toArray(this.props.children)[0]
+    const childProps = child.props || {}
+
+    const config = {
+      locale: props.locale || childProps.locale,
+      dateFormat: props.dateFormat || childProps.dateFormat
+    }
+    const theme = props.theme || childProps.theme
+
+    const viewMoment = childProps.viewDate?
+      this.toMoment(childProps.viewDate, config):
+      this.state.viewMoment
+
+    const view = React.cloneElement(child, {
+      navigation: false,
+      viewDate: viewMoment,
+      theme,
+      locale: config.locale,
+      dateFormat: config.dateFormat
+    })
+
+    // const prepareProps = child.type && child.type.prototype && child.type.prototype.prepareProps
+    // const preparedProps = prepareProps.call({
+    //   toMoment: this.toMoment
+    // }, view.props, this.state)
+
+    // const prevDisabled = preparedProps.minContrained || (preparedProps.minDateMoment && viewMoment.format('YYYY-MM') == preparedProps.minDateMoment.format('YYYY-MM'))
+    // const nextDisabled = preparedProps.maxContrained || (preparedProps.maxDateMoment && viewMoment.format('YYYY-MM') == preparedProps.maxDateMoment.format('YYYY-MM'))
+
+    return <Flex
+      column
+      wrap={false}
+      alignItems="stretch"
+      {...props}
+      className={
+        join(
+          'react-date-picker__navigation-view',
+          theme && `react-date-picker__navigation-view--theme-${theme}`
+        )
+      }
+    >
+      <NavBar
+        minDate={childProps.minDate}
+        maxDate={childProps.maxDate}
+
+        dateFormat={config.dateFormat}
+        secondary={props.secondary}
+        viewMoment={viewMoment}
+        onViewDateChange={this.onViewDateChange}
+      />
+      {view}
     </Flex>
   }
 
-  renderNavBefore(){
-    return this.renderNav(-1)
-  }
-
-  renderNavAfter(){
-    return this.renderNav(1)
-  }
-
-  renderNav(dir){
-    const className = bem(`arrow--${dir == -1? 'prev': 'next'}`)
-
-    return <InlineBlock className={className} onClick={this.onNavClick.bind(this, dir)}>
-      {ARROWS[dir]}
-    </InlineBlock>
-  }
-
-  onNavClick(dir){
-
-    const props = this.p
-    const viewMoment = props.viewMoment
-
-    const dateMoment = this.toMoment(viewMoment).add(dir, 'month')
-    const timestamp = +dateMoment
-
-    this.onViewDateChange({
-      dateMoment,
-      timestamp
+  onViewDateChange(dateString, { dateMoment, timestamp }){
+    this.setState({
+      viewMoment: dateMoment
     })
   }
-
-  renderHeaderDate(){
-    const props = this.p
-    const moment = props.viewMoment
-
-    if (this.props.renderHeaderDate){
-      return this.props.renderHeaderDate(moment)
-    }
-
-    return moment.format(props.headerDateFormat)
-  }
-
-  onViewDateChange({ dateMoment, timestamp }){
-    if (this.props.viewDate === undefined ){
-      this.setState({
-        viewDate: timestamp
-      })
-    }
-
-    this.props.onViewDateChange({ dateMoment, timestamp})
-  }
-
 }
 
 NavigationView.defaultProps = {

@@ -23,7 +23,97 @@ const RENDER_DAY = (props) => {
   return <div {...props} />
 }
 
+const prepareViewDate = function(props, state) {
+  let viewDate = props.viewDate === undefined?
+          state.viewDate:
+          props.viewDate
+
+  return viewDate
+}
+
+const prepareDate = function(props, state) {
+
+  if (props.range){
+    return null
+  }
+
+  return props.date === undefined?
+          state.date:
+          props.date
+}
+
+const prepareRange = function(props, state){
+  if (props.moment){
+    return null
+  }
+
+  return props.partialRange?
+    props.range || state.range:
+    state.range || props.range
+
+}
+
+const prepareActiveDate = function(props, state) {
+
+  const fallbackDate = prepareDate(props, state) || ((prepareRange(props, state) || [])[0])
+
+  const activeDate = props.activeDate === undefined?
+      //only fallback to date if activeDate not specified
+      (state.activeDate || fallbackDate):
+
+      props.activeDate
+
+  const daysInView = props.daysInView
+
+  if (activeDate && daysInView && props.constrainActiveInView){
+
+    const activeMoment = this.toMoment(activeDate)
+
+    if (!isInView(activeMoment, props)){
+
+      const date = fallbackDate
+      const dateMoment = this.toMoment(date)
+
+      if (date && isInView(dateMoment, props) && isValidActiveDate(+dateMoment, props)){
+        return date
+      }
+
+      return null
+    }
+  }
+
+  return isValidActiveDate(+activeDate, props)? activeDate: null
+}
+
+const isInView = function(moment, props) {
+  if (!props){
+    throw new Error('props is mandatory in isInView')
+  }
+
+  const daysInView = props.daysInView
+
+  return isInRange(moment, { range: daysInView, inclusive: true })
+}
+
+const isValidActiveDate = function(timestamp, props){
+  if (!props){
+    throw new Error('props is mandatory in isValidActiveDate')
+  }
+
+  const dayProps = props.dayPropsMap[timestamp]
+
+  if (dayProps && dayProps.disabled){
+    return false
+  }
+
+  return true
+}
+
 export default class MonthView extends Component {
+
+  isInView(moment, props){
+    return isInView(moment, props || this.p)
+  }
 
   constructor(props){
     super(props)
@@ -65,68 +155,6 @@ export default class MonthView extends Component {
     TODAY = +this.toMoment().startOf('day')
   }
 
-  prepareDate(props){
-
-    if (props.range){
-      return null
-    }
-
-    return props.date === undefined?
-            this.state.date:
-            props.date
-  }
-
-  prepareRange(props){
-    if (props.moment){
-      return null
-    }
-
-    return props.partialRange?
-      props.range || this.state.range:
-      this.state.range || props.range
-
-  }
-
-  prepareViewDate(props){
-    let viewDate = props.viewDate === undefined?
-            this.state.viewDate:
-            props.viewDate
-
-    return viewDate
-  }
-
-  prepareActiveDate(props){
-
-    const fallbackDate = this.prepareDate(props) || ((this.prepareRange(props) || [])[0])
-
-    const activeDate = props.activeDate === undefined?
-        //only fallback to date if activeDate not specified
-        (this.state.activeDate || fallbackDate):
-
-        props.activeDate
-
-    const daysInView = props.daysInView
-
-    if (activeDate && daysInView && props.constrainActiveInView){
-
-      const activeMoment = this.toMoment(activeDate)
-
-      if (!this.isInView(activeMoment, props)){
-
-        const date = fallbackDate
-        const dateMoment = this.toMoment(date)
-
-        if (date && this.isInView(dateMoment, props) && this.isValidActiveDate(+dateMoment)){
-          return date
-        }
-
-        return null
-      }
-    }
-
-    return this.isValidActiveDate(+activeDate)? activeDate: null
-  }
-
   prepareClassName(props){
     return join(
       props.className,
@@ -135,11 +163,13 @@ export default class MonthView extends Component {
     )
   }
 
-  prepareProps(thisProps){
+  prepareProps(thisProps, state){
     const props = this.p = assign({}, thisProps)
 
+    state = state || this.state
+
     props.dayPropsMap = {}
-    props.className = this.prepareClassName(props)
+    props.className = this.prepareClassName && this.prepareClassName(props)
 
     const { minDate, maxDate } = props
 
@@ -153,7 +183,7 @@ export default class MonthView extends Component {
       props.maxDate = +props.maxDateMoment
     }
 
-    props.viewMoment = props.viewMoment || this.toMoment(this.prepareViewDate(props))
+    props.viewMoment = props.viewMoment || this.toMoment(prepareViewDate(props, state))
 
     if (props.constrainViewDate && props.minDate && props.viewMoment.isBefore(props.minDate)){
       props.minContrained = true
@@ -168,23 +198,23 @@ export default class MonthView extends Component {
     props.viewMonthStart = this.toMoment(props.viewMoment).startOf('month')
     props.viewMonthEnd  = this.toMoment(props.viewMoment).endOf('month')
 
-    const date = this.prepareDate(props)
+    const date = prepareDate(props, state)
 
     if (date){
       props.moment = props.moment || (props.range? null: this.toMoment(date).startOf('day'))
       props.timestamp = props.moment? +props.moment: null
     }
 
-    const range = this.prepareRange(props)
+    const range = prepareRange(props, state)
 
     if (range){
       props.range = range.map(d => this.toMoment(d).startOf('day'))
-      props.rangeStart = this.state.rangeStart || (props.range.length == 1? props.range[0]: null)
+      props.rangeStart = state.rangeStart || (props.range.length == 1? props.range[0]: null)
     }
 
     props.daysInView = getDaysInMonthView(props.viewMoment, props)
 
-    const activeDate = this.prepareActiveDate(props)
+    const activeDate = prepareActiveDate.call(this, props, state)
 
     if (activeDate){
       props.activeDate = +this.toMoment(activeDate).startOf('day')
@@ -193,12 +223,12 @@ export default class MonthView extends Component {
     return props
   }
 
-  isInView(moment, props){
-    props = props || this.p
+  getViewMoment(){
+    return this.p.viewMoment
+  }
 
-    const daysInView = props.daysInView
-
-    return isInRange(moment, { range: daysInView, inclusive: true })
+  getViewSize(){
+    return 1
   }
 
   handleViewMouseLeave(){
@@ -225,25 +255,6 @@ export default class MonthView extends Component {
       thisMonth && this.bem('day--this-month')
     )
 
-  }
-
-  isValidActiveDate(timestamp, props){
-    props = props || this.p
-
-    const dayProps = props.dayPropsMap[timestamp]
-
-    if (dayProps && dayProps.disabled){
-      return false
-    }
-
-    // if (props.minDate && timestamp < props.minDate){
-    //   return false
-    // }
-    // if (props.maxDate && timestamp > props.maxDate){
-    //   return false
-    // }
-
-    return true
   }
 
   prepareMinMaxProps(timestamp, props){
@@ -512,8 +523,9 @@ export default class MonthView extends Component {
   renderNavBar(){
     const props = this.p
 
-    const prevDisabled = props.minContrained || (props.minDateMoment && props.viewMoment.format('YYYY-MM') == props.minDateMoment.format('YYYY-MM'))
-    const nextDisabled = props.maxContrained || (props.maxDateMoment && props.viewMoment.format('YYYY-MM') == props.maxDateMoment.format('YYYY-MM'))
+    // const prevDisabled = props.minConstrained || (props.minDateMoment && props.viewMoment.format('YYYY-MM') == props.minDateMoment.format('YYYY-MM'))
+    // const nextDisabled = props.maxConstrained || (props.maxDateMoment && props.viewMoment.format('YYYY-MM') == props.maxDateMoment.format('YYYY-MM'))
+
     const theme = props.theme
 
     const childNavBar = React.Children.toArray(props.children).filter(c => c && c.props && c.props.isDatePickerNavBar)[0]
@@ -522,12 +534,14 @@ export default class MonthView extends Component {
 
       if (props.navigation || props.renderNavBar){
         return this.renderNavBarComponent({
-          prevDisabled,
-          nextDisabled,
+          // prevDisabled,
+          // nextDisabled,
+          minDate: props.minDate,
+          maxDate: props.maxDate,
           theme,
           secondary: true,
           viewMoment: props.viewMoment,
-          onViewDateChange: this.onViewDateChange
+          onViewDateChange: this.onNavViewDateChange
         })
       }
 
@@ -537,8 +551,10 @@ export default class MonthView extends Component {
     const navBarProps = assign({}, childNavBar.props, {
       viewMoment: props.viewMoment,
       theme,
-      prevDisabled,
-      nextDisabled
+      minDate: props.minDate,
+      maxDate: props.maxDate
+      // prevDisabled,
+      // nextDisabled
     })
 
     const prevOnViewDateChange = navBarProps.onViewDateChange
@@ -547,7 +563,7 @@ export default class MonthView extends Component {
     if (prevOnViewDateChange){
       onViewDateChange = (...args) => {
         prevOnViewDateChange(...args)
-        this.onViewDateChange(...args)
+        this.onNavViewDateChange(...args)
       }
     }
 
@@ -589,8 +605,8 @@ export default class MonthView extends Component {
       this.props.onKeyDown(event)
     }
 
-    if (key == 'Enter'){
-      this.p.activeDate && this.confirm(this.p.activeDate, event)
+    if (key == 'Enter' && this.p.activeDate){
+      this.confirm(this.p.activeDate, event)
     }
 
     const dir = ({
@@ -604,10 +620,13 @@ export default class MonthView extends Component {
       return
     }
 
+    event.preventDefault()
     this.navigate(dir, event)
   }
 
   confirm(date, event){
+    event.preventDefault()
+
     if (this.props.confirm){
       return this.props.confirm(date, event)
     }
@@ -757,6 +776,10 @@ export default class MonthView extends Component {
     }
   }
 
+  onNavViewDateChange(dateString, { dateMoment, timestamp }){
+    this.onViewDateChange({dateMoment, timestamp})
+  }
+
   onViewDateChange({ dateMoment, timestamp }){
     if (this.props.viewDate === undefined && this.props.navOnDateClick){
       this.setState({
@@ -774,7 +797,7 @@ export default class MonthView extends Component {
 
   onActiveDateChange({ dateMoment, timestamp }){
 
-    if (!this.isValidActiveDate(timestamp)){
+    if (!isValidActiveDate(timestamp, this.p)){
       return
     }
 
