@@ -7,10 +7,24 @@ import assign from 'object-assign'
 import join from './join'
 import toMoment from './toMoment'
 
+import assignDefined from './assignDefined'
+
 import NavBar from './NavBar'
 import { Flex } from 'react-flex'
 
 import normalize from 'react-style-normalizer'
+
+const joinFunctions = (a, b) => {
+  if (a && b){
+    return (...args) => {
+      a(...args)
+      b(...args)
+    }
+  }
+
+  return a? a: b
+}
+
 
 const TRANSITION_DURATION = '0.4s'
 
@@ -24,7 +38,10 @@ export default class TransitionView extends Component {
 
     this.state = {
       rendered: false,
-      viewDate: childProps.defaultViewDate
+      viewDate: props.defaultViewDate ||
+        props.defaultDate ||
+        childProps.defaultViewDate ||
+        childProps.defaultDate
     }
   }
 
@@ -39,7 +56,7 @@ export default class TransitionView extends Component {
 
   componentWillMount(){
     this.setState({
-      viewMoment: this.getNextState().viewMoment
+      viewDate: this.getNextState().viewDate
     })
   }
 
@@ -48,7 +65,7 @@ export default class TransitionView extends Component {
     childProps = childProps || this.prepareChildProps()
 
     return {
-      viewMoment: childProps.viewMoment,
+      viewDate: childProps.viewMoment,
       date: childProps.date || childProps.moment,
       activeDate: childProps.activeDate,
       range: childProps.range
@@ -83,17 +100,22 @@ export default class TransitionView extends Component {
     const child = this.child = children[0]
 
     const childProps = this.prepareChildProps(child, {
-      viewMoment: this.state.viewMoment
+      viewDate: this.state.viewDate
     })
 
     this.nextState = this.getNextState(childProps)
 
+    const onViewDateChange = joinFunctions(
+      this.onViewDateChange,
+      props.onViewDateChange
+    )
+
     const newProps = {
       ref: (v) => this.view = v,
 
-      viewMoment: this.state.viewMoment,
+      viewDate: this.state.viewDate,
 
-      onViewDateChange: this.onViewDateChange,
+      onViewDateChange,
       theme: props.theme || child.props.theme,
       navigation: false,
       className: join(
@@ -115,10 +137,25 @@ export default class TransitionView extends Component {
       )
     }
 
-    const clone = React.cloneElement(child, newProps)
+    const thisProps = assignDefined({}, {
+      activeDate: props.activeDate,
+      defaultActiveDate: props.defaultActiveDate,
+      onActiveDateChange: props.onActiveDateChange,
+
+      range: props.range,
+      defaultRange: props.defaultRange,
+      onRangeChange: props.onRangeChange,
+
+      date: props.date,
+      defaultDate: props.defaultDate,
+      onChange: props.onChange
+    })
+
+    const clone = React.cloneElement(child, assign({}, thisProps, newProps))
 
     return <Flex
       column
+      inline
       wrap={false}
       alignItems="stretch"
       {...props}
@@ -132,10 +169,10 @@ export default class TransitionView extends Component {
         minDate={childProps.minDate}
         maxDate={childProps.maxDate}
         secondary
-        viewMoment={this.state.viewMoment}
-        onViewDateChange={this.onViewDateChange}
+        viewDate={this.state.viewDate}
+        onViewDateChange={onViewDateChange}
       />
-      <Flex row style={{position: 'relative'}}>
+      <Flex inline row style={{position: 'relative'}}>
         {this.renderAt(-1)}
         {clone}
         {this.renderAt(1)}
@@ -143,11 +180,23 @@ export default class TransitionView extends Component {
     </Flex>
   }
 
+  getView(){
+    return this.view
+  }
+
+  onViewKeyDown(...args){
+    this.view.onViewKeyDown(...args)
+  }
+
+  isInView(...args){
+    this.view.isInView(...args)
+  }
+
   onViewDateChange(dateString, { dateMoment }){
 
     if (moment(dateMoment).startOf('month')
         .isSame(
-          moment(this.state.viewMoment).startOf('month')
+          moment(this.state.viewDate).startOf('month')
         )
       ){
       return
@@ -155,12 +204,15 @@ export default class TransitionView extends Component {
 
     setTimeout(() => {
       //in order to allow this.view.p to update
+      if (!findDOMNode(this.view)){
+        return
+      }
 
-      this.nextViewMoment = dateMoment
+      this.nextViewDate = dateMoment
 
       const newState = {}
 
-      if (dateMoment.isAfter(this.state.viewMoment)){
+      if (dateMoment.isAfter(this.state.viewDate)){
         newState.transition = -1
       } else {
         newState.transition = 1
@@ -171,31 +223,29 @@ export default class TransitionView extends Component {
   }
 
   onTransitionEnd(){
-    if (!this.nextViewMoment){
+    if (!this.nextViewDate){
       return
     }
 
     this.setState({
-      viewMoment: this.nextViewMoment,
+      viewDate: this.nextViewDate,
       transition: 0
-    }, () => {
-      this.view && this.view.focus && this.view.focus()
     })
   }
 
   renderAt(index){
-    if (!this.state.rendered){
+    if (!this.state.rendered || !this.view){
       return null
     }
 
-    const viewMoment = this.view.getViewMoment()
+    const viewDate = this.view.getViewMoment()
     const viewSize = this.view.getViewSize? this.view.getViewSize(): 1
 
     const childProps = this.child.props
 
     const newProps = {
 
-      viewMoment: moment(this.state.viewMoment).add(viewSize * index, 'month'),
+      viewDate: moment(this.state.viewDate).add(viewSize * index, 'month'),
 
       date: this.nextState.date,
       range: this.nextState.range,
@@ -224,5 +274,7 @@ export default class TransitionView extends Component {
 }
 
 TransitionView.defaultProps = {
-  theme: 'default'
+  theme: 'default',
+  isDatePicker: true,
+  dateFormat: 'YYYY-MM-DD'
 }

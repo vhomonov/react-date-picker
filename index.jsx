@@ -81,7 +81,9 @@ var App = React.createClass({
         <Flex>
           <DateField value={this.state.date} onChange={this.onChange}>
             <input className="xxx" onChange={this.onTextChange}/>
-            <MonthView />
+
+              <MonthView />
+
           </DateField>
         </Flex>
         <br />
@@ -111,12 +113,10 @@ var App = React.createClass({
           />
         transition view
 
-        <TransitionView style={{marginBottom: 20}} >
           <MonthView
+            style={{maxWidth: 400}}
             maxDate="2016-07-11"
             locale={LOCALE}
-            xrange={R}
-            xdefaultRange={[]}
             onRenderDay={(props) => {
               props.onClick = () => {
                 console.log(props.dateMoment.format('YYYY-MM-DD'), props.disabled)
@@ -127,18 +127,18 @@ var App = React.createClass({
               return props.dateMoment.format('YYYY-MM-DD') == '2016-10-20'
             }}
             xonRangeChange={this.onRangeChange}
-            style={{height: 400}}
+            xstyle={{height: 400}}
             defaultRange={[]}
           >
 
           </MonthView>
-        </TransitionView>
 
         <MultiMonthView
-        maxDate="2016-06-24"
+          style={{maxWidth: 1200}}
+          maxDate="2016-06-24"
           defaultRange={[]}
           onRangeChange={this.onRangeChange}
-          size={4}
+          size={2}
         />
 
         <p>Select locale: <select value={LOCALE} onChange={this.onLocaleChange}>

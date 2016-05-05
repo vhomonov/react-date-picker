@@ -326,7 +326,8 @@ export default class DateField extends Component {
 
       return React.cloneElement(picker, {
         ref: (p) => {
-          this.picker = p
+          this.picker = p && p.getView? p.getView(): p
+
           if (!this.state.viewDate){
             this.onViewDateChange(props.viewDate)
           }

@@ -54,7 +54,7 @@ export default class NavBar extends Component {
 
     const className = join(props.className, bem(), bem(null, `theme-${props.theme}`))
 
-    return <Flex row {...props} className={className} viewDate={null}>
+    return <Flex inline row {...props} className={className} viewDate={null}>
 
       {secondary && this.renderNav(-2, viewMoment)}
       {this.renderNav(-1, viewMoment)}

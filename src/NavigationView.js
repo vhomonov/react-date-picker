@@ -100,6 +100,7 @@ export default class NavigationView extends Component {
 
     return <Flex
       column
+      inline
       wrap={false}
       alignItems="stretch"
       {...props}
