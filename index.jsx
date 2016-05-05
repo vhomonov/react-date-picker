@@ -111,8 +111,7 @@ var App = React.createClass({
             xdefaultActiveDate="2016-06-6"
             xdefaultDate="2016-02-10"
           />
-        transition view
-
+        transition view<TransitionView>
           <MonthView
             style={{maxWidth: 400}}
             maxDate="2016-07-11"
@@ -133,6 +132,7 @@ var App = React.createClass({
 
           </MonthView>
 
+        </TransitionView>
         <MultiMonthView
           style={{maxWidth: 1200}}
           maxDate="2016-06-24"
