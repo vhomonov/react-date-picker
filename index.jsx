@@ -10,6 +10,7 @@ import NavigationView from './src/NavigationView'
 import NavBar from './src/NavBar'
 import MultiMonthView from './src/MultiMonthView'
 import DateField from './src/DateField'
+import { Flex, Item } from 'react-flex'
 
 var moment = require('moment');
 var React      = require('react')
@@ -17,7 +18,7 @@ var DatePicker = require('./src/index')
 
 var render = require('react-dom').render
 
-var range = ['2016-02-01', '2016-02-09']
+var range = ['2016-05-01', '2016-05-09']
 var date = moment().add(-10, 'days')
 
 var LOCALE = 'en'
@@ -40,7 +41,7 @@ var GO2SELECTED = {
 
 function emptyFn(){}
 
-let R = ['2016-05-10']
+let R = range
 var App = React.createClass({
     displayName: 'App',
 
@@ -75,10 +76,14 @@ var App = React.createClass({
 
         return <div style={{margin: 10}}>
         <input />
-        <DateField value={this.state.date} onChange={this.onChange}>
-          <input className="xxx" onChange={this.onTextChange}/>
-          <MonthView />
-        </DateField>
+        <br />
+        <Flex>
+          <DateField value={this.state.date} onChange={this.onChange}>
+            <input className="xxx" onChange={this.onTextChange}/>
+            <MonthView />
+          </DateField>
+        </Flex>
+        <br />
         <input defaultValue="dadas"/>
 
         <NavBar secondary defaultViewDate="2016-06-03" />
@@ -87,7 +92,6 @@ var App = React.createClass({
           minDate="2016-10-10"
           maxDate="2016-11-11"
           locale={LOCALE}
-          onChange={() => {debugger}}
           xrange={R}
           xdefaultRange={[]}
           onRenderDay={(props) => {
@@ -108,7 +112,6 @@ var App = React.createClass({
         </MonthView>
 
         <MultiMonthView
-          xdefaultRange={['2016-05-06']}
           range={R}
           xdefaultRange={[]}
           onRangeChange={this.onRangeChange}

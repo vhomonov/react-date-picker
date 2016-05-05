@@ -6,6 +6,9 @@ $BORDER_COLOR: gray !default;
 $ACTIVE_IN_RANGE_COLOR: lighten($BLUE, 20%) !default;
 $ACTIVE_RANGE_LIMITS_COLOR: lighten($BLUE, 10%) !default;
 
+$NAV_BAR_ARROW_COLOR: darken(gray, 10%) !default;
+$NAV_BAR_ARROW_COLOR_HOVER: lighten(gray, 10%) !default;
+
 .react-date-picker__nav-bar--theme-default {
 
   padding-top: 5px;
@@ -17,10 +20,11 @@ $ACTIVE_RANGE_LIMITS_COLOR: lighten($BLUE, 10%) !default;
 
   .react-date-picker__nav-bar-arrow {
     position: relative;
+    fill: $NAV_BAR_ARROW_COLOR;
 
     &:not(.react-date-picker__nav-bar-arrow--disabled) {
-      &:hover{
-        opacity: 0.7;
+      &:hover {
+        fill: $NAV_BAR_ARROW_COLOR_HOVER;
       }
 
       &:active {
@@ -30,11 +34,13 @@ $ACTIVE_RANGE_LIMITS_COLOR: lighten($BLUE, 10%) !default;
   }
 
 }
+
 $base: 'react-date-picker__month-view';
 
 .#{$base}--theme-default {
 
   background: white;
+  position: relative;
   border: 1px solid $BORDER_COLOR;
 
   .#{$base}-week-day-names {
@@ -55,7 +61,7 @@ $base: 'react-date-picker__month-view';
 
   .#{$base}-day {
 
-    position: relative;
+    z-index: 10;
 
     .#{$base}-day-text {
       border: 2px solid transparent;

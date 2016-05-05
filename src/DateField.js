@@ -6,6 +6,7 @@ import { Flex, Item } from 'react-flex'
 import Input from 'react-field'
 import InlineBlock from 'react-inline-block'
 
+import moment from 'moment'
 import join from './join'
 import toMoment from './toMoment'
 
@@ -61,6 +62,7 @@ export default class DateField extends Component {
     return <Flex
       inline
       row
+      wrap={false}
       value={null}
       date={null}
       text={null}
