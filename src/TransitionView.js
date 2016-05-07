@@ -7,6 +7,7 @@ import assign from 'object-assign'
 import join from './join'
 import toMoment from './toMoment'
 
+import getTransitionEnd from './getTransitionEnd'
 import assignDefined from './assignDefined'
 
 import NavBar from './NavBar'
@@ -127,8 +128,7 @@ export default class TransitionView extends Component {
     if (this.state.transition){
       this.transitionDurationStyle = normalize({ transitionDuration: props.transitionDuration || TRANSITION_DURATION})
 
-      newProps.style = assign({}, child.props.style, this.transitionDurationStyle),
-      newProps.onTransitionEnd = this.onTransitionEnd
+      newProps.style = assign({}, child.props.style, this.transitionDurationStyle)
 
       newProps.className = join(
         newProps.className,
@@ -218,14 +218,25 @@ export default class TransitionView extends Component {
         newState.transition = 1
       }
 
+      this.addTransitionEnd()
       this.setState(newState)
     })
+  }
+
+  addTransitionEnd(){
+    findDOMNode(this.view).addEventListener(getTransitionEnd(), this.onTransitionEnd, false)
+  }
+
+  removeTransitionEnd(){
+    findDOMNode(this.view).removeEventListener(getTransitionEnd(), this.onTransitionEnd)
   }
 
   onTransitionEnd(){
     if (!this.nextViewDate){
       return
     }
+
+    this.removeTransitionEnd()
 
     this.setState({
       viewDate: this.nextViewDate,

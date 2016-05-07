@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --progress --config build/webpack.config.js",
     "styles": "theme-builder",
-    "lib": "rm -fr lib && babel --out-dir lib src",
+    "lib": "rimraf lib && babel --out-dir lib src",
     "build": "npm run styles && npm run lib",
     "prepublish": "npm run build"
   },
@@ -44,6 +44,7 @@
     "react": ">=0.14.0",
     "react-dom": ">=0.14.0",
     "react-hot-loader": "^1.2.8",
+    "rimraf": "^2.5.2",
     "sass-loader": "^3.2.0",
     "should": "^6.0.3",
     "style-loader": "^0.13.1",
