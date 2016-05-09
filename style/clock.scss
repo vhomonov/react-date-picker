@@ -1,0 +1,17 @@
+.react-date-picker__clock {
+  display: inline-block;
+  border: 5px solid red;
+  border-radius: 50%;
+  position: relative;
+}
+
+.react-date-picker__clock-tick {
+  position: absolute;
+  transform-origin: center;
+
+  left: 50%;
+  top: 0px;
+
+  width: 1px;
+  background: gray;
+}

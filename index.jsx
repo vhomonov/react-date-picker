@@ -11,6 +11,7 @@ import TransitionView from './src/TransitionView'
 import NavBar from './src/NavBar'
 import MultiMonthView from './src/MultiMonthView'
 import DateField from './src/DateField'
+import Clock from './src/Clock'
 import { Flex, Item } from 'react-flex'
 
 var moment = require('moment');
@@ -77,6 +78,8 @@ var App = React.createClass({
 
         return <div style={{margin: 10}}>
         <input />
+        <br />
+        <Clock />
         <br />
         <Flex>
           <DateField value={this.state.date} onChange={this.onChange}>
