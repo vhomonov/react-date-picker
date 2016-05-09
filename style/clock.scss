@@ -5,13 +5,18 @@
   position: relative;
 }
 
+.react-date-picker__clock-hand,
 .react-date-picker__clock-tick {
   position: absolute;
-  transform-origin: center;
+  // transform-origin: top;
 
   left: 50%;
-  top: 0px;
+  top: 50%;
 
   width: 1px;
   background: gray;
+}
+
+.react-date-picker__clock-hand {
+  background: red;
 }

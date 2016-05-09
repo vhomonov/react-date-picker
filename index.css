@@ -71,6 +71,21 @@
   width: 4px;
   height: 4px; }
 
+.react-date-picker__clock {
+  display: inline-block;
+  border: 5px solid red;
+  border-radius: 50%;
+  position: relative; }
+
+.react-date-picker__clock-tick {
+  position: absolute;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  left: 50%;
+  top: 0px;
+  width: 1px;
+  background: gray; }
+
 .react-date-field *,
 .react-date-field *:before,
 .react-date-field *:after,
@@ -80,6 +95,9 @@
 .react-date-picker__nav-bar *,
 .react-date-picker__nav-bar *:before,
 .react-date-picker__nav-bar *:after,
+.react-date-picker__clock *,
+.react-date-picker__clock *:before,
+.react-date-picker__clock *:after,
 .react-date-picker__basic-month-view *,
 .react-date-picker__basic-month-view *:before,
 .react-date-picker__basic-month-view *:after {
