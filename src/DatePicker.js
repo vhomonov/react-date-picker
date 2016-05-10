@@ -51,11 +51,20 @@ export default class DatePicker extends Component {
   renderClock(){
 
     const props = this.p
-    const style = {
-      margin: 10
+    const clock = React.Children
+                  .toArray(props.children)
+                  .filter(child => child && child.props && child.props.isDatePickerClock)[0]
+
+    const clockProps = {
+      time: props.date,
+      showSecondsHand: true
     }
 
-    return <Clock style={style} time={props.date} showSecondsHand={false}/>
+    if (clock){
+      return React.cloneElement(clock, clockProps)
+    }
+
+    return <Clock {...clockProps} />
   }
 }
 

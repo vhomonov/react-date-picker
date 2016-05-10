@@ -361,5 +361,6 @@ Clock.defaultProps = {
 
   color: '',
   borderWidth: 0,
-  showSmallTicks: true
+  showSmallTicks: true,
+  isDatePickerClock: true
 }

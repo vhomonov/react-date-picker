@@ -85,8 +85,9 @@ var App = React.createClass({
         <br />
         <Flex>
           <DateField dateFormat="YYYY MM DD HH" expanded defaultValue="2016 04 02 23" xonChange={this.onChange}>
-            <input className="xxx" onChange={this.onTextChange}/>
-            <DatePicker />
+            <DatePicker>
+              <Clock/>
+            </DatePicker>
           </DateField>
         </Flex>
         <br />
