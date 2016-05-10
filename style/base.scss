@@ -5,8 +5,10 @@
 .react-date-picker,
 .react-date-picker__nav-bar,
 .react-date-picker__clock,
+.react-date-picker__date-picker,
 .react-date-picker__basic-month-view {
 
+  box-sizing: border-box;
   *,
   *:before,
   *:after {

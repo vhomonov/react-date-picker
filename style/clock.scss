@@ -1,6 +1,7 @@
 .react-date-picker__clock {
+  position: relative;
   display: inline-block;
-  border: 5px solid red;
+  border: 5px solid gray;
   border-radius: 50%;
   position: relative;
 }
@@ -17,6 +18,3 @@
   background: gray;
 }
 
-.react-date-picker__clock-hand {
-  background: red;
-}

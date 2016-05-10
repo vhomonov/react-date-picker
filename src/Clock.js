@@ -4,22 +4,20 @@ import Component from 'react-class'
 
 import moment from 'moment'
 import assign from 'object-assign'
+
+import { NotifyResize } from 'react-notify-resize'
+
 import join from './join'
 import toMoment from './toMoment'
 import normalize from 'react-style-normalizer'
 
 const MINUTES = Array.apply(null, new Array(60)).map((_, index) => index)
 
-const HALF_PI = Math.PI / 2
-const PI2 = 2 * Math.PI
-const minutePI = PI2 / 360
-
-const TICKS = MINUTES.map(minute => {
-  return {
-    minute,
-    deg: minute * minutePI -  HALF_PI
-  }
-})
+const toUpperFirst = (str) => {
+  return str?
+    str.charAt(0).toUpperCase() + str.substr(1):
+    ''
+}
 
 const transformStyle = normalize({transform: ''})
 
@@ -58,25 +56,65 @@ export default class Clock extends Component {
   constructor(props){
     super(props)
 
-    this.state = {
-      value: props.defaultValue
+    let time = 0
+
+    if (props.defaultSeconds){
+      time = props.defaultSeconds == true?
+              Date.now():
+              +props.defaultSeconds * 1000
     }
 
-    if (props.run){
-      this.state.time = this.getTime(props)
-      this.state.initialTime = this.state.time
+    if (props.defaultTime){
+      time = props.defaultTime == true?
+              Date.now():
+              +props.defaultTime
+    }
+
+    this.state = {
+      time
+    }
+
+    if (time){
+      this.state.defaultTime = this.state.time
     }
   }
 
+  getPropsTime(){
+    if (this.props.time){
+      return this.props.time
+    }
+
+    if (this.props.seconds){
+      return this.props.seconds * 1000
+    }
+
+    return this.state.defaultTime || 0
+  }
+
+  shouldRun(props){
+    return !!(this.props.run || this.props.defaultSeconds || this.props.defaultTime)
+  }
+
   componentDidMount(){
-    if (this.props.run){
+    if (this.shouldRun(this.props)){
       this.start()
+    }
+
+    if (this.props.size == 'auto'){
+      this.setState({
+        rendered: true
+      })
     }
   }
 
   componentWillReceiveProps(nextProps){
-    if (!this.props.run && nextProps.run){
+    const currentRun = this.shouldRun(this.props)
+    const nextRun = this.shouldRun(nextProps)
+
+    if (!currentRun && nextRun){
       this.start()
+    } else if (currentRun && !nextRun){
+      this.stop()
     }
   }
 
@@ -86,23 +124,12 @@ export default class Clock extends Component {
     this.run()
   }
 
-  getTime(props){
-    props = props || this.props
-
-    if (props.value){
-      return props.value * 1000
-    }
-
-    return props.time === true?
-              Date.now?
-                Date.now():
-                +new Date
-            :
-            props.time
+  stop(){
+    this.timeoutId && clearTimeout(this.timeoutId)
   }
 
   run(){
-    setTimeout(() => {
+    this.timeoutId = setTimeout(() => {
       this.update()
       this.run()
     }, this.props.updateInterval || 1000)
@@ -112,11 +139,8 @@ export default class Clock extends Component {
     const now = Date.now? Date.now(): +new Date
     const diff = now - this.startTime
 
-    const value = this.props.value?
-                  this.props.value * 1000:
-                  this.state.initialTime || this.props.time
+    const value = this.getPropsTime()
 
-    console.log(diff)
     this.setTime(value + diff)
   }
 
@@ -125,8 +149,8 @@ export default class Clock extends Component {
       time
     })
 
-    if (this.props.onChange){
-      this.props.onChange(time / 1000)
+    if (this.props.onSecondsChange){
+      this.props.onSecondsChange(time / 1000)
     }
 
     if (this.props.onTimeChange){
@@ -136,57 +160,79 @@ export default class Clock extends Component {
 
   render(){
 
-    const props = this.props
-    const { size } = props
+    const props = this.p = assign({}, this.props)
+    let size = props.size
 
-    const time = this.state.time || props.time
+    if (size == 'auto'){
+      this.ignoreRender = false
+      if (!this.state.rendered){
+        this.ignoreRender = true
+      }
 
-    let value
-
-    if (this.state.value || this.props.value){
-      value = this.state.value || this.props.value
-    } else if (time){
-      value = time / 1000
+      size = props.size = this.state.size
     }
+
+    const time = this.state.time || this.getPropsTime()
+
+    const mom = toMoment(time)
+    const value = toMoment(time)
 
     const width = size
     const height = size
 
     const className = join(props.className, 'react-date-picker__clock')
 
-    const seconds = value % 60
-    const minutes = value / 60 % 60// (value - seconds) % 3600
-    const hours = (value / 3600) % 24
+    const seconds = mom.seconds()
+    const minutes = mom.minutes() + seconds / 60
+    const hours = (mom.hours() + minutes / 60) * 5
 
-    console.log(value, 'value')
-    console.log(seconds, 'seconds')
-    console.log(minutes, 'minutes')
-    console.log(hours, 'hours')
-    console.log('------')
+    const defaultStyle = {}
 
-    return <div className={className} style={{width, height, borderWidth: props.borderWidth}}>
+    if (props.color){
+      defaultStyle.borderColor = props.color
+    }
+
+    const style = assign(defaultStyle, props.style, {width, height, borderWidth: props.borderWidth})
+
+    return <div className={className} style={style}>
       {this.renderSecondHand(seconds)}
       {this.renderMinuteHand(minutes)}
       {this.renderHourHand(hours)}
 
       {MINUTES.map(this.renderTick)}
+      {this.props.size == 'auto' && <NotifyResize notifyOnMount onResize={this.onResize} />}
     </div>
   }
 
+  onResize({width, height}){
+    if (width != height){
+      console.warn('Clock width != height. Please make sure it\'s a square.')
+    }
+
+    this.setState({
+      size: width
+    })
+  }
+
   renderSecondHand(value){
-    return this.props.showSeconds && this.renderHand('second', value)
+    return this.props.showSecondsHand && this.renderHand('second', value)
   }
 
   renderMinuteHand(value){
-    return this.props.showMinutes && this.renderHand('minute', value)
+    return this.props.showMinutesHand && this.renderHand('minute', value)
   }
 
   renderHourHand(value){
-    return this.props.showHours && this.renderHand('hour', value)
+    return this.props.showHoursHand && this.renderHand('hour', value)
   }
 
   renderHand(name, value){
-    const props = this.props
+
+    if (this.ignoreRender){
+      return null
+    }
+
+    const props = this.p
     const { size, borderWidth } = props
 
     const height = props[name + 'HandHeight'] || props.handHeight || ((size/2) - props[name + 'HandDiff'])
@@ -201,15 +247,33 @@ export default class Clock extends Component {
     style.width = width
     style.height = height
 
+    if (props.color){
+      style.background = props.color
+    }
+
     const className = join(
       'react-date-picker__clock-hand',
       `react-date-picker__clock-hand-${name}`
     )
 
+    const renderName = 'render' + toUpperFirst(name) + 'Hand'
+
+    if (props[renderName]){
+      return props[renderName]({
+        key: name,
+        className,
+        style
+      })
+    }
+
     return <div key={name} className={className} style={style} />
   }
 
   renderTick(tick){
+
+    if (this.ignoreRender){
+      return null
+    }
 
     const {
       size,
@@ -226,7 +290,7 @@ export default class Clock extends Component {
       tickOffset,
       smallTickOffset,
       bigTickOffset
-    } = this.props
+    } = this.p
 
     const small = !!(tick % 5)
     const sizeName = small? 'small': 'big'
@@ -258,30 +322,44 @@ export default class Clock extends Component {
     style.height = tHeight
     style.width = tWidth
 
+    if (this.props.color){
+      style.background = this.props.color
+    }
+
+    if (this.props.renderTick){
+      return this.props.renderTick({
+        tick,
+        key,
+        className,
+        style
+      })
+    }
+
     return <div key={tick} className={className} style={style}/>
   }
 }
 
 Clock.defaultProps = {
   size: 150,
-  time: true,
 
-  showSeconds: true,
-  showHours: true,
-  showMinutes: true,
+  showSecondsHand: true,
+  showHoursHand: true,
+  showMinutesHand: true,
 
-  run: true,
+  handWidth: 2,
 
-  hourHandDiff: 40,
-  minuteHandDiff: 30,
+  hourHandDiff: 50,
+  minuteHandDiff: 35,
   secondHandDiff: 20,
 
-  tickWidth: 2,
+  tickWidth: 1,
+  bigTickWidth: 2,
   tickOffset: 2,
 
   smallTickHeight: 6,
   bigTickHeight: 10,
 
-  borderWidth: 4,
+  color: '',
+  borderWidth: 0,
   showSmallTicks: true
 }

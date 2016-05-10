@@ -6,6 +6,7 @@
 require('./style/index.scss')
 
 import MonthView from './src/MonthView'
+import DatePicker from './src/DatePicker'
 import NavigationView from './src/NavigationView'
 import TransitionView from './src/TransitionView'
 import NavBar from './src/NavBar'
@@ -16,7 +17,6 @@ import { Flex, Item } from 'react-flex'
 
 var moment = require('moment');
 var React      = require('react')
-var DatePicker = require('./src/index')
 
 var render = require('react-dom').render
 
@@ -79,14 +79,14 @@ var App = React.createClass({
         return <div style={{margin: 10}}>
         <input />
         <br />
-        <Clock />
+        <Clock defaultTime size="auto" style={{minHeight: 200, minWidth: 200}}/>ss
+        <br />
+        <DatePicker hasTime date={Date.now()}/>
         <br />
         <Flex>
-          <DateField value={this.state.date} onChange={this.onChange}>
+          <DateField dateFormat="YYYY MM DD HH" expanded defaultValue="2016 04 02 23" xonChange={this.onChange}>
             <input className="xxx" onChange={this.onTextChange}/>
-
-              <MonthView />
-
+            <DatePicker />
           </DateField>
         </Flex>
         <br />
