@@ -91,6 +91,10 @@ export default class Clock extends Component {
     return this.state.defaultTime || 0
   }
 
+  isTime(){
+    return this.props.time || this.state.defaultTime || this.state.time
+  }
+
   shouldRun(props){
     return !!(this.props.run || this.props.defaultSeconds || this.props.defaultTime)
   }
@@ -184,6 +188,8 @@ export default class Clock extends Component {
 
     const seconds = mom.seconds()
     const minutes = mom.minutes() + seconds / 60
+
+    console.log('hours', mom.hours())
     const hours = (mom.hours() + minutes / 60) * 5
 
     const defaultStyle = {}

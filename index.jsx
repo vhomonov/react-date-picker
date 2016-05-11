@@ -6,7 +6,10 @@
 require('./style/index.scss')
 
 import MonthView from './src/MonthView'
+
 import DatePicker from './src/DatePicker'
+import TimePicker from './src/TimePicker'
+
 import NavigationView from './src/NavigationView'
 import TransitionView from './src/TransitionView'
 import NavBar from './src/NavBar'
@@ -79,7 +82,7 @@ var App = React.createClass({
         return <div style={{margin: 10}}>
         <input />
         <br />
-        <Clock defaultTime size="auto" style={{minHeight: 200, minWidth: 200}}/>ss
+        <TimePicker defaultTime style={{minHeight: 200, minWidth: 200}}/>ss
         <br />
         <DatePicker hasTime date={Date.now()}/>
         <br />
