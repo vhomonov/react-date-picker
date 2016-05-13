@@ -9,6 +9,7 @@ import MonthView from './src/MonthView'
 
 import DatePicker from './src/DatePicker'
 import TimePicker from './src/TimePicker'
+import TimeInput from './src/TimeInput'
 
 import NavigationView from './src/NavigationView'
 import TransitionView from './src/TransitionView'
@@ -59,8 +60,14 @@ var App = React.createClass({
     getInitialState(){
       return {
         date: '2016-10-03',
-        text: 'atext'
+        text: 'atext',
+        time: '03:45:21'
       }
+    },
+
+    onTimeChange(time){
+      // console.log('time', time)
+      this.setState({ time })
     },
 
     onChange(date){
@@ -80,7 +87,7 @@ var App = React.createClass({
         date = this.props.date || date
 
         return <div style={{margin: 10}}>
-        <input />
+        <TimeInput autoFocus onChange={this.onTimeChange} value={this.state.time}/>
         <br />
         <TimePicker defaultTime style={{minHeight: 200, minWidth: 200}}/>ss
         <br />

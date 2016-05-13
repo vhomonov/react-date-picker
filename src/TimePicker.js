@@ -50,7 +50,7 @@ export default class TimePicker extends Component {
   }
 
   renderInput(){
-    return <input onChange={this.onTimeChange}/>
+    return <input defaultValue="00:00" onChange={this.onTimeChange}/>
   }
 
   onTimeChange(value){

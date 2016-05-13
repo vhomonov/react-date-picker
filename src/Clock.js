@@ -189,7 +189,7 @@ export default class Clock extends Component {
     const seconds = mom.seconds()
     const minutes = mom.minutes() + seconds / 60
 
-    console.log('hours', mom.hours())
+    // console.log('hours', mom.hours())
     const hours = (mom.hours() + minutes / 60) * 5
 
     const defaultStyle = {}
