@@ -1,5 +1,8 @@
 import MonthView from './MonthView'
 
+import TimePicker from './TimePicker'
+import TimeInput from './TimeInput'
+
 import TransitionView from './TransitionView'
 import NavigationView from './NavigationView'
 import MultiMonthView from './MultiMonthView'
@@ -14,5 +17,7 @@ export {
   TransitionView,
   MultiMonthView,
   NavBar,
-  DateField
+  DateField,
+  TimePicker,
+  TimeInput
 }

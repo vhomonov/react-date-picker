@@ -1,4 +1,12 @@
 .react-date-field {
+
+  box-sizing: border-box;
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+
   position: relative;
   overflow: visible;
   vertical-align: middle;

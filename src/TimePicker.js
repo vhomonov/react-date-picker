@@ -77,7 +77,6 @@ export default class TimePicker extends Component {
     if (this.props.onChange){
       this.props.onChange(value)
     }
-
   }
 
   renderClock(){
@@ -101,9 +100,7 @@ export default class TimePicker extends Component {
 
 TimePicker.defaultProps = {
   format: 'HH:mm:ss a',
-
   theme: 'default',
-
   isTimePicker: true
 }
 
