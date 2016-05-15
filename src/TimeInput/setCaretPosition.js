@@ -7,8 +7,6 @@ export default function setCaretPosition(elem, caretPos) {
     end = caretPos.end || start
   }
 
-  console.log('SET', start, end)
-
   if (elem != null) {
     if(elem.createTextRange) {
       var range = elem.createTextRange()

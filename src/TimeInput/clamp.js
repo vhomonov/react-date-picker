@@ -6,8 +6,8 @@ const clamp = (value, { min, max, circular = true }) => {
       value
 }
 
-export const clampHour = (value, { max, circular }) => {
-  return clamp(value, { min: 0, max: max || 23, circular })
+export const clampHour = (value, { max, min, circular }) => {
+  return clamp(value, { min: min || 0, max: max || 23, circular })
 }
 
 export const clampMinute = (value, { circular }) => {
@@ -27,8 +27,8 @@ const MAP = {
   hours: clampHour
 }
 
-export const clampNamed = (name, value, { circular }) => {
-  return MAP[name](value, { circular })
+export const clampNamed = (name, value, { circular, max, min }) => {
+  return MAP[name](value, { circular, max, min })
 }
 
 export default clamp

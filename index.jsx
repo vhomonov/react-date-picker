@@ -61,7 +61,7 @@ var App = React.createClass({
       return {
         date: '2016-10-03',
         text: 'atext',
-        time: '03:45:21'
+        time: '03:45:21 pm'
       }
     },
 
@@ -87,9 +87,9 @@ var App = React.createClass({
         date = this.props.date || date
 
         return <div style={{margin: 10}}>
-        <TimeInput autoFocus onChange={this.onTimeChange} value={this.state.time}/>
+        <TimeInput format="hh:mm:ss A" autoFocus xonChange={this.onTimeChange} defaultValue={this.state.time}/>
         <br />
-        <TimePicker defaultTime style={{minHeight: 200, minWidth: 200}}/>ss
+        <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />
         <DatePicker hasTime date={Date.now()}/>
         <br />

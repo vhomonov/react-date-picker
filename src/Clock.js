@@ -56,12 +56,15 @@ export default class Clock extends Component {
   constructor(props){
     super(props)
 
-    let time = 0
+    let time
+    let seconds
+
 
     if (props.defaultSeconds){
-      time = props.defaultSeconds == true?
-              Date.now():
-              +props.defaultSeconds * 1000
+      seconds = props.defaultSeconds == true?
+                  Date.now() / 1000:
+                 +props.defaultSeconds
+
     }
 
     if (props.defaultTime){
@@ -70,33 +73,31 @@ export default class Clock extends Component {
               +props.defaultTime
     }
 
-    this.state = {
-      time
+    if (time === undefined){
+      seconds = 0
     }
 
-    if (time){
-      this.state.defaultTime = this.state.time
-    }
-  }
+    this.state = {}
 
-  getPropsTime(){
-    if (this.props.time){
-      return this.props.time
+    if (seconds !== undefined){
+      this.state.seconds = seconds
+      this.state.defaultSeconds = seconds
     }
 
-    if (this.props.seconds){
-      return this.props.seconds * 1000
+    if (time !== undefined){
+      this.state.time = time
+      this.state.defaultTime = time
     }
-
-    return this.state.defaultTime || 0
-  }
-
-  isTime(){
-    return this.props.time || this.state.defaultTime || this.state.time
   }
 
   shouldRun(props){
-    return !!(this.props.run || this.props.defaultSeconds || this.props.defaultTime)
+    props = props || this.props
+
+    if (props.run === false){
+      return false
+    }
+
+    return !!(props.defaultSeconds || props.defaultTime)
   }
 
   componentDidMount(){
@@ -143,9 +144,25 @@ export default class Clock extends Component {
     const now = Date.now? Date.now(): +new Date
     const diff = now - this.startTime
 
-    const value = this.getPropsTime()
+    const seconds = this.getPropsSeconds()
 
-    this.setTime(value + diff)
+    if (seconds !== undefined){
+      return this.setSeconds(seconds + diff / 1000)
+    }
+
+    const time = this.getPropsTime()
+
+    this.setTime(time + diff)
+  }
+
+  setSeconds(seconds){
+    this.setState({
+      seconds
+    })
+
+    if (this.props.onSecondsChange){
+      this.props.onSecondsChange(seconds)
+    }
   }
 
   setTime(time){
@@ -153,13 +170,25 @@ export default class Clock extends Component {
       time
     })
 
-    if (this.props.onSecondsChange){
-      this.props.onSecondsChange(time / 1000)
-    }
-
     if (this.props.onTimeChange){
       this.props.onTimeChange(time)
     }
+  }
+
+  getPropsTime(){
+    return this.props.time || this.state.defaultTime || 0
+  }
+
+  getPropsSeconds(){
+    return this.props.seconds || this.state.defaultSeconds
+  }
+
+  getSeconds(){
+    return this.state.seconds || this.getPropsSeconds()
+  }
+
+  getTime(){
+    return this.state.time || this.getPropsTime()
   }
 
   render(){
@@ -176,21 +205,31 @@ export default class Clock extends Component {
       size = props.size = this.state.size
     }
 
-    const time = this.state.time || this.getPropsTime()
-
-    const mom = toMoment(time)
-    const value = toMoment(time)
+    let valueSeconds = this.getSeconds()
+    let valueTime = this.getTime()
 
     const width = size
     const height = size
 
     const className = join(props.className, 'react-date-picker__clock')
 
-    const seconds = mom.seconds()
-    const minutes = mom.minutes() + seconds / 60
+    let seconds
+    let minutes
+    let hours
 
-    // console.log('hours', mom.hours())
-    const hours = (mom.hours() + minutes / 60) * 5
+    if (valueSeconds != undefined){
+      seconds = Math.floor(valueSeconds % 60)
+      minutes = valueSeconds / 60 % 60
+      hours = (valueSeconds / 3600) % 24
+    } else {
+      const mom = toMoment(valueTime)
+
+      seconds = mom.seconds()
+      minutes = mom.minutes() + seconds / 60
+      hours = (mom.hours() + minutes / 60)
+    }
+
+    hours *= 5
 
     const defaultStyle = {}
 
@@ -354,9 +393,9 @@ Clock.defaultProps = {
 
   handWidth: 2,
 
-  hourHandDiff: 50,
-  minuteHandDiff: 35,
-  secondHandDiff: 20,
+  hourHandDiff: 35,
+  minuteHandDiff: 25,
+  secondHandDiff: 10,
 
   tickWidth: 1,
   bigTickWidth: 2,

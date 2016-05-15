@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
 import Component from 'react-class'
 
+import TimeInput from './TimeInput'
+
 import moment from 'moment'
 import assign from 'object-assign'
 
@@ -18,19 +20,20 @@ export default class TimePicker extends Component {
 
     this.state = {}
   }
-  prepareDate(props){
-    return toMoment(props.date, props)
-  }
+
+  // prepareDate(props){
+  //   return toMoment(props.date, props)
+  // }
 
   render(){
 
     const props = this.p = assign({}, this.props)
     props.children = React.Children.toArray(props.children)
 
-    const dateFormat = props.dateFormat.toLowerCase()
+    const timeFormat = props.timeFormat.toLowerCase()
 
-    props.date = this.prepareDate(props)
-    props.hasTime = props.hasTime || dateFormat.indexOf('k') != -1 || dateFormat.indexOf('h') != -1
+    // props.date = this.prepareDate(props)
+    props.hasTime = props.hasTime || timeFormat.indexOf('k') != -1 || timeFormat.indexOf('h') != -1
 
     const className = join(
       props.className,
@@ -50,15 +53,31 @@ export default class TimePicker extends Component {
   }
 
   renderInput(){
-    return <input defaultValue="00:00" onChange={this.onTimeChange}/>
+    return <TimeInput
+      className="react-date-picker__time-picker-input"
+      format={this.props.timeFormat || this.props.format}
+      defaultValue={this.props.value || this.props.defaultValue}
+      onChange={this.onTimeChange}
+    />
   }
 
   onTimeChange(value){
     const time = value.split(':')
 
+    let seconds = time[0] * 3600 + parseInt(time[1], 10) * 60
+
+    if (time[2]){
+      seconds += parseInt(time[2], 10)
+    }
+
     this.setState({
-      minutes: time[0] * 60 + time[1]
+      seconds
     })
+
+    if (this.props.onChange){
+      this.props.onChange(value)
+    }
+
   }
 
   renderClock(){
@@ -68,7 +87,7 @@ export default class TimePicker extends Component {
                   .filter(child => child && child.props && child.props.isTimePickerClock)[0]
 
     const clockProps = {
-      time: this.state.minutes || props.date,
+      seconds: this.state.seconds,
       showSecondsHand: true
     }
 
@@ -81,7 +100,7 @@ export default class TimePicker extends Component {
 }
 
 TimePicker.defaultProps = {
-  dateFormat: 'YYYY-MM-DD',
+  format: 'HH:mm:ss a',
 
   theme: 'default',
 

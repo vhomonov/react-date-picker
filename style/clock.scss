@@ -1,5 +1,11 @@
 .react-date-picker__clock {
-  position: relative;
+  box-sizing: border-box;
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+
   display: inline-block;
   border: 5px solid gray;
   border-radius: 50%;

@@ -34,6 +34,13 @@
     .react-date-picker__nav-bar--theme-default .react-date-picker__nav-bar-arrow:not(.react-date-picker__nav-bar-arrow--disabled):active {
       top: 1px; }
 
+.react-date-picker__date-picker--theme-default {
+  border: 1px solid gray; }
+  .react-date-picker__date-picker--theme-default .react-date-picker__month-view--theme-default {
+    border: none; }
+  .react-date-picker__date-picker--theme-default .react-date-picker__clock {
+    margin: 10px; }
+
 .react-date-picker__transition-month-view--theme-default {
   border: 1px solid gray; }
   .react-date-picker__transition-month-view--theme-default .react-date-picker__month-view--theme-default {
