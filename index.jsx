@@ -5,6 +5,7 @@
 //
 require('./style/index.scss')
 
+import DateFormatInput from './src/DateFormatInput'
 import MonthView from './src/MonthView'
 
 import DatePicker from './src/DatePicker'
@@ -87,19 +88,17 @@ var App = React.createClass({
         date = this.props.date || date
 
         return <div style={{margin: 10}}>
+        <DateFormatInput dateFormat="HH:YYYY"/>
+        <br />
         <TimeInput format="hh:mm:ss A" autoFocus xonChange={this.onTimeChange} defaultValue={this.state.time}/>
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />
-        <DatePicker hasTime date={Date.now()}/>
-        <br />
-        <Flex>
-          <DateField dateFormat="YYYY MM DD HH" expanded defaultValue="2016 04 02 23" xonChange={this.onChange}>
-            <DatePicker>
-              <Clock/>
-            </DatePicker>
-          </DateField>
-        </Flex>
+        <DateField dateFormat="YYYY-MM-DD HH:mm" defaultValue="2016-04-02 23:11" xonChange={this.onChange}>
+          <DatePicker>
+            <Clock/>
+          </DatePicker>
+        </DateField>
         <br />
         <input defaultValue="dadas"/>
 

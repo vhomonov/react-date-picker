@@ -4,7 +4,9 @@ import Component from 'react-class'
 import assign from 'object-assign'
 import { Flex, Item } from 'react-flex'
 import Input from 'react-field'
+
 import InlineBlock from 'react-inline-block'
+import { getNewValue, getSelectionStart, getSelectionEnd, setCaretPosition, toTimeValue } from './TimeInput'
 
 import moment from 'moment'
 import join from './join'
@@ -46,8 +48,38 @@ export default class DateField extends Component {
   constructor(props){
     super(props)
 
+    const dateFormat = props.dateFormat
+    let hourIndex = dateFormat.indexOf('HH')
+    if (hourIndex == -1){
+      hourIndex = dateFormat.indexOf('hh')
+    }
+
+    const timeFormat = hourIndex != -1? dateFormat.substring(hourIndex): null
+
+    let meridiem
+    let hours24 = true
+    let timeSeparator = ':'
+
+    if (timeFormat){
+      meridiem = timeFormat.indexOf('a') != -1 || timeFormat.indexOf('A') != -1
+      if (timeFormat.indexOf('hh') == 0){
+        hours24 = false
+      }
+
+      timeSeparator = props.timeSeparator ||
+                          timeFormat && timeFormat.length > 2?
+                            timeFormat.charAt(2)
+                            :
+                            ':'
+    }
+
     this.state = {
       value: props.defaultValue === undefined? '': props.defaultValue,
+
+      timeFormat,
+      timeSeparator,
+      meridiem,
+      hours24,
 
       expanded: props.defaultExpanded || false,
       focused: false
@@ -338,13 +370,15 @@ export default class DateField extends Component {
 
         className: join(pickerProps.className, 'react-date-field__picker'),
 
-        defaultDate: props.valid? props.date: null,
+        defaultDate: date || null,
 
         viewDate: props.viewDate,
         activeDate: props.activeDate,
 
         onViewDateChange: this.onViewDateChange,
         onActiveDateChange: this.onActiveDateChange,
+
+        // onKeyDown: this.onViewKeyDown,
 
         tabIndex: -1,
 
@@ -400,6 +434,7 @@ export default class DateField extends Component {
   }
 
   onFieldKeyDown(event){
+    const props = this.p
     const key = event.key
 
     if (key == 'Enter'){
@@ -409,8 +444,118 @@ export default class DateField extends Component {
       this.setExpanded(false)
     }
 
+    const { update } = this.handleTimeKeyDown(event)
+
+    if (update){
+      return false
+    }
+
+    // console.log("'field key diwn'", result.update);
+
+    this.onViewKeyDown(event)
+    // if (this.picker && (key == 'Enter' || (key in ARROW_KEYS))){
+    //   this.picker.onViewKeyDown(event)
+    // }
+  }
+
+  onViewKeyDown(event){
+    const key = event.key
+
     if (this.picker && (key == 'Enter' || (key in ARROW_KEYS))){
-      return this.picker.onViewKeyDown(event)
+      this.picker.onViewKeyDown(event)
+    }
+    // console.log('view key down!!');
+  }
+
+  handleTimeKeyDown(event){
+    const props = this.p
+
+    let update
+    let caretPos
+    let newValue
+
+    if (this.state.timeFormat){
+
+      const text = props.text
+      const startIndex = text.length - this.state.timeFormat.length
+
+      const value = text.substring(startIndex)
+
+      if (value.length < this.state.timeFormat.length){
+        return {}
+      }
+
+      const initialRange = this.getSelectedRange()
+      const range = assign({}, initialRange)
+      range.start -= startIndex
+      range.end -= startIndex
+
+      const result = getNewValue({
+        range,
+        event,
+        oldValue: value,
+        meridiem: this.state.meridiem,
+        hours24: this.state.hours24,
+        separator: this.state.timeSeparator
+      })
+
+      update = result.update
+      newValue = result.value
+      caretPos = result.caretPos
+
+      const updateCaretPos = () => {
+        let caretPos = result.caretPos
+
+        if (caretPos != undefined){
+          if (typeof caretPos == 'number'){
+            caretPos += startIndex
+          } else {
+            caretPos.start += startIndex
+            caretPos.end += startIndex
+          }
+
+          this.setCaretPosition(caretPos)
+        }
+      }
+
+      if (update){
+        event.preventDefault()
+      }
+
+      console.log("result", result);
+
+      if (result.update){
+        let prevText = text.substring(0, startIndex)
+
+        if (prevText[prevText.length - 1] != ' '){
+          prevText += ' '
+        }
+
+        const newValue = prevText + result.value
+
+        console.log("newValue", newValue);
+        this.onChange(newValue, updateCaretPos)
+      } else {
+        updateCaretPos()
+        result.update = initialRange.start >= startIndex
+      }
+
+      return result
+    }
+
+    return {}
+  }
+
+  getInput(){
+    return findDOMNode(this.field)
+  }
+
+  getSelectedRange(){
+    const dom = this.getInput()
+
+    return {
+      start: getSelectionStart(dom),
+      end  : getSelectionEnd(dom)
     }
   }
 
@@ -542,11 +687,39 @@ export default class DateField extends Component {
       this.setExpanded(false)
     }
 
+    if (this.state.timeFormat){
+      const text = props.text
+      const startIndex = text.length - this.state.timeFormat.length
+      const timeText = text.substring(startIndex)
+
+      console.log("timeText", timeText);
+
+      const time = toTimeValue({
+        value: timeText,
+        separator: this.state.timeSeparator,
+        meridiem: this.state.meridiem
+      })
+
+      Object.keys(time).forEach(key => {
+        dateMoment.add(time[key], key)
+      })
+    }
+
+    const caretPos = this.getSelectedRange()
+    const updateCaretPos = () => {
+      this.setCaretPosition(caretPos)
+    }
+
     this.onTextChange(this.format(dateMoment))
-    this.onChange(dateMoment)
+    this.onChange(dateMoment, updateCaretPos)
   }
 
-  onChange(dateMoment){
+  setCaretPosition(pos){
+    const dom = this.getInput()
+    dom && setCaretPosition(dom, pos)
+  }
+
+  onChange(dateMoment, callback){
 
     if (dateMoment != null && !moment.isMoment(dateMoment)){
       dateMoment = this.toMoment(dateMoment)
@@ -560,9 +733,8 @@ export default class DateField extends Component {
     }
 
     this.setState({
-      activeDate: dateMoment,
-      // viewDate: dateMoment
-    })
+      activeDate: dateMoment
+    }, callback)
 
     if (!this.picker || !this.picker.isInView || !this.picker.isInView(dateMoment)){
       this.setState({

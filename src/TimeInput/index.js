@@ -17,6 +17,16 @@ import getSelectionStart from './getSelectionStart'
 import getSelectionEnd from './getSelectionEnd'
 import setCaretPosition from './setCaretPosition'
 import getNewValue from './getNewValue'
+import toTimeValue from './toTimeValue'
+
+export {
+  getSelectionStart,
+  getSelectionEnd,
+
+  getNewValue,
+  setCaretPosition,
+  toTimeValue
+}
 
 export default class TimeInput extends Component {
 
@@ -57,6 +67,7 @@ export default class TimeInput extends Component {
     }
 
     this.state = {
+      valueRange: props.valueRange || 0,
       separator,
       hours24,
       meridiem,
@@ -89,6 +100,8 @@ export default class TimeInput extends Component {
 
     const value = this.p.value
 
+    const valueRange = this.state.valueRange
+
     if (this.props.onKeyDown){
       this.props.onKeyDown(event)
     }
@@ -97,7 +110,6 @@ export default class TimeInput extends Component {
     const separator = this.props.separator || this.state.separator || ':'
 
     const { value: newValue, update, caretPos } = getNewValue({
-
       range,
       event,
 

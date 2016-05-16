@@ -602,7 +602,9 @@ export default class MonthView extends Component {
     const key = event.key
 
     if (this.props.onKeyDown){
-      this.props.onKeyDown(event)
+      if (this.props.onKeyDown(event) === false){
+        return
+      }
     }
 
     if (key == 'Enter' && this.p.activeDate){

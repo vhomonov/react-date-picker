@@ -1,0 +1,12 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "semi": 0,
+    "comma-dangle": 0,
+    "react/wrap-multilines": 0,
+    "react/sort-comp": 0,
+    "eqeqeq": 0,
+    "no-console": 0,
+    "react/prop-types": [0, { "ignore": [], "customValidators": [] }]
+  }
+}

@@ -1,3 +1,4 @@
+import assign from 'object-assign'
 import toTimeValue from './toTimeValue'
 import leftPad from './leftPad'
 import { clampHour, clampMinute, clampSecond, clampNamed } from './clamp'
@@ -142,7 +143,7 @@ const getActiveTimePartIndex = ({ value, timeValue, separator, range, hours24, m
 }
 
 const getTimePartAt = (index, { hours24 }) => {
-  return TIME_PARTS[hours24? 24:12][index]
+  return assign({}, TIME_PARTS[hours24? 24:12][index])
 }
 
 const getActiveTimePart = ({ value, timeValue, separator, range, hours24, meridiem }) => {
