@@ -184,6 +184,8 @@ const FORMATS = {
     default: '01',
     handleDelete,
     handleBackspace,
+    handlePageUp: handlePageLeftPad,
+    handlePageDown: handlePageLeftPad,
     handleUnidentified: handleUnidentifiedLeftPad,
     handleArrow: handleArrowLeftPad
   },
@@ -193,6 +195,8 @@ const FORMATS = {
     min: 1,
     max: 31,
     default: '01',
+    handlePageUp: handlePageLeftPad,
+    handlePageDown: handlePageLeftPad,
     handleDelete,
     handleBackspace,
     handleUnidentified: handleUnidentifiedLeftPad,
