@@ -1,7 +1,7 @@
 import assign from 'object-assign'
 import toTimeValue from './toTimeValue'
-import leftPad from './leftPad'
-import { clampHour, clampMinute, clampSecond, clampNamed } from './clamp'
+import leftPad from '../utils/leftPad'
+import { clampHour, clampMinute, clampSecond, clampNamed } from '../utils/clamp'
 
 const removeAt = ({ value, index, len = 1 }) => {
   return value.substring(0, index) + value.substring(index + len)

@@ -1,4 +1,5 @@
-import leftPad from './leftPad'
+import leftPad from '../utils/leftPad'
+
 export default ({ value, separator = ':', meridiem }) => {
   const parts = value.split(separator)
 

@@ -11,4 +11,6 @@ export default (str) => {
       '0' + str:
       str + ''
   }
+
+  return str
 }

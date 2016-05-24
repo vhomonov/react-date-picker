@@ -6,27 +6,39 @@ import assign from 'object-assign'
 
 import { getSelectionStart, getSelectionEnd, setCaretPosition } from '../TimeInput'
 
+import toMoment from '../toMoment';
+import toUpperFirst from './toUpperFirst';
 import parseFormat from './parseFormat'
 
+const BACKWARDS = {
+  Backspace: 1,
+  ArrowUp: 1,
+  ArrowDown: 1,
+  PageUp: 1,
+  PageDown: 1
+}
+
 export default class DateFormatInput extends Component {
+
+  toMoment(value, dateFormat) {
+    const props = this.props
+
+    return toMoment(value, {
+      locale: props.locale,
+      dateFormat: dateFormat || props.dateFormat
+    })
+  }
 
   constructor(props) {
     super(props)
 
     const { positions, matches } = parseFormat(props.dateFormat)
-
-    const defaultValue = matches.map(match => {
-      if (typeof match == 'string'){
-        return match
-      }
-
-      return match.default
-    }).join('')
+    const defaultValue = props.defaultValue || Date.now()
 
     this.state = {
       positions,
       matches,
-      value: props.defaultValue || defaultValue
+      value: this.toMoment(defaultValue).format(props.dateFormat) // || defaultValue
     }
   }
 
@@ -36,14 +48,19 @@ export default class DateFormatInput extends Component {
     props.value = this.state.value
 
     return <input
-      {...props}
-      value={props.value}
+
+      xvalue={null}
+      value={this.state.value}
       onKeyDown={this.onKeyDown}
       onChange={this.onChange}
     />
   }
 
   onChange(event) {
+    // this.setState({
+    //   value: this.state.value
+    // })
+    event.preventDefault()
     event.stopPropagation()
   }
 
@@ -56,11 +73,87 @@ export default class DateFormatInput extends Component {
     const value = props.value
 
     const { positions, matches } = this.state
+    const valueStr = value + ''
 
+    let currentPosition = positions[range.start]
 
-    console.log("range", range);
-    console.log("positions", positions);
-    console.log("matches", matches);
+    if (typeof currentPosition == 'string'){
+      currentPosition = positions[range.start + (key in BACKWARDS? -1: 1)]
+    }
+
+    if (!currentPosition){
+      currentPosition = positions[range.start - 1]
+    }
+
+    let keyName = key
+
+    if (key == 'ArrowUp' || key == 'ArrowDown') {
+      keyName = 'Arrow'
+    }
+
+    const handlerName = 'handle' + keyName
+    let preventDefault
+
+    if (currentPosition && currentPosition[handlerName]){
+      const returnValue = currentPosition[handlerName](currentPosition, {
+        range,
+        selectedValue,
+        value,
+        positions,
+        currentValue: valueStr.substring(currentPosition.start, currentPosition.end + 1),
+        matches,
+        event,
+        key,
+        input: this.getInput(),
+        setCaretPosition: (...args) => this.setCaretPosition(...args)
+      })
+
+      if (returnValue && returnValue.value !== undefined){
+
+        const newValue = valueStr.substring(0, currentPosition.start) +
+                          returnValue.value +
+                          valueStr.substring(currentPosition.end + 1)
+
+        const updateCaretPos = () => {
+          let caretPos = returnValue.caretPos || range
+
+          if (caretPos === true){
+            caretPos = { start: currentPosition.start, end: currentPosition.end + 1 }
+          }
+
+          this.setCaretPosition(caretPos)
+        }
+
+        this.setValue(newValue, updateCaretPos)
+
+        preventDefault = true
+      }
+    }
+
+    if (preventDefault || key == 'Backspace' || key == 'Delete'){//} || key == 'Unidentified'){
+
+      if (!preventDefault){
+        this.setCaretPosition({
+          start: range.start + (key == 'Backspace'? -1: 1)
+        })
+      }
+      console.log("'preventDefault'", preventDefault);
+      event.preventDefault()
+    } else if (key == 'Unidentified'){
+    //   console.log("'value'", this.state.value);
+      // event.preventDefault()
+    //   this.setValue(
+    //     this.state.value,
+    //     () => this.setCaretPosition(range)
+    //   )
+      // console.log("event", event);
+      // this.setCaretPosition(range)
+      // // event.preventDefault()
+      event.stopPropagation()
+      // // const char = String.fromCharCode(event.which)
+      //
+      // console.log("char", char, char.length);
+    }
   }
 
   getInput() {

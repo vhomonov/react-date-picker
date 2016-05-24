@@ -1,38 +1,5 @@
 import assign from 'object-assign'
-
-const FORMATS = {
-
-  YYYY: {
-    min: 1900,
-    max: 2200,
-    default: '2000'
-  },
-
-  YY: {
-    default: '00'
-  },
-
-  M: { min: 1, max: 12, default: '1', maxLen: 2 },
-  MM: { min: 1, max: 12, default: '01' },
-
-  D: { min: 1, max: 31, default: '1', maxLen: 2 },
-  DD: { min: 1, max: 31, default: '01' },
-
-  H: { min: 0, max: 23, default: '0', maxLen: 2 },
-  HH: { min: 0, max: 23, default: '00' },
-
-  h: { min: 1, max: 12, default: '1', maxLen: 2 },
-  hh: { min: 1, max: 12, default: '01'},
-
-  a: { default: 'am' },
-  A: { default: 'AM'},
-
-  m: { min: 0, max: 59, default: '0', maxLen: 2 },
-  mm: { min: 0, max: 59, default: '00' },
-
-  s: { min: 0, max: 59, default: '0' },
-  ss: { min: 0, max: 59, default: '00' }
-}
+import FORMATS from './formats'
 
 const SUGGESTIONS = {
   Y: ['YYYY', 'YY'],
@@ -74,15 +41,23 @@ export default (format) => {
       }
 
       if (!suggestionMatch){
-        //we found a match, with no other suggestion
-        matchObject = assign({}, FORMATS[char], {format: char})
-        positions[index] = matchObject
-        matches.push(matchObject)
+        if (!FORMATS[char]){
+            console.warn(`Format ${char} is not supported yet! ${suggestions? "Use one of [" + suggestions.join(',') + "]":""}`)
+            positions[index] = char
+            matches.push(char)
+        } else {
+          //we found a match, with no other suggestion
+          matchObject = assign({}, FORMATS[char], {format: char, start: index, end: index})
+          positions[index] = matchObject
+          matches.push(matchObject)
+        }
       } else {
-        matchObject = assign({}, FORMATS[suggestionMatch], { format: suggestionMatch })
+        matchObject = assign({}, FORMATS[suggestionMatch], { format: suggestionMatch, start: index })
         matches.push(matchObject)
 
         let endIndex = index + suggestionMatch.length
+
+        matchObject.end = endIndex - 1
         while (index < endIndex){
           positions[index] = matchObject
           index++
