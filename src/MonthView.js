@@ -25,8 +25,8 @@ const RENDER_DAY = (props) => {
 
 const prepareViewDate = function(props, state) {
   let viewDate = props.viewDate === undefined?
-          state.viewDate:
-          props.viewDate
+        state.viewDate:
+        props.viewDate
 
   return viewDate
 }
@@ -254,7 +254,6 @@ export default class MonthView extends Component {
 
       thisMonth && this.bem('day--this-month')
     )
-
   }
 
   prepareMinMaxProps(timestamp, props){
@@ -392,11 +391,14 @@ export default class MonthView extends Component {
   }
 
   focus(){
-    findDOMNode(this).focus()
+    const domNode = findDOMNode(this)
+
+    if (domNode){
+        domNode.focus()
+    }
   }
 
-  onDayTextMouseEnter({ dateMoment, timestamp }){
-
+  onDayTextMouseEnter({ dateMoment, timestamp }) {
     if (!this.state.focused){
       this.focus()
     }
@@ -405,7 +407,6 @@ export default class MonthView extends Component {
   }
 
   renderDay(renderProps) {
-
     const props = this.p
 
     const { dateMoment, timestamp } = renderProps

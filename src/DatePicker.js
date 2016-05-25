@@ -1,31 +1,22 @@
-import React, { PropTypes } from 'react'
-import { findDOMNode } from 'react-dom'
+import React from 'react'
 import Component from 'react-class'
 
-import moment from 'moment'
 import assign from 'object-assign'
 
 import MonthView from './MonthView'
-import clampRange from './clampRange'
 import toMoment from './toMoment'
 import join from './join'
-import isInRange from './utils/isInRange'
-
-import NavBar from './NavBar'
-import bemFactory from './bemFactory'
-
 import Clock from './Clock'
 
-import {Flex, Item} from 'react-flex'
+import { Flex } from 'react-flex'
 
 export default class DatePicker extends Component {
 
-  prepareDate(props){
+  prepareDate(props) {
     return toMoment(props.date, props)
   }
 
-  render(){
-
+  render() {
     const props = this.p = assign({}, this.props)
     const dateFormat = props.dateFormat.toLowerCase()
 
@@ -39,17 +30,16 @@ export default class DatePicker extends Component {
     )
 
     return <Flex row wrap={false} className={className}>
-      <MonthView {...this.props} ref={view => this.view = view }/>
+      <MonthView {...this.props} ref={view => { this.view = view }} />
       {props.hasTime && this.renderClock()}
     </Flex>
   }
 
-  onViewKeyDown(...args){
+  onViewKeyDown(...args) {
     this.view.onViewKeyDown(...args)
   }
 
-  renderClock(){
-
+  renderClock() {
     const props = this.p
     const clock = React.Children
                   .toArray(props.children)
@@ -57,10 +47,11 @@ export default class DatePicker extends Component {
 
     const clockProps = {
       time: props.date,
-      showSecondsHand: true
+      showMinutesHand: props.dateFormat.indexOf('mm') != -1,
+      showSecondsHand: props.dateFormat.indexOf('ss') != -1
     }
 
-    if (clock){
+    if (clock) {
       return React.cloneElement(clock, clockProps)
     }
 

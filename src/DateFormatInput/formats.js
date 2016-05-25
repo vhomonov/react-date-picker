@@ -71,10 +71,11 @@ const handleUnidentified = (format, { event, currentValue, range }) => {
   const caretPos = { start: range.start + 1 }
 
   if (newChar * 1 != newChar) {
-    // console.log("'not number'");
+    console.log("'al'");
     return {
+      preventDefault: false,
       value: currentValue,
-      caretPos
+      // caretPos
     }
   }
 
@@ -111,11 +112,12 @@ const handleUnidentified = (format, { event, currentValue, range }) => {
 }
 
 const handleUnidentifiedLeftPad = (format, config) => {
-  const { value, caretPos } = handleUnidentified(format, config)
+  const { value, caretPos, preventDefault } = handleUnidentified(format, config)
 
   return {
     value: leftPad(value),
-    caretPos
+    caretPos,
+    preventDefault
   }
 }
 
@@ -239,6 +241,7 @@ const FORMATS = {
   //   handlePageDown: handlePageLeftPad
   // },
   HH: {
+    time: true,
     min: 0, max: 23, default: '00',
     handleDelete,
     handleBackspace,
@@ -254,6 +257,7 @@ const FORMATS = {
   //   handlePageDown: handlePageLeftPad
   // },
   hh: { min: 1, max: 12, default: '01',
+    time: true,
     handleDelete,
     handleBackspace,
     handleUnidentified: handleUnidentifiedLeftPad,
@@ -263,6 +267,7 @@ const FORMATS = {
   },
 
   a: {
+    time: true,
     length: 2,
     default: 'am',
     handleArrow: handleMeridiemArrow,
@@ -273,6 +278,7 @@ const FORMATS = {
   },
   A: {
     length: 2,
+    time: true,
     default: 'AM', upper: true,
     handleArrow: handleMeridiemArrow,
     handlePageUp: handleMeridiemArrow,
@@ -283,6 +289,7 @@ const FORMATS = {
 
   // m: { min: 0, max: 59, default: '0', maxLen: 2 },
   mm: { min: 0, max: 59, default: '00',
+    time: true,
     handleDelete,
     handleBackspace,
     handleUnidentified: handleUnidentifiedLeftPad,
@@ -293,6 +300,7 @@ const FORMATS = {
 
   // s: { min: 0, max: 59, default: '0' },
   ss: {
+    time: true,
     min: 0, max: 59, default: '00',
     handleDelete,
     handleBackspace,

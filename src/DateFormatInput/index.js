@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
 import Component from 'react-class'
-import debounce from 'lodash.debounce'
+import throttle from 'lodash.throttle'
 
 import { getSelectionStart, getSelectionEnd, setCaretPosition } from '../TimeInput'
 
@@ -25,13 +25,19 @@ export default class DateFormatInput extends Component {
     const { positions, matches } = parseFormat(props.dateFormat)
     const defaultValue = props.defaultValue || Date.now()
 
-    this.debounceSetValue = debounce(this.setValue, 100)
+    this.debounceSetValue = throttle(this.setValue, props.throttle || 100)
 
     this.state = {
       positions,
       matches,
       propsValue: props.value !== undefined,
       value: defaultValue
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.value !== undefined && this.caretPos && this.isFocused()) {
+      this.setCaretPosition(this.caretPos)
     }
   }
 
@@ -57,10 +63,37 @@ export default class DateFormatInput extends Component {
 
     return <input
       {...props}
+      defaultValue={undefined}
+      onFocus={this.onFocus}
+      onBlur={this.onBlur}
       value={displayValue}
       onKeyDown={this.onKeyDown}
       onChange={this.onChange}
     />
+  }
+
+  onFocus(event) {
+    if (this.props.onFocus) {
+      this.props.onFocus(event)
+    }
+
+    this.setState({
+      focused: true
+    })
+  }
+
+  onBlur(event) {
+    if (this.props.onBlur) {
+      this.props.onBlur(event)
+    }
+
+    this.setState({
+      focused: false
+    })
+  }
+
+  isFocused() {
+    return this.state.focused
   }
 
   onChange(event) {
@@ -70,17 +103,13 @@ export default class DateFormatInput extends Component {
   onKeyDown(event) {
     const { props } = this
 
-    if (props.onKeyDown) {
-      props.onKeyDown(event)
-    }
-
     const { key } = event
     const range = this.getSelectedRange()
     const selectedValue = this.getSelectedValue(range)
     const value = this.displayValue
 
     const { positions, matches } = this.state
-    const valueStr = value + ''
+    const valueStr = `${value}`
 
     let currentPosition = positions[range.start]
 
@@ -92,14 +121,24 @@ export default class DateFormatInput extends Component {
       currentPosition = positions[range.start - 1]
     }
 
+    if (props.onKeyDown) {
+      if (props.onKeyDown(event, currentPosition) === false) {
+        this.caretPos = range
+        return
+      }
+    }
+
     let keyName = key
 
     if (key == 'ArrowUp' || key == 'ArrowDown') {
       keyName = 'Arrow'
     }
 
-    const handlerName = 'handle' + keyName
+    const handlerName = `handle${keyName}`
+
     let preventDefault
+    let newValue
+    let newCaretPos
 
     if (currentPosition && currentPosition[handlerName]) {
       const returnValue = currentPosition[handlerName](currentPosition, {
@@ -115,34 +154,49 @@ export default class DateFormatInput extends Component {
         setCaretPosition: (...args) => this.setCaretPosition(...args)
       })
 
+      this.caretPos = range
+
       if (returnValue && returnValue.value !== undefined) {
-        const newValue = valueStr.substring(0, currentPosition.start) +
+        newValue = valueStr.substring(0, currentPosition.start) +
                           returnValue.value +
                           valueStr.substring(currentPosition.end + 1)
 
-        const updateCaretPos = () => {
-          let caretPos = returnValue.caretPos || range
-
-          if (caretPos === true) {
-            caretPos = { start: currentPosition.start, end: currentPosition.end + 1 }
-          }
-
-          this.setCaretPosition(caretPos)
+        newCaretPos = returnValue.caretPos || range
+        if (newCaretPos === true) {
+          newCaretPos = { start: currentPosition.start, end: currentPosition.end + 1 }
         }
-
-        this.setStateValue(newValue, updateCaretPos)
-
-        preventDefault = true
+        preventDefault = returnValue.preventDefault !== false
       }
     }
 
     if (preventDefault || key == 'Backspace' || key == 'Delete') {
       if (!preventDefault) {
-        this.setCaretPosition({
+        this.setCaretPosition(this.caretPos = {
           start: range.start + (key == 'Backspace' ? -1 : 1)
         })
       }
+      preventDefault = true
+    }
 
+    const config = {
+      currentPosition,
+      preventDefault,
+      event,
+      value: newValue,
+      stop: false
+    }
+
+    if (this.props.afterKeyDown) {
+      this.props.afterKeyDown(config)
+    }
+
+    if (!config.stop && newCaretPos !== undefined) {
+      const updateCaretPos = () => this.setCaretPosition(newCaretPos)
+      this.caretPos = newCaretPos
+      this.setStateValue(newValue, updateCaretPos)
+    }
+
+    if (config.preventDefault) {
       event.preventDefault()
     }
   }
@@ -159,7 +213,8 @@ export default class DateFormatInput extends Component {
   }
 
   setStateValue(value, callback) {
-    if (!this.toMoment(value).isValid()) {
+    const dateMoment = this.toMoment(value)
+    if (!dateMoment.isValid()) {
       return
     }
 
@@ -169,16 +224,16 @@ export default class DateFormatInput extends Component {
     }, typeof callback == 'function' && callback)
 
     if (this.props.value !== undefined) {
-      this.debounceSetValue(value)
+      this.debounceSetValue(value, dateMoment)
     }
   }
 
-  setValue(value, callback) {
+  setValue(value, dateMoment) {
     if (this.props.value === undefined) {
       this.setState({
         value,
         propsValue: false
-      }, typeof callback == 'function' && callback)
+      })
     } else {
       this.setState({
         propsValue: true,
@@ -187,7 +242,7 @@ export default class DateFormatInput extends Component {
     }
 
     if (this.props.onChange) {
-      this.props.onChange(value, { dateMoment: this.toMoment(value) })
+      this.props.onChange(value, { dateMoment: dateMoment || this.toMoment(value) })
     }
   }
 
@@ -213,10 +268,10 @@ DateFormatInput.defaultProps = {
 }
 
 DateFormatInput.propTypes = {
-  format: PropTypes.string,
+  dateFormat: PropTypes.string.isRequired,
   value: (props, propName) => {
     if (props[propName] !== undefined) {
-      console.warn('Due to performance considerations, TimeInput will only be uncontrolled.')
+      // console.warn('Due to performance considerations, TimeInput will only be uncontrolled.')
     }
   }
 }

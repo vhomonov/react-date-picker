@@ -1,13 +1,10 @@
 import React, { PropTypes } from 'react'
 import Component from 'react-class'
-import { Flex } from 'react-flex'
 
 import moment from 'moment'
 import assign from 'object-assign'
 
 import FORMAT from './utils/format'
-import asConfig from './utils/asConfig'
-import onEnter from './onEnter'
 import toMoment from './toMoment'
 
 import weekDayNamesFactory from './utils/getWeekDayNames'
@@ -15,24 +12,19 @@ import join from './join'
 
 import bemFactory from './bemFactory'
 
-import isInRange from './utils/isInRange'
-
 const CLASS_NAME = 'react-date-picker__basic-month-view'
-
-const emptyFn = () => {}
 
 const RENDER_DAY = (props) => {
   return <div {...props} />
 }
 
 const getWeekStartDay = (props) => {
-
   const locale = props.locale
   let weekStartDay = props.weekStartDay
 
-  if (weekStartDay == null){
+  if (weekStartDay == null) {
     const localeData = props.localeData || moment.localeData(locale)
-    weekStartDay = localeData._week? localeData._week.dow: null
+    weekStartDay = localeData._week ? localeData._week.dow : null
   }
 
   return weekStartDay
@@ -50,7 +42,6 @@ const getWeekStartDay = (props) => {
  * @return {Moment}
  */
 const getWeekStartMoment = (value, props) => {
-
   const locale = props.locale
   const dateFormat = props.dateFormat
 
@@ -80,10 +71,10 @@ const getDaysInMonthView = (value, props) => {
   const { locale, dateFormat } = props
   const toMomentParam = { locale, dateFormat }
 
-  const first  = toMoment(value, toMomentParam).startOf('month')
+  const first = toMoment(value, toMomentParam).startOf('month')
   const beforeFirst = toMoment(value, toMomentParam).startOf('month').add(-1, 'days')
 
-  const start  = getWeekStartMoment(first, props)
+  const start = getWeekStartMoment(first, props)
 
   const result = []
 
@@ -91,14 +82,15 @@ const getDaysInMonthView = (value, props) => {
 
   if (
     beforeFirst.isBefore(start)
-    // and it doesn't start with a full week before and the week has at least 1 day from current month (default)
+    // and it doesn't start with a full week before and the
+    // week has at least 1 day from current month (default)
     &&
     (props.alwaysShowPrevWeek || !start.isSame(first))
-  ){
+  ) {
     start.add(-1, 'weeks')
   }
 
-  for (; i < 42; i++){
+  for (; i < 42; i++) {
     result.push(toMoment(start, toMomentParam))
     start.add(1, 'days')
   }
@@ -115,49 +107,46 @@ const getDaysInMonthView = (value, props) => {
  * @return {String[]}
  */
 const getWeekDayNames = (props) => {
+  const { weekStartDay, weekDayNames, locale } = props
 
-    const { weekStartDay, weekDayNames, locale } = props
+  let names = weekDayNames
 
-    let names = weekDayNames
+  if (typeof names == 'function') {
+    names = names(weekStartDay, locale)
+  } else if (Array.isArray(names)) {
+    names = [...names]
 
-    if (typeof names == 'function'){
-      names = names(weekStartDay, locale)
+    let index = weekStartDay
 
-    } else if (Array.isArray(names)){
-
-      names = [...names]
-
-      let index = weekStartDay
-
-      while (index > 0){
-        names.push(names.shift())
-        index--
-      }
+    while (index > 0) {
+      names.push(names.shift())
+      index--
     }
-
-    return names
   }
+
+  return names
+}
 
 class BasicMonthView extends Component {
 
-  componentWillMount(){
+  componentWillMount() {
     this.updateBem(this.props)
     this.updateToMoment(this.props)
   }
 
-  componentWillReceiveProps(nextProps){
-    if (nextProps.defaultClassName != this.props.defaultClassName){
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.defaultClassName != this.props.defaultClassName) {
       this.updateBem(nextProps)
     }
 
     this.updateToMoment(nextProps)
   }
 
-  updateBem(props){
+  updateBem(props) {
     this.bem = bemFactory(props.defaultClassName)
   }
 
-  updateToMoment(props){
+  updateToMoment(props) {
     this.toMoment = (value, dateFormat) => {
       return toMoment(value, {
         locale: props.locale,
@@ -166,9 +155,8 @@ class BasicMonthView extends Component {
     }
   }
 
-  prepareProps(thisProps){
-
-    const props = assign({}, this.props)
+  prepareProps(thisProps) {
+    const props = assign({}, thisProps)
 
     props.viewMoment = props.viewMoment || this.toMoment(props.viewDate)
 
@@ -179,8 +167,7 @@ class BasicMonthView extends Component {
     return props
   }
 
-  prepareClassName(props){
-
+  prepareClassName(props) {
     return join(
       props.className,
       `${CLASS_NAME} dp-month-view`
@@ -188,7 +175,6 @@ class BasicMonthView extends Component {
   }
 
   render() {
-
     const props = this.p = this.prepareProps(this.props)
 
     const { viewMoment } = props
@@ -200,7 +186,7 @@ class BasicMonthView extends Component {
       this.renderDays(props, daysInView)
     ]
 
-    if (props.renderChildren){
+    if (props.renderChildren) {
       children = props.renderChildren(children, props)
     }
 
@@ -220,8 +206,7 @@ class BasicMonthView extends Component {
    * @param  {Moment[]} days The days in a week
    * @return {React.DOM}
    */
-  renderWeekNumber (props, days) {
-
+  renderWeekNumber(props, days) {
     const firstDayOfWeek = days[0]
     const week = firstDayOfWeek.weeks()
 
@@ -230,11 +215,11 @@ class BasicMonthView extends Component {
 
       className: `${this.bem('cell')} ${this.bem('week-number')} dp-cell dp-weeknumber`,
 
-      //week number
-      week: week,
+      // week number
+      week,
 
-      //the days in this week
-      days: days,
+      // the days in this week
+      days,
 
       date: firstDayOfWeek,
 
@@ -245,16 +230,15 @@ class BasicMonthView extends Component {
 
     let result
 
-    if (renderWeekNumber){
+    if (renderWeekNumber) {
       result = renderWeekNumber(weekNumberProps)
     }
 
-    if (result === undefined){
+    if (result === undefined) {
       result = <div {...weekNumberProps} />
     }
 
     return result
-
   }
 
   /**
@@ -274,8 +258,7 @@ class BasicMonthView extends Component {
     let weekStart
     let weekEnd
 
-    for ( ; i < bucketsLen; i++){
-
+    for (; i < bucketsLen; i++) {
       weekStart = i * 7
       weekEnd = (i + 1) * 7
 
@@ -288,8 +271,8 @@ class BasicMonthView extends Component {
       )
     }
 
-    return buckets.map((bucket, i) => <div
-      key={"row" + i}
+    return buckets.map((bucket, index) => <div
+      key={`row_${index}`}
       className={`${this.bem('row')} dp-week dp-row`}
     >
       {bucket}
@@ -305,8 +288,6 @@ class BasicMonthView extends Component {
       'dp-cell dp-day'
     ]
 
-    const dateTimestamp = +dateMoment
-
     let renderDayProps = {
       day: dayText,
       dateMoment,
@@ -317,7 +298,7 @@ class BasicMonthView extends Component {
       children: dayText
     }
 
-    if (typeof props.onRenderDay === 'function'){
+    if (typeof props.onRenderDay === 'function') {
       renderDayProps = props.onRenderDay(renderDayProps)
     }
 
@@ -325,23 +306,30 @@ class BasicMonthView extends Component {
 
     let result = renderFunction(renderDayProps)
 
-    if (result === undefined){
+    if (result === undefined) {
       result = RENDER_DAY(renderDayProps)
     }
 
     return result
   }
 
-  renderWeekDayNames(){
+  renderWeekDayNames() {
 
-    const props  = this.p
-    const { weekNumbers, weekNumberName, weekDayNames, renderWeekDayNames, renderWeekDayName, weekStartDay } = props
+    const props = this.p
+    const {
+      weekNumbers,
+      weekNumberName,
+      weekDayNames,
+      renderWeekDayNames,
+      renderWeekDayName,
+      weekStartDay
+    } = props
 
-    if (weekDayNames === false){
+    if (weekDayNames === false) {
       return null
     }
 
-    const names = [weekNumbers? weekNumberName: null].concat(getWeekDayNames(props))
+    const names = [weekNumbers ? weekNumberName : null].concat(getWeekDayNames(props))
 
     const className = `${this.bem('row')} ${this.bem('week-day-names')} dp-row dp-week-day-names`
 
@@ -350,13 +338,12 @@ class BasicMonthView extends Component {
       names
     }
 
-    if (renderWeekDayNames){
+    if (renderWeekDayNames) {
       return renderWeekDayNames(renderProps)
     }
 
     return <div className={className}>
       {names.map((name, index) => {
-
         const props = {
           weekStartDay,
           index,
@@ -367,7 +354,7 @@ class BasicMonthView extends Component {
           children: name
         }
 
-        if (renderWeekDayName){
+        if (renderWeekDayName) {
           return renderWeekDayName(props)
         }
 
@@ -388,20 +375,22 @@ BasicMonthView.propTypes = {
   viewMoment: PropTypes.any,
 
   locale: PropTypes.string,
-  weekStartDay: PropTypes.number, //0 is Sunday in the English locale
+  weekStartDay: PropTypes.number, // 0 is Sunday in the English locale
 
-  //boolean prop to show/hide week numbers
+  // boolean prop to show/hide week numbers
   weekNumbers: PropTypes.bool,
 
-  //the name to give to the week number column
+  // the name to give to the week number column
   weekNumberName: PropTypes.string,
 
-  weekDayNames: (props, propName) => {
+  weekDayNames(props, propName) {
     const value = props[propName]
 
-    if (typeof value != 'function' && value !== false){
+    if (typeof value != 'function' && value !== false) {
       return new Error(`"weekDayNames" should either be a function or the boolean "false"`)
     }
+
+    return undefined
   },
 
   renderWeekDayNames: PropTypes.func,

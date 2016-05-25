@@ -90,14 +90,15 @@ var App = React.createClass({
         return <div style={{margin: 10}}>
         <DateFormatInput defaultValue={new Date()} autoFocus dateFormat="A YYYY:MM:DD--hh:mm:ss!!"/>
         <br />
-        <TimeInput format="hh:mm:ss A" xonChange={this.onTimeChange} defaultValue={this.state.time}/>
+        {/*<TimeInput format="hh:mm:ss A" xonChange={this.onTimeChange} defaultValue={this.state.time}/>*/}
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />
-        <DateField dateFormat="YYYY-MM-DD HH:mm" defaultValue="2016-04-02 23:11" xonChange={this.onChange}>
-          <DatePicker>
-            <Clock/>
-          </DatePicker>
+        <DateField
+          dateFormat="YYYY-MM-DD hh:mm a"
+          defaultValue="2016-04-02 04:11 am"
+          xonChange={this.onChange}
+        >
         </DateField>
         <br />
         <input defaultValue="dadas"/>

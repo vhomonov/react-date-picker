@@ -11,6 +11,7 @@
     "no-loop-func": 0,
     "arrow-body-style": 0,
     "no-param-reassign": 0,
+    "react/no-did-mount-set-state": 0,
     "react/prop-types": [0, { "ignore": [], "customValidators": [] }]
   }
 }
