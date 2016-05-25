@@ -4,6 +4,7 @@ import Component from 'react-class'
 import assign from 'object-assign'
 
 import MonthView from './MonthView'
+import TransitionView from './TransitionView'
 import toMoment from './toMoment'
 import join from './join'
 import Clock from './Clock'
@@ -29,8 +30,10 @@ export default class DatePicker extends Component {
       props.theme && `react-date-picker__date-picker--theme-${props.theme}`
     )
 
-    return <Flex row wrap={false} className={className}>
-      <MonthView {...this.props} ref={view => { this.view = view }} />
+    return <Flex row wrap={false} className={className} style={props.style}>
+
+      <MonthView {...this.props} className={null} style={null} ref={view => { this.view = view }} />
+
       {props.hasTime && this.renderClock()}
     </Flex>
   }

@@ -99,6 +99,9 @@ var App = React.createClass({
           defaultValue="2016-04-02 04:11 am"
           xonChange={this.onChange}
         >
+          <TransitionView>
+            <DatePicker />
+          </TransitionView>
         </DateField>
         <br />
         <input defaultValue="dadas"/>
