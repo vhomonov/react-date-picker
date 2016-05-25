@@ -1,12 +1,14 @@
 import React, { PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
 import Component from 'react-class'
+import debounce from 'lodash.debounce'
 
 import assign from 'object-assign'
 
 import { getSelectionStart, getSelectionEnd, setCaretPosition } from '../TimeInput'
 
 import toMoment from '../toMoment';
+
 import toUpperFirst from './toUpperFirst';
 import parseFormat from './parseFormat'
 
@@ -20,6 +22,23 @@ const BACKWARDS = {
 
 export default class DateFormatInput extends Component {
 
+  constructor(props) {
+    super(props)
+
+    const { positions, matches } = parseFormat(props.dateFormat)
+    const defaultValue = props.defaultValue || Date.now()
+
+    this.debounceSetValue = debounce(this.setValue, 100)
+
+    this.state = {
+      positions,
+      matches,
+      propsValue: props.value !== undefined,
+      value: defaultValue
+    }
+
+  }
+
   toMoment(value, dateFormat) {
     const props = this.props
 
@@ -29,48 +48,40 @@ export default class DateFormatInput extends Component {
     })
   }
 
-  constructor(props) {
-    super(props)
-
-    const { positions, matches } = parseFormat(props.dateFormat)
-    const defaultValue = props.defaultValue || Date.now()
-
-    this.state = {
-      positions,
-      matches,
-      value: this.toMoment(defaultValue).format(props.dateFormat) // || defaultValue
-    }
-  }
-
   render() {
-    const props = this.p = assign({}, this.props)
+    const { props } = this
 
-    props.value = this.state.value
+    const value = this.state.propsValue?
+                    props.value:
+                    this.state.value
+
+    const displayValue =
+      this.displayValue =
+        this.toMoment(value).format(props.dateFormat)
 
     return <input
-
-      xvalue={null}
-      value={this.state.value}
+      {...props}
+      value={displayValue}
       onKeyDown={this.onKeyDown}
       onChange={this.onChange}
     />
   }
 
   onChange(event) {
-    // this.setState({
-    //   value: this.state.value
-    // })
-    event.preventDefault()
     event.stopPropagation()
   }
 
   onKeyDown(event) {
-    const props = this.p
+    const { props } = this
+
+    if (props.onKeyDown){
+      props.onKeyDown(event)
+    }
 
     const { key } = event
     const range = this.getSelectedRange()
     const selectedValue = this.getSelectedValue(range)
-    const value = props.value
+    const value = this.displayValue
 
     const { positions, matches } = this.state
     const valueStr = value + ''
@@ -124,7 +135,7 @@ export default class DateFormatInput extends Component {
           this.setCaretPosition(caretPos)
         }
 
-        this.setValue(newValue, updateCaretPos)
+        this.setStateValue(newValue, updateCaretPos)
 
         preventDefault = true
       }
@@ -137,22 +148,8 @@ export default class DateFormatInput extends Component {
           start: range.start + (key == 'Backspace'? -1: 1)
         })
       }
-      console.log("'preventDefault'", preventDefault);
+
       event.preventDefault()
-    } else if (key == 'Unidentified'){
-    //   console.log("'value'", this.state.value);
-      // event.preventDefault()
-    //   this.setValue(
-    //     this.state.value,
-    //     () => this.setCaretPosition(range)
-    //   )
-      // console.log("event", event);
-      // this.setCaretPosition(range)
-      // // event.preventDefault()
-      event.stopPropagation()
-      // // const char = String.fromCharCode(event.which)
-      //
-      // console.log("char", char, char.length);
     }
   }
 
@@ -167,21 +164,38 @@ export default class DateFormatInput extends Component {
     }
   }
 
-  setValue(value, callback) {
+  setStateValue(value, callback){
+
+    if (!this.toMoment(value).isValid()){
+      return
+    }
+
     this.setState({
-      now: Date.now(),
-      value
+      value,
+      propsValue: false
     }, typeof callback == 'function' && callback)
 
-    if (this.props.onChange) {
-      this.props.onChange(value)
+    if (this.props.value !== undefined){
+      this.debounceSetValue(value)
     }
   }
 
-  componentDidUpdate() {
-    if (this.updateCallback) {
-      this.updateCallback()
-      this.updateCallback = null
+  setValue(value, callback) {
+
+    if (this.props.value === undefined){
+      this.setState({
+        value,
+        propsValue: false
+      }, typeof callback == 'function' && callback)
+    } else {
+      this.setState({
+        propsValue: true,
+        value: undefined
+      })
+    }
+
+    if (this.props.onChange) {
+      this.props.onChange(value, { dateMoment: this.toMoment(value) })
     }
   }
 
@@ -196,7 +210,7 @@ export default class DateFormatInput extends Component {
 
   getSelectedValue(range) {
     range = range || this.getSelectedRange()
-    const value = this.p.value
+    const value = this.displayValue
 
     return value.substring(range.start, range.end)
   }

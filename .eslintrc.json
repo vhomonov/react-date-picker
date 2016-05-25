@@ -7,6 +7,9 @@
     "react/sort-comp": 0,
     "eqeqeq": 0,
     "no-console": 0,
+    "no-loop-func": 0,
+    "arrow-body-style": 0,
+    "no-param-reassign": 0,
     "react/prop-types": [0, { "ignore": [], "customValidators": [] }]
   }
 }

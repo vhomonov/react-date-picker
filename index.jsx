@@ -88,7 +88,7 @@ var App = React.createClass({
         date = this.props.date || date
 
         return <div style={{margin: 10}}>
-        <DateFormatInput defaultValue={new Date()} autoFocus dateFormat="YYYY:MM:DD--HH:mm:ss!!"/>
+        <DateFormatInput defaultValue={new Date()} autoFocus dateFormat="A YYYY:MM:DD--hh:mm:ss!!"/>
         <br />
         <TimeInput format="hh:mm:ss A" xonChange={this.onTimeChange} defaultValue={this.state.time}/>
         <br />

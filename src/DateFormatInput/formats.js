@@ -1,5 +1,5 @@
 import leftPad from '../utils/leftPad'
-import clamp, { clampHour } from '../utils/clamp'
+import clamp from '../utils/clamp'
 import times from '../utils/times'
 
 const isValid = (value, format) => {
@@ -10,11 +10,6 @@ const isValid = (value, format) => {
 const replaceAt = ({ value, index, len = 1, str }) => {
   return value.substring(0, index) + str + value.substring(index + len)
 }
-
-const insertAt = ({ value, index, str }) => {
-  return value.substring(0, index) + str + value.substring(index)
-}
-
 
 const handlePage = (format, config) => {
   config.dir = config.dir || (config.key == 'PageUp'? 10: -10)
@@ -159,6 +154,42 @@ const handleBackspace = (format, config) => {
   return handleDelete(format, config)
 }
 
+const toggleMeridiem = ({ upper, value }) => {
+  if (upper) {
+    return value == 'AM'? 'PM': 'AM'
+  }
+
+  return value == 'am'? 'pm': 'am'
+}
+
+const handleMeridiemArrow = (format, { currentValue }) => {
+  return {
+    value: toggleMeridiem({ upper: format.upper, value: currentValue }),
+    caretPos: true
+  }
+}
+const handleMeridiemDelete = (format, { dir, range }) => {
+
+  dir = dir || 0
+
+  if (range.start <= format.start && range.end >= format.end){
+    return {
+      value: format.default,
+      caretPos: true
+    }
+  }
+
+  return {
+    value: format.upper ? 'AM': 'am',
+    caretPos: { start: range.start + (dir < 0 ? -1 : 1) }
+  }
+}
+
+const handleMeridiemBackspace = (format, config) => {
+  config.dir = -1
+  return handleMeridiemDelete(format, config)
+}
+
 const FORMATS = {
 
   YYYY: {
@@ -235,8 +266,24 @@ const FORMATS = {
     handlePageDown: handlePageLeftPad
   },
 
-  a: { default: 'am' },
-  A: { default: 'AM'},
+  a: {
+    length: 2,
+    default: 'am',
+    handleArrow: handleMeridiemArrow,
+    handlePageUp: handleMeridiemArrow,
+    handlePageDown: handleMeridiemArrow,
+    handleDelete: handleMeridiemDelete,
+    handleBackspace: handleMeridiemBackspace
+  },
+  A: {
+    length: 2,
+    default: 'AM', upper: true,
+    handleArrow: handleMeridiemArrow,
+    handlePageUp: handleMeridiemArrow,
+    handlePageDown: handleMeridiemArrow,
+    handleDelete: handleMeridiemDelete,
+    handleBackspace: handleMeridiemBackspace
+  },
 
   // m: { min: 0, max: 59, default: '0', maxLen: 2 },
   mm: { min: 0, max: 59, default: '00',

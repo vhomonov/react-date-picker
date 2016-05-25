@@ -9,28 +9,27 @@ export default ({ value, separator = ':', meridiem }) => {
 
   const result = { hours, minutes }
 
-  if (typeof seconds == 'string' && seconds.length){
+  if (typeof seconds == 'string' && seconds.length) {
     result.seconds = seconds
   }
 
-  if (meridiem && seconds !== undefined && seconds * 1 != seconds){
+  if (meridiem && seconds !== undefined && seconds * 1 != seconds) {
     result.seconds = leftPad(parseInt(seconds, 10))
   }
 
-  if (meridiem && seconds === undefined && minutes * 1 != minutes){
+  if (meridiem && seconds === undefined && minutes * 1 != minutes) {
     result.minutes = leftPad(parseInt(minutes, 10))
   }
 
-  if (meridiem){
-    let meridiems = ['am','AM','pm','PM']
-    let indexes = meridiems.map(m => (seconds || minutes).indexOf(m))
+  if (meridiem) {
+    const meridiems = ['am', 'AM', 'pm', 'PM']
+    const indexes = meridiems.map(m => (seconds || minutes).indexOf(m))
 
     indexes.forEach((indexOf, i) => {
-      if (indexOf != -1){
+      if (indexOf != -1) {
         result.meridiem = meridiems[i]
       }
     })
-
   }
 
   return result
