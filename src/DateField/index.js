@@ -2,15 +2,22 @@ import React from 'react'
 import { findDOMNode } from 'react-dom'
 import Component from 'react-class'
 import assign from 'object-assign'
-import { Flex, Item } from 'react-flex'
+
+import { Flex } from 'react-flex'
 import Input from 'react-field'
 
 import InlineBlock from 'react-inline-block'
-import { getNewValue, getSelectionStart, getSelectionEnd, setCaretPosition, toTimeValue } from './TimeInput'
+import {
+  getNewValue,
+  getSelectionStart,
+  getSelectionEnd,
+  setCaretPosition,
+  toTimeValue
+} from '../TimeInput'
 
 import moment from 'moment'
-import join from './join'
-import toMoment from './toMoment'
+import join from '../join'
+import toMoment from '../toMoment'
 
 const getPicker = (props) => {
   return React.Children.toArray(props.children).filter(c => c && c.props && c.props.isDatePicker)[0]
@@ -23,20 +30,17 @@ const ARROW_KEYS = {
   ArrowRight: 1
 }
 
-const CLEAR_ICON = <svg height="20" width="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-  <path d="M0 0h24v24H0z" fill="none"/>
-</svg>
+import { CLEAR_ICON } from './icons'
 
 const joinFunctions = (a, b) => {
-  if (a && b){
+  if (a && b) {
     return (...args) => {
       a(...args)
       b(...args)
     }
   }
 
-  return a? a: b
+  return a ? a : b
 }
 
 const preventDefault = (event) => {
@@ -45,7 +49,7 @@ const preventDefault = (event) => {
 
 export default class DateField extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
 
     const dateFormat = props.dateFormat

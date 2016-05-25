@@ -6,6 +6,7 @@
     "react/wrap-multilines": 0,
     "react/sort-comp": 0,
     "eqeqeq": 0,
+    "prefer-template": 1,
     "no-console": 0,
     "no-loop-func": 0,
     "arrow-body-style": 0,

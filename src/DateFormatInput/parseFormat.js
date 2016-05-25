@@ -85,7 +85,5 @@ export default (format) => {
     index++
   }
 
-  console.log("positions, matches", positions, matches);
-
   return { positions, matches }
 }

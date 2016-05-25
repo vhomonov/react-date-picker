@@ -3,13 +3,10 @@ import { findDOMNode } from 'react-dom'
 import Component from 'react-class'
 import debounce from 'lodash.debounce'
 
-import assign from 'object-assign'
-
 import { getSelectionStart, getSelectionEnd, setCaretPosition } from '../TimeInput'
 
 import toMoment from '../toMoment';
 
-import toUpperFirst from './toUpperFirst';
 import parseFormat from './parseFormat'
 
 const BACKWARDS = {
@@ -36,7 +33,6 @@ export default class DateFormatInput extends Component {
       propsValue: props.value !== undefined,
       value: defaultValue
     }
-
   }
 
   toMoment(value, dateFormat) {
@@ -51,8 +47,8 @@ export default class DateFormatInput extends Component {
   render() {
     const { props } = this
 
-    const value = this.state.propsValue?
-                    props.value:
+    const value = this.state.propsValue ?
+                    props.value :
                     this.state.value
 
     const displayValue =
@@ -74,7 +70,7 @@ export default class DateFormatInput extends Component {
   onKeyDown(event) {
     const { props } = this
 
-    if (props.onKeyDown){
+    if (props.onKeyDown) {
       props.onKeyDown(event)
     }
 
@@ -88,11 +84,11 @@ export default class DateFormatInput extends Component {
 
     let currentPosition = positions[range.start]
 
-    if (typeof currentPosition == 'string'){
-      currentPosition = positions[range.start + (key in BACKWARDS? -1: 1)]
+    if (typeof currentPosition == 'string') {
+      currentPosition = positions[range.start + (key in BACKWARDS ? -1 : 1)]
     }
 
-    if (!currentPosition){
+    if (!currentPosition) {
       currentPosition = positions[range.start - 1]
     }
 
@@ -105,7 +101,7 @@ export default class DateFormatInput extends Component {
     const handlerName = 'handle' + keyName
     let preventDefault
 
-    if (currentPosition && currentPosition[handlerName]){
+    if (currentPosition && currentPosition[handlerName]) {
       const returnValue = currentPosition[handlerName](currentPosition, {
         range,
         selectedValue,
@@ -119,8 +115,7 @@ export default class DateFormatInput extends Component {
         setCaretPosition: (...args) => this.setCaretPosition(...args)
       })
 
-      if (returnValue && returnValue.value !== undefined){
-
+      if (returnValue && returnValue.value !== undefined) {
         const newValue = valueStr.substring(0, currentPosition.start) +
                           returnValue.value +
                           valueStr.substring(currentPosition.end + 1)
@@ -128,7 +123,7 @@ export default class DateFormatInput extends Component {
         const updateCaretPos = () => {
           let caretPos = returnValue.caretPos || range
 
-          if (caretPos === true){
+          if (caretPos === true) {
             caretPos = { start: currentPosition.start, end: currentPosition.end + 1 }
           }
 
@@ -141,11 +136,10 @@ export default class DateFormatInput extends Component {
       }
     }
 
-    if (preventDefault || key == 'Backspace' || key == 'Delete'){//} || key == 'Unidentified'){
-
-      if (!preventDefault){
+    if (preventDefault || key == 'Backspace' || key == 'Delete') {
+      if (!preventDefault) {
         this.setCaretPosition({
-          start: range.start + (key == 'Backspace'? -1: 1)
+          start: range.start + (key == 'Backspace' ? -1 : 1)
         })
       }
 
@@ -164,9 +158,8 @@ export default class DateFormatInput extends Component {
     }
   }
 
-  setStateValue(value, callback){
-
-    if (!this.toMoment(value).isValid()){
+  setStateValue(value, callback) {
+    if (!this.toMoment(value).isValid()) {
       return
     }
 
@@ -175,14 +168,13 @@ export default class DateFormatInput extends Component {
       propsValue: false
     }, typeof callback == 'function' && callback)
 
-    if (this.props.value !== undefined){
+    if (this.props.value !== undefined) {
       this.debounceSetValue(value)
     }
   }
 
   setValue(value, callback) {
-
-    if (this.props.value === undefined){
+    if (this.props.value === undefined) {
       this.setState({
         value,
         propsValue: false
@@ -217,10 +209,7 @@ export default class DateFormatInput extends Component {
 }
 
 DateFormatInput.defaultProps = {
-  theme: 'default',
-
-  circular: true,
-  propagate: true
+  isDateInput: true
 }
 
 DateFormatInput.propTypes = {
