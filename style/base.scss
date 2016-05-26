@@ -54,6 +54,7 @@
 }
 
 .react-date-picker__next {
+  // z-index: 1111;
   transform: translate3d(100%, 0px, 0px);
 }
 
@@ -66,6 +67,7 @@
 }
 
 .react-date-picker--transition-right {
+  z-index: 1111;
   transform: translate3d(100%, 0px, 0px);
 
   &.react-date-picker__prev {

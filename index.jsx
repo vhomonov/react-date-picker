@@ -99,15 +99,13 @@ var App = React.createClass({
           defaultValue="2016-04-02 04:11 am"
           xonChange={this.onChange}
         >
-          <TransitionView>
             <DatePicker />
-          </TransitionView>
         </DateField>
         <br />
         <input defaultValue="dadas"/>
 
         navview
-          <MonthView
+          {/*<MonthView
             className="xxx"
             minDate="2016-10-10"
             maxDate="2016-11-11"
@@ -123,15 +121,11 @@ var App = React.createClass({
             isDisabledDay={(props) => {
               return props.dateMoment.format('YYYY-MM-DD') == '2016-10-20'
             }}
-            xonRangeChange={this.onRangeChange}
-            style={{height: 400}}
-            xdefaultActiveDate="2016-06-6"
-            xdefaultDate="2016-02-10"
-          />
-        transition view<TransitionView>
+
+          />*/}
+        transition view
           <MonthView
             style={{maxWidth: 400}}
-            maxDate="2016-07-11"
             locale={LOCALE}
             onRenderDay={(props) => {
               props.onClick = () => {
@@ -139,25 +133,19 @@ var App = React.createClass({
               }
               return props
             }}
-            isDisabledDay={(props) => {
+            xisDisabledDay={(props) => {
               return props.dateMoment.format('YYYY-MM-DD') == '2016-10-20'
             }}
-            xonRangeChange={this.onRangeChange}
-            xstyle={{height: 400}}
             defaultRange={[]}
           >
-
           </MonthView>
 
-        </TransitionView>
-        <MultiMonthView
-          style={{maxWidth: 1200}}
-          maxDate="2016-06-24"
-          defaultRange={[]}
-          onRangeChange={this.onRangeChange}
-          size={2}
-        />
-
+          <MultiMonthView
+            style={{maxWidth: 1200}}
+            maxDate="2016-08-20"
+            defaultRange={[]}
+            size={4}
+          />
         <p>Select locale: <select value={LOCALE} onChange={this.onLocaleChange}>
                 <option value="en">English (US)</option>
                 <option value="fr">French</option>

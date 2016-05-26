@@ -17,28 +17,23 @@ import BasicMonthView, { getDaysInMonthView } from './BasicMonthView'
 
 let TODAY
 
-const emptyFn = () => {}
-
 const RENDER_DAY = (props) => {
   return <div {...props} />
 }
 
-const prepareViewDate = function(props, state) {
-  let viewDate = props.viewDate === undefined?
-        state.viewDate:
+const prepareViewDate = function (props, state) {
+  return props.viewDate === undefined ?
+        state.viewDate :
         props.viewDate
-
-  return viewDate
 }
 
 const prepareDate = function(props, state) {
-
-  if (props.range){
+  if (props.range) {
     return null
   }
 
-  return props.date === undefined?
-          state.date:
+  return props.date === undefined ?
+          state.date :
           props.date
 }
 
@@ -85,24 +80,24 @@ const prepareActiveDate = function(props, state) {
   return isValidActiveDate(+activeDate, props)? activeDate: null
 }
 
-const isInView = function(moment, props) {
-  if (!props){
+const isInView = function (mom, props) {
+  if (!props) {
     throw new Error('props is mandatory in isInView')
   }
 
   const daysInView = props.daysInView
 
-  return isInRange(moment, { range: daysInView, inclusive: true })
+  return isInRange(mom, { range: daysInView, inclusive: true })
 }
 
-const isValidActiveDate = function(timestamp, props){
-  if (!props){
+const isValidActiveDate = function (timestamp, props) {
+  if (!props) {
     throw new Error('props is mandatory in isValidActiveDate')
   }
 
   const dayProps = props.dayPropsMap[timestamp]
 
-  if (dayProps && dayProps.disabled){
+  if (dayProps && dayProps.disabled) {
     return false
   }
 
@@ -627,10 +622,10 @@ export default class MonthView extends Component {
     this.navigate(dir, event)
   }
 
-  confirm(date, event){
+  confirm(date, event) {
     event.preventDefault()
 
-    if (this.props.confirm){
+    if (this.props.confirm) {
       return this.props.confirm(date, event)
     }
 
@@ -640,20 +635,18 @@ export default class MonthView extends Component {
   }
 
   navigate(dir, event){
-
     const props = this.p
 
-    if (props.navigate){
+    if (props.navigate) {
       return props.navigate(dir, event)
     }
 
-    if (props.activeDate){
-
+    if (props.activeDate) {
       event.preventDefault()
 
       const nextMoment = this.toMoment(props.activeDate).add(dir, 'day')
 
-      this.gotoViewDate({ dateMoment: nextMoment})
+      this.gotoViewDate({ dateMoment: nextMoment })
     }
   }
 
@@ -676,23 +669,22 @@ export default class MonthView extends Component {
   handleClick({ timestamp, dateMoment }, event) {
     const props = this.p
 
-    if (props.minDate && timestamp < props.minDate){
+    if (props.minDate && timestamp < props.minDate) {
       return
     }
 
-    if (props.maxDate && timestamp > props.maxDate){
+    if (props.maxDate && timestamp > props.maxDate) {
       return
     }
 
     event.target.value = timestamp
 
     this.select({ dateMoment, timestamp }, event)
-
   }
 
-  select({ dateMoment, timestamp }, event){
+  select({ dateMoment, timestamp }, event) {
 
-    if (this.props.select){
+    if (this.props.select) {
       return this.props.select({ dateMoment, timestamp }, event)
     }
 
@@ -790,24 +782,26 @@ export default class MonthView extends Component {
       })
     }
 
-    if (this.props.onViewDateChange){
+    if (this.props.onViewDateChange) {
       const dateString = this.format(dateMoment)
 
-      this.props.onViewDateChange(dateString, { dateMoment, dateString, timestamp})
+      this.props.onViewDateChange(dateString, { dateMoment, dateString, timestamp })
     }
-
   }
 
-  onActiveDateChange({ dateMoment, timestamp }){
+  isValidActiveDate(date, props) {
+    return isValidActiveDate(date, props || this.p)
+  }
 
-    if (!isValidActiveDate(timestamp, this.p)){
+  onActiveDateChange({ dateMoment, timestamp }) {
+    if (!isValidActiveDate(timestamp, this.p)) {
       return
     }
 
     const props = this.p
     const range = props.range
 
-    if (range && props.rangeStart){
+    if (range && props.rangeStart) {
 
       const newRange = clampRange([props.rangeStart, dateMoment])
 
