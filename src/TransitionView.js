@@ -37,13 +37,17 @@ export default class TransitionView extends Component {
     const child = React.Children.toArray(this.props.children)[0]
     const childProps = child.props
 
+    const viewDate = props.defaultViewDate ||
+      props.defaultDate ||
+      childProps.defaultViewDate ||
+      childProps.defaultDate
+
+    const dateFormat = props.dateFormat || childProps.dateFormat
+    const locale = props.locale || childProps.locale
+
     this.state = {
       rendered: false,
-      viewDate: props.defaultViewDate ||
-        props.defaultDate ||
-
-        childProps.defaultViewDate ||
-        childProps.defaultDate
+      viewDate: this.toMoment(viewDate, { dateFormat, locale })
     }
   }
 
@@ -77,7 +81,6 @@ export default class TransitionView extends Component {
 
     const children = React.Children.toArray(props.children)
     const child = this.child = children[0]
-    // debugger
 
     let viewDate = this.state.viewDate || props.viewMoment || props.viewDate
 
@@ -123,6 +126,7 @@ export default class TransitionView extends Component {
       defaultActiveDate: props.defaultActiveDate,
 
       dateFormat: props.dateFormat,
+      locale: props.locale,
       theme: props.theme
     })
 
@@ -195,15 +199,15 @@ export default class TransitionView extends Component {
 
     const viewSize = this.view.getViewSize ? this.view.getViewSize() || 1 : 1
 
-    console.log("viewSize", viewSize);
     const childProps = this.child.props
     const renderedProps = this.renderedChildProps
 
     const newProps = assign({
-      date: renderedProps.date,
+      date: renderedProps.date || renderedProps.moment,
       range: renderedProps.range,
       activeDate: renderedProps.activeDate,
-      dateFormat: renderedProps.dateFormat
+      dateFormat: renderedProps.dateFormat,
+      locale: renderedProps.locale
     }, {
       viewDate: moment(this.viewDate).add(viewSize * index, 'month'),
       key: index,
@@ -291,7 +295,6 @@ export default class TransitionView extends Component {
   }
 
   onTransitionEnd() {
-    console.log('transition end');
     this.removeTransitionEnd()
 
     if (!this.nextViewDate) {
@@ -311,6 +314,5 @@ export default class TransitionView extends Component {
 TransitionView.defaultProps = {
   navBar: true,
   theme: 'default',
-  isDatePicker: true,
-  dateFormat: 'YYYY-MM-DD'
+  isDatePicker: true
 }

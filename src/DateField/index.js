@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
 import Component from 'react-class'
 import assign from 'object-assign'
@@ -577,9 +577,18 @@ export default class DateField extends Component {
 
     const currentDate = props.date
 
-    ;['hour', 'minute', 'second', 'millisecond'].forEach(part => {
-      dateMoment.set(part, currentDate.get(part))
-    })
+    if (props.valid && currentDate) {
+      const dateFormat = props.dateFormat.toLowerCase()
+
+      const hasTime = dateFormat.indexOf('k') != -1 ||
+                      dateFormat.indexOf('h') != -1
+
+      if (hasTime) {
+        ['hour', 'minute', 'second', 'millisecond'].forEach(part => {
+          dateMoment.set(part, currentDate.get(part))
+        })
+      }
+    }
 
     if (props.collapseOnChange) {
       this.setExpanded(false)
@@ -635,7 +644,7 @@ export default class DateField extends Component {
 }
 
 DateField.defaultProps = {
-  pattern: true,
+  pattern: false,
   strict: true,
   expandOnFocus: true,
   collapseOnChange: true,
@@ -654,4 +663,5 @@ DateField.defaultProps = {
 }
 
 DateField.propTypes = {
+  dateFormat: PropTypes.string.isRequired
 }

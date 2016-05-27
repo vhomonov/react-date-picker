@@ -43,7 +43,9 @@
 
 .react-date-picker__transition-month-view--theme-default {
   border: 1px solid gray; }
-  .react-date-picker__transition-month-view--theme-default .react-date-picker__month-view--theme-default {
+  .react-date-picker__transition-month-view--theme-default .react-date-picker__month-view--theme-default,
+  .react-date-picker__transition-month-view--theme-default .react-date-picker__multi-month-view--theme-default,
+  .react-date-picker__transition-month-view--theme-default .react-date-picker__date-picker--theme-default {
     border: none; }
 
 .react-date-picker__navigation-view--theme-default {

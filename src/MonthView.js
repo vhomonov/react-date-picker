@@ -22,12 +22,18 @@ const RENDER_DAY = (props) => {
 }
 
 const prepareViewDate = function (props, state) {
-  return props.viewDate === undefined ?
+  const viewDate = props.viewDate === undefined ?
         state.viewDate :
         props.viewDate
+
+  if (!viewDate && props.moment) {
+    return toMoment(props.moment)
+  }
+
+  return viewDate
 }
 
-const prepareDate = function(props, state) {
+const prepareDate = function (props, state) {
   if (props.range) {
     return null
   }
@@ -37,39 +43,34 @@ const prepareDate = function(props, state) {
           props.date
 }
 
-const prepareRange = function(props, state){
-  if (props.moment){
+const prepareRange = function (props, state) {
+  if (props.moment) {
     return null
   }
 
-  return props.partialRange?
-    props.range || state.range:
+  return props.partialRange ?
+    props.range || state.range :
     state.range || props.range
-
 }
 
-const prepareActiveDate = function(props, state) {
-
+const prepareActiveDate = function (props, state) {
   const fallbackDate = prepareDate(props, state) || ((prepareRange(props, state) || [])[0])
 
-  const activeDate = props.activeDate === undefined?
-      //only fallback to date if activeDate not specified
-      (state.activeDate || fallbackDate):
-
+  const activeDate = props.activeDate === undefined ?
+      // only fallback to date if activeDate not specified
+      (state.activeDate || fallbackDate) :
       props.activeDate
 
   const daysInView = props.daysInView
 
-  if (activeDate && daysInView && props.constrainActiveInView){
-
+  if (activeDate && daysInView && props.constrainActiveInView) {
     const activeMoment = this.toMoment(activeDate)
 
-    if (!isInView(activeMoment, props)){
-
+    if (!isInView(activeMoment, props)) {
       const date = fallbackDate
       const dateMoment = this.toMoment(date)
 
-      if (date && isInView(dateMoment, props) && isValidActiveDate(+dateMoment, props)){
+      if (date && isInView(dateMoment, props) && isValidActiveDate(+dateMoment, props)) {
         return date
       }
 
@@ -77,7 +78,7 @@ const prepareActiveDate = function(props, state) {
     }
   }
 
-  return isValidActiveDate(+activeDate, props)? activeDate: null
+  return isValidActiveDate(+activeDate, props) ? activeDate : null
 }
 
 const isInView = function (mom, props) {
@@ -106,11 +107,11 @@ const isValidActiveDate = function (timestamp, props) {
 
 export default class MonthView extends Component {
 
-  isInView(moment, props){
+  isInView(moment, props) {
     return isInView(moment, props || this.p)
   }
 
-  constructor(props){
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -121,25 +122,24 @@ export default class MonthView extends Component {
     }
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.updateBem(this.props)
     this.updateToMoment(this.props)
   }
 
-  componentWillReceiveProps(nextProps){
-    if (nextProps.defaultClassName != this.props.defaultClassName){
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.defaultClassName != this.props.defaultClassName) {
       this.updateBem(nextProps)
     }
 
     this.updateToMoment(nextProps)
   }
 
-  updateBem(props){
+  updateBem(props) {
     this.bem = bemFactory(props.defaultClassName)
   }
 
-  updateToMoment(props){
-
+  updateToMoment(props) {
     this.toMoment = (value, dateFormat) => {
       return toMoment(value, {
         locale: props.locale,
@@ -150,7 +150,7 @@ export default class MonthView extends Component {
     TODAY = +this.toMoment().startOf('day')
   }
 
-  prepareClassName(props){
+  prepareClassName(props) {
     return join(
       props.className,
       this.bem(),
@@ -158,7 +158,7 @@ export default class MonthView extends Component {
     )
   }
 
-  prepareProps(thisProps, state){
+  prepareProps(thisProps, state) {
     const props = this.p = assign({}, thisProps)
 
     state = state || this.state
@@ -168,41 +168,41 @@ export default class MonthView extends Component {
 
     const { minDate, maxDate } = props
 
-    if (minDate){
+    if (minDate) {
       props.minDateMoment = this.toMoment(props.minDate).startOf('day')
       props.minDate = +props.minDateMoment
     }
 
-    if (maxDate){
+    if (maxDate) {
       props.maxDateMoment = this.toMoment(props.maxDate)
       props.maxDate = +props.maxDateMoment
     }
 
+    const date = prepareDate(props, state)
+
+    if (date) {
+      props.moment = props.moment || (props.range ? null : this.toMoment(date).startOf('day'))
+      props.timestamp = props.moment ? +props.moment : null
+    }
+
     props.viewMoment = props.viewMoment || this.toMoment(prepareViewDate(props, state))
 
-    if (props.constrainViewDate && props.minDate && props.viewMoment.isBefore(props.minDate)){
+    if (props.constrainViewDate && props.minDate && props.viewMoment.isBefore(props.minDate)) {
       props.minContrained = true
       props.viewMoment = this.toMoment(props.minDate)
     }
 
-    if (props.constrainViewDate && props.maxDate && props.viewMoment.isAfter(props.maxDate)){
+    if (props.constrainViewDate && props.maxDate && props.viewMoment.isAfter(props.maxDate)) {
       props.maxConstrained = true
       props.viewMoment = this.toMoment(props.maxDate)
     }
 
     props.viewMonthStart = this.toMoment(props.viewMoment).startOf('month')
-    props.viewMonthEnd  = this.toMoment(props.viewMoment).endOf('month')
-
-    const date = prepareDate(props, state)
-
-    if (date){
-      props.moment = props.moment || (props.range? null: this.toMoment(date).startOf('day'))
-      props.timestamp = props.moment? +props.moment: null
-    }
+    props.viewMonthEnd = this.toMoment(props.viewMoment).endOf('month')
 
     const range = prepareRange(props, state)
 
-    if (range){
+    if (range) {
       props.range = range.map(d => this.toMoment(d).startOf('day'))
       props.rangeStart = state.rangeStart || (props.range.length == 1? props.range[0]: null)
     }
@@ -211,7 +211,7 @@ export default class MonthView extends Component {
 
     const activeDate = prepareActiveDate.call(this, props, state)
 
-    if (activeDate){
+    if (activeDate) {
       props.activeDate = +this.toMoment(activeDate).startOf('day')
     }
 

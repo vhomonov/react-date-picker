@@ -176,6 +176,7 @@
             transform: translate3d(0%, 0px, 0px); }
 
 .react-date-picker--transition-right {
+  z-index: 1111;
   -webkit-transform: translate3d(100%, 0px, 0px);
           transform: translate3d(100%, 0px, 0px); }
   .react-date-picker--transition-right.react-date-picker__prev {
@@ -188,8 +189,6 @@
 .react-date-picker__prev.react-date-picker--transition,
 .react-date-picker__center.react-date-picker--transition,
 .react-date-picker__next.react-date-picker--transition {
-  -webkit-transition-duration: 0.2s;
-          transition-duration: 0.2s;
   -webkit-transition-property: -webkit-transform;
   transition-property: -webkit-transform;
   transition-property: transform;
