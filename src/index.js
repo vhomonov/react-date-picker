@@ -9,6 +9,7 @@ import MultiMonthView from './MultiMonthView'
 
 import NavBar from './NavBar'
 import DateField from './DateField'
+import DatePicker from './DatePicker'
 import DateFormatInput from './DateFormatInput'
 
 export default MonthView
@@ -21,6 +22,7 @@ export {
   MultiMonthView,
   NavBar,
   DateField,
+  DatePicker,
   TimePicker,
   TimeInput
 }

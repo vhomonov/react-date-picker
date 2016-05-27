@@ -192,15 +192,30 @@ export default class TransitionView extends Component {
     </Flex>
   }
 
+  getViewSize() {
+    return this.view.getViewSize ?
+      this.view.getViewSize() || 1 :
+      1
+  }
+
   renderAt(index) {
     if (!this.state.rendered || !this.view){ // } || this.state.prepareTransition != -index) {
       return null
     }
 
-    const viewSize = this.view.getViewSize ? this.view.getViewSize() || 1 : 1
+    const viewSize = this.getViewSize()
+    const viewDiff = viewSize * index
 
     const childProps = this.child.props
     const renderedProps = this.renderedChildProps
+
+    let viewDate = moment(this.viewDate).add(viewDiff, 'month')
+
+    if (this.nextViewDate && this.state.prepareTransition == -index) {
+      // we're transitioning to this viewDate, so make sure
+      // it renders the date we'll need at the end of the transition
+      viewDate = this.nextViewDate
+    }
 
     const newProps = assign({
       date: renderedProps.date || renderedProps.moment,
@@ -209,7 +224,7 @@ export default class TransitionView extends Component {
       dateFormat: renderedProps.dateFormat,
       locale: renderedProps.locale
     }, {
-      viewDate: moment(this.viewDate).add(viewSize * index, 'month'),
+      viewDate,
       key: index,
       navigation: false,
       className: join(
@@ -251,6 +266,7 @@ export default class TransitionView extends Component {
       return
     }
 
+    console.log('dateString', dateString);
     if (this.state.transition) {
       this.nextViewDate = dateMoment
       return

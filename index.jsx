@@ -88,10 +88,77 @@ var App = React.createClass({
         date = this.props.date || date
 
         return <div style={{margin: 10}}>
+        <DateField pattern={false} dateFormat="YYYY MM DD" />
+        <TransitionView>
+          <MonthView dateFormat="DD/MM/YYYY" defaultDate="20/04/2016" onChange={() => {}}/>
+        </TransitionView>
 
+        <DateFormatInput defaultValue={new Date()} autoFocus dateFormat="A YYYY:MM:DD--hh:mm:ss!!"/>
+        <br />
+        {/*<TimeInput format="hh:mm:ss A" xonChange={this.onTimeChange} defaultValue={this.state.time}/>*/}
+        <br />
+        <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
+        <br />
+        <DateField
+          dateFormat="YYYY-MM-DD hh:mm a"
+          defaultValue="2016-04-02 04:11 am"
+          xonChange={this.onChange}
+        >
+            <DatePicker />
+        </DateField>
+        <br />
+        <input defaultValue="dadas"/>
 
-          <MonthView dateFormat="DD/MM/YYYY" date="20/04/2016" onChange={() => {}}/>
+        navview
+          {/*<MonthView
+            className="xxx"
+            minDate="2016-10-10"
+            maxDate="2016-11-11"
+            locale={LOCALE}
+            xrange={R}
+            xdefaultRange={[]}
+            onRenderDay={(props) => {
+              props.onClick = () => {
+                console.log(props.dateMoment.format('YYYY-MM-DD'), props.disabled)
+              }
+              return props
+            }}
+            isDisabledDay={(props) => {
+              return props.dateMoment.format('YYYY-MM-DD') == '2016-10-20'
+            }}
 
+          />*/}
+        transition view
+          <MonthView
+            style={{maxWidth: 400}}
+            locale={LOCALE}
+            onRenderDay={(props) => {
+              props.onClick = () => {
+                console.log(props.dateMoment.format('YYYY-MM-DD'), props.disabled)
+              }
+              return props
+            }}
+            xisDisabledDay={(props) => {
+              return props.dateMoment.format('YYYY-MM-DD') == '2016-10-20'
+            }}
+            defaultRange={[]}
+          >
+          </MonthView>
+
+          <MultiMonthView
+            style={{maxWidth: 1200}}
+            maxDate="2016-08-20"
+            defaultRange={[]}
+            size={4}
+          />
+        <p>Select locale: <select value={LOCALE} onChange={this.onLocaleChange}>
+                <option value="en">English (US)</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="es">Spanish</option>
+                <option value="ro">Romanian</option>
+            </select>
+        </p>
 
         </div>
     },
