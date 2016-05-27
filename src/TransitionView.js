@@ -222,7 +222,8 @@ export default class TransitionView extends Component {
       range: renderedProps.range,
       activeDate: renderedProps.activeDate,
       dateFormat: renderedProps.dateFormat,
-      locale: renderedProps.locale
+      locale: renderedProps.locale,
+      tabIndex: -1
     }, {
       viewDate,
       key: index,

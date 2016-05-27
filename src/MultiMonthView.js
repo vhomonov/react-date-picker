@@ -426,7 +426,6 @@ export default class MultiMonthView extends Component {
   }
 
   onActiveDateChange({ dateMoment, timestamp }) {
-
     const valid = this.views.reduce((valid, view) => {
       return valid && view.isValidActiveDate(timestamp)
     }, true)
