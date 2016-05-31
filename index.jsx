@@ -88,13 +88,18 @@ var App = React.createClass({
         date = this.props.date || date
 
         return <div style={{margin: 10}}>
-        <DateField pattern={false} dateFormat="YYYY MM DD" />
         <TransitionView>
+          <NavBar style={{color: 'red'}} />
+          <DatePicker />
+        </TransitionView>
+        {/*<DateField pattern={false} dateFormat="YYYY MM DD" />
+        <TransitionView transitionDuration="0.1s">
           <MonthView dateFormat="DD/MM/YYYY" defaultDate="20/04/2016" onChange={() => {}}/>
         </TransitionView>
 
         <DateFormatInput defaultValue={new Date()} autoFocus dateFormat="A YYYY:MM:DD--hh:mm:ss!!"/>
         <br />
+        */}
         {/*<TimeInput format="hh:mm:ss A" xonChange={this.onTimeChange} defaultValue={this.state.time}/>*/}
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>

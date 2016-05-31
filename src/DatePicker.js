@@ -38,6 +38,12 @@ export default class DatePicker extends Component {
     </Flex>
   }
 
+  focus() {
+    if (this.view) {
+      this.view.focus()
+    }
+  }
+
   onViewKeyDown(...args) {
     this.view.onViewKeyDown(...args)
   }

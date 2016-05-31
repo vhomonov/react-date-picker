@@ -66,12 +66,17 @@ export default class TransitionView extends Component {
     })
   }
 
+  getViewChild() {
+    return React.Children.toArray(this.props.children)
+      .filter(c => c && c.props && c.props.isDatePicker)[0]
+  }
+
   prepareChildProps(child, extraProps) {
     if (this.view) {
       return this.view.p
     }
 
-    child = child || React.Children.toArray(this.props.children)[0]
+    child = child || this.getViewChild()
 
     return assign({}, child.props, extraProps)
   }
@@ -79,8 +84,7 @@ export default class TransitionView extends Component {
   render() {
     const props = this.props
 
-    const children = React.Children.toArray(props.children)
-    const child = this.child = children[0]
+    const child = this.child = this.getViewChild()
 
     let viewDate = this.state.viewDate || props.viewMoment || props.viewDate
 
@@ -163,13 +167,13 @@ export default class TransitionView extends Component {
     let navBar
 
     if (props.navBar) {
-      navBar = <NavBar
-        minDate={renderedChildProps.minDate}
-        maxDate={renderedChildProps.maxDate}
-        secondary
-        viewDate={this.viewDate}
-        onViewDateChange={onViewDateChange}
-      />
+      navBar = this.renderNavBar({
+        minDate: renderedChildProps.minDate,
+        maxDate: renderedChildProps.maxDate,
+        secondary: true,
+        viewDate: this.viewDate,
+        onViewDateChange
+      })
     }
 
     return <Flex
@@ -193,6 +197,24 @@ export default class TransitionView extends Component {
     </Flex>
   }
 
+  renderNavBar(navBarProps) {
+    const props = this.props
+    const navBar = React.Children.toArray(props.children)
+      .filter(c => c && c.props && c.props.isDatePickerNavBar)[0]
+
+    if (navBar) {
+      const newProps = assign({}, navBarProps, navBar.props)
+
+      // have viewDate & onViewDateChange win over initial navBar.props
+      newProps.viewDate = navBarProps.viewDate
+      newProps.onViewDateChange = navBarProps.onViewDateChange
+
+      return React.cloneElement(navBar, newProps)
+    }
+
+    return <NavBar {...navBarProps} />
+  }
+
   getViewSize() {
     return this.view.getViewSize ?
       this.view.getViewSize() || 1 :
@@ -200,7 +222,7 @@ export default class TransitionView extends Component {
   }
 
   renderAt(index) {
-    if (!this.state.rendered || !this.view){ // } || this.state.prepareTransition != -index) {
+    if (!this.state.rendered || !this.view) { // || this.state.prepareTransition != -index ) {
       return null
     }
 
