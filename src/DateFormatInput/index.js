@@ -169,7 +169,7 @@ export default class DateFormatInput extends Component {
       }
     }
 
-    if (preventDefault || key == 'Backspace' || key == 'Delete') {
+    if (preventDefault || key == 'Backspace' || key == 'Delete' || key == ' ') {
       if (!preventDefault) {
         this.setCaretPosition(this.caretPos = {
           start: range.start + (key == 'Backspace' ? -1 : 1)

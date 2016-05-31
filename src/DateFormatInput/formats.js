@@ -71,7 +71,6 @@ const handleUnidentified = (format, { event, currentValue, range }) => {
   const caretPos = { start: range.start + 1 }
 
   if (newChar * 1 != newChar) {
-    console.log("'al'");
     return {
       preventDefault: false,
       value: currentValue,
@@ -81,15 +80,29 @@ const handleUnidentified = (format, { event, currentValue, range }) => {
 
   let value
   let valid
-  do {
-    value = replaceAt({ value: currentValue, index, str: newChar })
-    valid = isValid(value, format)
-    index++
 
-    if (!valid) {
-      caretPos.start++
-    }
-  } while (!valid && index <= format.end)
+  value = replaceAt({ value: currentValue, index, str: newChar })
+  valid = isValid(value, format)
+
+  if (!valid && index == 0 && newChar == `${format.max}`[0]) {
+    valid = true
+    value = format.max
+    caretPos.start++
+  }
+
+  if (!valid) {
+    do {
+      value = times(index).map(() => '0').join('') +
+        replaceAt({ value: currentValue, index, str: newChar }).substring(index)
+
+      valid = isValid(value, format)
+      index++
+
+      if (!valid) {
+        caretPos.start++
+      }
+    } while (!valid && index <= format.end)
+  }
 
   if (valid) {
     value = handleUpdate(value, format, { range })
@@ -192,7 +205,7 @@ const FORMATS = {
 
   YYYY: {
     min: 1900,
-    max: 2400,
+    max: 4000,
     default: '2000',
     handleDelete,
     handleBackspace,

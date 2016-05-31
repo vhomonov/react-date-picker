@@ -16,11 +16,12 @@ import BasicMonthView, { getDaysInMonthView } from './BasicMonthView'
 
 let TODAY
 
-const NAV = {
+const NAV_KEYS = {
   ArrowUp: -7,
   ArrowDown: 7,
   ArrowLeft: -1,
   ArrowRight: 1,
+
   PageUp(mom) {
     return mom.add(-1, 'month')
   },
@@ -614,7 +615,8 @@ export default class MonthView extends Component {
       this.confirm(this.p.activeDate, event)
     }
 
-    const dir = NAV[key]
+    const navKeys = this.p.navKeys || NAV_KEYS
+    const dir = navKeys[key]
 
     if (!dir) {
       return
@@ -645,8 +647,9 @@ export default class MonthView extends Component {
       return props.navigate(dir, event)
     }
 
+    event.preventDefault()
+
     if (props.activeDate) {
-      event.preventDefault()
 
       const mom = this.toMoment(props.activeDate)
       let nextMoment
@@ -881,3 +884,5 @@ MonthView.propTypes = {
   onViewDateChange: PropTypes.func,
   onActiveDateChange: PropTypes.func
 }
+
+export { NAV_KEYS }

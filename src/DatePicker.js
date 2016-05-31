@@ -3,8 +3,7 @@ import Component from 'react-class'
 
 import assign from 'object-assign'
 
-import MonthView from './MonthView'
-import TransitionView from './TransitionView'
+import MonthView, { NAV_KEYS } from './MonthView'
 import toMoment from './toMoment'
 import join from './join'
 import Clock from './Clock'
@@ -77,4 +76,8 @@ DatePicker.defaultProps = {
 }
 
 DatePicker.propTypes = {
+}
+
+export {
+  NAV_KEYS
 }

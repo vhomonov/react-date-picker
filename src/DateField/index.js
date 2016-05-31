@@ -13,7 +13,7 @@ import { CLEAR_ICON } from './icons'
 import moment from 'moment'
 import join from '../join'
 import toMoment from '../toMoment'
-import DatePicker from '../DatePicker'
+import DatePicker, { NAV_KEYS } from '../DatePicker'
 
 const getPicker = (props) => {
   return React.Children.toArray(props.children)
@@ -22,13 +22,6 @@ const getPicker = (props) => {
 }
 
 const FIND_INPUT = c => c && (c.type === 'input' || (c.props && c.isDateInput))
-
-const ARROW_KEYS = {
-  ArrowUp: 1,
-  ArrowDown: 1,
-  ArrowLeft: 1,
-  ArrowRight: 1
-}
 
 const joinFunctions = (a, b) => {
   if (a && b) {
@@ -59,7 +52,6 @@ export default class DateField extends Component {
 
   render() {
     const props = this.prepareProps(this.props)
-    // const tabIndex = this.isFocused() ? -1 : (this.props.tabIndex || 0)
 
     return <Flex
       inline
@@ -411,7 +403,7 @@ export default class DateField extends Component {
   onViewKeyDown(event) {
     const key = event.key
 
-    if (this.picker && (key == 'Enter' || (key in ARROW_KEYS))) {
+    if (this.picker && (key == 'Enter' || (key in NAV_KEYS))) {
       this.picker.onViewKeyDown(event)
     }
   }
@@ -434,11 +426,16 @@ export default class DateField extends Component {
     }
 
     if (expanded) {
-      if (!currentPosition || !currentPosition.time) {
-        // the time has not changed, so it's safe to forward the event
+      console.log('NAV_KEYS', NAV_KEYS, key);
+      if (key in NAV_KEYS) {
         this.onViewKeyDown(event)
         return false
       }
+      // if (!currentPosition || !currentPosition.time) {
+      //   // the time has not changed, so it's safe to forward the event
+      //   this.onViewKeyDown(event)
+      //   return false
+      // }
     }
 
     return true
