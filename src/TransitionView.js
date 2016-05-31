@@ -101,6 +101,7 @@ export default class TransitionView extends Component {
     const onViewDateChange = joinFunctions(this.onViewDateChange, props.onViewDateChange)
 
     const newProps = {
+      key: 'picker',
       ref: (v) => { this.view = v },
 
       viewDate: this.viewDate,
@@ -250,9 +251,9 @@ export default class TransitionView extends Component {
     return this.view
   }
 
-  onViewKeyDown(...args) {
-    return this.view.onViewKeyDown(...args)
-  }
+  // onViewKeyDown(...args) {
+  //   return this.view.onViewKeyDown(...args)
+  // }
 
   isInView(...args) {
     return this.view.isInView(...args)
@@ -267,7 +268,6 @@ export default class TransitionView extends Component {
       return
     }
 
-    console.log('dateString', dateString);
     if (this.state.transition) {
       this.nextViewDate = dateMoment
       return
@@ -324,6 +324,7 @@ export default class TransitionView extends Component {
       prepareTransition: 0
     })
 
+    this.getView().focus()
     delete this.nextViewDate
   }
 }
