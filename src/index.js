@@ -10,6 +10,9 @@ import MultiMonthView from './MultiMonthView'
 import NavBar from './NavBar'
 import Footer from './Footer'
 
+import Clock from './Clock'
+import ClockInput from './ClockInput'
+
 import DateField from './DateField'
 import DatePicker from './DatePicker'
 import DateFormatInput from './DateFormatInput'
@@ -24,6 +27,10 @@ export {
   MultiMonthView,
   NavBar,
   Footer,
+
+  Clock,
+  ClockInput,
+
   DateField,
   DatePicker,
   TimePicker,

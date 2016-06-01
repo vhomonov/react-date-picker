@@ -12,6 +12,13 @@ import { Flex } from 'react-flex'
 
 export default class DatePicker extends Component {
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      timeFocused: false
+    }
+  }
   prepareDate(props) {
     return toMoment(props.date, props)
   }
@@ -48,7 +55,7 @@ export default class DatePicker extends Component {
 
   renderChildren([navBar, inner, footer]) {
     const props = this.p
-    const timePart = props.hasTime && this.renderTimePart()
+    const timePart = props.hasTime && this.renderClockInput()
 
     const children = [
       navBar,
@@ -77,12 +84,56 @@ export default class DatePicker extends Component {
     this.view.onViewKeyDown(...args)
   }
 
-  renderTimePart() {
+  isTimeInputFocused() {
+    return this.state.timeFocused
+  }
+
+  renderClockInput() {
+    const clockInput = null
+    // const clockInput = React.Children
+    //   .toArray(this.props.children)
+    //   .filter(c => c && c.props && c.props.isClockInput)[0]
+
+    const clockInputProps = {
+      ref: (clkInput) => { this.clockInput = clkInput },
+      dateFormat: this.p.dateFormat,
+      defaultValue: this.p.date,
+      onFocus: this.onClockInputFocus,
+      onBlur: this.onClockInputBlur,
+      onChange: this.onTimeChange,
+      onMouseDown: this.onClockInputMouseDown,
+      onEnterKey: this.props.onClockEnterKey
+    }
+
+    if (clockInput) {
+      return React.cloneElement(clockInput, clockInputProps)
+    }
+
     return <ClockInput
-      dateFormat={this.p.dateFormat}
-      defaultValue={this.p.date}
-      onChange={this.onTimeChange}
+      {...clockInputProps}
     />
+  }
+
+  onClockInputFocus() {
+    this.setState({
+      timeFocused: true
+    })
+
+    this.props.onClockInputFocus()
+  }
+
+  onClockInputBlur() {
+    this.setState({
+      timeFocused: false
+    })
+
+    this.props.onClockInputBlur()
+  }
+
+  onClockInputMouseDown(event) {
+    event.stopPropagation()
+
+    this.clockInput.focus()
   }
 
   onTimeChange(value, timeFormat) {
@@ -98,7 +149,11 @@ DatePicker.defaultProps = {
   isDatePicker: true,
   wrapTime: false,
 
-  onTimeChange: () => {}
+  onTimeChange: () => {},
+
+  onClockEnterKey: () => {},
+  onClockInputBlur: () => {},
+  onClockInputFocus: () => {}
 }
 
 DatePicker.propTypes = {

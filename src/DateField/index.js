@@ -263,7 +263,7 @@ export default class DateField extends Component {
       props.theme && `react-date-field--theme-${props.theme}`,
       `react-date-field--picker-position-${position}`,
 
-      this.isFocused() && join(
+      this.isLazyFocused() && join(
         'react-date-field--focused',
         props.focusedClassName
       ),
@@ -322,7 +322,7 @@ export default class DateField extends Component {
 
       const pickerProps = props.pickerProps
 
-      const onMouseDown = joinFunctions(pickerProps.onMouseDown, preventDefault)
+      const onMouseDown = joinFunctions(pickerProps.onMouseDown, this.onPickerMouseDown)
       const onChange = joinFunctions(pickerProps.onChange, this.onPickerChange)
 
       const date = props.valid && props.date
@@ -336,6 +336,8 @@ export default class DateField extends Component {
           }
         },
 
+        onClockInputBlur: this.onClockInputBlur,
+        onClockEnterKey: this.onClockEnterKey,
         footerClearDate: props.clearDate || props.minDate,
 
         onFooterCancelClick: this.onFooterCancelClick,
@@ -380,6 +382,8 @@ export default class DateField extends Component {
       return acc
     }, {})
 
+    console.log('time', time);
+
     this.time = time
   }
 
@@ -414,7 +418,7 @@ export default class DateField extends Component {
         })
       }
 
-      this.setValue(date)
+      this.setValue(date, { skipTime: !!this.time })
     } else {
       this.setExpanded(false)
     }
@@ -485,6 +489,14 @@ export default class DateField extends Component {
     }
   }
 
+  onPickerMouseDown(event) {
+    preventDefault(event)
+
+    if (!this.isFocused()) {
+      this.focus()
+    }
+  }
+
   onFieldKeyDown(event) {
     const key = event.key
     const expanded = this.isExpanded()
@@ -525,6 +537,18 @@ export default class DateField extends Component {
     return this.state.focused
   }
 
+  isLazyFocused() {
+    return this.isFocused() || this.isTimeInputFocused()
+  }
+
+  isTimeInputFocused() {
+    if (this.picker) {
+      return this.picker.isTimeInputFocused()
+    }
+
+    return false
+  }
+
   onFieldFocus(event) {
     if (this.state.focused) {
       return
@@ -550,9 +574,35 @@ export default class DateField extends Component {
       focused: false
     })
 
-    this.setExpanded(false)
-
     this.props.onBlur(event)
+
+    if (!this.picker) {
+      this.onLazyBlur()
+      return
+    }
+
+    setTimeout(() => this.onLazyBlur(), 0)
+  }
+
+  onClockEnterKey() {
+    this.focus()
+    this.onFooterOkClick()
+  }
+
+  onClockInputBlur() {
+    setTimeout(() => {
+      if (!this.isFocused()) {
+        this.onLazyBlur()
+      }
+    }, 0)
+  }
+
+  onLazyBlur() {
+    if (this.isTimeInputFocused()) {
+      return
+    }
+
+    this.setExpanded(false)
 
     if (!this.isValid() && this.props.validateOnBlur) {
       const value = this.lastValidDate && this.p.text != '' ?
@@ -707,7 +757,9 @@ export default class DateField extends Component {
   focusField() {
     const input = findDOMNode(this.field)
 
-    input.focus()
+    if (input) {
+      input.focus()
+    }
   }
 
   focus() {

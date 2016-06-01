@@ -1,6 +1,7 @@
 import React from 'react'
 import Component from 'react-class'
 
+import assign from 'object-assign'
 import join from './join'
 
 import toMoment from './toMoment'
@@ -53,19 +54,37 @@ export default class ClockInput extends Component {
   }
 
   renderTimeInput() {
-    return <DateFormatInput
-      tabIndex={0}
-      {...this.props}
-      ref={(field) => { this.field = field }}
-      value={this.value}
-      dateFormat={this.dateFormat}
-      onChange={this.onChange}
-    />
+    const props = this.props
+    const dateInput = React.Children
+                  .toArray(props.children)
+                  .filter(child => child && child.props && child.props.isDateInput)[0]
+
+    const dateInputProps = assign({
+      tabIndex: 0
+    }, this.props, {
+      ref: (field) => { this.field = field },
+      value: this.value,
+      dateFormat: this.dateFormat,
+      onChange: this.onChange,
+      onKeyDown: this.onKeyDown
+    })
+
+    if (dateInput) {
+      return React.cloneElement(dateInput, dateInputProps)
+    }
+
+    return <DateFormatInput {...dateInputProps} style={null} />
   }
 
   focus() {
     if (this.field) {
       this.field.focus()
+    }
+  }
+
+  onKeyDown(event) {
+    if (this.props.onEnterKey && event.key == 'Enter') {
+      this.props.onEnterKey(event)
     }
   }
 
@@ -122,6 +141,7 @@ ClockInput.defaultProps = {
   theme: 'default',
 
   wrapTime: false,
+  isClockInput: true,
 
   onTimeChange: () => {}
 }

@@ -105,6 +105,10 @@ export default class DateFormatInput extends Component {
     />
   }
 
+  focus(){
+    findDOMNode(this).focus()
+  }
+
   onFocus(event) {
     if (this.props.onFocus) {
       this.props.onFocus(event)

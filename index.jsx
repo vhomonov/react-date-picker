@@ -105,7 +105,7 @@ var App = React.createClass({
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />
         <DateField
-          expanded
+          xexpanded
           expandOnFocus={false}
           pattern
           xminDate="2016-03-05 02:00 am"
