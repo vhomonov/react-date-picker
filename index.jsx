@@ -97,12 +97,14 @@ var App = React.createClass({
         <br />
         */}
         {/*<TimeInput format="hh:mm:ss A" xonChange={this.onTimeChange} defaultValue={this.state.time}/>*/}
-        <DateFormatInput defaultValue={new Date()} autoFocus dateFormat="YYYY:MM:DD--hh:mm:ss!!"/>
+        <MonthView minDate="2016-05-05" />
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />
         <DateField
+          expandOnFocus={false}
           pattern
+          minDate="2016-05-05 02:00 am"
           dateFormat="YYYY-MM-DD hh:mm a"
           defaultValue="2016-04-02 04:11 am"
           xonChange={this.onChange}
@@ -150,9 +152,9 @@ var App = React.createClass({
 
           <MultiMonthView
             style={{maxWidth: 1200}}
-            maxDate="2016-08-20"
-            defaultRange={[]}
-            size={4}
+            xmaxDate="2016-08-20"
+            xdefaultRange={[]}
+            size={2}
           />
         <p>Select locale: <select value={LOCALE} onChange={this.onLocaleChange}>
                 <option value="en">English (US)</option>

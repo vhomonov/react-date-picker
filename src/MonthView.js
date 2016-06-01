@@ -10,7 +10,9 @@ import join from './join'
 import isInRange from './utils/isInRange'
 
 import NavBar from './NavBar'
+import Footer from './Footer'
 import bemFactory from './bemFactory'
+import joinFunctions from './joinFunctions'
 
 import BasicMonthView, { getDaysInMonthView } from './BasicMonthView'
 
@@ -515,19 +517,46 @@ export default class MonthView extends Component {
   renderChildren(children) {
     const props = this.p
     const navBar = this.renderNavBar(props)
+    const footer = this.renderFooter(props)
 
-    if (navBar) {
-      children = [
-        navBar,
-        children
-      ]
-    }
-
-    return children
+    return [
+      navBar,
+      children,
+      footer
+    ]
   }
 
-  renderNavBar() {
-    const props = this.p
+  renderFooter(props) {
+    if (!props.footer) {
+      return null
+    }
+
+    const footerProps = {
+      onTodayClick: props.onFooterTodayClick,
+      onClearClick: props.onFooterClearClick,
+      onOkClick: props.onFooterOkClick,
+      onCancelClick: props.onFooterCancelClick
+    }
+
+    const childFooter = React.Children.toArray(props.children)
+      .filter(c => c && c.props && c.props.isDatePickerFooter)[0]
+
+    if (childFooter) {
+      // also take into account the props on childFooter
+      // so we merge those with the other props already built
+      Object.keys(footerProps).forEach(key => {
+        if (childFooter.props[key]) {
+          footerProps[key] = joinFunctions(footerProps[key], childFooter.props[key])
+        }
+      })
+
+      return React.cloneElement(childFooter, footerProps)
+    }
+
+    return <Footer {...footerProps} />
+  }
+
+  renderNavBar(props) {
     const theme = props.theme
 
     const childNavBar = React.Children.toArray(props.children)
@@ -643,22 +672,22 @@ export default class MonthView extends Component {
   navigate(dir, event) {
     const props = this.p
 
+    const getNavigationDate = (dir, date, dateFormat) => {
+      const mom = moment.isMoment(date) ? date : this.toMoment(date, dateFormat)
+
+      return typeof dir == 'function' ?
+          dir(mom) :
+          mom.add(dir, 'day')
+    }
+
     if (props.navigate) {
-      return props.navigate(dir, event)
+      return props.navigate(dir, event, getNavigationDate)
     }
 
     event.preventDefault()
 
     if (props.activeDate) {
-
-      const mom = this.toMoment(props.activeDate)
-      let nextMoment
-
-      if (typeof dir == 'function') {
-        nextMoment = dir(mom)
-      } else {
-        nextMoment = mom.add(dir, 'day')
-      }
+      const nextMoment = getNavigationDate(dir, props.activeDate)
 
       this.gotoViewDate({ dateMoment: nextMoment })
     }
@@ -870,6 +899,7 @@ MonthView.defaultProps = {
   highlightWeekends: true,
   navOnDateClick: true,
   navigation: true,
+  footer: true,
 
   constrainViewDate: true,
 

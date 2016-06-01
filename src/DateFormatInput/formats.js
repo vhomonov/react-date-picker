@@ -18,7 +18,7 @@ const handleArrow = (format, { currentValue, key, dir }) => {
     value: clamp(currentValue * 1 + dir, {
       min: format.min,
       max: format.max,
-      circular: false
+      circular: true
     }),
     caretPos: true
   }
@@ -201,127 +201,132 @@ const handleMeridiemBackspace = (format, config) => {
   return handleMeridiemDelete(format, config)
 }
 
-const FORMATS = {
+const getFormats = () => {
+  return {
+    YYYY: {
+      min: 1900,
+      max: 4000,
+      default: '2000',
+      handleDelete,
+      handleBackspace,
+      handleArrow,
+      handlePageUp: handlePage,
+      handlePageDown: handlePage,
+      handleUnidentified: handleYearUnidentified
+    },
 
-  YYYY: {
-    min: 1900,
-    max: 4000,
-    default: '2000',
-    handleDelete,
-    handleBackspace,
-    handleArrow,
-    handlePageUp: handlePage,
-    handlePageDown: handlePage,
-    handleUnidentified: handleYearUnidentified
-  },
+    // YY: {
+    //   default: '00'
+    // },
 
-  // YY: {
-  //   default: '00'
-  // },
+    // M: { min: 1, max: 12, default: '1', maxLen: 2 },
+    MM: {
+      min: 1,
+      max: 12,
+      default: '01',
+      handleDelete,
+      handleBackspace,
+      handlePageUp: handlePageLeftPad,
+      handlePageDown: handlePageLeftPad,
+      handleUnidentified: handleUnidentifiedLeftPad,
+      handleArrow: handleArrowLeftPad
+    },
 
-  // M: { min: 1, max: 12, default: '1', maxLen: 2 },
-  MM: {
-    min: 1,
-    max: 12,
-    default: '01',
-    handleDelete,
-    handleBackspace,
-    handlePageUp: handlePageLeftPad,
-    handlePageDown: handlePageLeftPad,
-    handleUnidentified: handleUnidentifiedLeftPad,
-    handleArrow: handleArrowLeftPad
-  },
+    // D: { min: 1, max: 31, default: '1', maxLen: 2 },
+    DD: {
+      min: 1,
+      max: 31,
+      default: '01',
+      handlePageUp: handlePageLeftPad,
+      handlePageDown: handlePageLeftPad,
+      handleDelete,
+      handleBackspace,
+      handleUnidentified: handleUnidentifiedLeftPad,
+      handleArrow: handleArrowLeftPad
+    },
 
-  // D: { min: 1, max: 31, default: '1', maxLen: 2 },
-  DD: {
-    min: 1,
-    max: 31,
-    default: '01',
-    handlePageUp: handlePageLeftPad,
-    handlePageDown: handlePageLeftPad,
-    handleDelete,
-    handleBackspace,
-    handleUnidentified: handleUnidentifiedLeftPad,
-    handleArrow: handleArrowLeftPad
-  },
+    // H: {
+    //   min: 0, max: 23, default: '0', maxLen: 2,
+    //   handleDelete,
+    //   handleBackspace,
+    //   handleArrow: handleArrowLeftPad,
+    //   handlePageUp: handlePageLeftPad,
+    //   handlePageDown: handlePageLeftPad
+    // },
+    HH: {
+      time: true,
+      min: 0, max: 23, default: '00',
+      handleDelete,
+      handleBackspace,
+      handleUnidentified: handleUnidentifiedLeftPad,
+      handleArrow: handleArrowLeftPad,
+      handlePageUp: handlePageLeftPad,
+      handlePageDown: handlePageLeftPad
+    },
 
-  // H: {
-  //   min: 0, max: 23, default: '0', maxLen: 2,
-  //   handleDelete,
-  //   handleBackspace,
-  //   handleArrow: handleArrowLeftPad,
-  //   handlePageUp: handlePageLeftPad,
-  //   handlePageDown: handlePageLeftPad
-  // },
-  HH: {
-    time: true,
-    min: 0, max: 23, default: '00',
-    handleDelete,
-    handleBackspace,
-    handleUnidentified: handleUnidentifiedLeftPad,
-    handleArrow: handleArrowLeftPad,
-    handlePageUp: handlePageLeftPad,
-    handlePageDown: handlePageLeftPad
-  },
+    // h: { min: 1, max: 12, default: '1', maxLen: 2,
+    //   handleArrow: handleArrowLeftPad,
+    //   handlePageUp: handlePageLeftPad,
+    //   handlePageDown: handlePageLeftPad
+    // },
+    hh: { min: 1, max: 12, default: '01',
+      time: true,
+      handleDelete,
+      handleBackspace,
+      handleUnidentified: handleUnidentifiedLeftPad,
+      handleArrow: handleArrowLeftPad,
+      handlePageUp: handlePageLeftPad,
+      handlePageDown: handlePageLeftPad
+    },
 
-  // h: { min: 1, max: 12, default: '1', maxLen: 2,
-  //   handleArrow: handleArrowLeftPad,
-  //   handlePageUp: handlePageLeftPad,
-  //   handlePageDown: handlePageLeftPad
-  // },
-  hh: { min: 1, max: 12, default: '01',
-    time: true,
-    handleDelete,
-    handleBackspace,
-    handleUnidentified: handleUnidentifiedLeftPad,
-    handleArrow: handleArrowLeftPad,
-    handlePageUp: handlePageLeftPad,
-    handlePageDown: handlePageLeftPad
-  },
+    a: {
+      time: true,
+      length: 2,
+      default: 'am',
+      handleArrow: handleMeridiemArrow,
+      handlePageUp: handleMeridiemArrow,
+      handlePageDown: handleMeridiemArrow,
+      handleDelete: handleMeridiemDelete,
+      handleBackspace: handleMeridiemBackspace
+    },
+    A: {
+      length: 2,
+      time: true,
+      default: 'AM', upper: true,
+      handleArrow: handleMeridiemArrow,
+      handlePageUp: handleMeridiemArrow,
+      handlePageDown: handleMeridiemArrow,
+      handleDelete: handleMeridiemDelete,
+      handleBackspace: handleMeridiemBackspace
+    },
 
-  a: {
-    time: true,
-    length: 2,
-    default: 'am',
-    handleArrow: handleMeridiemArrow,
-    handlePageUp: handleMeridiemArrow,
-    handlePageDown: handleMeridiemArrow,
-    handleDelete: handleMeridiemDelete,
-    handleBackspace: handleMeridiemBackspace
-  },
-  A: {
-    length: 2,
-    time: true,
-    default: 'AM', upper: true,
-    handleArrow: handleMeridiemArrow,
-    handlePageUp: handleMeridiemArrow,
-    handlePageDown: handleMeridiemArrow,
-    handleDelete: handleMeridiemDelete,
-    handleBackspace: handleMeridiemBackspace
-  },
+    // m: { min: 0, max: 59, default: '0', maxLen: 2 },
+    mm: { min: 0, max: 59, default: '00',
+      time: true,
+      handleDelete,
+      handleBackspace,
+      handleUnidentified: handleUnidentifiedLeftPad,
+      handleArrow: handleArrowLeftPad,
+      handlePageUp: handlePageLeftPad,
+      handlePageDown: handlePageLeftPad
+    },
 
-  // m: { min: 0, max: 59, default: '0', maxLen: 2 },
-  mm: { min: 0, max: 59, default: '00',
-    time: true,
-    handleDelete,
-    handleBackspace,
-    handleUnidentified: handleUnidentifiedLeftPad,
-    handleArrow: handleArrowLeftPad,
-    handlePageUp: handlePageLeftPad,
-    handlePageDown: handlePageLeftPad
-  },
-
-  // s: { min: 0, max: 59, default: '0' },
-  ss: {
-    time: true,
-    min: 0, max: 59, default: '00',
-    handleDelete,
-    handleBackspace,
-    handleUnidentified: handleUnidentifiedLeftPad,
-    handleArrow: handleArrowLeftPad,
-    handlePageUp: handlePageLeftPad,
-    handlePageDown: handlePageLeftPad
+    // s: { min: 0, max: 59, default: '0' },
+    ss: {
+      time: true,
+      min: 0, max: 59, default: '00',
+      handleDelete,
+      handleBackspace,
+      handleUnidentified: handleUnidentifiedLeftPad,
+      handleArrow: handleArrowLeftPad,
+      handlePageUp: handlePageLeftPad,
+      handlePageDown: handlePageLeftPad
+    }
   }
 }
 
-export default FORMATS
+export {
+  getFormats
+}
+
+export default getFormats()

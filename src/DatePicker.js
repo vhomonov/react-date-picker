@@ -33,7 +33,7 @@ export default class DatePicker extends Component {
 
       <MonthView {...this.props} className={null} style={null} ref={view => { this.view = view }} />
 
-      {props.hasTime && this.renderClock()}
+      {props.hasTime && this.renderTimePart()}
     </Flex>
   }
 
@@ -45,6 +45,10 @@ export default class DatePicker extends Component {
 
   onViewKeyDown(...args) {
     this.view.onViewKeyDown(...args)
+  }
+
+  renderTimePart() {
+    return this.renderClock()
   }
 
   renderClock() {

@@ -14,25 +14,17 @@ import moment from 'moment'
 import join from '../join'
 import toMoment from '../toMoment'
 import DatePicker, { NAV_KEYS } from '../DatePicker'
+import joinFunctions from '../joinFunctions'
+import assignDefined from '../assignDefined'
 
-const getPicker = (props) => {
-  return React.Children.toArray(props.children)
-    .filter(c => c && c.props && c.props.isDatePicker)[0]
-    || <DatePicker />
+const getPicker = (props, cmp) => {
+  return React.Children
+    .toArray(props.children)
+    .filter(c => c && c.props && c.props.isDatePicker)[0] || <DatePicker />
 }
 
 const FIND_INPUT = c => c && (c.type === 'input' || (c.props && c.isDateInput))
 
-const joinFunctions = (a, b) => {
-  if (a && b) {
-    return (...args) => {
-      a(...args)
-      b(...args)
-    }
-  }
-
-  return a || b
-}
 
 const preventDefault = (event) => {
   event.preventDefault()
@@ -211,7 +203,7 @@ export default class DateField extends Component {
   }
 
   preparePickerProps(props) {
-    const picker = getPicker(props)
+    const picker = getPicker(props, this)
 
     if (!picker) {
       return null
@@ -308,6 +300,11 @@ export default class DateField extends Component {
       )
     })
 
+    assignDefined(newInputProps, {
+      minDate: props.minDate,
+      maxDate: props.maxDate
+    })
+
     return newInputProps
   }
 
@@ -315,7 +312,7 @@ export default class DateField extends Component {
     const props = this.p
 
     if (this.isExpanded()) {
-      const picker = getPicker(props)
+      const picker = getPicker(props, this)
 
       const pickerProps = props.pickerProps
 
@@ -324,7 +321,7 @@ export default class DateField extends Component {
 
       const date = props.valid && props.date
 
-      return React.cloneElement(picker, {
+      return React.cloneElement(picker, assignDefined({
         ref: (p) => {
           this.picker = p && p.getView ? p.getView() : p
 
@@ -332,6 +329,11 @@ export default class DateField extends Component {
             this.onViewDateChange(props.viewDate)
           }
         },
+
+        onFooterCancelClick: this.onFooterCancelClick,
+        onFooterTodayClick: this.onFooterTodayClick,
+        onFooterOkClick: this.onFooterOkClick,
+        onFooterClearClick: this.onFooterClearClick,
 
         dateFormat: props.dateFormat,
         theme: props.theme || pickerProps.theme,
@@ -350,10 +352,48 @@ export default class DateField extends Component {
 
         onMouseDown,
         onChange
-      })
+      }, {
+        minDate: props.minDate,
+        maxDate: props.maxDate
+      }))
     }
 
     return null
+  }
+
+  setValue(value, config) {
+    const dateMoment = this.toMoment(value)
+    const dateString = this.format(dateMoment)
+
+    this.onPickerChange(dateString, assign(config, { dateMoment }))
+  }
+
+  onFooterCancelClick() {
+    this.setExpanded(false)
+  }
+
+  onFooterTodayClick() {
+    this.setValue(
+      this.toMoment(new Date()).startOf('day'),
+      {
+        skipTime: this.props.skipTodayTime
+      })
+  }
+
+  onFooterOkClick() {
+    const activeDate = this.p.activeDate
+
+    if (activeDate) {
+      this.setValue(activeDate)
+    } else {
+      this.setExpanded(false)
+    }
+  }
+
+  onFooterClearClick() {
+    this.setValue(this.props.minDate || 0, {
+      skipTime: true
+    })
   }
 
   toMoment(value, props) {
@@ -408,7 +448,7 @@ export default class DateField extends Component {
     }
   }
 
-  onFieldKeyDown(event, currentPosition) {
+  onFieldKeyDown(event) {
     const key = event.key
     const expanded = this.isExpanded()
 
@@ -426,7 +466,6 @@ export default class DateField extends Component {
     }
 
     if (expanded) {
-      console.log('NAV_KEYS', NAV_KEYS, key);
       if (key in NAV_KEYS) {
         this.onViewKeyDown(event)
         return false
@@ -558,6 +597,7 @@ export default class DateField extends Component {
   }
 
   onTextChange(text) {
+    console.log('text', text);
     if (this.props.text === undefined) {
       this.setState({
         text
@@ -569,7 +609,7 @@ export default class DateField extends Component {
     }
   }
 
-  onPickerChange(dateString, { dateMoment }) {
+  onPickerChange(dateString, { dateMoment, skipTime = false }) {
     const props = this.p
 
     const currentDate = props.date
@@ -580,7 +620,7 @@ export default class DateField extends Component {
       const hasTime = dateFormat.indexOf('k') != -1 ||
                       dateFormat.indexOf('h') != -1
 
-      if (hasTime) {
+      if (hasTime && !skipTime) {
         ['hour', 'minute', 'second', 'millisecond'].forEach(part => {
           dateMoment.set(part, currentDate.get(part))
         })
@@ -656,7 +696,9 @@ DateField.defaultProps = {
 
   onExpandChange: () => {},
   onCollapse: () => {},
-  onExpand: () => {}
+  onExpand: () => {},
+
+  skipTodayTime: false
 }
 
 DateField.propTypes = {

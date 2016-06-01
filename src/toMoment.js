@@ -8,8 +8,10 @@ import CONFIG from './config'
  *
  * @param  {String/Date/Moment} value
  *
- * @param  {String} [dateFormat] if value is string, it will be parsed to a moment using this format.
- * You can skip this argument and only specify the config instead, where you can have a dateFormat property
+ * @param  {String} [dateFormat] if value is string, it will be parsed to a moment
+ * using this format.
+ * You can skip this argument and only specify the config instead,
+ * where you can have a dateFormat property
  *
  * @param  {Object} [config]
  * @param  {String} [config.dateFormat] a dateFormat string
@@ -19,7 +21,7 @@ import CONFIG from './config'
  * @return {Moment}
  */
 export default (value, dateFormat, config) => {
-  if (typeof dateFormat === 'object'){
+  if (typeof dateFormat === 'object') {
     config = dateFormat
     dateFormat = null
   }
@@ -29,12 +31,12 @@ export default (value, dateFormat, config) => {
 
   dateFormat = dateFormat || (config && config.dateFormat) || CONFIG.dateFormat
 
-  if (typeof value == 'string'){
+  if (typeof value == 'string') {
     return moment(value, dateFormat, locale, strict)
   }
 
-  value = value == null?
-            new Date():
+  value = value == null ?
+            new Date() :
             value
 
   return moment(value, undefined, locale, strict)

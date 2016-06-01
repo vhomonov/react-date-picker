@@ -27,12 +27,44 @@ export default class DateFormatInput extends Component {
 
     this.debounceSetValue = throttle(this.setValue, props.throttle || 100)
 
+    const { minDate, maxDate } = this.getMinMax(props)
+
     this.state = {
       positions,
       matches,
       propsValue: props.value !== undefined,
-      value: defaultValue
+      value: defaultValue,
+      minDate,
+      maxDate
     }
+  }
+
+  getMinMax(props) {
+    props = props || this.props
+
+    let minDate = null
+
+    if (props.minDate) {
+      minDate = this.toMoment(props.minDate, props)
+    }
+
+    let maxDate = null
+
+    if (props.maxDate) {
+      maxDate = this.toMoment(props.maxDate, props)
+    }
+
+    return {
+      minDate, maxDate
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { minDate, maxDate } = this.getMinMax(nextProps)
+
+    this.setState({
+      minDate, maxDate
+    })
   }
 
   componentDidUpdate() {
@@ -41,12 +73,12 @@ export default class DateFormatInput extends Component {
     }
   }
 
-  toMoment(value, dateFormat) {
-    const props = this.props
+  toMoment(value, props) {
+    props = props || this.props
 
     return toMoment(value, {
       locale: props.locale,
-      dateFormat: dateFormat || props.dateFormat
+      dateFormat: props.dateFormat || this.props.dateFormat
     })
   }
 
@@ -193,7 +225,7 @@ export default class DateFormatInput extends Component {
     if (!config.stop && newCaretPos !== undefined) {
       const updateCaretPos = () => this.setCaretPosition(newCaretPos)
       this.caretPos = newCaretPos
-      this.setStateValue(newValue, updateCaretPos)
+      this.setStateValue(newValue, updateCaretPos, { key, oldValue: valueStr, currentPosition })
     }
 
     if (config.preventDefault) {
@@ -212,10 +244,46 @@ export default class DateFormatInput extends Component {
     }
   }
 
-  setStateValue(value, callback) {
-    const dateMoment = this.toMoment(value)
+  format(mom, format) {
+    return mom.format(format || this.props.format)
+  }
+
+  setStateValue(value, callback, { key, oldValue, currentPosition }) {
+    let dateMoment = this.toMoment(value)
+
     if (!dateMoment.isValid()) {
-      return
+      const dir = (key == 'ArrowUp' || key == 'PageUp') ? 1 : -1
+
+      if (currentPosition.format == 'MM') {
+        // updating the month
+        dateMoment = this.toMoment(oldValue).add(dir, 'month')
+      } else {
+        // updating the day
+        dateMoment = dir > 0 ?
+          // we've gone with +1 beyond max, so reset to 1
+          this.toMoment(oldValue).date(1) :
+
+          // we've gone with -1 beyond max, so reset to max of month
+          this.toMoment(oldValue).endOf('month')
+      }
+
+      if (!dateMoment.isValid()) {
+        return;
+      }
+
+      value = this.format(dateMoment)
+    }
+
+    const { minDate, maxDate } = this.state
+
+    if (minDate && dateMoment.isBefore(minDate)) {
+      dateMoment = minDate
+      value = this.format(dateMoment)
+    }
+
+    if (maxDate && dateMoment.isAfter(maxDate)) {
+      dateMoment = maxDate
+      value = this.format(dateMoment)
     }
 
     this.setState({

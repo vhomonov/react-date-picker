@@ -1,0 +1,25 @@
+.react-date-picker__footer--theme-#{$THEME_NAME} {
+  padding: 5px;
+
+  .react-date-picker__footer-button {
+    padding: 2px 3px;
+    outline: none;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid $FIELD_BORDER_COLOR;
+
+    &:active {
+      top: 1px;
+    }
+
+    &:hover {
+      background: $ACTIVE_COLOR;
+      color: white;
+    }
+  }
+
+  .react-date-picker__footer-button + .react-date-picker__footer-button {
+    margin-left: 3px;
+  }
+}

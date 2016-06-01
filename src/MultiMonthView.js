@@ -336,7 +336,7 @@ export default class MultiMonthView extends Component {
     return <NavBar {...navBarProps} />
   }
 
-  onMonthNavigate(index, dir, event) {
+  onMonthNavigate(index, dir, event, getNavigationDate) {
     const props = this.p
 
     event.preventDefault()
@@ -345,7 +345,16 @@ export default class MultiMonthView extends Component {
       return
     }
 
-    const nextMoment = this.toMoment(this.p.activeDate).add(dir, 'day')
+    const key = event.key
+
+    const homeEndDate = key == 'Home' ? props.viewStart : props.viewEnd
+
+    const mom = key == 'Home' || key == 'End' ?
+      homeEndDate :
+      props.activeDate
+
+    const nextMoment = getNavigationDate(dir, this.toMoment(mom))
+
     const viewMoment = this.toMoment(nextMoment)
 
     this.onActiveDateChange({
