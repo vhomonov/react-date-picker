@@ -4,6 +4,8 @@ import Component from 'react-class'
 import moment from 'moment'
 import assign from 'object-assign'
 
+import { Flex } from 'react-flex'
+
 import FORMAT from './utils/format'
 import toMoment from './toMoment'
 
@@ -190,7 +192,11 @@ class BasicMonthView extends Component {
       children = props.renderChildren(children, props)
     }
 
-    return <div
+    return <Flex
+      column
+      wrap={false}
+      inline
+      alignItems="stretch"
       {...props}
 
       weekStartDay={null}

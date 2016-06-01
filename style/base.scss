@@ -16,9 +16,9 @@
 }
 
 .react-date-picker {
-  display: flex;
-  flex-flow: column;
-  flex: 1 0 auto;
+  // display: flex;
+  // flex-flow: column;
+  // flex: 1 0 auto;
 }
 
 .react-date-picker__nav-bar {
@@ -102,9 +102,6 @@
 
   position: relative;
   outline: none;
-  display: flex;
-  flex-flow: column;
-  flex: 1 1 auto;
 
   &-week-day-name {
     padding: 5px 0px;

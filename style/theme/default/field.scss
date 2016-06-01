@@ -1,6 +1,10 @@
 .react-date-field--theme-#{$THEME_NAME} {
   border: 1px solid $FIELD_BORDER_COLOR;
 
+  & > .react-date-field__picker {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.34375);
+  }
+
   .react-date-field__calendar-icon {
     border: 3px solid $CALENDAR_ICON_COLOR;
   }

@@ -22,6 +22,7 @@ export const Button = (props) => {
 
   const className = `${props.className || ''} ${buttonClassName} ${disabledClassName}`
   return <button
+    tabIndex={-1}
     {...props}
     className={className}
   />

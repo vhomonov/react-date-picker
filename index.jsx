@@ -105,6 +105,7 @@ var App = React.createClass({
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />
         <DateField
+          expanded
           expandOnFocus={false}
           pattern
           xminDate="2016-03-05 02:00 am"
@@ -112,61 +113,11 @@ var App = React.createClass({
           defaultValue="2016-04-02 04:11 am"
           xonChange={this.onChange}
         >
-          <DatePicker />
+          <DatePicker xposition="top"/>
         </DateField>
         <br />
         <input defaultValue="dadas"/>
 
-        navview
-          {/*<MonthView
-            className="xxx"
-            minDate="2016-10-10"
-            maxDate="2016-11-11"
-            locale={LOCALE}
-            xrange={R}
-            xdefaultRange={[]}
-            onRenderDay={(props) => {
-              props.onClick = () => {
-                console.log(props.dateMoment.format('YYYY-MM-DD'), props.disabled)
-              }
-              return props
-            }}
-            isDisabledDay={(props) => {
-              return props.dateMoment.format('YYYY-MM-DD') == '2016-10-20'
-            }}
-
-          />*/}
-        transition view
-          <MonthView
-            style={{maxWidth: 400}}
-            locale={LOCALE}
-            onRenderDay={(props) => {
-              props.onClick = () => {
-                console.log(props.dateMoment.format('YYYY-MM-DD'), props.disabled)
-              }
-              return props
-            }}
-            xisDisabledDay={(props) => {
-              return props.dateMoment.format('YYYY-MM-DD') == '2016-10-20'
-            }}
-            defaultRange={[]}
-          >
-          </MonthView>
-
-          <MultiMonthView
-            style={{maxWidth: 1200}}
-            xmaxDate="2016-08-20"
-            xdefaultRange={[]}
-            size={2}
-          />
-        <p>Select locale: <select value={LOCALE} onChange={this.onLocaleChange}>
-                <option value="en">English (US)</option>
-                <option value="fr">French</option>
-                <option value="de">German</option>
-                <option value="es">Spanish</option>
-                <option value="ro">Romanian</option>
-            </select>
-        </p>
 
         </div>
     },

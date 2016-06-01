@@ -19,6 +19,13 @@ $ACTIVE_COLOR: rgb(52, 154, 239) !default;
 $ACTIVE_IN_RANGE_COLOR: lighten($ACTIVE_COLOR, 20%) !default;
 $ACTIVE_RANGE_LIMITS_COLOR: lighten($ACTIVE_COLOR, 10%) !default;
 
+$OTHER_MONTH_DAY_COLOR: lighten(gray, 20%) !default;
+$WEEKEND_HIGHLIGHT_COLOR: red !default;
+$WEEKEND_OTHER_MONTH_HIGHLIGHT_COLOR: lighten(#BB4343, 20%) !default;
+
+$FOOTER_BUTTON_FONT_SIZE: 12px !default;
+$WEEK_NUMBER_COLOR: #B1B1B1 !default;
+$WEEK_NUMBER_FONT_SIZE: 12px !default;
 $WEEK_DAY_NAMES_TEXT_TRANSFORM: uppercase !default;
 
 $NAV_BAR_ARROW_COLOR: darken(gray, 10%) !default;
@@ -63,7 +70,8 @@ $base: 'react-date-picker__month-view';
   }
 
   .#{$base}-week-number {
-    color: #B1B1B1;
+    color: $WEEK_NUMBER_COLOR;
+    font-size: $WEEK_NUMBER_FONT_SIZE;
   }
 
   .#{$base}-day-text {
@@ -183,15 +191,15 @@ $base: 'react-date-picker__month-view';
 
   .#{$base}-day--prev-month,
   .#{$base}-day--next-month {
-    color: gray;
+    color: $OTHER_MONTH_DAY_COLOR;
   }
 
   .#{$base}-day--weekend-highlight {
-    color: red;
+    color: $WEEKEND_HIGHLIGHT_COLOR;
 
     &.#{$base}-day--prev-month,
     &.#{$base}-day--next-month {
-      color: #BB4343;
+      color: $WEEKEND_OTHER_MONTH_HIGHLIGHT_COLOR;
     }
   }
 

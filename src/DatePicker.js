@@ -6,7 +6,7 @@ import assign from 'object-assign'
 import MonthView, { NAV_KEYS } from './MonthView'
 import toMoment from './toMoment'
 import join from './join'
-import Clock from './Clock'
+import ClockInput from './ClockInput'
 
 import { Flex } from 'react-flex'
 
@@ -22,6 +22,10 @@ export default class DatePicker extends Component {
 
     props.date = this.prepareDate(props)
     props.hasTime = props.hasTime || dateFormat.indexOf('k') != -1 || dateFormat.indexOf('h') != -1
+
+    const timeFormat = dateFormat.substring(dateFormat.toLowerCase().indexOf('hh'))
+
+    props.timeFormat = timeFormat
 
     const className = join(
       props.className,
@@ -42,7 +46,7 @@ export default class DatePicker extends Component {
     </Flex>
   }
 
-  renderChildren([ navBar, inner, footer ]) {
+  renderChildren([navBar, inner, footer]) {
     const props = this.p
     const timePart = props.hasTime && this.renderTimePart()
 
@@ -74,26 +78,15 @@ export default class DatePicker extends Component {
   }
 
   renderTimePart() {
-    return this.renderClock()
+    return <ClockInput
+      dateFormat={this.p.dateFormat}
+      defaultValue={this.p.date}
+      onChange={this.onTimeChange}
+    />
   }
 
-  renderClock() {
-    const props = this.p
-    const clock = React.Children
-                  .toArray(props.children)
-                  .filter(child => child && child.props && child.props.isDatePickerClock)[0]
-
-    const clockProps = {
-      time: props.date,
-      showMinutesHand: props.dateFormat.indexOf('mm') != -1,
-      showSecondsHand: props.dateFormat.indexOf('ss') != -1
-    }
-
-    if (clock) {
-      return React.cloneElement(clock, clockProps)
-    }
-
-    return <Clock {...clockProps} />
+  onTimeChange(value, timeFormat) {
+    this.props.onTimeChange(value, timeFormat)
   }
 }
 
@@ -103,7 +96,9 @@ DatePicker.defaultProps = {
   theme: 'default',
 
   isDatePicker: true,
-  wrapTime: false
+  wrapTime: false,
+
+  onTimeChange: () => {}
 }
 
 DatePicker.propTypes = {

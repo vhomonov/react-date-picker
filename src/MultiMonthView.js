@@ -192,7 +192,7 @@ export default class MultiMonthView extends Component {
 
     return <Flex
       column
-
+      inline
       alignItems="stretch"
       {...props}
       className={join(

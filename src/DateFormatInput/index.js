@@ -25,7 +25,8 @@ export default class DateFormatInput extends Component {
     const { positions, matches } = parseFormat(props.dateFormat)
     const defaultValue = props.defaultValue || Date.now()
 
-    this.debounceSetValue = throttle(this.setValue, props.throttle || 100)
+    const delay = props.throttle || 100
+    this.throttleSetValue = delay == -1 ? this.setValue : throttle(this.setValue, delay)
 
     const { minDate, maxDate } = this.getMinMax(props)
 
@@ -136,6 +137,11 @@ export default class DateFormatInput extends Component {
     const { props } = this
 
     const { key } = event
+
+    if (props.stopPropagation) {
+      event.stopPropagation()
+    }
+
     const range = this.getSelectedRange()
     const selectedValue = this.getSelectedValue(range)
     const value = this.displayValue
@@ -291,8 +297,9 @@ export default class DateFormatInput extends Component {
       propsValue: false
     }, typeof callback == 'function' && callback)
 
-    if (this.props.value !== undefined) {
-      this.debounceSetValue(value, dateMoment)
+    // if (this.props.value !== undefined) {
+    if (this.props.onChange) {
+      this.throttleSetValue(value, dateMoment)
     }
   }
 
@@ -332,7 +339,8 @@ export default class DateFormatInput extends Component {
 }
 
 DateFormatInput.defaultProps = {
-  isDateInput: true
+  isDateInput: true,
+  stopPropagation: true
 }
 
 DateFormatInput.propTypes = {

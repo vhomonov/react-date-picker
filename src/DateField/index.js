@@ -17,6 +17,8 @@ import DatePicker, { NAV_KEYS } from '../DatePicker'
 import joinFunctions from '../joinFunctions'
 import assignDefined from '../assignDefined'
 
+const POSITIONS = { top: 'top', bottom: 'bottom' }
+
 const getPicker = (props, cmp) => {
   return React.Children
     .toArray(props.children)
@@ -53,6 +55,7 @@ export default class DateField extends Component {
       date={null}
       text={null}
       {...props}
+      position={null}
     >
       {this.renderInput()}
       {this.renderClearIcon()}
@@ -251,11 +254,14 @@ export default class DateField extends Component {
   }
 
   prepareClassName(props) {
+    const position = POSITIONS[props.pickerProps.position || props.pickerPosition] || 'bottom'
+
     return join([
       'react-date-field',
       props.className,
 
       props.theme && `react-date-field--theme-${props.theme}`,
+      `react-date-field--picker-position-${position}`,
 
       this.isFocused() && join(
         'react-date-field--focused',
@@ -349,6 +355,7 @@ export default class DateField extends Component {
 
         onViewDateChange: this.onViewDateChange,
         onActiveDateChange: this.onActiveDateChange,
+        onTimeChange: this.onTimeChange,
 
         tabIndex: -1,
 
@@ -360,7 +367,20 @@ export default class DateField extends Component {
       }))
     }
 
+    this.time = null
+
     return null
+  }
+
+  onTimeChange(value, timeFormat) {
+    const timeMoment = this.toMoment(value, { dateFormat: timeFormat })
+
+    const time = ['hour', 'minute', 'second', 'millisecond'].reduce((acc, part) => {
+      acc[part] = timeMoment.get(part)
+      return acc
+    }, {})
+
+    this.time = time
   }
 
   setValue(value, config = {}) {
@@ -386,7 +406,15 @@ export default class DateField extends Component {
     const activeDate = this.p.activeDate
 
     if (activeDate) {
-      this.setValue(activeDate)
+      const date = this.toMoment(activeDate)
+
+      if (this.time) {
+        ['hour', 'minute', 'second', 'millisecond'].forEach(part => {
+          date.set(part, this.time[part])
+        })
+      }
+
+      this.setValue(date)
     } else {
       this.setExpanded(false)
     }
