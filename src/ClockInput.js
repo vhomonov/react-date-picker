@@ -66,7 +66,8 @@ export default class ClockInput extends Component {
       value: this.value,
       dateFormat: this.dateFormat,
       onChange: this.onChange,
-      onKeyDown: this.onKeyDown
+      onKeyDown: this.onKeyDown,
+      size: props.size || (this.dateFormat.length + 2)
     })
 
     if (dateInput) {

@@ -936,7 +936,6 @@ MonthView.defaultProps = {
   highlightWeekends: true,
   navOnDateClick: true,
   navigation: true,
-  footer: true,
 
   constrainViewDate: true,
 

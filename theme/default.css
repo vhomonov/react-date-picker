@@ -1,5 +1,7 @@
 .react-date-field--theme-default {
   border: 1px solid gray; }
+  .react-date-field--theme-default > .react-date-field__picker {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.34375); }
   .react-date-field--theme-default .react-date-field__calendar-icon {
     border: 3px solid gray; }
   .react-date-field--theme-default .react-date-field__clear-icon {
@@ -34,6 +36,29 @@
     .react-date-picker__nav-bar--theme-default .react-date-picker__nav-bar-arrow:not(.react-date-picker__nav-bar-arrow--disabled):active {
       top: 1px; }
 
+.react-date-picker__footer--theme-default {
+  padding: 5px; }
+  .react-date-picker__footer--theme-default .react-date-picker__footer-button {
+    padding: 2px 3px;
+    outline: none;
+    position: relative;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    border: 1px solid gray;
+    background: white;
+    font-size: 12px; }
+    .react-date-picker__footer--theme-default .react-date-picker__footer-button:active {
+      top: 1px; }
+    .react-date-picker__footer--theme-default .react-date-picker__footer-button:not(.react-date-picker__footer-button--disabled) {
+      cursor: pointer; }
+      .react-date-picker__footer--theme-default .react-date-picker__footer-button:not(.react-date-picker__footer-button--disabled):hover {
+        background: #349aef;
+        color: white; }
+  .react-date-picker__footer--theme-default .react-date-picker__footer-button + .react-date-picker__footer-button {
+    margin-left: 3px; }
+
 .react-date-picker__date-picker--theme-default {
   border: 1px solid gray; }
   .react-date-picker__date-picker--theme-default .react-date-picker__month-view--theme-default {
@@ -62,7 +87,8 @@
   .react-date-picker__month-view--theme-default .react-date-picker__month-view-week-day-names {
     text-transform: uppercase; }
   .react-date-picker__month-view--theme-default .react-date-picker__month-view-week-number {
-    color: #B1B1B1; }
+    color: #B1B1B1;
+    font-size: 12px; }
   .react-date-picker__month-view--theme-default .react-date-picker__month-view-cell {
     min-width: 40px; }
   .react-date-picker__month-view--theme-default .react-date-picker__month-view-day {
@@ -129,11 +155,11 @@
       border: 2px solid #349aef; }
   .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--prev-month,
   .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--next-month {
-    color: gray; }
+    color: #b3b3b3; }
   .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--weekend-highlight {
     color: red; }
     .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--weekend-highlight.react-date-picker__month-view-day--prev-month, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--weekend-highlight.react-date-picker__month-view-day--next-month {
-      color: #BB4343; }
+      color: #d68e8e; }
   .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--disabled {
     color: #D8D8D8; }
     .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--disabled .react-date-picker__month-view-day-text {

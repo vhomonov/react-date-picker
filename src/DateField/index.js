@@ -336,6 +336,8 @@ export default class DateField extends Component {
           }
         },
 
+        footer: !pickerProps.footer ? pickerProps.footer : props.footer,
+
         onClockInputBlur: this.onClockInputBlur,
         onClockEnterKey: this.onClockEnterKey,
         footerClearDate: props.clearDate || props.minDate,
@@ -585,7 +587,9 @@ export default class DateField extends Component {
   }
 
   onClockEnterKey() {
-    this.focus()
+    if (!this.isFocused()){
+      this.focus()
+    }
     this.onFooterOkClick()
   }
 
@@ -775,6 +779,8 @@ DateField.defaultProps = {
   collapseOnChange: true,
 
   theme: 'default',
+
+  footer: true,
 
   onBlur: () => {},
   onFocus: () => {},

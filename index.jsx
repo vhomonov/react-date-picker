@@ -98,6 +98,10 @@ var App = React.createClass({
         <br />
         */}
         {/*<TimeInput format="hh:mm:ss A" xonChange={this.onTimeChange} defaultValue={this.state.time}/>*/}
+        <DateField
+            defaultValue={"2016-05-30"}
+            dateFormat="YYYY-MM-DD"
+          />
         <MonthView minDate="2016-05-05" okButtonText='okay'>
           <Footer xclearDate={Date.now()} />
         </MonthView>
@@ -105,16 +109,11 @@ var App = React.createClass({
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />
         <DateField
-          xexpanded
-          expandOnFocus={false}
           pattern
-          xminDate="2016-03-05 02:00 am"
           dateFormat="YYYY-MM-DD hh:mm a"
           defaultValue="2016-04-02 04:11 am"
-          xonChange={this.onChange}
-        >
-          <DatePicker xposition="top"/>
-        </DateField>
+
+        />
         <br />
         <input defaultValue="dadas"/>
 

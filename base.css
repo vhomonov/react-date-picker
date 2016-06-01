@@ -10,10 +10,15 @@
   .react-date-field > .react-date-field__picker {
     min-width: 100%;
     position: absolute;
-    left: -1px;
-    top: 100%;
     z-index: 100;
+    left: -1px;
     background: white; }
+
+.react-date-field--picker-position-bottom > .react-date-field__picker {
+  top: 100%; }
+
+.react-date-field--picker-position-top > .react-date-field__picker {
+  bottom: 100%; }
 
 .react-date-field__input {
   width: 100%;
@@ -124,19 +129,6 @@
   .react-date-picker__basic-month-view *:after {
     box-sizing: border-box; }
 
-.react-date-picker {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-flow: column;
-      -ms-flex-flow: column;
-          flex-flow: column;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 0 auto;
-      -ms-flex: 1 0 auto;
-          flex: 1 0 auto; }
-
 .react-date-picker__nav-bar-arrow {
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -205,18 +197,7 @@
 .react-date-picker__month-view,
 .react-date-picker__basic-month-view {
   position: relative;
-  outline: none;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-flow: column;
-      -ms-flex-flow: column;
-          flex-flow: column;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1 1 auto;
-      -ms-flex: 1 1 auto;
-          flex: 1 1 auto; }
+  outline: none; }
   .react-date-picker__month-view-week-day-name,
   .react-date-picker__basic-month-view-week-day-name {
     padding: 5px 0px; }
