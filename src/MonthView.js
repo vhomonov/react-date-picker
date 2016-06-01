@@ -13,6 +13,7 @@ import NavBar from './NavBar'
 import Footer from './Footer'
 import bemFactory from './bemFactory'
 import joinFunctions from './joinFunctions'
+import assignDefined from './assignDefined'
 
 import BasicMonthView, { getDaysInMonthView } from './BasicMonthView'
 
@@ -486,8 +487,9 @@ export default class MonthView extends Component {
 
     return <BasicMonthView
       tabIndex={0}
-      renderChildren={this.renderChildren}
       {...props}
+
+      renderChildren={this.renderChildren}
 
       onKeyDown={this.onViewKeyDown}
       onFocus={this.onFocus}
@@ -519,11 +521,17 @@ export default class MonthView extends Component {
     const navBar = this.renderNavBar(props)
     const footer = this.renderFooter(props)
 
-    return [
+    const result = [
       navBar,
       children,
       footer
     ]
+
+    if (props.renderChildren) {
+      return props.renderChildren(result)
+    }
+
+    return result
   }
 
   renderFooter(props) {
@@ -531,7 +539,9 @@ export default class MonthView extends Component {
       return null
     }
 
-    const footerProps = {
+    const renderFooter = props.renderFooter
+
+    const footerFnProps = {
       onTodayClick: props.onFooterTodayClick,
       onClearClick: props.onFooterClearClick,
       onOkClick: props.onFooterOkClick,
@@ -541,16 +551,43 @@ export default class MonthView extends Component {
     const childFooter = React.Children.toArray(props.children)
       .filter(c => c && c.props && c.props.isDatePickerFooter)[0]
 
-    if (childFooter) {
+    const childFooterProps = childFooter ? childFooter.props : null
+
+    if (childFooterProps) {
       // also take into account the props on childFooter
       // so we merge those with the other props already built
-      Object.keys(footerProps).forEach(key => {
+      Object.keys(footerFnProps).forEach(key => {
         if (childFooter.props[key]) {
-          footerProps[key] = joinFunctions(footerProps[key], childFooter.props[key])
+          footerFnProps[key] = joinFunctions(footerFnProps[key], childFooter.props[key])
         }
       })
+    }
+
+    const footerProps = assignDefined({}, footerFnProps, {
+      todayButton: props.todayButton,
+      todayButtonText: props.todayButtonText,
+      clearButton: props.clearButton,
+      clearButtonText: props.clearButtonText,
+
+      okButton: props.okButton,
+      okButtonText: props.okButtonText,
+
+      cancelButton: props.cancelButton,
+      cancelButtonText: props.cancelButtonText,
+
+      clearDate: props.clearDate || props.footerClearDate
+    })
+
+    if (childFooter) {
+      if (renderFooter) {
+        return renderFooter(assign({}, childFooter.props, footerProps))
+      }
 
       return React.cloneElement(childFooter, footerProps)
+    }
+
+    if (renderFooter) {
+      return renderFooter(footerProps)
     }
 
     return <Footer {...footerProps} />

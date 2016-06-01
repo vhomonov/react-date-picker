@@ -5,17 +5,22 @@
     padding: 2px 3px;
     outline: none;
     position: relative;
-    cursor: pointer;
     user-select: none;
     border: 1px solid $FIELD_BORDER_COLOR;
+    background: white;
+    font-size: inherit;
 
     &:active {
       top: 1px;
     }
 
-    &:hover {
-      background: $ACTIVE_COLOR;
-      color: white;
+    &:not(.react-date-picker__footer-button--disabled) {
+      cursor: pointer;
+      
+      &:hover {
+        background: $ACTIVE_COLOR;
+        color: white;
+      }
     }
   }
 

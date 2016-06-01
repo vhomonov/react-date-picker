@@ -239,6 +239,7 @@ export default class MultiMonthView extends Component {
 
       index={index}
 
+      footer={false}
       constrainActiveInView={false}
 
       navigate={this.onMonthNavigate.bind(this, index)}

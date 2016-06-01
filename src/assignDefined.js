@@ -1,10 +1,10 @@
 import assign from 'object-assign'
 
-const filter = (object) =>{
+const filter = (object) => {
   return Object.keys(object).reduce((acc, prop) => {
     const value = object[prop]
 
-    if (value !== undefined){
+    if (value !== undefined) {
       acc[prop] = value
     }
 

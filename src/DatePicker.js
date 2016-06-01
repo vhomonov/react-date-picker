@@ -29,12 +29,38 @@ export default class DatePicker extends Component {
       props.theme && `react-date-picker__date-picker--theme-${props.theme}`
     )
 
+    const monthView = <MonthView
+      {...this.props}
+      className={null}
+      style={null}
+      ref={view => { this.view = view }}
+      renderChildren={this.renderChildren}
+    />
+
     return <Flex row wrap={false} className={className} style={props.style}>
-
-      <MonthView {...this.props} className={null} style={null} ref={view => { this.view = view }} />
-
-      {props.hasTime && this.renderTimePart()}
+      {monthView}
     </Flex>
+  }
+
+  renderChildren([ navBar, inner, footer ]) {
+    const props = this.p
+    const timePart = props.hasTime && this.renderTimePart()
+
+    const children = [
+      navBar,
+      <Flex justifyContent="center" wrap={this.props.wrap || this.props.wrapTime}>
+        <Flex flex column wrap={false} alignItems="stretch" children={inner} />
+        {timePart}
+      </Flex>,
+      footer
+    ]
+
+    return <Flex
+      column
+      wrap={false}
+      alignItems="stretch"
+      children={children}
+    />
   }
 
   focus() {
@@ -76,7 +102,8 @@ DatePicker.defaultProps = {
 
   theme: 'default',
 
-  isDatePicker: true
+  isDatePicker: true,
+  wrapTime: false
 }
 
 DatePicker.propTypes = {

@@ -330,6 +330,8 @@ export default class DateField extends Component {
           }
         },
 
+        footerClearDate: props.clearDate || props.minDate,
+
         onFooterCancelClick: this.onFooterCancelClick,
         onFooterTodayClick: this.onFooterTodayClick,
         onFooterOkClick: this.onFooterOkClick,
@@ -361,7 +363,7 @@ export default class DateField extends Component {
     return null
   }
 
-  setValue(value, config) {
+  setValue(value, config = {}) {
     const dateMoment = this.toMoment(value)
     const dateString = this.format(dateMoment)
 
@@ -391,7 +393,14 @@ export default class DateField extends Component {
   }
 
   onFooterClearClick() {
-    this.setValue(this.props.minDate || 0, {
+    const clearDate = this.props.clearDate || this.props.minDate
+
+    if (!clearDate) {
+      this.setExpanded(false)
+      return
+    }
+
+    this.setValue(clearDate, {
       skipTime: true
     })
   }
@@ -597,7 +606,6 @@ export default class DateField extends Component {
   }
 
   onTextChange(text) {
-    console.log('text', text);
     if (this.props.text === undefined) {
       this.setState({
         text

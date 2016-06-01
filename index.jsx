@@ -15,6 +15,7 @@ import TimeInput from './src/TimeInput'
 import NavigationView from './src/NavigationView'
 import TransitionView from './src/TransitionView'
 import NavBar from './src/NavBar'
+import Footer from './src/Footer'
 import MultiMonthView from './src/MultiMonthView'
 import DateField from './src/DateField'
 import Clock from './src/Clock'
@@ -97,14 +98,16 @@ var App = React.createClass({
         <br />
         */}
         {/*<TimeInput format="hh:mm:ss A" xonChange={this.onTimeChange} defaultValue={this.state.time}/>*/}
-        <MonthView minDate="2016-05-05" />
+        <MonthView minDate="2016-05-05" okButtonText='okay'>
+          <Footer xclearDate={Date.now()} />
+        </MonthView>
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />
         <DateField
           expandOnFocus={false}
           pattern
-          minDate="2016-05-05 02:00 am"
+          xminDate="2016-03-05 02:00 am"
           dateFormat="YYYY-MM-DD hh:mm a"
           defaultValue="2016-04-02 04:11 am"
           xonChange={this.onChange}

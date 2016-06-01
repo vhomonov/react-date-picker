@@ -13,10 +13,17 @@ const bem = bemFactory('react-date-picker__footer')
 
 const SPACER = <Item />
 
+const buttonClassName = 'react-date-picker__footer-button'
+
 export const Button = (props) => {
-  return <InlineBlock
+  const disabledClassName = props.disabled ?
+    `${buttonClassName}--disabled` :
+    ''
+
+  const className = `${props.className || ''} ${buttonClassName} ${disabledClassName}`
+  return <button
     {...props}
-    className={`${props.className || ''} react-date-picker__footer-button`}
+    className={className}
   />
 }
 
@@ -38,19 +45,34 @@ export default class Footer extends Component {
   }
 
   renderTodayButton() {
-    return this.renderButton('Today', this.props.onTodayClick)
+    if (!this.props.todayButton) {
+      return null
+    }
+    return this.renderButton(this.props.todayButtonText, this.props.onTodayClick)
   }
 
   renderClearButton() {
-    return this.renderButton('Clear', this.props.onClearClick)
+    if (!this.props.clearButton) {
+      return null
+    }
+    return this.renderButton({
+      children: this.props.clearButtonText,
+      disabled: !this.props.clearDate
+    }, this.props.onClearClick)
   }
 
   renderOkButton() {
-    return this.renderButton('OK', this.props.onOkClick)
+    if (!this.props.okButton) {
+      return null
+    }
+    return this.renderButton(this.props.okButtonText, this.props.onOkClick)
   }
 
   renderCancelButton() {
-    return this.renderButton('Cancel', this.props.onCancelClick)
+    if (!this.props.cancelButton) {
+      return null
+    }
+    return this.renderButton(this.props.cancelButtonText, this.props.onCancelClick)
   }
 
   renderButton(props, fn) {
@@ -62,7 +84,7 @@ export default class Footer extends Component {
       text = props
     }
 
-    if (typeof fn == 'function' && !p.onClick) {
+    if (typeof fn == 'function' && !p.onClick && !p.disabled) {
       p.onClick = fn
     }
 
@@ -76,6 +98,16 @@ Footer.defaultProps = {
   theme: 'default',
 
   buttonFactory: Button,
+
+  todayButton: true,
+  clearButton: true,
+  okButton: true,
+  cancelButton: true,
+
+  todayButtonText: 'Today',
+  clearButtonText: 'Clear',
+  okButtonText: 'OK',
+  cancelButtonText: 'Cancel',
 
   isDatePickerFooter: true,
 }
