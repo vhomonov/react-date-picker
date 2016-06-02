@@ -60,7 +60,8 @@ export default class ClockInput extends Component {
                   .filter(child => child && child.props && child.props.isDateInput)[0]
 
     const dateInputProps = assign({
-      tabIndex: 0
+      tabIndex: props.tabIndex || 0,
+      readOnly: props.readOnly
     }, this.props, {
       ref: (field) => { this.field = field },
       value: this.value,

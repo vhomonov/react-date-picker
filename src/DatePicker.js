@@ -102,7 +102,9 @@ export default class DatePicker extends Component {
       onBlur: this.onClockInputBlur,
       onChange: this.onTimeChange,
       onMouseDown: this.onClockInputMouseDown,
-      onEnterKey: this.props.onClockEnterKey
+      onEnterKey: this.props.onClockEnterKey,
+      readOnly: this.props.readOnly,
+      tabIndex: this.props.clockTabIndex
     }
 
     if (clockInput) {

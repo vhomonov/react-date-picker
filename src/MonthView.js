@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
 import Component from 'react-class'
 
+import moment from 'moment'
 import assign from 'object-assign'
 
 import clampRange from './clampRange'

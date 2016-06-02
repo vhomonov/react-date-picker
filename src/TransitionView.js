@@ -39,8 +39,10 @@ export default class TransitionView extends Component {
 
     const viewDate = props.defaultViewDate ||
       props.defaultDate ||
+      props.date ||
       childProps.defaultViewDate ||
-      childProps.defaultDate
+      childProps.defaultDate ||
+      childProps.date
 
     const dateFormat = props.dateFormat || childProps.dateFormat
     const locale = props.locale || childProps.locale
@@ -122,6 +124,7 @@ export default class TransitionView extends Component {
     // only pass those down if they have been specified
     // as props on this TransitionView
     assignDefined(newProps, {
+      tabIndex: -1,
       range: props.range,
       date: props.date,
       activeDate: props.activeDate,
@@ -246,10 +249,12 @@ export default class TransitionView extends Component {
       activeDate: renderedProps.activeDate,
       dateFormat: renderedProps.dateFormat,
       locale: renderedProps.locale,
-      tabIndex: -1
-    }, {
+      tabIndex: -1,
+      clockTabIndex: -1,
+    // }, {
       viewDate,
       key: index,
+      readOnly: true,
       navigation: false,
       className: join(
         childProps.className,

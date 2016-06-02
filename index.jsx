@@ -110,10 +110,14 @@ var App = React.createClass({
         <br />
         <DateField
           pattern
+          expanded
           dateFormat="YYYY-MM-DD hh:mm a"
           defaultValue="2016-04-02 04:11 am"
-
-        />
+        >
+          <TransitionView>
+            <DatePicker />
+          </TransitionView>
+        </DateField>
         <br />
         <input defaultValue="dadas"/>
 
