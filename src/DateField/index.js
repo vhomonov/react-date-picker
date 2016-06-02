@@ -326,6 +326,7 @@ export default class DateField extends Component {
       const onChange = joinFunctions(pickerProps.onChange, this.onPickerChange)
 
       const date = props.valid && props.date
+      const footer = pickerProps.footer !== undefined ? pickerProps.footer : props.footer
 
       return React.cloneElement(picker, assignDefined({
         ref: (p) => {
@@ -336,7 +337,7 @@ export default class DateField extends Component {
           }
         },
 
-        footer: !pickerProps.footer ? pickerProps.footer : props.footer,
+        footer,
 
         onClockInputBlur: this.onClockInputBlur,
         onClockEnterKey: this.onClockEnterKey,
@@ -393,7 +394,7 @@ export default class DateField extends Component {
     const dateMoment = this.toMoment(value)
     const dateString = this.format(dateMoment)
 
-    this.onPickerChange(dateString, assign(config, { dateMoment }))
+    this.setDate(dateString, assign(config, { dateMoment }))
   }
 
   onFooterCancelClick() {
@@ -406,6 +407,8 @@ export default class DateField extends Component {
       {
         skipTime: this.props.skipTodayTime
       })
+
+    this.setExpanded(false)
   }
 
   onFooterOkClick() {
@@ -421,22 +424,21 @@ export default class DateField extends Component {
       }
 
       this.setValue(date, { skipTime: !!this.time })
-    } else {
-      this.setExpanded(false)
     }
+
+    this.setExpanded(false)
   }
 
   onFooterClearClick() {
     const clearDate = this.props.clearDate || this.props.minDate
 
-    if (!clearDate) {
-      this.setExpanded(false)
-      return
+    if (clearDate) {
+      this.setValue(clearDate, {
+        skipTime: true
+      })
     }
 
-    this.setValue(clearDate, {
-      skipTime: true
-    })
+    this.setExpanded(false)
   }
 
   toMoment(value, props) {
@@ -587,7 +589,7 @@ export default class DateField extends Component {
   }
 
   onClockEnterKey() {
-    if (!this.isFocused()){
+    if (!this.isFocused()) {
       this.focus()
     }
     this.onFooterOkClick()
@@ -699,7 +701,15 @@ export default class DateField extends Component {
     }
   }
 
-  onPickerChange(dateString, { dateMoment, skipTime = false }) {
+  onPickerChange(dateString, { dateMoment }) {
+    this.setDate(dateString, { dateMoment })
+
+    if (this.props.collapseOnChange) {
+      this.setExpanded(false)
+    }
+  }
+
+  setDate(dateString, { dateMoment, skipTime = false }) {
     const props = this.p
 
     const currentDate = props.date
@@ -715,10 +725,6 @@ export default class DateField extends Component {
           dateMoment.set(part, currentDate.get(part))
         })
       }
-    }
-
-    if (props.collapseOnChange) {
-      this.setExpanded(false)
     }
 
     this.onTextChange(this.format(dateMoment))

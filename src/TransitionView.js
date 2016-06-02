@@ -10,7 +10,9 @@ import toMoment from './toMoment'
 import getTransitionEnd from './getTransitionEnd'
 import assignDefined from './assignDefined'
 
+import { renderFooter } from './MonthView'
 import NavBar from './NavBar'
+import Footer from './Footer'
 import { Flex } from 'react-flex'
 
 import normalize from 'react-style-normalizer'
@@ -128,6 +130,7 @@ export default class TransitionView extends Component {
       range: props.range,
       date: props.date,
       activeDate: props.activeDate,
+      footer: false,
 
       defaultRange: props.defaultRange,
       defaultDate: props.defaultDate,
@@ -179,6 +182,12 @@ export default class TransitionView extends Component {
       })
     }
 
+    let footer
+
+    if (props.footer) {
+      footer = renderFooter(props)
+    }
+
     return <Flex
       column
       inline
@@ -197,6 +206,7 @@ export default class TransitionView extends Component {
         {clone}
         {this.renderAt(1)}
       </Flex>
+      {footer}
     </Flex>
   }
 
@@ -351,7 +361,7 @@ export default class TransitionView extends Component {
       prepareTransition: 0
     })
 
-    this.getView().focus()
+    // this.getView().focus()
     delete this.nextViewDate
   }
 }
@@ -359,5 +369,6 @@ export default class TransitionView extends Component {
 TransitionView.defaultProps = {
   navBar: true,
   theme: 'default',
-  isDatePicker: true
+  isDatePicker: true,
+  footer: true
 }

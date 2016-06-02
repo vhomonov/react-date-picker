@@ -128,6 +128,65 @@ const prepareActiveDate = function (props, state) {
   return isValidActiveDate(+activeDate, props) ? activeDate : null
 }
 
+const renderFooter = props => {
+  if (!props.footer) {
+    return null
+  }
+
+  const renderFooter = props.renderFooter
+
+  const footerFnProps = {
+    onTodayClick: props.onFooterTodayClick,
+    onClearClick: props.onFooterClearClick,
+    onOkClick: props.onFooterOkClick,
+    onCancelClick: props.onFooterCancelClick
+  }
+
+  const childFooter = React.Children.toArray(props.children)
+    .filter(c => c && c.props && c.props.isDatePickerFooter)[0]
+
+  const childFooterProps = childFooter ? childFooter.props : null
+
+  if (childFooterProps) {
+    // also take into account the props on childFooter
+    // so we merge those with the other props already built
+    Object.keys(footerFnProps).forEach(key => {
+      if (childFooter.props[key]) {
+        footerFnProps[key] = joinFunctions(footerFnProps[key], childFooter.props[key])
+      }
+    })
+  }
+
+  const footerProps = assignDefined({}, footerFnProps, {
+    todayButton: props.todayButton,
+    todayButtonText: props.todayButtonText,
+    clearButton: props.clearButton,
+    clearButtonText: props.clearButtonText,
+
+    okButton: props.okButton,
+    okButtonText: props.okButtonText,
+
+    cancelButton: props.cancelButton,
+    cancelButtonText: props.cancelButtonText,
+
+    clearDate: props.clearDate || props.footerClearDate
+  })
+
+  if (childFooter) {
+    if (renderFooter) {
+      return renderFooter(assign({}, childFooter.props, footerProps))
+    }
+
+    return React.cloneElement(childFooter, footerProps)
+  }
+
+  if (renderFooter) {
+    return renderFooter(footerProps)
+  }
+
+  return <Footer {...footerProps} />
+}
+
 export default class MonthView extends Component {
 
   isInView(mom, props) {
@@ -536,62 +595,7 @@ export default class MonthView extends Component {
   }
 
   renderFooter(props) {
-    if (!props.footer) {
-      return null
-    }
-
-    const renderFooter = props.renderFooter
-
-    const footerFnProps = {
-      onTodayClick: props.onFooterTodayClick,
-      onClearClick: props.onFooterClearClick,
-      onOkClick: props.onFooterOkClick,
-      onCancelClick: props.onFooterCancelClick
-    }
-
-    const childFooter = React.Children.toArray(props.children)
-      .filter(c => c && c.props && c.props.isDatePickerFooter)[0]
-
-    const childFooterProps = childFooter ? childFooter.props : null
-
-    if (childFooterProps) {
-      // also take into account the props on childFooter
-      // so we merge those with the other props already built
-      Object.keys(footerFnProps).forEach(key => {
-        if (childFooter.props[key]) {
-          footerFnProps[key] = joinFunctions(footerFnProps[key], childFooter.props[key])
-        }
-      })
-    }
-
-    const footerProps = assignDefined({}, footerFnProps, {
-      todayButton: props.todayButton,
-      todayButtonText: props.todayButtonText,
-      clearButton: props.clearButton,
-      clearButtonText: props.clearButtonText,
-
-      okButton: props.okButton,
-      okButtonText: props.okButtonText,
-
-      cancelButton: props.cancelButton,
-      cancelButtonText: props.cancelButtonText,
-
-      clearDate: props.clearDate || props.footerClearDate
-    })
-
-    if (childFooter) {
-      if (renderFooter) {
-        return renderFooter(assign({}, childFooter.props, footerProps))
-      }
-
-      return React.cloneElement(childFooter, footerProps)
-    }
-
-    if (renderFooter) {
-      return renderFooter(footerProps)
-    }
-
-    return <Footer {...footerProps} />
+    return renderFooter(props)
   }
 
   renderNavBar(props) {
@@ -952,4 +956,4 @@ MonthView.propTypes = {
   onActiveDateChange: PropTypes.func
 }
 
-export { NAV_KEYS }
+export { NAV_KEYS, renderFooter }
