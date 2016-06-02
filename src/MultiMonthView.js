@@ -499,7 +499,7 @@ export default class MultiMonthView extends Component {
 
 MultiMonthView.defaultProps = {
   perRow: 2,
-  size: 4,
+  size: 2,
 
   isDatePicker: true,
   forceViewUpdate: false,

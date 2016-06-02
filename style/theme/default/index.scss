@@ -17,11 +17,14 @@ $VIEW_BORDER_COLOR: gray !default;
 
 $ACTIVE_COLOR: rgb(52, 154, 239) !default;
 $ACTIVE_IN_RANGE_COLOR: lighten($ACTIVE_COLOR, 20%) !default;
+$ACTIVE_IN_HOVER_RANGE_COLOR: lighten($ACTIVE_IN_RANGE_COLOR, 15%) !default;
 $ACTIVE_RANGE_LIMITS_COLOR: lighten($ACTIVE_COLOR, 10%) !default;
 
 $OTHER_MONTH_DAY_COLOR: lighten(gray, 20%) !default;
 $WEEKEND_HIGHLIGHT_COLOR: red !default;
+$TODAY_HIGHLIGHT_COLOR: magenta !default;
 $WEEKEND_OTHER_MONTH_HIGHLIGHT_COLOR: lighten(#BB4343, 20%) !default;
+$TODAY_OTHER_MONTH_HIGHLIGHT_COLOR: lighten(magenta, 20%) !default;
 
 $FOOTER_BUTTON_FONT_SIZE: 12px !default;
 $WEEK_NUMBER_COLOR: #B1B1B1 !default;
@@ -107,6 +110,7 @@ $base: 'react-date-picker__month-view';
       }
     }
 
+    &--in-hover-range,
     &--in-range {
       overflow: hidden;
       .#{$base}-day-text {
@@ -131,6 +135,7 @@ $base: 'react-date-picker__month-view';
         }
       }
 
+      &.#{$base}-day--hover-range-start,
       &.#{$base}-day--range-start {
         .#{$base}-day-text {
           &:before {
@@ -139,6 +144,7 @@ $base: 'react-date-picker__month-view';
         }
       }
 
+      &.#{$base}-day--hover-range-end,
       &.#{$base}-day--range-end {
         .#{$base}-day-text {
           &:after {
@@ -146,8 +152,15 @@ $base: 'react-date-picker__month-view';
           }
         }
       }
+      &.#{$base}-day--hover-range-start:not(#{$base}-day--hover-range-end) {
+        .#{$base}-day-text {
+          &:after {
+            display: inherit;
+          }
+        }
+      }
 
-      &.#{$base}-day--active:not(.#{$base}-day--range-start):not(.#{$base}-day--range-end) {
+      &.#{$base}-day--active:not(.#{$base}-day--range-start):not(.#{$base}-day--range-end):not(.#{$base}-day--hover-range-start):not(.#{$base}-day--hover-range-end) {
         .#{$base}-day-text {
           background: $ACTIVE_IN_RANGE_COLOR padding-box;
 
@@ -158,6 +171,7 @@ $base: 'react-date-picker__month-view';
       }
     }
 
+    &--in-hover-range,
     &--in-range,
     &--value {
       .#{$base}-day-text {
@@ -169,8 +183,26 @@ $base: 'react-date-picker__month-view';
           background: $ACTIVE_COLOR padding-box;
         }
       }
+
+      &.#{$base}-day--today-highlight {
+        .#{$base}-day-text {
+          color: lighten($TODAY_HIGHLIGHT_COLOR, 40%);
+        }
+      }
     }
 
+    &--in-hover-range {
+      .#{$base}-day-text {
+        background: $ACTIVE_IN_HOVER_RANGE_COLOR padding-box;
+        &:after,
+        &:before {
+          background: $ACTIVE_IN_HOVER_RANGE_COLOR;
+        }
+      }
+    }
+
+    &--hover-range-start,
+    &--hover-range-end,
     &--range-start,
     &--range-end {
       .#{$base}-day-text {
@@ -200,6 +232,15 @@ $base: 'react-date-picker__month-view';
     &.#{$base}-day--prev-month,
     &.#{$base}-day--next-month {
       color: $WEEKEND_OTHER_MONTH_HIGHLIGHT_COLOR;
+    }
+  }
+
+  .#{$base}-day--today-highlight {
+    color: $TODAY_HIGHLIGHT_COLOR;
+
+    &.#{$base}-day--prev-month,
+    &.#{$base}-day--next-month {
+      color: $TODAY_OTHER_MONTH_HIGHLIGHT_COLOR;
     }
   }
 

@@ -385,8 +385,6 @@ export default class DateField extends Component {
       return acc
     }, {})
 
-    console.log('time', time);
-
     this.time = time
   }
 
@@ -402,13 +400,19 @@ export default class DateField extends Component {
   }
 
   onFooterTodayClick() {
-    this.setValue(
-      this.toMoment(new Date()).startOf('day'),
-      {
-        skipTime: this.props.skipTodayTime
-      })
+    const today = this.toMoment(new Date())
+                    .startOf('day')
 
-    this.setExpanded(false)
+    this.onPickerChange(this.format(today), { dateMoment: today })
+    this.onViewDateChange(today)
+    this.onActiveDateChange(today)
+    // this.setValue(
+    //   today,
+    //   {
+    //     skipTime: this.props.skipTodayTime
+    //   })
+
+    // this.setExpanded(false)
   }
 
   onFooterOkClick() {
@@ -592,6 +596,7 @@ export default class DateField extends Component {
     if (!this.isFocused()) {
       this.focus()
     }
+
     this.onFooterOkClick()
   }
 
@@ -701,9 +706,9 @@ export default class DateField extends Component {
     }
   }
 
-  onPickerChange(dateString, { dateMoment }, event) {
+  onPickerChange(dateString, { dateMoment, forceUpdate }, event) {
     const isEnter = event && event.key == 'Enter'
-    const updateOnDateClick = this.props.updateOnDateClick || isEnter
+    const updateOnDateClick = forceUpdate ? true : this.props.updateOnDateClick || isEnter
 
     if (updateOnDateClick) {
       this.setDate(dateString, { dateMoment })

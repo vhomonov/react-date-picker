@@ -322,6 +322,7 @@ export default class MonthView extends Component {
 
     return join(
       timestamp == TODAY && this.bem('day--today'),
+      props.highlightToday && timestamp == TODAY && this.bem('day--today-highlight'),
 
       before && this.bem('day--prev-month'),
       before && !props.showDaysBeforeMonth && this.bem('day--hidden'),
@@ -382,6 +383,19 @@ export default class MonthView extends Component {
     let inRange = false
 
     const className = []
+
+    const { hoverRange } = this.state
+
+    if (hoverRange && isInRange(dateMoment, hoverRange)){
+      className.push(this.bem('day--in-hover-range'))
+
+      if (dateMoment.isSame(hoverRange[0])){
+        className.push(this.bem('day--hover-range-start'))
+      }
+      if (dateMoment.isSame(hoverRange[1])){
+        className.push(this.bem('day--hover-range-end'))
+      }
+    }
 
     if (range) {
       let [rangeStart, rangeEnd] = range
@@ -574,6 +588,12 @@ export default class MonthView extends Component {
     if (this.props.onMouseLeave) {
       this.props.onMouseLeave(event)
     }
+
+    if (this.state.hoverRange) {
+      this.setState({
+        hoverRange: null
+      })
+    }
   }
 
   renderChildren(children) {
@@ -738,17 +758,15 @@ export default class MonthView extends Component {
   }
 
   handleDayMouseEnter(dayProps) {
-    const range = this.props.range
+    const props = this.p
 
-    if (range && range.length == 1) {
-      const [start] = range
+    const { rangeStart, range } = props
 
+    const partial = !!(rangeStart && range.length < 2)
+
+    if (partial) {
       this.setState({
-        range: [start, dayProps.date].sort((a, b) => a - b)
-      })
-    } else if (this.state.range) {
-      this.setState({
-        range: null
+        hoverRange: clampRange([rangeStart, dayProps.dateMoment])
       })
     }
   }
@@ -823,7 +841,8 @@ export default class MonthView extends Component {
 
   onRangeChange(range, event) {
     this.setState({
-      range: this.props.range === undefined ? range : null
+      range: this.props.range === undefined ? range : null,
+      hoverRange: null
     })
 
     if (this.props.onRangeChange) {
@@ -939,6 +958,8 @@ MonthView.defaultProps = {
   showDaysAfterMonth: true,
 
   highlightWeekends: true,
+  highlightToday: false,
+
   navOnDateClick: true,
   navigation: true,
 

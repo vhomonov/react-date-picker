@@ -39,10 +39,15 @@ export default class TransitionView extends Component {
     const child = React.Children.toArray(this.props.children)[0]
     const childProps = child.props
 
-    const viewDate = props.defaultViewDate ||
+    const viewDate = props.viewDate ||
+      props.defaultViewDate ||
+
       props.defaultDate ||
       props.date ||
+
+      childProps.viewDate ||
       childProps.defaultViewDate ||
+
       childProps.defaultDate ||
       childProps.date
 
@@ -64,10 +69,31 @@ export default class TransitionView extends Component {
     })
   }
 
+  format(mom, props) {
+    props = props || this.props
+    return mom.format(props.dateFormat)
+  }
+
   componentDidMount() {
     this.setState({
       rendered: true
     })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.viewDate) {
+      // this is in order to transition when the prop changes
+      // is we were to simply do setState({ viewDate }) it wouldn't have had a transition
+      this.transitionTo(nextProps.viewDate, nextProps)
+    }
+  }
+
+  transitionTo(date, props) {
+    props = props || this.props
+
+    const dateMoment = this.toMoment(date, props)
+
+    this.doTransition(dateMoment)
   }
 
   getViewChild() {
@@ -297,6 +323,10 @@ export default class TransitionView extends Component {
   }
 
   onViewDateChange(dateString, { dateMoment }) {
+    this.doTransition(dateMoment)
+  }
+
+  doTransition(dateMoment) {
     if (moment(dateMoment).startOf('month')
         .isSame(
           moment(this.viewDate).startOf('month')
