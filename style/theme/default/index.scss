@@ -136,7 +136,7 @@ $base: 'react-date-picker__month-view';
       }
 
       &.#{$base}-day--hover-range-start,
-      &.#{$base}-day--range-start {
+      &.#{$base}-day--range-start:not(.#{$base}-day--in-hover-range) {
         .#{$base}-day-text {
           &:before {
             display: none;
@@ -145,16 +145,23 @@ $base: 'react-date-picker__month-view';
       }
 
       &.#{$base}-day--hover-range-end,
-      &.#{$base}-day--range-end {
+      &.#{$base}-day--range-end:not(.#{$base}-day--in-hover-range) {
         .#{$base}-day-text {
           &:after {
             display: none;
           }
         }
       }
-      &.#{$base}-day--hover-range-start:not(#{$base}-day--hover-range-end) {
+      &.#{$base}-day--hover-range-start:not(.#{$base}-day--hover-range-end) {
         .#{$base}-day-text {
           &:after {
+            display: inherit;
+          }
+        }
+      }
+      &.#{$base}-day--hover-range-end:not(.#{$base}-day--hover-range-start) {
+        .#{$base}-day-text {
+          &:before {
             display: inherit;
           }
         }

@@ -199,6 +199,7 @@ export default class MonthView extends Component {
     this.state = {
       range: props.defaultRange,
       date: props.defaultDate,
+      hoverRange: props.defaultHoverRange,
       activeDate: props.defaultActiveDate,
       viewDate: props.defaultViewDate
     }
@@ -244,6 +245,8 @@ export default class MonthView extends Component {
     const props = this.p = assign({}, thisProps)
 
     state = state || this.state
+
+    props.hoverRange = props.hoverRange === undefined ? this.state.hoverRange : props.hoverRange
 
     props.dayPropsMap = {}
     props.className = this.prepareClassName && this.prepareClassName(props)
@@ -378,24 +381,11 @@ export default class MonthView extends Component {
   }
 
   prepareRangeProps(dateMoment, props) {
-    const range = props.range
-
     let inRange = false
 
     const className = []
 
-    const { hoverRange } = this.state
-
-    if (hoverRange && isInRange(dateMoment, hoverRange)){
-      className.push(this.bem('day--in-hover-range'))
-
-      if (dateMoment.isSame(hoverRange[0])){
-        className.push(this.bem('day--hover-range-start'))
-      }
-      if (dateMoment.isSame(hoverRange[1])){
-        className.push(this.bem('day--hover-range-end'))
-      }
-    }
+    const { hoverRange, range } = props
 
     if (range) {
       let [rangeStart, rangeEnd] = range
@@ -404,28 +394,42 @@ export default class MonthView extends Component {
         rangeStart = props.rangeStart
       }
 
+      // const rangeName = !props.partialRange ? 'hover-range' : 'range'
+      const rangeName = 'range' //hoverRange ? 'range' : 'hover-range'
+
       if (rangeStart && dateMoment.isSame(rangeStart)) {
-        className.push(this.bem('day--range-start'))
-        className.push(this.bem('day--in-range'))
+        className.push(this.bem(`day--${rangeName}-start`))
+        className.push(this.bem(`day--in-${rangeName}`))
 
         if (!rangeEnd) {
-          className.push(this.bem('day--range-end'))
+          className.push(this.bem(`day--${rangeName}-end`))
         }
 
         inRange = true
       }
 
       if (rangeEnd && dateMoment.isSame(rangeEnd)) {
-        className.push(this.bem('day--range-end'))
-        className.push(this.bem('day--in-range'))
+        className.push(this.bem(`day--${rangeName}-end`))
+        className.push(this.bem(`day--in-${rangeName}`))
 
         inRange = true
       }
 
       if (!inRange && isInRange(dateMoment, range)) {
-        className.push(this.bem('day--in-range'))
+        className.push(this.bem(`day--in-${rangeName}`))
 
         inRange = true
+      }
+    }
+
+    if (range && range.length < 2 && hoverRange && isInRange(dateMoment, hoverRange)){
+      className.push(this.bem('day--in-hover-range'))
+
+      if (dateMoment.isSame(hoverRange[0])){
+        className.push(this.bem('day--hover-range-start'))
+      }
+      if (dateMoment.isSame(hoverRange[1])){
+        className.push(this.bem('day--hover-range-end'))
       }
     }
 
@@ -590,9 +594,7 @@ export default class MonthView extends Component {
     }
 
     if (this.state.hoverRange) {
-      this.setState({
-        hoverRange: null
-      })
+      this.setHoverRange(null)
     }
   }
 
@@ -765,9 +767,7 @@ export default class MonthView extends Component {
     const partial = !!(rangeStart && range.length < 2)
 
     if (partial) {
-      this.setState({
-        hoverRange: clampRange([rangeStart, dayProps.dateMoment])
-      })
+      this.setHoverRange(clampRange([rangeStart, dayProps.dateMoment]))
     }
   }
 
@@ -839,11 +839,24 @@ export default class MonthView extends Component {
     return mom.format(this.props.dateFormat)
   }
 
+  setHoverRange(hoverRange) {
+    if (this.props.hoverRange === undefined) {
+      this.setState({
+        hoverRange
+      })
+    }
+
+    if (this.props.onHoverRangeChange) {
+      this.props.onHoverRangeChange(hoverRange)
+    }
+  }
+
   onRangeChange(range, event) {
     this.setState({
-      range: this.props.range === undefined ? range : null,
-      hoverRange: null
+      range: this.props.range === undefined ? range : null
     })
+
+    this.setHoverRange(null)
 
     if (this.props.onRangeChange) {
       const newRange = range.map(m => {

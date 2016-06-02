@@ -98,6 +98,7 @@ export default class MultiMonthView extends Component {
     super(props)
 
     this.state = {
+      hoverRange: null,
       range: props.defaultRange,
       date: props.defaultDate,
       activeDate: props.defaultActiveDate,
@@ -243,6 +244,8 @@ export default class MultiMonthView extends Component {
       constrainActiveInView={false}
 
       navigate={this.onMonthNavigate.bind(this, index)}
+      hoverRange={this.state.hoverRange}
+      onHoverRangeChange={this.setHoverRange}
 
       activeDate={props.activeDate}
 
@@ -268,6 +271,12 @@ export default class MultiMonthView extends Component {
 
       renderNavBar={this.renderNavBar.bind(this, index, viewMoment)}
     />
+  }
+
+  setHoverRange(hoverRange) {
+    this.setState({
+      hoverRange
+    })
   }
 
   select({ dateMoment, timestamp }) {

@@ -106,11 +106,13 @@ var App = React.createClass({
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
-        <MonthView
+        <MultiMonthView
+          xpartialRange={false}
           highlightRangeOnMouseMove
+          onRangeChange={() => console.log('change')}
           minDate="2016-05-05" okButtonText='okay' defaultRange={[]}>
           <Footer xclearDate={Date.now()} />
-        </MonthView>
+        </MultiMonthView>
         <br />
         <DateField
           pattern
