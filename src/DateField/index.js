@@ -506,8 +506,8 @@ export default class DateField extends Component {
     const expanded = this.isExpanded()
 
     if (key == 'Enter') {
-      this.toggleExpand()
       this.onViewKeyDown(event)
+      this.toggleExpand()
       return false
     }
 
@@ -701,11 +701,16 @@ export default class DateField extends Component {
     }
   }
 
-  onPickerChange(dateString, { dateMoment }) {
-    this.setDate(dateString, { dateMoment })
+  onPickerChange(dateString, { dateMoment }, event) {
+    const isEnter = event && event.key == 'Enter'
+    const updateOnDateClick = this.props.updateOnDateClick || isEnter
 
-    if (this.props.collapseOnChange) {
-      this.setExpanded(false)
+    if (updateOnDateClick) {
+      this.setDate(dateString, { dateMoment })
+
+      if (this.props.collapseOnDateClick || isEnter) {
+        this.setExpanded(false)
+      }
     }
   }
 
@@ -781,8 +786,11 @@ export default class DateField extends Component {
 DateField.defaultProps = {
   pattern: false,
   strict: true,
+
   expandOnFocus: true,
-  collapseOnChange: true,
+
+  updateOnDateClick: false,
+  collapseOnDateClick: false,
 
   theme: 'default',
 

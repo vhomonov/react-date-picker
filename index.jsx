@@ -111,7 +111,6 @@ var App = React.createClass({
         <DateField
           pattern
           clearDate={Date.now()}
-          collapseOnChange={false}
           expandedx
           dateFormat="YYYY-MM-DD hh:mm a"
           defaultValue="2016-04-02 04:11 am"
