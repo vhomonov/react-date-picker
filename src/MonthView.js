@@ -44,6 +44,18 @@ const RENDER_DAY = (props) => {
   return <div {...props} />
 }
 
+const isDateInMinMax = function(timestamp, props) {
+  if (props.minDate && timestamp < props.minDate) {
+    return false
+  }
+
+  if (props.maxDate && timestamp > props.maxDate) {
+    return false
+  }
+
+  return true
+}
+
 const isValidActiveDate = function (timestamp, props) {
   if (!props) {
     throw new Error('props is mandatory in isValidActiveDate')
@@ -901,7 +913,7 @@ export default class MonthView extends Component {
   }
 
   onViewDateChange({ dateMoment, timestamp }) {
-    if (!isValidActiveDate(timestamp, this.p)) {
+    if (this.props.forceValidView && !isDateInMinMax(timestamp, this.p)) {
       return
     }
 
@@ -991,7 +1003,8 @@ MonthView.defaultProps = {
   constrainViewDate: true,
   highlightRangeOnMouseMove: false,
 
-  isDatePicker: true
+  isDatePicker: true,
+  forceValidView: true
 }
 
 MonthView.propTypes = {

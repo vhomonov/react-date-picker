@@ -117,7 +117,7 @@ var App = React.createClass({
           clearDate={Date.now()}
           dateFormat="YYYY-MM-DD HH:mm"
           defaultValue="2016-04-02 15:23"
-          xminDate="2016-01-01 00:00"
+          minDate="2016-01-01 00:00"
         >
           <TransitionView>
           <DatePicker />
