@@ -44,6 +44,10 @@ export default class DateField extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.unmounted = true
+  }
+
   render() {
     const props = this.prepareProps(this.props)
 
@@ -78,7 +82,7 @@ export default class DateField extends Component {
     if (input === undefined) {
       input = props.children.filter(FIND_INPUT)[0]
 
-      const FieldInput = props.pattern ? DateFormatInput : Input
+      const FieldInput = props.forceValidDate ? DateFormatInput : Input
 
       input = input ?
         React.cloneElement(input, inputProps) :
@@ -91,7 +95,7 @@ export default class DateField extends Component {
   renderClearIcon() {
     const props = this.p
 
-    if (!props.clearIcon || props.pattern) {
+    if (!props.clearIcon || props.forceValidDate) {
       return undefined
     }
 
@@ -227,7 +231,7 @@ export default class DateField extends Component {
 
     if (input && input.type == 'input') {
       props.rawInput = true
-      props.pattern = false
+      props.forceValidDate = false
     }
 
     const dateInfo = this.prepareDate(props, props.pickerProps)
@@ -357,6 +361,7 @@ export default class DateField extends Component {
 
         viewDate: props.viewDate,
         activeDate: props.activeDate,
+        locale: props.locale,
 
         onViewDateChange: this.onViewDateChange,
         onActiveDateChange: this.onActiveDateChange,
@@ -550,7 +555,7 @@ export default class DateField extends Component {
   }
 
   isTimeInputFocused() {
-    if (this.picker) {
+    if (this.picker && this.picker.isTimeInputFocused) {
       return this.picker.isTimeInputFocused()
     }
 
@@ -584,7 +589,7 @@ export default class DateField extends Component {
 
     this.props.onBlur(event)
 
-    if (!this.picker) {
+    if (!this.picker || !this.picker.isTimeInputFocused) {
       this.onLazyBlur()
       return
     }
@@ -609,6 +614,10 @@ export default class DateField extends Component {
   }
 
   onLazyBlur() {
+    if (this.unmounted) {
+      return
+    }
+
     if (this.isTimeInputFocused()) {
       return
     }
@@ -789,7 +798,7 @@ export default class DateField extends Component {
 }
 
 DateField.defaultProps = {
-  pattern: false,
+  forceValidDate: false,
   strict: true,
 
   expandOnFocus: true,

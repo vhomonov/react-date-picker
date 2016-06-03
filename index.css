@@ -2311,11 +2311,11 @@
               justify-content: center; }
       .react-date-picker__month-view--theme-default .react-date-picker__month-view-day .react-date-picker__month-view-day-text:hover {
         background: #D8EDFF padding-box; }
-    .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range {
+    .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range {
       overflow: hidden; }
-      .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range .react-date-picker__month-view-day-text {
+      .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range .react-date-picker__month-view-day-text, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range .react-date-picker__month-view-day-text {
         position: relative; }
-        .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range .react-date-picker__month-view-day-text:after, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range .react-date-picker__month-view-day-text:before {
+        .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range .react-date-picker__month-view-day-text:after, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range .react-date-picker__month-view-day-text:before, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range .react-date-picker__month-view-day-text:after, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range .react-date-picker__month-view-day-text:before {
           position: absolute;
           height: 100%;
           top: 0px;
@@ -2324,27 +2324,37 @@
           background: #349aef;
           z-index: -1;
           content: ''; }
-        .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range .react-date-picker__month-view-day-text:before {
+        .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range .react-date-picker__month-view-day-text:before, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range .react-date-picker__month-view-day-text:before {
           right: 50%; }
-        .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range .react-date-picker__month-view-day-text:after {
+        .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range .react-date-picker__month-view-day-text:after, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range .react-date-picker__month-view-day-text:after {
           left: 50%; }
-      .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range.react-date-picker__month-view-day--range-start .react-date-picker__month-view-day-text:before {
+      .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range.react-date-picker__month-view-day--hover-range-start .react-date-picker__month-view-day-text:before, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range.react-date-picker__month-view-day--range-start:not(.react-date-picker__month-view-day--in-hover-range) .react-date-picker__month-view-day-text:before, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range.react-date-picker__month-view-day--hover-range-start .react-date-picker__month-view-day-text:before, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range.react-date-picker__month-view-day--range-start:not(.react-date-picker__month-view-day--in-hover-range) .react-date-picker__month-view-day-text:before {
         display: none; }
-      .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range.react-date-picker__month-view-day--range-end .react-date-picker__month-view-day-text:after {
+      .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range.react-date-picker__month-view-day--hover-range-end .react-date-picker__month-view-day-text:after, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range.react-date-picker__month-view-day--range-end:not(.react-date-picker__month-view-day--in-hover-range) .react-date-picker__month-view-day-text:after, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range.react-date-picker__month-view-day--hover-range-end .react-date-picker__month-view-day-text:after, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range.react-date-picker__month-view-day--range-end:not(.react-date-picker__month-view-day--in-hover-range) .react-date-picker__month-view-day-text:after {
         display: none; }
-      .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range.react-date-picker__month-view-day--active:not(.react-date-picker__month-view-day--range-start):not(.react-date-picker__month-view-day--range-end) .react-date-picker__month-view-day-text {
+      .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range.react-date-picker__month-view-day--hover-range-start:not(.react-date-picker__month-view-day--hover-range-end) .react-date-picker__month-view-day-text:after, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range.react-date-picker__month-view-day--hover-range-start:not(.react-date-picker__month-view-day--hover-range-end) .react-date-picker__month-view-day-text:after {
+        display: inherit; }
+      .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range.react-date-picker__month-view-day--hover-range-end:not(.react-date-picker__month-view-day--hover-range-start) .react-date-picker__month-view-day-text:before, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range.react-date-picker__month-view-day--hover-range-end:not(.react-date-picker__month-view-day--hover-range-start) .react-date-picker__month-view-day-text:before {
+        display: inherit; }
+      .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range.react-date-picker__month-view-day--active:not(.react-date-picker__month-view-day--range-start):not(.react-date-picker__month-view-day--range-end):not(.react-date-picker__month-view-day--hover-range-start):not(.react-date-picker__month-view-day--hover-range-end) .react-date-picker__month-view-day-text, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range.react-date-picker__month-view-day--active:not(.react-date-picker__month-view-day--range-start):not(.react-date-picker__month-view-day--range-end):not(.react-date-picker__month-view-day--hover-range-start):not(.react-date-picker__month-view-day--hover-range-end) .react-date-picker__month-view-day-text {
         background: #93c9f6 padding-box; }
-        .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range.react-date-picker__month-view-day--active:not(.react-date-picker__month-view-day--range-start):not(.react-date-picker__month-view-day--range-end) .react-date-picker__month-view-day-text:hover {
+        .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range.react-date-picker__month-view-day--active:not(.react-date-picker__month-view-day--range-start):not(.react-date-picker__month-view-day--range-end):not(.react-date-picker__month-view-day--hover-range-start):not(.react-date-picker__month-view-day--hover-range-end) .react-date-picker__month-view-day-text:hover, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range.react-date-picker__month-view-day--active:not(.react-date-picker__month-view-day--range-start):not(.react-date-picker__month-view-day--range-end):not(.react-date-picker__month-view-day--hover-range-start):not(.react-date-picker__month-view-day--hover-range-end) .react-date-picker__month-view-day-text:hover {
           background: #93c9f6 padding-box; }
-    .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range .react-date-picker__month-view-day-text, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--value .react-date-picker__month-view-day-text {
+    .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range .react-date-picker__month-view-day-text, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range .react-date-picker__month-view-day-text, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--value .react-date-picker__month-view-day-text {
       border: 2px solid transparent;
       background: #349aef padding-box;
       color: white; }
-      .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range .react-date-picker__month-view-day-text:hover, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--value .react-date-picker__month-view-day-text:hover {
+      .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range .react-date-picker__month-view-day-text:hover, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range .react-date-picker__month-view-day-text:hover, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--value .react-date-picker__month-view-day-text:hover {
         background: #349aef padding-box; }
-    .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--range-start .react-date-picker__month-view-day-text, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--range-end .react-date-picker__month-view-day-text {
+    .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range.react-date-picker__month-view-day--today-highlight .react-date-picker__month-view-day-text, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-range.react-date-picker__month-view-day--today-highlight .react-date-picker__month-view-day-text, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--value.react-date-picker__month-view-day--today-highlight .react-date-picker__month-view-day-text {
+      color: #ffccff; }
+    .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range .react-date-picker__month-view-day-text {
+      background: #d9ecfc padding-box; }
+      .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range .react-date-picker__month-view-day-text:after, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--in-hover-range .react-date-picker__month-view-day-text:before {
+        background: #d9ecfc; }
+    .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--hover-range-start .react-date-picker__month-view-day-text, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--hover-range-end .react-date-picker__month-view-day-text, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--range-start .react-date-picker__month-view-day-text, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--range-end .react-date-picker__month-view-day-text {
       background: #63b2f3 padding-box; }
-      .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--range-start .react-date-picker__month-view-day-text:hover, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--range-end .react-date-picker__month-view-day-text:hover {
+      .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--hover-range-start .react-date-picker__month-view-day-text:hover, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--hover-range-end .react-date-picker__month-view-day-text:hover, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--range-start .react-date-picker__month-view-day-text:hover, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--range-end .react-date-picker__month-view-day-text:hover {
         background: #63b2f3 padding-box; }
     .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--active .react-date-picker__month-view-day-text {
       border: 2px solid #349aef; }
@@ -2355,6 +2365,10 @@
     color: red; }
     .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--weekend-highlight.react-date-picker__month-view-day--prev-month, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--weekend-highlight.react-date-picker__month-view-day--next-month {
       color: #d68e8e; }
+  .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--today-highlight {
+    color: magenta; }
+    .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--today-highlight.react-date-picker__month-view-day--prev-month, .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--today-highlight.react-date-picker__month-view-day--next-month {
+      color: #ff66ff; }
   .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--disabled {
     color: #D8D8D8; }
     .react-date-picker__month-view--theme-default .react-date-picker__month-view-day--disabled .react-date-picker__month-view-day-text {

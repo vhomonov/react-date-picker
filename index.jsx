@@ -106,24 +106,20 @@ var App = React.createClass({
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
-        <MultiMonthView
-          xpartialRange={false}
-          highlightRangeOnMouseMove
-          onRangeChange={() => console.log('change')}
-          minDate="2016-05-05" okButtonText='okay' defaultRange={[]}>
-          <Footer xclearDate={Date.now()} />
-        </MultiMonthView>
+        <TransitionView>
+          <MonthView
+            defaultRange={[]}
+            navBar={false}
+          />
+        </TransitionView>
         <br />
         <DateField
-          pattern
+          forceValidDate
           clearDate={Date.now()}
-          expanded
-          dateFormat="YYYY-MM-DD hh:mm a"
-          defaultValue="2016-04-02 04:11 am"
+          dateFormat="YYYY-MM-DD"
+          defaultValue="2016-04-02"
         >
-          <TransitionView>
-            <DatePicker />
-          </TransitionView>
+          <DatePicker />
         </DateField>
         <br />
         <input defaultValue="dadas"/>

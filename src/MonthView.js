@@ -971,7 +971,7 @@ MonthView.defaultProps = {
   showDaysAfterMonth: true,
 
   highlightWeekends: true,
-  highlightToday: false,
+  highlightToday: true,
 
   navOnDateClick: true,
   navigation: true,

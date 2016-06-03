@@ -12,7 +12,6 @@ import assignDefined from './assignDefined'
 
 import { renderFooter } from './MonthView'
 import NavBar from './NavBar'
-import Footer from './Footer'
 import { Flex } from 'react-flex'
 
 import normalize from 'react-style-normalizer'
@@ -399,6 +398,5 @@ export default class TransitionView extends Component {
 TransitionView.defaultProps = {
   navBar: true,
   theme: 'default',
-  isDatePicker: true,
-  footer: true
+  isDatePicker: true
 }
