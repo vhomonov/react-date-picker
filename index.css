@@ -92,6 +92,15 @@
   .react-date-picker__clock *:after {
     box-sizing: border-box; }
 
+.react-date-picker__clock-overlay,
+.react-date-picker__clock-center {
+  border-radius: 50%;
+  position: absolute;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+          transform: translate3d(-50%, -50%, 0);
+  top: 50%;
+  left: 50%; }
+
 .react-date-picker__clock-hand,
 .react-date-picker__clock-tick {
   position: absolute;
@@ -2230,6 +2239,14 @@
       fill: #9a9a9a; }
     .react-date-picker__nav-bar--theme-default .react-date-picker__nav-bar-arrow:not(.react-date-picker__nav-bar-arrow--disabled):active {
       top: 1px; }
+
+.react-date-picker__clock--theme-default .react-date-picker__clock-center {
+  background: #e6e6e6; }
+
+.react-date-picker__clock--theme-default .react-date-picker__clock-overlay {
+  background: white;
+  border-style: solid;
+  border-color: gray; }
 
 .react-date-picker__footer--theme-default {
   padding: 5px; }

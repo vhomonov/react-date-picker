@@ -92,6 +92,15 @@
   .react-date-picker__clock *:after {
     box-sizing: border-box; }
 
+.react-date-picker__clock-overlay,
+.react-date-picker__clock-center {
+  border-radius: 50%;
+  position: absolute;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+          transform: translate3d(-50%, -50%, 0);
+  top: 50%;
+  left: 50%; }
+
 .react-date-picker__clock-hand,
 .react-date-picker__clock-tick {
   position: absolute;

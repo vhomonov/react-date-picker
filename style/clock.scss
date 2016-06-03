@@ -12,6 +12,14 @@
   position: relative;
 }
 
+.react-date-picker__clock-overlay,
+.react-date-picker__clock-center {
+  border-radius: 50%;
+  position: absolute;
+  transform: translate3d(-50%, -50%, 0);
+  top: 50%;
+  left: 50%;
+}
 .react-date-picker__clock-hand,
 .react-date-picker__clock-tick {
   position: absolute;
@@ -23,4 +31,3 @@
   width: 1px;
   background: gray;
 }
-

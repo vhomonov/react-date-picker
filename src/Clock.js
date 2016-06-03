@@ -193,7 +193,11 @@ export default class Clock extends Component {
     const width = size
     const height = size
 
-    const className = join(props.className, 'react-date-picker__clock')
+    const className = join(
+      props.className,
+      'react-date-picker__clock',
+      `react-date-picker__clock--theme-${props.theme}`
+    )
 
     let seconds
     let minutes
@@ -228,13 +232,39 @@ export default class Clock extends Component {
       className={className}
       style={style}
     >
+      {this.renderCenter()}
       {this.renderSecondHand(seconds)}
       {this.renderMinuteHand(minutes)}
       {this.renderHourHand(hours)}
+      {this.renderCenterOverlay()}
 
       {MINUTES.map(this.renderTick)}
       {this.props.size == 'auto' && <NotifyResize notifyOnMount onResize={this.onResize} />}
     </div>
+  }
+
+  renderCenter() {
+    const props = this.props
+    const centerSize = props.centerSize || ((props.bigTickHeight || props.tickHeight) * 3)
+
+    return <div
+      className="react-date-picker__clock-center"
+      style={{ width: centerSize, height: centerSize }}
+    />
+  }
+
+  renderCenterOverlay() {
+    const props = this.props
+    const centerOverlaySize = props.centerOverlaySize || (props.handWidth * 4)
+
+    return <div
+      className="react-date-picker__clock-overlay"
+      style={{
+        width: centerOverlaySize,
+        height: centerOverlaySize,
+        borderWidth: props.handWidth
+      }}
+    />
   }
 
   onResize({ width, height }) {
@@ -269,6 +299,7 @@ export default class Clock extends Component {
 
     const height = props[`${name}HandHeight`] ||
       props.handHeight || ((size / 2) - props[`${name}HandDiff`])
+
     const width = props[`${name}HandWidth`] || props.handWidth || props.tickWidth
     let offset = props[`${name}HandOffset`] || props.handOffset
 
@@ -375,12 +406,14 @@ export default class Clock extends Component {
 
 Clock.defaultProps = {
   size: 150,
+  theme: 'default',
 
   showSecondsHand: true,
   showHoursHand: true,
   showMinutesHand: true,
 
   handWidth: 2,
+  handOffset: 10,
 
   hourHandDiff: 35,
   minuteHandDiff: 25,

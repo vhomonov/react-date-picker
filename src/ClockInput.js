@@ -125,6 +125,7 @@ export default class ClockInput extends Component {
 
     const clockProps = {
       time,
+      theme: props.theme,
       showMinutesHand: dateFormat.indexOf('mm') != -1,
       showSecondsHand: dateFormat.indexOf('ss') != -1
     }

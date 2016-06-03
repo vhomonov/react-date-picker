@@ -977,6 +977,7 @@ MonthView.defaultProps = {
   navigation: true,
 
   constrainViewDate: true,
+  highlightRangeOnMouseMove: false,
 
   isDatePicker: true
 }

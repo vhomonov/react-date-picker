@@ -269,7 +269,7 @@ export default class MultiMonthView extends Component {
 
       select={this.select}
 
-      renderNavBar={this.renderNavBar.bind(this, index, viewMoment)}
+      renderNavBar={this.props.navigation && this.renderNavBar.bind(this, index, viewMoment)}
     />
   }
 
@@ -512,6 +512,8 @@ MultiMonthView.defaultProps = {
 
   isDatePicker: true,
   forceViewUpdate: false,
+
+  navigation: true,
 
   constrainActiveInView: true,
 

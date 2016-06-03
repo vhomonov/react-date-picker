@@ -106,12 +106,11 @@ var App = React.createClass({
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
-        <TransitionView>
-          <MonthView
+          <MultiMonthView
             defaultRange={[]}
-            navBar={false}
+            navigation={false}
           />
-        </TransitionView>
+        <Clock defaultTime />
         <br />
         <DateField
           forceValidDate
