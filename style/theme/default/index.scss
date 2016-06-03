@@ -26,7 +26,7 @@ $TODAY_HIGHLIGHT_COLOR: magenta !default;
 $WEEKEND_OTHER_MONTH_HIGHLIGHT_COLOR: lighten(#BB4343, 20%) !default;
 $TODAY_OTHER_MONTH_HIGHLIGHT_COLOR: lighten(magenta, 20%) !default;
 
-$FOOTER_BUTTON_FONT_SIZE: 12px !default;
+$FOOTER_BUTTON_FONT_SIZE: inherit !default;
 $WEEK_NUMBER_COLOR: #B1B1B1 !default;
 $WEEK_NUMBER_FONT_SIZE: 12px !default;
 $WEEK_DAY_NAMES_TEXT_TRANSFORM: uppercase !default;

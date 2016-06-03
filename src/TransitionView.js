@@ -156,6 +156,7 @@ export default class TransitionView extends Component {
       date: props.date,
       activeDate: props.activeDate,
       footer: false,
+      insideField: props.insideField,
 
       defaultRange: props.defaultRange,
       defaultDate: props.defaultDate,
@@ -168,6 +169,8 @@ export default class TransitionView extends Component {
       dateFormat: props.dateFormat,
       locale: props.locale,
       theme: props.theme,
+
+      showClock: props.showClock,
 
       minDate: props.minDate,
       maxDate: props.maxDate

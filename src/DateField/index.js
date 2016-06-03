@@ -13,7 +13,7 @@ import { CLEAR_ICON } from './icons'
 import moment from 'moment'
 import join from '../join'
 import toMoment from '../toMoment'
-import DatePicker, { NAV_KEYS } from '../DatePicker'
+import Calendar, { NAV_KEYS } from '../Calendar'
 import joinFunctions from '../joinFunctions'
 import assignDefined from '../assignDefined'
 
@@ -22,7 +22,7 @@ const POSITIONS = { top: 'top', bottom: 'bottom' }
 const getPicker = (props, cmp) => {
   return React.Children
     .toArray(props.children)
-    .filter(c => c && c.props && c.props.isDatePicker)[0] || <DatePicker />
+    .filter(c => c && c.props && c.props.isDatePicker)[0] || <Calendar />
 }
 
 const FIND_INPUT = c => c && (c.type === 'input' || (c.props && c.isDateInput))
@@ -343,6 +343,9 @@ export default class DateField extends Component {
 
         footer,
 
+        insideField: true,
+        showClock: props.showClock,
+
         updateOnWheel: props.updateOnWheel,
         onClockInputBlur: this.onClockInputBlur,
         onClockEnterKey: this.onClockEnterKey,
@@ -412,13 +415,8 @@ export default class DateField extends Component {
     this.onPickerChange(this.format(today), { dateMoment: today })
     this.onViewDateChange(today)
     this.onActiveDateChange(today)
-    // this.setValue(
-    //   today,
-    //   {
-    //     skipTime: this.props.skipTodayTime
-    //   })
 
-    // this.setExpanded(false)
+    return false
   }
 
   onFooterOkClick() {
@@ -440,15 +438,17 @@ export default class DateField extends Component {
   }
 
   onFooterClearClick() {
-    const clearDate = this.props.clearDate || this.props.minDate
+    const clearDate = this.props.clearDate === undefined ? this.props.minDate : this.props.clearDate
 
-    if (clearDate) {
+    if (clearDate !== undefined) {
       this.setValue(clearDate, {
         skipTime: true
       })
     }
 
     this.setExpanded(false)
+
+    return false
   }
 
   toMoment(value, props) {
@@ -799,6 +799,8 @@ export default class DateField extends Component {
 }
 
 DateField.defaultProps = {
+  showClock: undefined,
+
   forceValidDate: false,
   strict: true,
 

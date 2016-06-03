@@ -8,6 +8,7 @@ import { getSelectionStart, getSelectionEnd, setCaretPosition } from '../TimeInp
 import toMoment from '../toMoment';
 
 import parseFormat from './parseFormat'
+import forwardTime from '../utils/forwardTime'
 
 const BACKWARDS = {
   Backspace: 1,
@@ -271,7 +272,7 @@ export default class DateFormatInput extends Component {
   }
 
   format(mom, format) {
-    return mom.format(format || this.props.format)
+    return mom.format(format || this.props.dateFormat)
   }
 
   setStateValue(value, callback, { key, oldValue, currentPosition }) {
@@ -303,12 +304,27 @@ export default class DateFormatInput extends Component {
     const { minDate, maxDate } = this.state
 
     if (minDate && dateMoment.isBefore(minDate)) {
-      dateMoment = minDate
+      const clone = moment(dateMoment)
+
+      // try with time
+      dateMoment = forwardTime(clone, this.toMoment(minDate))
+
+      if (dateMoment.isBefore(minDate)) {
+        // try without time
+        dateMoment = this.toMoment(minDate)
+      }
+
       value = this.format(dateMoment)
     }
 
     if (maxDate && dateMoment.isAfter(maxDate)) {
-      dateMoment = maxDate
+      const clone = moment(dateMoment)
+      dateMoment = forwardTime(clone, this.toMoment(maxDate))
+
+      if (dateMoment.isAfter(maxDate)) {
+        dateMoment = this.toMoment(maxDate)
+      }
+
       value = this.format(dateMoment)
     }
 

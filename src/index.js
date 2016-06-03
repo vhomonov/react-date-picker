@@ -14,10 +14,14 @@ import Clock from './Clock'
 import ClockInput from './ClockInput'
 
 import DateField from './DateField'
-import DatePicker from './DatePicker'
+import Calendar from './Calendar'
 import DateFormatInput from './DateFormatInput'
 
 export default MonthView
+
+// allow people to import with other aliases as well
+export const DatePicker = Calendar
+export const DateEditor = DateField
 
 export {
   MonthView,
@@ -32,7 +36,7 @@ export {
   ClockInput,
 
   DateField,
-  DatePicker,
+  Calendar,
   TimePicker,
   TimeInput
 }

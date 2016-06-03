@@ -35,13 +35,26 @@ export default class Footer extends Component {
 
     const className = join(props.className, bem(), bem(null, `theme-${props.theme}`))
 
-    return <Flex inline row {...props} className={className}>
+    const todayButton = this.renderTodayButton()
+    const clearButton = this.renderClearButton()
 
-      {this.renderTodayButton()}
-      {this.renderClearButton()}
-      {SPACER}
-      {this.renderOkButton()}
-      {this.renderCancelButton()}
+    const okButton = this.renderOkButton()
+    const cancelButton = this.renderCancelButton()
+
+    if (!todayButton && !clearButton && !okButton && !cancelButton) {
+      return null
+    }
+
+    const spacer = (okButton || cancelButton) ? SPACER : null
+
+    return <Flex inline row {...props} justifyContent="center" className={className}>
+      {todayButton}
+      {clearButton}
+
+      {spacer}
+
+      {okButton}
+      {cancelButton}
     </Flex>
   }
 
@@ -56,9 +69,10 @@ export default class Footer extends Component {
     if (!this.props.clearButton) {
       return null
     }
+
     return this.renderButton({
       children: this.props.clearButtonText,
-      disabled: !this.props.clearDate
+      disabled: this.props.clearDate === undefined
     }, this.props.onClearClick)
   }
 

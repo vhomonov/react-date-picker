@@ -36,6 +36,9 @@
     .react-date-picker__nav-bar--theme-default .react-date-picker__nav-bar-arrow:not(.react-date-picker__nav-bar-arrow--disabled):active {
       top: 1px; }
 
+.react-date-picker__clock--theme-default .react-date-picker__clock-hand-second {
+  background: red; }
+
 .react-date-picker__clock--theme-default .react-date-picker__clock-center {
   background: #e6e6e6; }
 
@@ -56,7 +59,7 @@
             user-select: none;
     border: 1px solid gray;
     background: white;
-    font-size: 12px; }
+    font-size: inherit; }
     .react-date-picker__footer--theme-default .react-date-picker__footer-button:active {
       top: 1px; }
     .react-date-picker__footer--theme-default .react-date-picker__footer-button:not(.react-date-picker__footer-button--disabled) {

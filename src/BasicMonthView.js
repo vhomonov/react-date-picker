@@ -335,7 +335,9 @@ class BasicMonthView extends Component {
       return null
     }
 
-    const names = [weekNumbers ? weekNumberName : null].concat(getWeekDayNames(props))
+    const names = weekNumbers ?
+      [weekNumberName].concat(getWeekDayNames(props)) :
+      getWeekDayNames(props)
 
     const className = `${this.bem('row')} ${this.bem('week-day-names')} dp-row dp-week-day-names`
 

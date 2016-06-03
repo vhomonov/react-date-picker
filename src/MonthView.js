@@ -67,15 +67,7 @@ const isValidActiveDate = function (timestamp, props) {
     return false
   }
 
-  if (props.minDate && timestamp < props.minDate) {
-    return false
-  }
-
-  if (props.maxDate && timestamp > props.maxDate) {
-    return false
-  }
-
-  return true
+  return isDateInMinMax(timestamp, props)
 }
 
 const isInView = function (mom, props) {
@@ -148,18 +140,20 @@ const prepareActiveDate = function (props, state) {
   return isValidActiveDate(+activeDate, props) ? activeDate : null
 }
 
-const renderFooter = props => {
+const renderFooter = (props, buttonHandlers) => {
   if (!props.footer) {
     return null
   }
 
+  buttonHandlers = buttonHandlers || props
+
   const renderFooter = props.renderFooter
 
   const footerFnProps = {
-    onTodayClick: props.onFooterTodayClick,
-    onClearClick: props.onFooterClearClick,
-    onOkClick: props.onFooterOkClick,
-    onCancelClick: props.onFooterCancelClick
+    onTodayClick: buttonHandlers.onFooterTodayClick,
+    onClearClick: buttonHandlers.onFooterClearClick,
+    onOkClick: buttonHandlers.onFooterOkClick,
+    onCancelClick: buttonHandlers.onFooterCancelClick
   }
 
   const childFooter = React.Children.toArray(props.children)
@@ -183,10 +177,10 @@ const renderFooter = props => {
     clearButton: props.clearButton,
     clearButtonText: props.clearButtonText,
 
-    okButton: props.okButton,
+    okButton: props.okButton === undefined && !props.insideField ? false : props.okButton,
     okButtonText: props.okButtonText,
 
-    cancelButton: props.cancelButton,
+    cancelButton: props.cancelButton === undefined && !props.insideField ? false : props.cancelButton,
     cancelButtonText: props.cancelButtonText,
 
     clearDate: props.clearDate || props.footerClearDate
@@ -636,8 +630,40 @@ export default class MonthView extends Component {
     return result
   }
 
+  onFooterTodayClick() {
+    if (this.props.onFooterTodayClick) {
+      if (this.props.onFooterTodayClick() === false) {
+        return
+      }
+    }
+
+    this.select({ dateMoment: this.toMoment(Date.now()) })
+  }
+
+  onFooterClearClick() {
+    if (this.props.onFooterClearClick) {
+      if (this.props.onFooterClearClick() === false) {
+        return
+      }
+    }
+
+    this.select({ dateMoment: null })
+  }
+
+  onFooterOkClick() {
+    if (this.props.onFooterOkClick) {
+      this.props.onFooterOkClick()
+    }
+  }
+
+  onFooterCancelClick() {
+    if (this.props.onFooterCancelClick) {
+      this.onFooterCancelClick()
+    }
+  }
+
   renderFooter(props) {
-    return renderFooter(props)
+    return renderFooter(props, this)
   }
 
   renderNavBar(props) {
@@ -969,7 +995,7 @@ export default class MonthView extends Component {
 
   gotoViewDate({ dateMoment, timestamp }) {
     if (!timestamp) {
-      timestamp = +dateMoment
+      timestamp = dateMoment == null ? null : +dateMoment
     }
 
     this.onViewDateChange({ dateMoment, timestamp })
@@ -985,6 +1011,8 @@ MonthView.defaultProps = {
 
   onBlur: () => {},
   onFocus: () => {},
+
+  footerClearDate: null,
 
   partialRange: true,
 

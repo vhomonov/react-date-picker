@@ -8,7 +8,7 @@ require('./style/index.scss')
 import DateFormatInput from './src/DateFormatInput'
 import MonthView from './src/MonthView'
 
-import DatePicker from './src/DatePicker'
+import DatePicker from './src/Calendar'
 import TimePicker from './src/TimePicker'
 import TimeInput from './src/TimeInput'
 
@@ -106,22 +106,20 @@ var App = React.createClass({
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
-          <MultiMonthView
-            defaultRange={[]}
-            navigation={false}
+          <MonthView
+            weekNumbers={false}
           />
         <Clock defaultTime />
         <br />
         <DateField
           forceValidDate
-          clearDate={Date.now()}
+          xexpanded
           dateFormat="YYYY-MM-DD HH:mm"
           defaultValue="2016-04-02 15:23"
-          minDate="2016-01-01 00:00"
         >
-          <TransitionView>
-          <DatePicker />
-          </TransitionView>
+            <DatePicker>
+
+            </DatePicker>
         </DateField>
         <br />
         <input defaultValue="dadas"/>

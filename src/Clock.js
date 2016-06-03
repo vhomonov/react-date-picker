@@ -233,9 +233,11 @@ export default class Clock extends Component {
       style={style}
     >
       {this.renderCenter()}
-      {this.renderSecondHand(seconds)}
-      {this.renderMinuteHand(minutes)}
+
       {this.renderHourHand(hours)}
+      {this.renderMinuteHand(minutes)}
+      {this.renderSecondHand(seconds)}
+
       {this.renderCenterOverlay()}
 
       {MINUTES.map(this.renderTick)}
@@ -405,6 +407,10 @@ export default class Clock extends Component {
 }
 
 Clock.defaultProps = {
+
+  centerSize: null,
+  centerOverlaySize: null,
+
   size: 150,
   theme: 'default',
 
@@ -413,6 +419,7 @@ Clock.defaultProps = {
   showMinutesHand: true,
 
   handWidth: 2,
+  secondHandWidth: 1,
   handOffset: 10,
 
   hourHandDiff: 35,

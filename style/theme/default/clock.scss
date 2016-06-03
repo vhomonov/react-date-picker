@@ -1,4 +1,8 @@
 .react-date-picker__clock--theme-#{$THEME_NAME} {
+  .react-date-picker__clock-hand-second {
+    background: red;
+  }
+
   .react-date-picker__clock-center {
     background: lighten(gray, 40%);
   }

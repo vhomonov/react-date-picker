@@ -11,7 +11,7 @@ import ClockInput from './ClockInput'
 
 import { Flex } from 'react-flex'
 
-export default class DatePicker extends Component {
+export default class Calendar extends Component {
 
   constructor(props) {
     super(props)
@@ -29,7 +29,9 @@ export default class DatePicker extends Component {
     const dateFormat = props.dateFormat.toLowerCase()
 
     props.date = this.prepareDate(props)
-    props.hasTime = props.hasTime || dateFormat.indexOf('k') != -1 || dateFormat.indexOf('h') != -1
+    if (props.showClock === undefined) {
+      props.showClock = dateFormat.indexOf('k') != -1 || dateFormat.indexOf('h') != -1
+    }
 
     const timeFormat = dateFormat.substring(dateFormat.toLowerCase().indexOf('hh'))
 
@@ -56,13 +58,13 @@ export default class DatePicker extends Component {
 
   renderChildren([navBar, inner, footer]) {
     const props = this.p
-    const timePart = props.hasTime && this.renderClockInput()
+    const clockInput = props.showClock && this.renderClockInput()
 
     const children = [
       navBar,
       <Flex justifyContent="center" wrap={this.props.wrap || this.props.wrapTime}>
-        <Flex flex column wrap={false} alignItems="stretch" children={inner} />
-        {timePart}
+        <Flex flexGrow="1" flexShrink="0" flexBasis="auto" column wrap={false} alignItems="stretch" children={inner} />
+        {clockInput}
       </Flex>,
       footer
     ]
@@ -149,7 +151,7 @@ export default class DatePicker extends Component {
   }
 }
 
-DatePicker.defaultProps = {
+Calendar.defaultProps = {
   dateFormat: 'YYYY-MM-DD',
 
   theme: 'default',
@@ -164,7 +166,7 @@ DatePicker.defaultProps = {
   onClockInputFocus: () => {}
 }
 
-DatePicker.propTypes = {
+Calendar.propTypes = {
 }
 
 export {
