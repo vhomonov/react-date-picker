@@ -2,6 +2,7 @@ import React from 'react'
 import Component from 'react-class'
 
 import assign from 'object-assign'
+import assignDefined from './assignDefined'
 
 import MonthView, { NAV_KEYS } from './MonthView'
 import toMoment from './toMoment'
@@ -101,12 +102,16 @@ export default class DatePicker extends Component {
       onFocus: this.onClockInputFocus,
       onBlur: this.onClockInputBlur,
       onChange: this.onTimeChange,
-      onMouseDown: this.onClockInputMouseDown,
+      onMouseDown: this.onClockInputMouseDown
+    }
+
+    assignDefined(clockInputProps, {
       onEnterKey: this.props.onClockEnterKey,
       readOnly: this.props.readOnly,
       tabIndex: this.props.clockTabIndex,
-      theme: this.props.theme
-    }
+      theme: this.props.theme,
+      updateOnWheel: this.props.updateOnWheel
+    })
 
     if (clockInput) {
       return React.cloneElement(clockInput, clockInputProps)

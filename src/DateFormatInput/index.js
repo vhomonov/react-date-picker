@@ -101,11 +101,12 @@ export default class DateFormatInput extends Component {
       onBlur={this.onBlur}
       value={displayValue}
       onKeyDown={this.onKeyDown}
+      onWheel={this.onWheel}
       onChange={this.onChange}
     />
   }
 
-  focus(){
+  focus() {
     findDOMNode(this).focus()
   }
 
@@ -137,10 +138,25 @@ export default class DateFormatInput extends Component {
     event.stopPropagation()
   }
 
+  onWheel(event) {
+    if (this.props.updateOnWheel && this.isFocused()) {
+      this.onKeyDown({
+        key: event.deltaY < 0 ? 'ArrowUp' : 'ArrowDown',
+        type: event.type,
+        stopPropagation: () => event.stopPropagation(),
+        preventDefault: () => event.preventDefault()
+      })
+    }
+
+    if (this.props.onWheel) {
+      this.props.onWheel(event)
+    }
+  }
+
   onKeyDown(event) {
     const { props } = this
 
-    const { key } = event
+    const { key, type } = event
 
     if (props.stopPropagation) {
       event.stopPropagation()
@@ -163,7 +179,7 @@ export default class DateFormatInput extends Component {
       currentPosition = positions[range.start - 1]
     }
 
-    if (props.onKeyDown) {
+    if (props.onKeyDown && type == 'keydown') {
       if (props.onKeyDown(event, currentPosition) === false) {
         this.caretPos = range
         return
@@ -228,7 +244,7 @@ export default class DateFormatInput extends Component {
       stop: false
     }
 
-    if (this.props.afterKeyDown) {
+    if (this.props.afterKeyDown && type == 'keydown') {
       this.props.afterKeyDown(config)
     }
 
@@ -344,7 +360,8 @@ export default class DateFormatInput extends Component {
 
 DateFormatInput.defaultProps = {
   isDateInput: true,
-  stopPropagation: true
+  stopPropagation: true,
+  updateOnWheel: true
 }
 
 DateFormatInput.propTypes = {

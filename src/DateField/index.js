@@ -343,6 +343,7 @@ export default class DateField extends Component {
 
         footer,
 
+        updateOnWheel: props.updateOnWheel,
         onClockInputBlur: this.onClockInputBlur,
         onClockEnterKey: this.onClockEnterKey,
         footerClearDate: props.clearDate || props.minDate,
