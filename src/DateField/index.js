@@ -821,6 +821,9 @@ DateField.defaultProps = {
   onCollapse: () => {},
   onExpand: () => {},
 
+  minDate: moment('0100-01-01', 'YYYY-MM-DD'),
+  maxDate: moment('9999-12-31 HH:mm:ss', 'YYYY-MM-DD 23:59:59'),
+
   skipTodayTime: false
 }
 

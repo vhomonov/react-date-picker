@@ -204,9 +204,9 @@ const handleMeridiemBackspace = (format, config) => {
 const getFormats = () => {
   return {
     YYYY: {
-      min: 1900,
-      max: 4000,
-      default: '2000',
+      min: 100,
+      max: 9999,
+      default: '0100',
       handleDelete,
       handleBackspace,
       handleArrow,
