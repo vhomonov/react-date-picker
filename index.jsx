@@ -116,10 +116,12 @@ var App = React.createClass({
         <DateField
           forceValidDate
           clearDate={Date.now()}
-          dateFormat="YYYY-MM-DD"
-          defaultValue="2016-04-02"
+          dateFormat="YYYY-MM-DD HH:mm"
+          defaultValue="2016-04-02 15:23"
         >
-          <DatePicker />
+          <TransitionView>
+            <DatePicker />
+          </TransitionView>
         </DateField>
         <br />
         <input defaultValue="dadas"/>

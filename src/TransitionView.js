@@ -161,6 +161,10 @@ export default class TransitionView extends Component {
       defaultDate: props.defaultDate,
       defaultActiveDate: props.defaultActiveDate,
 
+      // this is here in order to ensure time changes are reflected
+      // when using a TransitionView inside a DateField
+      onTimeChange: props.onTimeChange,
+
       dateFormat: props.dateFormat,
       locale: props.locale,
       theme: props.theme
