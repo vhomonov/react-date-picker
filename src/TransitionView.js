@@ -167,7 +167,10 @@ export default class TransitionView extends Component {
 
       dateFormat: props.dateFormat,
       locale: props.locale,
-      theme: props.theme
+      theme: props.theme,
+
+      minDate: props.minDate,
+      maxDate: props.maxDate
     })
 
     if (props.onChange) {
@@ -203,8 +206,8 @@ export default class TransitionView extends Component {
 
     if (props.navBar) {
       navBar = this.renderNavBar({
-        minDate: renderedChildProps.minDate,
-        maxDate: renderedChildProps.maxDate,
+        minDate: props.minDate || renderedChildProps.minDate,
+        maxDate: props.maxDate || renderedChildProps.maxDate,
         secondary: true,
         viewDate: this.viewDate,
         onViewDateChange
@@ -299,6 +302,11 @@ export default class TransitionView extends Component {
         childProps.className,
         `react-date-picker__${index == -1 ? 'prev' : 'next'}`
       )
+    })
+
+    assignDefined(newProps, {
+      minDate: renderedProps.minDate,
+      maxDate: renderedProps.maxDate
     })
 
     if (this.state.transition && this.state.transition != index) {

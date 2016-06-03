@@ -55,6 +55,14 @@ const isValidActiveDate = function (timestamp, props) {
     return false
   }
 
+  if (props.minDate && timestamp < props.minDate) {
+    return false
+  }
+
+  if (props.maxDate && timestamp > props.maxDate) {
+    return false
+  }
+
   return true
 }
 
@@ -893,6 +901,10 @@ export default class MonthView extends Component {
   }
 
   onViewDateChange({ dateMoment, timestamp }) {
+    if (!isValidActiveDate(timestamp, this.p)) {
+      return
+    }
+
     if (this.props.viewDate === undefined && this.props.navOnDateClick) {
       this.setState({
         viewDate: timestamp
