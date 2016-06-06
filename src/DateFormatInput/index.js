@@ -10,6 +10,8 @@ import toMoment from '../toMoment';
 import parseFormat from './parseFormat'
 import forwardTime from '../utils/forwardTime'
 
+const emptyFn = () => {}
+
 const BACKWARDS = {
   Backspace: 1,
   ArrowUp: 1,
@@ -26,7 +28,7 @@ export default class DateFormatInput extends Component {
     const { positions, matches } = parseFormat(props.dateFormat)
     const defaultValue = props.defaultValue || Date.now()
 
-    const delay = props.throttle || 100
+    const delay = props.changeDelay
     this.throttleSetValue = delay == -1 ? this.setValue : throttle(this.setValue, delay)
 
     const { minDate, maxDate } = this.getMinMax(props)
@@ -139,14 +141,24 @@ export default class DateFormatInput extends Component {
     event.stopPropagation()
   }
 
+  onDirection(dir, event = {}){
+    this.onKeyDown({
+      key: dir > 0 ? 'ArrowUp' : 'ArrowDown',
+      type: event.type || 'unknown',
+      stopPropagation: typeof event.stopPropagation == 'function' ? () => event.stopPropagation(): emptyFn,
+      preventDefault: typeof event.preventDefault == 'function' ? () => event.preventDefault(): emptyFn
+    })
+  }
+
   onWheel(event) {
     if (this.props.updateOnWheel && this.isFocused()) {
-      this.onKeyDown({
-        key: event.deltaY < 0 ? 'ArrowUp' : 'ArrowDown',
-        type: event.type,
-        stopPropagation: () => event.stopPropagation(),
-        preventDefault: () => event.preventDefault()
-      })
+      this.onDirection(-event.deltaY, event)
+      // this.onKeyDown({
+      //   key: event.deltaY < 0 ? 'ArrowUp' : 'ArrowDown',
+      //   type: event.type,
+      //   stopPropagation: () => event.stopPropagation(),
+      //   preventDefault: () => event.preventDefault()
+      // })
     }
 
     if (this.props.onWheel) {
@@ -377,7 +389,8 @@ export default class DateFormatInput extends Component {
 DateFormatInput.defaultProps = {
   isDateInput: true,
   stopPropagation: true,
-  updateOnWheel: true
+  updateOnWheel: true,
+  changeDelay: 100
 }
 
 DateFormatInput.propTypes = {

@@ -39,6 +39,7 @@ $NAV_BAR_ARROW_COLOR_DISABLED: #C5C5C5;
 @import './navbar.scss';
 @import './clock.scss';
 @import './footer.scss';
+@import './spinner.scss';
 
 $base: 'react-date-picker__month-view';
 
@@ -48,7 +49,7 @@ $base: 'react-date-picker__month-view';
   border: 1px solid $VIEW_BORDER_COLOR;
   .#{$base}--theme-#{$THEME_NAME},
   .react-date-picker__multi-month-view--theme-#{$THEME_NAME},
-  .react-date-picker__date-picker--theme-#{$THEME_NAME} {
+  .react-date-picker__calendar--theme-#{$THEME_NAME} {
     border: none;
   }
 }

@@ -39,8 +39,8 @@ export default class Calendar extends Component {
 
     const className = join(
       props.className,
-      'react-date-picker__date-picker',
-      props.theme && `react-date-picker__date-picker--theme-${props.theme}`
+      'react-date-picker__calendar',
+      props.theme && `react-date-picker__calendar--theme-${props.theme}`
     )
 
     const monthView = <MonthView

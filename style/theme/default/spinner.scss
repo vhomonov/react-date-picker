@@ -1,0 +1,19 @@
+.react-date-picker__date-format-spinner--theme-#{$THEME_NAME} {
+  border: 1px solid gray;
+
+  input {
+    border: none;
+    outline: none;
+  }
+
+  &:not([disabled]) {
+    .react-date-picker__date-format-spinner-arrow {
+      position: relative;
+      cursor: pointer;
+
+      &:active {
+        top: 1px;
+      }
+    }
+  }
+}

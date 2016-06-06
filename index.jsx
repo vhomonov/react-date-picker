@@ -19,6 +19,7 @@ import Footer from './src/Footer'
 import MultiMonthView from './src/MultiMonthView'
 import DateField from './src/DateField'
 import Clock from './src/Clock'
+import DateFormatSpinnerInput from './src/DateFormatSpinnerInput'
 import { Flex, Item } from 'react-flex'
 
 var moment = require('moment');
@@ -106,6 +107,7 @@ var App = React.createClass({
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
+        <DateFormatSpinnerInput dateFormat="YYYY-MM-DD HH:mm" /><br />
           <MonthView
             weekNumbers={false}
           />
