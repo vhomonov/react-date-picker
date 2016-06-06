@@ -64,7 +64,6 @@ $base: 'react-date-picker__month-view';
 }
 
 .#{$base}--theme-#{$THEME_NAME} {
-
   background: white;
   position: relative;
   border: 1px solid $VIEW_BORDER_COLOR;

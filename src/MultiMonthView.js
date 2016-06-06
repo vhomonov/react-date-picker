@@ -92,6 +92,39 @@ const prepareViews = function (props) {
   props.inViewEnd = lastViewDays[lastViewDays.length - 1]
 }
 
+export const renderNavBar = function(config){
+
+  const props = this.props
+  const { index, viewMoment } = config
+
+  const navBarProps = {
+    secondary: true,
+
+    minDate: config.minDate || props.minDate,
+    maxDate: config.maxDate || props.maxDate,
+
+    renderNavNext: config.renderHiddenNav || this.renderHiddenNav,
+    renderNavPrev: config.renderHiddenNav || this.renderHiddenNav,
+
+    viewMoment,
+
+    onViewDateChange: config.onViewDateChange || this.onNavViewDateChange,
+    onUpdate: config.onUpdate || this.updateViewMoment
+  }
+
+  console.log('index', index);
+
+  if (index == 0) {
+    delete navBarProps.renderNavPrev
+  }
+
+  if (index == props.perRow - 1) {
+    delete navBarProps.renderNavNext
+  }
+
+  return <NavBar {...navBarProps} />
+}
+
 export default class MultiMonthView extends Component {
 
   constructor(props) {
@@ -238,6 +271,8 @@ export default class MultiMonthView extends Component {
       constrainViewDate={false}
       {...this.props}
 
+      className={null}
+
       index={index}
 
       footer={false}
@@ -269,7 +304,7 @@ export default class MultiMonthView extends Component {
 
       select={this.select}
 
-      renderNavBar={this.props.navigation && this.renderNavBar.bind(this, index, viewMoment)}
+      renderNavBar={this.props.navigation && (this.props.renderNavBar || this.renderNavBar).bind(this, { index, viewMoment })}
     />
   }
 
@@ -319,31 +354,8 @@ export default class MultiMonthView extends Component {
     }
   }
 
-  renderNavBar(index, viewMoment) {
-    const navBarProps = {
-      secondary: true,
-
-      minDate: this.props.minDate,
-      maxDate: this.props.maxDate,
-
-      renderNavNext: this.renderHiddenNav,
-      renderNavPrev: this.renderHiddenNav,
-
-      viewMoment,
-
-      onViewDateChange: this.onNavViewDateChange,
-      onUpdate: this.updateViewMoment
-    }
-
-    if (index == 0) {
-      delete navBarProps.renderNavPrev
-    }
-
-    if (index == this.props.perRow - 1) {
-      delete navBarProps.renderNavNext
-    }
-
-    return <NavBar {...navBarProps} />
+  renderNavBar(config) {
+    return renderNavBar.call(this, config)
   }
 
   onMonthNavigate(index, dir, event, getNavigationDate) {
@@ -514,6 +526,7 @@ MultiMonthView.defaultProps = {
   forceViewUpdate: false,
 
   navigation: true,
+  theme: 'default',
 
   constrainActiveInView: true,
 

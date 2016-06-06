@@ -13,8 +13,12 @@ import assignDefined from './assignDefined'
 import { renderFooter } from './MonthView'
 import NavBar from './NavBar'
 import { Flex } from 'react-flex'
+import times from './utils/times'
 
+import InlineBlock from 'react-inline-block'
 import normalize from 'react-style-normalizer'
+
+const renderHiddenNav = (props) => <InlineBlock {...props} style={{visibility: 'hidden'}} />
 
 const joinFunctions = (a, b) => {
   if (a && b) {
@@ -131,6 +135,8 @@ export default class TransitionView extends Component {
       this.viewDate = viewDate
     }
 
+    const multiView = child.props.size && child.props.size >= 2
+
     const onViewDateChange = joinFunctions(this.onViewDateChange, props.onViewDateChange)
 
     const newProps = {
@@ -139,8 +145,7 @@ export default class TransitionView extends Component {
 
       viewDate: this.viewDate,
       onViewDateChange,
-
-      navigation: false,
+      navigation: multiView,
 
       className: join(
         child.props.className,
@@ -203,18 +208,19 @@ export default class TransitionView extends Component {
       )
     }
 
-    const clone = React.cloneElement(child, newProps)
-
     let navBar
 
+    const navBarProps = {
+      minDate: props.minDate || renderedChildProps.minDate,
+      maxDate: props.maxDate || renderedChildProps.maxDate,
+      secondary: true,
+      viewDate: this.viewDate,
+      onViewDateChange,
+      multiView
+    }
+
     if (props.navBar) {
-      navBar = this.renderNavBar({
-        minDate: props.minDate || renderedChildProps.minDate,
-        maxDate: props.maxDate || renderedChildProps.maxDate,
-        secondary: true,
-        viewDate: this.viewDate,
-        onViewDateChange
-      })
+      navBar = this.renderNavBar(navBarProps)
     }
 
     let footer
@@ -222,6 +228,12 @@ export default class TransitionView extends Component {
     if (props.footer) {
       footer = renderFooter(props)
     }
+
+    if (multiView) {
+      newProps.renderNavBar = this.renderMultiViewNavBar.bind(this, navBarProps)
+    }
+
+    const clone = React.cloneElement(child, newProps)
 
     return <Flex
       column
@@ -237,39 +249,95 @@ export default class TransitionView extends Component {
     >
       {navBar}
       <Flex inline row style={{ position: 'relative' }}>
-        {this.renderAt(-1)}
+        {this.renderAt(-1, { multiView, navBarProps })}
         {clone}
-        {this.renderAt(1)}
+        {this.renderAt(1, { multiView, navBarProps })}
       </Flex>
       {footer}
     </Flex>
   }
 
+  renderMultiViewNavBar(navBarProps, config) {
+    const { index } = config
+    const { offset = 0 } = navBarProps
+    const count = this.child.props.perRow
+
+    if (index >= count) {
+      // const size = index * (offset + this.getViewSize())
+      // console.log('index, size, offset', index, size, offset);
+      const viewDate = this.toMoment(navBarProps.viewDate)
+        .add(offset + this.getViewSize(), 'month')
+        .add(index, 'month')
+
+      return <NavBar
+        {...navBarProps}
+        renderNavNext={renderHiddenNav}
+        renderNavPrev={renderHiddenNav}
+        viewDate={viewDate}
+      />
+    }
+
+    return null
+  }
+
   renderNavBar(navBarProps) {
     const props = this.props
+    const { multiView } = navBarProps
+
     const navBar = React.Children.toArray(props.children)
       .filter(c => c && c.props && c.props.isDatePickerNavBar)[0]
 
+    let newProps = navBarProps
+
     if (navBar) {
-      const newProps = assign({}, navBarProps, navBar.props)
+      newProps = assign({}, navBarProps, navBar.props)
 
       // have viewDate & onViewDateChange win over initial navBar.props
       newProps.viewDate = navBarProps.viewDate
       newProps.onViewDateChange = navBarProps.onViewDateChange
-
-      return React.cloneElement(navBar, newProps)
     }
 
-    return <NavBar {...navBarProps} />
+    if (multiView) {
+      const count = this.child.props.perRow
+      const viewSize = this.getViewSize()
+
+      const bars = times(count).map(index => {
+        const onUpdate = (dateMoment, dir) => {
+          return this.toMoment(newProps.viewDate).add(dir * viewSize, 'month')
+        }
+
+        const barProps = assign({}, newProps, {
+          onUpdate,
+          renderNavNext: renderHiddenNav,
+          renderNavPrev: renderHiddenNav,
+          viewDate: this.toMoment(newProps.viewDate).add(index, 'month')
+        })
+
+        if (index == 0) {
+          delete barProps.renderNavPrev
+        }
+        if (index == count - 1) {
+          delete barProps.renderNavNext
+        }
+
+        return <NavBar flex {...barProps} />
+      })
+
+      return <Flex row children={bars} />
+    }
+
+    return navBar ?
+      React.cloneElement(navBar, newProps) :
+      <NavBar {...newProps} />
   }
 
   getViewSize() {
-    return this.view.getViewSize ?
+    return this.view && this.view.getViewSize ?
       this.view.getViewSize() || 1 :
       1
   }
 
-  renderAt(index) {
+  renderAt(index, { multiView, navBarProps }) {
     if (!this.state.rendered || !this.view) { // || this.state.prepareTransition != -index ) {
       return null
     }
@@ -288,6 +356,8 @@ export default class TransitionView extends Component {
       viewDate = this.nextViewDate
     }
 
+    console.log(viewDate.format('YYYY-MM'));
+
     const newProps = assign({
       date: renderedProps.date || renderedProps.moment,
       range: renderedProps.range,
@@ -296,11 +366,11 @@ export default class TransitionView extends Component {
       locale: renderedProps.locale,
       tabIndex: -1,
       clockTabIndex: -1,
+      navigation: multiView,
     // }, {
       viewDate,
       key: index,
       readOnly: true,
-      navigation: false,
       className: join(
         childProps.className,
         `react-date-picker__${index == -1 ? 'prev' : 'next'}`
@@ -321,16 +391,19 @@ export default class TransitionView extends Component {
       )
     }
 
+    if (multiView) {
+      newProps.renderNavBar = this.renderMultiViewNavBar.bind(
+        this,
+        assign({}, navBarProps, { offset: index })
+      )
+    }
+
     return React.cloneElement(this.child, newProps)
   }
 
   getView() {
     return this.view
   }
-
-  // onViewKeyDown(...args) {
-  //   return this.view.onViewKeyDown(...args)
-  // }
 
   isInView(...args) {
     return this.view.isInView(...args)

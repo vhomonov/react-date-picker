@@ -169,7 +169,15 @@ export default class DateFormatInput extends Component {
   onKeyDown(event) {
     const { props } = this
 
-    const { key, type } = event
+    let { key, type, which } = event
+
+    if (key !== 'Unidentified' && which && which >= 65 && which <= 90) {
+      key = ' '
+    }
+
+    if (key != ' ' && key * 1 == key) {
+      key = 'Unidentified'
+    }
 
     if (props.stopPropagation) {
       event.stopPropagation()
