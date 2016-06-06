@@ -139,7 +139,7 @@ export default class ClockInput extends Component {
 }
 
 ClockInput.defaultProps = {
-  changeDelay: 100,
+  changeDelay: 50,
 
   dateFormat: 'YYYY-MM-DD',
   updateOnWheel: true,

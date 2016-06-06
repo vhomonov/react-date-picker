@@ -219,7 +219,7 @@ export default class DateFormatSpinnerInput extends Component {
 DateFormatSpinnerInput.defaultProps = {
   firstStepDelay: 150,
   secondStepDelay: 100,
-  stepDelay: 80,
+  stepDelay: 50,
 
   changeDelay: undefined,
 
