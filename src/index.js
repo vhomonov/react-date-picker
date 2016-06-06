@@ -16,6 +16,7 @@ import ClockInput from './ClockInput'
 import DateField from './DateField'
 import Calendar from './Calendar'
 import DateFormatInput from './DateFormatInput'
+import DateFormatSpinnerInput from './DateFormatSpinnerInput'
 
 export default MonthView
 
@@ -25,7 +26,10 @@ export const DateEditor = DateField
 
 export {
   MonthView,
+
   DateFormatInput,
+  DateFormatSpinnerInput,
+
   NavigationView,
   TransitionView,
   MultiMonthView,

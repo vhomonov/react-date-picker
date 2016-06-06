@@ -1,23 +1,23 @@
 import React from 'react'
 import Component from 'react-class'
 
-import assign from 'object-assign'
-import join from './join'
-
-import toMoment from './toMoment'
-import Clock from './Clock'
-import DateFormatInput from './DateFormatInput'
-
 import throttle from 'lodash.throttle'
+import assign from 'object-assign'
 
 import { Flex } from 'react-flex'
+
+import join from './join'
+import toMoment from './toMoment'
+
+import Clock from './Clock'
+import DateFormatSpinnerInput from './DateFormatSpinnerInput'
 
 export default class ClockInput extends Component {
 
   constructor(props) {
     super(props)
 
-    const delay = props.throttle || 100
+    const delay = props.changeDelay
     this.throttleSetValue = delay == -1 ? this.setValue : throttle(this.setValue, delay)
 
     this.state = {
@@ -75,7 +75,7 @@ export default class ClockInput extends Component {
       return React.cloneElement(dateInput, dateInputProps)
     }
 
-    return <DateFormatInput {...dateInputProps} style={null} />
+    return <DateFormatSpinnerInput {...dateInputProps} style={null} />
   }
 
   focus() {
@@ -139,6 +139,8 @@ export default class ClockInput extends Component {
 }
 
 ClockInput.defaultProps = {
+  changeDelay: 100,
+
   dateFormat: 'YYYY-MM-DD',
   updateOnWheel: true,
 

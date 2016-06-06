@@ -109,16 +109,11 @@ export default class DateFormatSpinnerInput extends Component {
       className="react-date-picker__date-format-spinner-arrow"
       style={{overflow: 'hidden', height: this.props.arrowSize}}
       onMouseDown={this.onMouseDown.bind(this, dir)}
-      onMouseUp={this.onMouseUp}
-      onMouseLeave={this.onMouseUp}
+      onMouseUp={this.stop}
+      onMouseLeave={this.stop}
     >
       {this.arrows[dir]}
     </Item>
-  }
-
-  onMouseUp() {
-    // global.removeEventListener('mouseup', this.onMouseUp)
-    this.stop()
   }
 
   onMouseDown(dir, event) {
@@ -127,10 +122,8 @@ export default class DateFormatSpinnerInput extends Component {
       return
     }
 
-    // global.addEventListener('mouseup', this.onMouseUp, false)
-
+    event.preventDefault()
     if (this.isFocused()) {
-      event.preventDefault()
       this.start(dir)
     } else {
       this.focus()
@@ -224,8 +217,8 @@ export default class DateFormatSpinnerInput extends Component {
 }
 
 DateFormatSpinnerInput.defaultProps = {
-  firstStepDelay: 500,
-  secondStepDelay: 250,
+  firstStepDelay: 150,
+  secondStepDelay: 100,
   stepDelay: 80,
 
   changeDelay: undefined,
