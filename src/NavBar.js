@@ -83,7 +83,7 @@ export default class NavBar extends Component {
     const props = this.p
 
     const name = dir < 0? 'prev': 'next'
-    let disabled = dir < 0? props.prevDisabled: props.nextDisabled
+    let disabled = dir < 0 ? props.prevDisabled: props.nextDisabled
     const secondary = Math.abs(dir) == 2
 
     if (dir < 0 && props.minDate){
@@ -157,7 +157,7 @@ export default class NavBar extends Component {
 
     const mom = this.toMoment(viewMoment)
 
-    mom.add(sign, abs == 1? 'month': 'year')
+    mom.add(sign, abs == 1 ? 'month' : 'year')
 
     return mom
   }

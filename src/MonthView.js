@@ -744,6 +744,8 @@ export default class MonthView extends Component {
   onViewKeyDown(event) {
     const key = event.key
 
+    console.log('key', key);
+
     if (this.props.onKeyDown) {
       if (this.props.onKeyDown(event) === false) {
         return

@@ -34,7 +34,7 @@ const prepareViewDate = function (props, state) {
 }
 
 const prepareRange = function (props, state) {
-  return state.range || props.range
+  return props.range && props.range.length ? props.range : state.range
 }
 
 const prepareActiveDate = function (props, state) {
@@ -111,8 +111,6 @@ export const renderNavBar = function(config){
     onViewDateChange: config.onViewDateChange || this.onNavViewDateChange,
     onUpdate: config.onUpdate || this.updateViewMoment
   }
-
-  console.log('index', index);
 
   if (index == 0) {
     delete navBarProps.renderNavPrev
@@ -228,6 +226,7 @@ export default class MultiMonthView extends Component {
       column
       inline
       alignItems="stretch"
+      wrap={false}
       {...props}
       className={join(
         props.className,
@@ -251,7 +250,7 @@ export default class MultiMonthView extends Component {
       return this.renderView(index, props.size)
     })
 
-    return <Flex row wrap={false} children={children} />
+    return <Flex inline row wrap={false} children={children} />
   }
 
   renderView(index, size) {
@@ -457,11 +456,11 @@ export default class MultiMonthView extends Component {
   }
 
   onActiveDateChange({ dateMoment, timestamp }) {
-    const valid = this.views.reduce((valid, view) => {
-      return valid && view.isValidActiveDate(timestamp)
+    const valid = this.views.reduce((isValid, view) => {
+      return isValid && view.isValidActiveDate(timestamp)
     }, true)
 
-    if (!valid){
+    if (!valid) {
       return
     }
 
@@ -476,6 +475,7 @@ export default class MultiMonthView extends Component {
     }
 
     if (this.props.activeDate === undefined) {
+      console.log('timestamp!!!!', timestamp);
       this.setState({
         activeDate: timestamp
       })

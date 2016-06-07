@@ -135,7 +135,7 @@ export default class TransitionView extends Component {
       this.viewDate = viewDate
     }
 
-    const multiView = child.props.size && child.props.size >= 2
+    const multiView = !!(child.props.size && child.props.size >= 2)
 
     const onViewDateChange = joinFunctions(this.onViewDateChange, props.onViewDateChange)
 
@@ -146,6 +146,7 @@ export default class TransitionView extends Component {
       viewDate: this.viewDate,
       onViewDateChange,
       navigation: multiView,
+      constrainActiveInView: props.constrainActiveInView,
 
       className: join(
         child.props.className,
@@ -214,7 +215,7 @@ export default class TransitionView extends Component {
       minDate: props.minDate || renderedChildProps.minDate,
       maxDate: props.maxDate || renderedChildProps.maxDate,
       secondary: true,
-      viewDate: this.viewDate,
+      viewDate: this.nextViewDate || this.viewDate,
       onViewDateChange,
       multiView
     }
@@ -257,23 +258,28 @@ export default class TransitionView extends Component {
     </Flex>
   }
 
+  /**
+   * This method is only called when rendering the NavBar of the MonthViews
+   * that are not on the first row of the MultiMonthView
+   *
+   * @param  {Object} navBarProps
+   * @param  {Object} config
+   * @return {ReactNode}
+   */
   renderMultiViewNavBar(navBarProps, config) {
     const { index } = config
-    const { offset = 0 } = navBarProps
     const count = this.child.props.perRow
 
     if (index >= count) {
-      // const size = index * (offset + this.getViewSize())
-      // console.log('index, size, offset', index, size, offset);
       const viewDate = this.toMoment(navBarProps.viewDate)
-        .add(offset + this.getViewSize(), 'month')
         .add(index, 'month')
 
       return <NavBar
         {...navBarProps}
         renderNavNext={renderHiddenNav}
         renderNavPrev={renderHiddenNav}
-        viewDate={viewDate}
+        onViewDateChange={null}
+        viewDate={moment(viewDate)}
       />
     }
 
@@ -303,7 +309,17 @@ export default class TransitionView extends Component {
 
       const bars = times(count).map(index => {
         const onUpdate = (dateMoment, dir) => {
-          return this.toMoment(newProps.viewDate).add(dir * viewSize, 'month')
+          const mom = this.toMoment(newProps.viewDate)
+
+          if (Math.abs(dir) == 1) {
+            mom.add(dir * viewSize, 'month')
+          } else {
+            const sign = dir > 0 ? 1 : -1
+
+            mom.add(sign, 'year')
+          }
+
+          return mom
         }
 
         const barProps = assign({}, newProps, {
@@ -356,8 +372,6 @@ export default class TransitionView extends Component {
       viewDate = this.nextViewDate
     }
 
-    console.log(viewDate.format('YYYY-MM'));
-
     const newProps = assign({
       date: renderedProps.date || renderedProps.moment,
       range: renderedProps.range,
@@ -367,7 +381,6 @@ export default class TransitionView extends Component {
       tabIndex: -1,
       clockTabIndex: -1,
       navigation: multiView,
-    // }, {
       viewDate,
       key: index,
       readOnly: true,
@@ -394,7 +407,7 @@ export default class TransitionView extends Component {
     if (multiView) {
       newProps.renderNavBar = this.renderMultiViewNavBar.bind(
         this,
-        assign({}, navBarProps, { offset: index })
+        assign({}, navBarProps, { viewDate, onViewDateChange: null })
       )
     }
 
@@ -414,20 +427,31 @@ export default class TransitionView extends Component {
   }
 
   doTransition(dateMoment) {
-    if (moment(dateMoment).startOf('month')
-        .isSame(
-          moment(this.viewDate).startOf('month')
-        )
-      ) {
-      return
-    }
-
     if (this.state.transition) {
-      this.nextViewDate = dateMoment
+      // this.nextViewDate = dateMoment
       return
     }
 
-    const transition = dateMoment.isAfter(this.viewDate) ? -1 : 1
+    const newMoment = moment(dateMoment).startOf('month')
+    const viewMoment = moment(this.viewDate).startOf('month')
+
+    if (newMoment.isSame(viewMoment)) {
+      return
+    }
+
+    const navNext = newMoment.isAfter(viewMoment)
+    const transition = navNext ? -1 : 1
+    const viewSize = this.getViewSize()
+
+    if (Math.abs(viewSize) > 1) {
+      const temp = moment(viewMoment).add(viewSize * -transition, 'month')
+
+      if (navNext) {
+        dateMoment = dateMoment.isAfter(temp) ? dateMoment : temp
+      } else {
+        dateMoment = dateMoment.isBefore(temp) ? dateMoment : temp
+      }
+    }
 
     this.setState({
       prepareTransition: transition
@@ -478,12 +502,16 @@ export default class TransitionView extends Component {
       prepareTransition: 0
     })
 
-    // this.getView().focus()
+    if (this.props.focusOnTransitionEnd) {
+      this.getView().focus()
+    }
     delete this.nextViewDate
   }
 }
 
 TransitionView.defaultProps = {
+  constrainActiveInView: false,
+  focusOnTransitionEnd: false,
   navBar: true,
   theme: 'default',
   isDatePicker: true

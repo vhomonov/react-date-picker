@@ -108,15 +108,27 @@ var App = React.createClass({
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
         <DateFormatSpinnerInput dateFormat="YYYY-MM-DD HH:mm" /><br />
-        <TransitionView transitionDuration="2s">
-            <MultiMonthView
 
-              size={4}
+        <TransitionView xtransitionDuration="2s">
+          <MonthView />
+        </TransitionView>
+
+        <MultiMonthView
+          defaultRange={[]}
+          highlightRangeOnMouseMove
+          size={4}
+        />
+
+        <TransitionView xtransitionDuration="2s">
+            <MultiMonthView
+              defaultRange={[]}
+              size={2}
+              highlightRangeOnMouseMove
             />
             </TransitionView>
-
+            {/*
             <MultiMonthView size={4}
-            />
+            />*/}
 
         <br />
         <br />
