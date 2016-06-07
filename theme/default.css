@@ -70,18 +70,29 @@
   .react-date-picker__footer--theme-default .react-date-picker__footer-button + .react-date-picker__footer-button {
     margin-left: 3px; }
 
-.react-date-picker__date-picker--theme-default {
+.react-date-picker__date-format-spinner--theme-default {
   border: 1px solid gray; }
-  .react-date-picker__date-picker--theme-default .react-date-picker__month-view--theme-default {
+  .react-date-picker__date-format-spinner--theme-default input {
+    border: none;
+    outline: none; }
+  .react-date-picker__date-format-spinner--theme-default:not([disabled]) .react-date-picker__date-format-spinner-arrow {
+    position: relative;
+    cursor: pointer; }
+    .react-date-picker__date-format-spinner--theme-default:not([disabled]) .react-date-picker__date-format-spinner-arrow:active {
+      top: 1px; }
+
+.react-date-picker__calendar--theme-default {
+  border: 1px solid gray; }
+  .react-date-picker__calendar--theme-default .react-date-picker__month-view--theme-default {
     border: none; }
-  .react-date-picker__date-picker--theme-default .react-date-picker__clock {
+  .react-date-picker__calendar--theme-default .react-date-picker__clock {
     margin: 10px; }
 
 .react-date-picker__transition-month-view--theme-default {
   border: 1px solid gray; }
   .react-date-picker__transition-month-view--theme-default .react-date-picker__month-view--theme-default,
   .react-date-picker__transition-month-view--theme-default .react-date-picker__multi-month-view--theme-default,
-  .react-date-picker__transition-month-view--theme-default .react-date-picker__date-picker--theme-default {
+  .react-date-picker__transition-month-view--theme-default .react-date-picker__calendar--theme-default {
     border: none; }
 
 .react-date-picker__navigation-view--theme-default {

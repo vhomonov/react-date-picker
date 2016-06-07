@@ -1,16 +1,11 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Component from 'react-class'
+
 import moment from 'moment'
 import assign from 'object-assign'
 
-import FORMAT from './utils/format'
-import asConfig from './utils/asConfig'
 import toMoment from './toMoment'
-import onEnter from './onEnter'
-
 import isInRange from './utils/isInRange'
-
-let TODAY
 
 const emptyFn = () => {}
 

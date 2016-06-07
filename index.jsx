@@ -12,7 +12,6 @@ import DatePicker from './src/Calendar'
 import TimePicker from './src/TimePicker'
 import TimeInput from './src/TimeInput'
 
-import NavigationView from './src/NavigationView'
 import TransitionView from './src/TransitionView'
 import NavBar from './src/NavBar'
 import Footer from './src/Footer'
@@ -120,12 +119,12 @@ var App = React.createClass({
         />
 
         <TransitionView xtransitionDuration="2s">
-            <MultiMonthView
-              defaultRange={[]}
-              size={2}
-              highlightRangeOnMouseMove
-            />
-            </TransitionView>
+          <MultiMonthView
+            defaultRange={[]}
+            size={2}
+            highlightRangeOnMouseMove
+          />
+        </TransitionView>
             {/*
             <MultiMonthView size={4}
             />*/}
