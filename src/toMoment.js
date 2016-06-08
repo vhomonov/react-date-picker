@@ -29,7 +29,7 @@ export default (value, dateFormat, config) => {
   const strict = !!(config && config.strict)
   const locale = config && config.locale
 
-  dateFormat = dateFormat || (config && config.dateFormat) || CONFIG.dateFormat
+  dateFormat = dateFormat || (config && config.dateFormat) || 'YYYY-MM-DD'
 
   if (typeof value == 'string') {
     return moment(value, dateFormat, locale, strict)

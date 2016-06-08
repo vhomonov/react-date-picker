@@ -5,40 +5,23 @@ import Component from 'react-class'
 import moment from 'moment'
 import assign from 'object-assign'
 
-import clampRange from './clampRange'
-import toMoment from './toMoment'
-import join from './join'
-import isInRange from './utils/isInRange'
+import clampRange from '../clampRange'
+import toMoment from '../toMoment'
+import join from '../join'
+import isInRange from '../utils/isInRange'
 
-import NavBar from './NavBar'
-import Footer from './Footer'
-import bemFactory from './bemFactory'
-import joinFunctions from './joinFunctions'
-import assignDefined from './assignDefined'
+import NavBar from '../NavBar'
+import Footer from '../Footer'
+import bemFactory from '../bemFactory'
+import joinFunctions from '../joinFunctions'
+import assignDefined from '../assignDefined'
 
-import BasicMonthView, { getDaysInMonthView } from './BasicMonthView'
+import BasicMonthView, { getDaysInMonthView } from '../BasicMonthView'
+
+import ON_KEY_DOWN from './onKeyDown'
+import NAV_KEYS from './navKeys'
 
 let TODAY
-
-const NAV_KEYS = {
-  ArrowUp: -7,
-  ArrowDown: 7,
-  ArrowLeft: -1,
-  ArrowRight: 1,
-
-  PageUp(mom) {
-    return mom.add(-1, 'month')
-  },
-  PageDown(mom) {
-    return mom.add(1, 'month')
-  },
-  Home(mom) {
-    return mom.startOf('month')
-  },
-  End(mom) {
-    return mom.endOf('month')
-  }
-}
 
 const RENDER_DAY = (props) => {
   return <div {...props} />
@@ -287,7 +270,7 @@ export default class MonthView extends Component {
     props.viewMoment = props.viewMoment || this.toMoment(prepareViewDate(props, state))
 
     if (props.constrainViewDate && props.minDate && props.viewMoment.isBefore(props.minDate)) {
-      props.minContrained = true
+      props.minConstrained = true
       props.viewMoment = this.toMoment(props.minDate)
     }
 
@@ -742,29 +725,7 @@ export default class MonthView extends Component {
   }
 
   onViewKeyDown(event) {
-    const key = event.key
-
-    console.log('key', key);
-
-    if (this.props.onKeyDown) {
-      if (this.props.onKeyDown(event) === false) {
-        return
-      }
-    }
-
-    if (key == 'Enter' && this.p.activeDate) {
-      this.confirm(this.p.activeDate, event)
-    }
-
-    const navKeys = this.p.navKeys || NAV_KEYS
-    const dir = navKeys[key]
-
-    if (!dir) {
-      return
-    }
-
-    event.preventDefault()
-    this.navigate(dir, event)
+    return ON_KEY_DOWN.call(this, event)
   }
 
   confirm(date, event) {
@@ -941,7 +902,7 @@ export default class MonthView extends Component {
   }
 
   onViewDateChange({ dateMoment, timestamp }) {
-    if (this.props.forceValidView && !isDateInMinMax(timestamp, this.p)) {
+    if (this.props.constrainViewDate && !isDateInMinMax(timestamp, this.p)) {
       return
     }
 
@@ -1033,8 +994,7 @@ MonthView.defaultProps = {
   constrainViewDate: true,
   highlightRangeOnMouseMove: false,
 
-  isDatePicker: true,
-  forceValidView: true
+  isDatePicker: true
 }
 
 MonthView.propTypes = {

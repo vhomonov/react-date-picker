@@ -13,6 +13,8 @@ import TimePicker from './src/TimePicker'
 import TimeInput from './src/TimeInput'
 
 import TransitionView from './src/TransitionView'
+import DecadeView from './src/DecadeView'
+import YearView from './src/YearView'
 import NavBar from './src/NavBar'
 import Footer from './src/Footer'
 import MultiMonthView from './src/MultiMonthView'
@@ -106,6 +108,8 @@ var App = React.createClass({
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
+        <DecadeView minDate="2004-04-04" navigation xstyle={{width: 700, height: 300}}/>
+        <YearView locale="ro" monthFormat="YYYY-MMM" xstyle={{width: 300, height: 300}}/>
         <DateFormatSpinnerInput dateFormat="YYYY-MM-DD HH:mm" /><br />
 
         <TransitionView xtransitionDuration="2s">

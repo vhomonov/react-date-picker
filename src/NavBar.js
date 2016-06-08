@@ -4,7 +4,6 @@ import Component from 'react-class'
 import { Flex, Item } from 'react-flex'
 import InlineBlock from 'react-inline-block'
 
-import moment from 'moment'
 import assign from 'object-assign'
 
 import toMoment from './toMoment'
@@ -22,7 +21,6 @@ const ARROWS = {
     <path d="M0 0h24v24H0z" fill="none"/>
   </svg>
 }
-
 
 const bem = bemFactory('react-date-picker__nav-bar')
 
