@@ -342,7 +342,7 @@ export default class DecadeView extends Component {
     const props = this.p = assign({}, this.props)
 
     if (props.onlyCompareYear) {
-      props.adjustDateStartOf = null
+      // props.adjustDateStartOf = null
     }
 
     const dateProps = prepareDateProps(props, this.state)

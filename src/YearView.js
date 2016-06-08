@@ -124,7 +124,7 @@ export default class YearView extends Component {
     const props = this.p = assign({}, this.props)
 
     if (props.onlyCompareMonth) {
-      props.adjustDateStartOf = null
+      // props.adjustDateStartOf = null
     }
 
     const dateProps = prepareDateProps(props, this.state)
