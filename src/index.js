@@ -7,6 +7,10 @@ import TransitionView from './TransitionView'
 import NavigationView from './NavigationView'
 import MultiMonthView from './MultiMonthView'
 
+import HistoryView from './HistoryView'
+import YearView from './YearView'
+import DecadeView from './DecadeView'
+
 import NavBar from './NavBar'
 import Footer from './Footer'
 
@@ -26,6 +30,9 @@ export const DateEditor = DateField
 
 export {
   MonthView,
+  YearView,
+  DecadeView,
+  HistoryView,
 
   DateFormatInput,
   DateFormatSpinnerInput,

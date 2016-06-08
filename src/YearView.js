@@ -1,7 +1,7 @@
 import React from 'react'
+import { findDOMNode } from 'react-dom'
 import Component from 'react-class'
 
-import moment from 'moment'
 import assign from 'object-assign'
 
 import times from './utils/times'
@@ -14,7 +14,20 @@ import bemFactory from './bemFactory'
 
 const bem = bemFactory('react-date-picker__year-view')
 
-import ON_KEY_DOWN from './MonthView/onKeyDown'
+import {
+  prepareDateProps,
+  getInitialState,
+
+  onKeyDown,
+
+  onViewDateChange,
+  onActiveDateChange,
+  onChange,
+  navigate,
+  select,
+  confirm,
+  gotoViewDate
+} from './DecadeView'
 
 const NAV_KEYS = {
   ArrowUp(mom) {
@@ -83,17 +96,12 @@ const NAV_KEYS = {
   }
 }
 
-
 export default class YearView extends Component {
 
   constructor(props) {
     super(props)
 
-    this.state = {
-      date: props.defaultDate,
-      activeDate: props.defaultActiveDate,
-      viewDate: props.defaultViewDate
-    }
+    this.state = getInitialState(props)
   }
 
   /**
@@ -108,61 +116,20 @@ export default class YearView extends Component {
     return times(12).map(i => this.toMoment(start).add(i, 'month'))
   }
 
-  prepareViewDate(props, state) {
-    const viewDate = props.viewDate === undefined ?
-          state.viewDate :
-          props.viewDate
-
-    if (!viewDate && props.date) {
-      return props.date
-    }
-
-    return viewDate
-  }
-
-
-  prepareDate(props, state) {
-    return props.date === undefined ?
-            state.date :
-            props.date
-  }
-
-  prepareActiveDate(props, state) {
-    const activeDate = props.activeDate === undefined ?
-      state.activeDate || this.prepareDate(props, state) :
-      props.activeDate
-
-    return activeDate
-  }
-
-  prepareProps(thisProps) {
-    const props = assign({}, thisProps)
-    const state = this.state
-
-    props.date = this.prepareDate(props, state)
-    props.viewDate = this.prepareViewDate(props, state)
-
-    const activeDate = this.prepareActiveDate(props, state)
-
-    if (props.date) {
-      props.timestamp = +this.toMoment(props.date).startOf('month')
-    }
-
-    if (activeDate) {
-      props.activeDate = +this.toMoment(activeDate).startOf('month')
-    }
-
-    props.viewMoment = this.toMoment(props.viewDate).startOf('month')
-
-    return props
-  }
-
   toMoment(date) {
     return toMoment(date, this.props)
   }
 
   render() {
-    const props = this.p = this.prepareProps(this.props)
+    const props = this.p = assign({}, this.props)
+
+    if (props.onlyCompareMonth) {
+      props.adjustDateStartOf = null
+    }
+
+    const dateProps = prepareDateProps(props, this.state)
+
+    assign(props, dateProps)
 
     const className = join(
       props.className,
@@ -221,16 +188,31 @@ export default class YearView extends Component {
 
     const timestamp = +dateMoment
 
+    const isActiveDate = props.onlyCompareMonth && props.activeMoment ?
+      dateMoment.get('month') == props.activeMoment.get('month') :
+      timestamp === props.activeDate
+
+    const isValue = props.onlyCompareMonth && props.moment ?
+      dateMoment.get('month') == props.moment.get('month') :
+      timestamp === props.timestamp
+
+    const disabled = props.minDate != null && timestamp < props.minDate
+      ||
+      props.maxDate != null && timestamp > props.maxDate
+
     const className = join(
       bem('month'),
-      timestamp === props.activeDate && bem('month', 'active'),
-      timestamp === props.timestamp && bem('month', 'value')
+      !disabled && isActiveDate && bem('month', 'active'),
+      isValue && bem('month', 'value'),
+      disabled && bem('month', 'disabled')
     )
 
-    const onClick = this.handleClick.bind(this, {
-      dateMoment,
-      timestamp
-    })
+    const onClick = disabled ?
+      null :
+      this.handleClick.bind(this, {
+        dateMoment,
+        timestamp
+      })
 
     return <Item
       key={monthText}
@@ -248,118 +230,53 @@ export default class YearView extends Component {
   }
 
   onKeyDown(event) {
-    return ON_KEY_DOWN.call(this, event)
+    return onKeyDown.call(this, event)
   }
 
   confirm(date, event) {
-    event.preventDefault()
-
-    if (this.props.confirm) {
-      return this.props.confirm(date, event)
-    }
-
-    const dateMoment = this.toMoment(date)
-
-    this.select({ dateMoment, timestamp: +dateMoment }, event)
-
-    return undefined
+    return confirm.call(this, date, event)
   }
 
   navigate(direction, event) {
-    const props = this.p
-
-    const getNavigationDate = (dir, date, dateFormat) => {
-      const mom = moment.isMoment(date) ? date : this.toMoment(date, dateFormat)
-
-      if (typeof dir == 'function') {
-        return dir(mom)
-      }
-
-      return mom
-    }
-
-    if (props.navigate) {
-      return props.navigate(direction, event, getNavigationDate)
-    }
-
-    event.preventDefault()
-
-    if (props.activeDate) {
-      const nextMoment = getNavigationDate(direction, props.activeDate)
-
-      this.gotoViewDate({ dateMoment: nextMoment })
-    }
-
-    return undefined
+    return navigate.call(this, direction, event)
   }
 
   select({ dateMoment, timestamp }, event) {
-    if (this.props.select) {
-      return this.props.select({ dateMoment, timestamp }, event)
-    }
-
-    if (!timestamp) {
-      timestamp = +dateMoment
-    }
-
-    this.gotoViewDate({ dateMoment, timestamp })
-    this.onChange({ dateMoment, timestamp }, event)
-
-    return undefined
+    return select.call(this, { dateMoment, timestamp }, event)
   }
 
   onViewDateChange({ dateMoment, timestamp }) {
-    if (this.props.viewDate === undefined) {
-      this.setState({
-        viewDate: timestamp
-      })
-    }
-
-    if (this.props.onViewDateChange) {
-      const dateString = this.format(dateMoment)
-      this.props.onViewDateChange(dateString, { dateMoment, dateString, timestamp })
-    }
+    return onViewDateChange.call(this, { dateMoment, timestamp })
   }
 
   gotoViewDate({ dateMoment, timestamp }) {
-    if (!timestamp) {
-      timestamp = dateMoment == null ? null : +dateMoment
-    }
-
-    this.onViewDateChange({ dateMoment, timestamp })
-    this.onActiveDateChange({ dateMoment, timestamp })
+    return gotoViewDate.call(this, { dateMoment, timestamp })
   }
 
   onActiveDateChange({ dateMoment, timestamp }) {
-    if (this.props.activeDate === undefined) {
-      this.setState({
-        activeDate: timestamp
-      })
-    }
-
-    if (this.props.onActiveDateChange) {
-      const dateString = this.format(dateMoment)
-      this.props.onActiveDateChange(dateString, { dateMoment, timestamp, dateString })
-    }
+    return onActiveDateChange.call(this, { dateMoment, timestamp })
   }
 
   onChange({ dateMoment, timestamp }, event) {
-    if (this.props.date === undefined) {
-      this.setState({
-        date: timestamp
-      })
-    }
+    return onChange.call(this, { dateMoment, timestamp }, event)
+  }
 
-    if (this.props.onChange) {
-      const dateString = this.format(dateMoment)
-      this.props.onChange(dateString, { dateMoment, timestamp, dateString }, event)
-    }
+  focus() {
+    findDOMNode(this).focus()
   }
 }
 
 YearView.defaultProps = {
+  isYearView: true,
   navKeys: NAV_KEYS,
+  constrainViewDate: true,
   theme: 'default',
   monthFormat: 'MMM',
-  dateFormat: 'YYYY-MM-DD'
+  dateFormat: 'YYYY-MM-DD',
+
+  onlyCompareMonth: true,
+
+  adjustDateStartOf: 'month',
+  adjustMinDateStartOf: 'month',
+  adjustMaxDateStartOf: 'month'
 }

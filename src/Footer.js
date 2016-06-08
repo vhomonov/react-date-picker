@@ -45,17 +45,37 @@ export default class Footer extends Component {
       return null
     }
 
-    const spacer = (okButton || cancelButton) ? SPACER : null
+    const middleSpacer = (okButton || cancelButton) ? SPACER : null
 
-    return <Flex inline row {...props} justifyContent="center" className={className}>
-      {todayButton}
-      {clearButton}
+    const spacer = !props.centerButtons ?
+      middleSpacer :
+      null
 
-      {spacer}
+    let children = [
+      props.centerButtons && SPACER,
 
-      {okButton}
-      {cancelButton}
-    </Flex>
+      todayButton,
+      clearButton,
+
+      spacer,
+
+      okButton,
+      cancelButton,
+      props.centerButtons && SPACER
+    ]
+
+    if (props.renderChildren) {
+      children = props.renderChildren(children, props)
+    }
+
+    return <Flex
+      inline
+      row
+      {...props}
+      justifyContent="center"
+      className={className}
+      children={children}
+    />
   }
 
   renderTodayButton() {

@@ -2,6 +2,7 @@ $base: 'react-date-picker__decade-view';
 
 .#{$base}--theme-#{$THEME_NAME} {
   border: 1px solid gray;
+  padding: 2px;
 
   .#{$base}-arrow {
     cursor: pointer;

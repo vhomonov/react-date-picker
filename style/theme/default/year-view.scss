@@ -2,11 +2,16 @@ $base: 'react-date-picker__year-view';
 
 .#{$base}--theme-#{$THEME_NAME} {
   border: 1px solid gray;
+  padding: 2px;
 
   .#{$base}-month {
     padding: 5px;
     cursor: pointer;
     border: 2px solid transparent;
+
+    &--disabled {
+      color: $DAY_COLOR_DISABLED;
+    }
   }
 
   .#{$base}-month--active {
