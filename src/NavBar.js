@@ -49,16 +49,18 @@ export default class NavBar extends Component {
       this.prepareViewDate(props)
     )
 
+    props.historyViewEnabled = props.expandedHistoryView || props.enableHistoryView
+
     const secondary = props.secondary
 
     const className = join(
       props.className,
       bem(),
       bem(null, `theme-${props.theme}`),
-      bem(null, 'with-history-view')
+      props.historyViewEnabled && bem(null, 'with-history-view')
     )
 
-    const historyView = this.state.historyView ? this.renderHistoryView() : null
+    const historyView = props.historyViewEnabled ? this.renderHistoryView() : null
 
     return <Flex inline row {...props} className={className} viewDate={null}>
 
@@ -68,7 +70,7 @@ export default class NavBar extends Component {
       <Item
         className={bem('date')}
         style={{ textAlign: 'center' }}
-        onMouseDown={props.enableHistoryView ? this.showHistoryView : null}
+        onMouseDown={props.historyViewEnabled ? this.showHistoryView : null}
       >
         {this.renderNavDate(viewMoment)}
       </Item>
@@ -81,12 +83,12 @@ export default class NavBar extends Component {
   }
 
   renderHistoryView() {
-    if (!this.props.enableHistoryView) {
+    if (!this.state.historyView) {
       return null
     }
 
     const className = bem('history-view')
-    const viewMoment = this.p.viewMoment
+    const { viewMoment, theme } = this.p
 
     return <HistoryView
       defaultViewDate={viewMoment}
@@ -96,6 +98,7 @@ export default class NavBar extends Component {
       focusDecadeView={false}
 
       className={className}
+      theme={theme}
 
       onOkClick={this.onHistoryViewOk}
       onCancelClick={this.onHistoryViewCancel}

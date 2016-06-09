@@ -4,6 +4,7 @@ import Component from 'react-class'
 import { Flex, Item } from 'react-flex'
 import DateFormatInput from '../DateFormatInput'
 
+import assign from 'object-assign'
 import joinFunctions from '../joinFunctions'
 import assignDefined from '../assignDefined'
 import join from '../join'
@@ -22,8 +23,7 @@ export default class DateFormatSpinnerInput extends Component {
     this.started = false
   }
 
-  render(){
-
+  render() {
     const props = this.props
     const children = React.Children.toArray(props.children)
 
@@ -56,12 +56,12 @@ export default class DateFormatSpinnerInput extends Component {
 
     this.arrows = {
       1: <svg height={arrowSize} viewBox="0 0 24 24" width={arrowSize} xmlns="http://www.w3.org/2000/svg">
-        <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
+        <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" />
         {/*<path d="M0 0h24v24H0z" fill="none"/>*/}
       </svg>,
 
       '-1': <svg height={arrowSize} viewBox="0 0 24 24" width={arrowSize} xmlns="http://www.w3.org/2000/svg">
-        <path d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z"/>
+        <path d="M7.41 7.84L12 12.42l4.59-4.58L18 9.25l-6 6-6-6z" />
         {/*<path d="M0-.75h24v24H0z" fill="none"/>*/}
       </svg>
     }
@@ -81,7 +81,7 @@ export default class DateFormatSpinnerInput extends Component {
       disabled={props.disabled}
     >
       <DateFormatInput
-        ref={input => this.input = input }
+        ref={inputDOM => { this.input = inputDOM }}
         value={props.value}
         {...inputProps}
       />
@@ -89,7 +89,7 @@ export default class DateFormatSpinnerInput extends Component {
     </Flex>
   }
 
-  renderArrows(){
+  renderArrows() {
     if (this.props.renderArrows) {
       return this.props.renderArrows(this.props)
     }
@@ -107,7 +107,7 @@ export default class DateFormatSpinnerInput extends Component {
     return <Item
       flexShrink={1}
       className="react-date-picker__date-format-spinner-arrow"
-      style={{overflow: 'hidden', height: this.props.arrowSize}}
+      style={{ overflow: 'hidden', height: this.props.arrowSize }}
       onMouseDown={this.onMouseDown.bind(this, dir)}
       onMouseUp={this.stop}
       onMouseLeave={this.stop}
@@ -117,7 +117,7 @@ export default class DateFormatSpinnerInput extends Component {
   }
 
   onMouseDown(dir, event) {
-    if (this.props.disabled){
+    if (this.props.disabled) {
       event.preventDefault()
       return
     }
@@ -150,7 +150,6 @@ export default class DateFormatSpinnerInput extends Component {
 
         lazyStep()
       }, this.props.secondStepDelay)
-
     }, this.props.firstStepDelay)
   }
 
@@ -179,7 +178,7 @@ export default class DateFormatSpinnerInput extends Component {
     }
   }
 
-  focus(){
+  focus() {
     if (this.input) {
       this.input.focus()
     }
@@ -190,8 +189,11 @@ export default class DateFormatSpinnerInput extends Component {
   }
 
   onBlur(event) {
-    const { props, inputProps } = this
-    const onBlur = joinFunctions(props.onBlur, this.inputChild && this.inputChild.props && this.inputChild.props.onBlur)
+    const { props } = this
+    const onBlur = joinFunctions(
+      props.onBlur,
+      this.inputChild && this.inputChild.props && this.inputChild.props.onBlur
+    )
 
     if (onBlur) {
       onBlur(event)
@@ -202,9 +204,12 @@ export default class DateFormatSpinnerInput extends Component {
     })
   }
 
-  onFocus() {
+  onFocus(event) {
     const { props } = this
-    const onFocus = joinFunctions(props.onFocus, this.inputChild && this.inputChild.props && this.inputChild.props.onFocus)
+    const onFocus = joinFunctions(
+      props.onFocus,
+      this.inputChild && this.inputChild.props && this.inputChild.props.onFocus
+    )
 
     if (onFocus) {
       onFocus(event)

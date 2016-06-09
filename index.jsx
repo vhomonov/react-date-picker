@@ -17,6 +17,7 @@ import DecadeView from './src/DecadeView'
 import YearView from './src/YearView'
 import HistoryView from './src/HistoryView'
 import NavBar from './src/NavBar'
+import Calendar from './src/Calendar'
 import Footer from './src/Footer'
 import MultiMonthView from './src/MultiMonthView'
 import DateField from './src/DateField'
@@ -116,7 +117,12 @@ var App = React.createClass({
 
         <DateFormatSpinnerInput dateFormat="YYYY-MM-DD HH:mm" /><br />
 
+        <Calendar dateFormat="YYYY-MM-DD HH:mm" />
         <DateField dateFormat="YYYY-MM-DD HH:mm" />
+
+        <MonthView>
+          <NavBar expandedHistoryView />
+        </MonthView>
 
         <MultiMonthView
           defaultRange={[]}

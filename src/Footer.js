@@ -15,6 +15,8 @@ const SPACER = <Item />
 
 const buttonClassName = 'react-date-picker__footer-button'
 
+const preventDefault = e => e.preventDefault()
+
 export const Button = (props) => {
   const disabledClassName = props.disabled ?
     `${buttonClassName}--disabled` :
@@ -125,11 +127,16 @@ export default class Footer extends Component {
 
     const Factory = this.props.buttonFactory
 
-    return <Factory tabIndex={0} {...p}>{text}</Factory>
+    const onMouseDown = p.onMouseDown ?
+      joinFunctions(p.onMouseDown, preventDefault) :
+      preventDefault
+
+    return <Factory tabIndex={0} {...p} onMouseDown={onMouseDown}>{text}</Factory>
   }
 }
 
 Footer.defaultProps = {
+  actionEvent: 'onClick',
   theme: 'default',
 
   buttonFactory: Button,

@@ -51,7 +51,7 @@ export default class Calendar extends Component {
       renderChildren={this.renderChildren}
     />
 
-    return <Flex row wrap={false} className={className} style={props.style}>
+    return <Flex inline row wrap={false} className={className} style={props.style}>
       {monthView}
     </Flex>
   }

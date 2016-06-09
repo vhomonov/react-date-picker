@@ -4,7 +4,6 @@ import TimePicker from './TimePicker'
 import TimeInput from './TimeInput'
 
 import TransitionView from './TransitionView'
-import NavigationView from './NavigationView'
 import MultiMonthView from './MultiMonthView'
 
 import HistoryView from './HistoryView'
@@ -37,7 +36,6 @@ export {
   DateFormatInput,
   DateFormatSpinnerInput,
 
-  NavigationView,
   TransitionView,
   MultiMonthView,
   NavBar,
