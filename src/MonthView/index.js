@@ -769,6 +769,14 @@ export default class MonthView extends Component {
     }
   }
 
+  isHistoryViewVisible() {
+    if (this.navBar) {
+      return this.navBar.isHistoryViewVisible()
+    }
+
+    return false
+  }
+
   tryNavBarKeyDown(event) {
     if (this.navBar && this.navBar.getHistoryView) {
       const historyView = this.navBar.getHistoryView()

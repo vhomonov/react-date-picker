@@ -116,7 +116,7 @@ var App = React.createClass({
 
         <DateFormatSpinnerInput dateFormat="YYYY-MM-DD HH:mm" /><br />
 
-        <DateField dateFormat="YYYY-MM-DD" />
+        <DateField dateFormat="YYYY-MM-DD HH:mm" />
 
         <MultiMonthView
           defaultRange={[]}

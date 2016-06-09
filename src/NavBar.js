@@ -106,6 +106,10 @@ export default class NavBar extends Component {
     return this.historyView
   }
 
+  isHistoryViewVisible() {
+    return !!this.historyView
+  }
+
   onHistoryViewOk(dateString, { dateMoment, timestamp }) {
     this.hideHistoryView()
     this.onViewDateChange({ dateMoment, timestamp })

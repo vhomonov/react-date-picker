@@ -56,6 +56,14 @@ export default class Calendar extends Component {
     </Flex>
   }
 
+  isHistoryViewVisible() {
+    if (this.view && this.view.isHistoryViewVisible) {
+      return this.view.isHistoryViewVisible()
+    }
+
+    return false
+  }
+
   renderChildren([navBar, inner, footer]) {
     const props = this.p
     const clockInput = props.showClock && this.renderClockInput()

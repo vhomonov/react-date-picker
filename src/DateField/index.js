@@ -512,11 +512,20 @@ export default class DateField extends Component {
     }
   }
 
+  isHistoryViewVisible() {
+    if (this.picker && this.picker.isHistoryViewVisible) {
+      return this.picker.isHistoryViewVisible()
+    }
+
+    return false
+  }
+
   onFieldKeyDown(event) {
     const key = event.key
     const expanded = this.isExpanded()
+    const historyVisible = this.isHistoryViewVisible()
 
-    if (key == 'Enter') {
+    if (key == 'Enter' && !historyVisible) {
       this.onViewKeyDown(event)
       this.toggleExpand()
       return false
@@ -530,7 +539,7 @@ export default class DateField extends Component {
     }
 
     if (expanded) {
-      if (key in NAV_KEYS) {
+      if (historyVisible || (key in NAV_KEYS)) {
         this.onViewKeyDown(event)
         return false
       }
