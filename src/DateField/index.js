@@ -343,6 +343,7 @@ export default class DateField extends Component {
 
         footer,
 
+        focusOnNavMouseDown: false,
         insideField: true,
         showClock: props.showClock,
 

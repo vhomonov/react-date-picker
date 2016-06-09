@@ -655,31 +655,40 @@ export default class MonthView extends Component {
     const childNavBar = React.Children.toArray(props.children)
       .filter(c => c && c.props && c.props.isDatePickerNavBar)[0]
 
+    const ref = (navBar) => { this.navBar = navBar }
+
     if (!childNavBar) {
       if (props.navigation || props.renderNavBar) {
-        return this.renderNavBarComponent({
+        return this.renderNavBarComponent(assignDefined({
           // prevDisabled,
           // nextDisabled,
           minDate: props.minDate,
           maxDate: props.maxDate,
           theme,
           secondary: true,
+          date: props.moment,
           viewMoment: props.viewMoment,
-          onViewDateChange: this.onNavViewDateChange
-        })
+          onViewDateChange: this.onNavViewDateChange,
+          onMouseDown: this.onNavMouseDown,
+          ref
+        }, {
+          enableHistoryView: props.enableHistoryView
+        }))
       }
 
       return null
     }
 
-    const navBarProps = assign({}, childNavBar.props, {
+    const navBarProps = assign({}, childNavBar.props, assignDefined({
       viewMoment: props.viewMoment,
+      date: props.moment,
       theme,
+      ref,
       minDate: props.minDate,
-      maxDate: props.maxDate
-      // prevDisabled,
-      // nextDisabled
-    })
+      maxDate: props.maxDate,
+    }, {
+      enableHistoryView: props.enableHistoryView
+    }))
 
     const prevOnViewDateChange = navBarProps.onViewDateChange
     let onViewDateChange = this.onViewDateChange
@@ -693,11 +702,29 @@ export default class MonthView extends Component {
 
     navBarProps.onViewDateChange = onViewDateChange
 
+    const prevOnMouseDown = navBarProps.onMouseDown
+    let onMouseDown = this.onNavMouseDown
+
+    if (prevOnMouseDown) {
+      onMouseDown = (...args) => {
+        prevOnMouseDown(...args)
+        this.onNavMouseDown(...args)
+      }
+    }
+
+    navBarProps.onMouseDown = onMouseDown
+
     if (navBarProps) {
       return this.renderNavBarComponent(navBarProps)
     }
 
     return null
+  }
+
+  onNavMouseDown(event) {
+    if (this.props.focusOnNavMouseDown && !this.isFocused()) {
+      this.focus()
+    }
   }
 
   renderNavBarComponent(navBarProps) {
@@ -706,6 +733,10 @@ export default class MonthView extends Component {
     }
 
     return <NavBar {...navBarProps} />
+  }
+
+  isFocused() {
+    return this.state.focused
   }
 
   onFocus(event) {
@@ -721,10 +752,41 @@ export default class MonthView extends Component {
       focused: false
     })
 
+    this.hideHistoryView()
+
     this.props.onBlur(event)
   }
 
+  showHistoryView() {
+    if (this.navBar) {
+      this.navBar.showHistoryView()
+    }
+  }
+
+  hideHistoryView() {
+    if (this.navBar) {
+      this.navBar.hideHistoryView()
+    }
+  }
+
+  tryNavBarKeyDown(event) {
+    if (this.navBar && this.navBar.getHistoryView) {
+      const historyView = this.navBar.getHistoryView()
+
+      if (historyView && historyView.onKeyDown) {
+        historyView.onKeyDown(event)
+        return true
+      }
+    }
+
+    return false
+  }
+
   onViewKeyDown(event) {
+    if (this.tryNavBarKeyDown(event)) {
+      return
+    }
+
     return ON_KEY_DOWN.call(this, event)
   }
 
@@ -994,7 +1056,10 @@ MonthView.defaultProps = {
   constrainViewDate: true,
   highlightRangeOnMouseMove: false,
 
-  isDatePicker: true
+  isDatePicker: true,
+
+  enableHistoryView: true,
+  focusOnNavMouseDown: true
 }
 
 MonthView.propTypes = {

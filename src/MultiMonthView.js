@@ -92,12 +92,11 @@ const prepareViews = function (props) {
   props.inViewEnd = lastViewDays[lastViewDays.length - 1]
 }
 
-export const renderNavBar = function(config){
-
+export const renderNavBar = function(config, navBarProps) {
   const props = this.props
   const { index, viewMoment } = config
 
-  const navBarProps = {
+  navBarProps = assign({}, navBarProps, {
     secondary: true,
 
     minDate: config.minDate || props.minDate,
@@ -109,8 +108,10 @@ export const renderNavBar = function(config){
     viewMoment,
 
     onViewDateChange: config.onViewDateChange || this.onNavViewDateChange,
-    onUpdate: config.onUpdate || this.updateViewMoment
-  }
+    onUpdate: config.onUpdate || this.updateViewMoment,
+
+    enableHistoryView: props.enableHistoryView
+  })
 
   if (index == 0) {
     delete navBarProps.renderNavPrev
@@ -296,6 +297,8 @@ export default class MultiMonthView extends Component {
 
       viewMoment={viewMoment}
 
+      insideMultiView
+
       daysInView={props.daysInView[index]}
 
       showDaysBeforeMonth={index == 0}
@@ -305,6 +308,24 @@ export default class MultiMonthView extends Component {
 
       renderNavBar={this.props.navigation && (this.props.renderNavBar || this.renderNavBar).bind(this, { index, viewMoment })}
     />
+  }
+
+  isFocused() {
+    const firstView = this.views[0]
+
+    if (firstView) {
+      return firstView.isFocused()
+    }
+
+    return false
+  }
+
+  focus() {
+    const firstView = this.views[0]
+
+    if (firstView) {
+      return firstView.focus()
+    }
   }
 
   setHoverRange(hoverRange) {
@@ -353,8 +374,8 @@ export default class MultiMonthView extends Component {
     }
   }
 
-  renderNavBar(config) {
-    return renderNavBar.call(this, config)
+  renderNavBar(config, navBarProps) {
+    return renderNavBar.call(this, config, navBarProps)
   }
 
   onMonthNavigate(index, dir, event, getNavigationDate) {
@@ -475,7 +496,6 @@ export default class MultiMonthView extends Component {
     }
 
     if (this.props.activeDate === undefined) {
-      console.log('timestamp!!!!', timestamp);
       this.setState({
         activeDate: timestamp
       })
@@ -521,6 +541,8 @@ export default class MultiMonthView extends Component {
 MultiMonthView.defaultProps = {
   perRow: 2,
   size: 2,
+
+  enableHistoryView: true,
 
   isDatePicker: true,
   forceViewUpdate: false,

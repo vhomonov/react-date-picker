@@ -157,7 +157,7 @@ export default class TransitionView extends Component {
     // only pass those down if they have been specified
     // as props on this TransitionView
     assignDefined(newProps, {
-      tabIndex: -1,
+      // tabIndex: -1,
       range: props.range,
       date: props.date,
       activeDate: props.activeDate,
@@ -179,7 +179,9 @@ export default class TransitionView extends Component {
       showClock: props.showClock,
 
       minDate: props.minDate,
-      maxDate: props.maxDate
+      maxDate: props.maxDate,
+      onKeyDown: this.onKeyDown,
+      onBlur: this.onBlur
     })
 
     if (props.onChange) {
@@ -188,6 +190,8 @@ export default class TransitionView extends Component {
     if (props.onRangeChange) {
       newProps.onRangeChange = joinFunctions(props.onRangeChange, renderedChildProps.onRangeChange)
     }
+
+
     if (props.onActiveDateChange) {
       newProps.onActiveDateChange = joinFunctions(
         props.onActiveDateChange,
@@ -214,6 +218,9 @@ export default class TransitionView extends Component {
     const navBarProps = {
       minDate: props.minDate || renderedChildProps.minDate,
       maxDate: props.maxDate || renderedChildProps.maxDate,
+      enableHistoryView: props.enableHistoryView === undefined ?
+        renderedChildProps.enableHistoryView :
+        props.enableHistoryView,
       secondary: true,
       viewDate: this.nextViewDate || this.viewDate,
       onViewDateChange,
@@ -221,7 +228,7 @@ export default class TransitionView extends Component {
     }
 
     if (props.navBar) {
-      navBar = this.renderNavBar(navBarProps)
+      navBar = this.renderNavBar(assign({}, navBarProps, { mainNavBar: true }))
     }
 
     let footer
@@ -258,6 +265,57 @@ export default class TransitionView extends Component {
     </Flex>
   }
 
+  tryNavBarKeyDown(event) {
+    if (this.navBar && this.navBar.getHistoryView) {
+      const historyView = this.navBar.getHistoryView()
+
+      if (historyView && historyView.onKeyDown) {
+        historyView.onKeyDown(event)
+        return true
+      }
+    }
+
+    return false
+  }
+
+  onKeyDown(event) {
+    const initialKeyDown = this.child.onKeyDown
+
+    if (this.tryNavBarKeyDown(event)) {
+      return false
+    }
+
+    if (initialKeyDown) {
+      initialKeyDown(event)
+    }
+
+    return true
+  }
+
+  showHistoryView() {
+    if (this.navBar) {
+      this.navBar.showHistoryView()
+    }
+  }
+
+  hideHistoryView() {
+    if (this.navBar) {
+      this.navBar.hideHistoryView()
+    }
+  }
+
+  onBlur(event) {
+    const initialBlur = this.child.onBlur
+
+    this.hideHistoryView()
+
+    if (initialBlur) {
+      initialBlur(event)
+    }
+
+    return true
+  }
+
   /**
    * This method is only called when rendering the NavBar of the MonthViews
    * that are not on the first row of the MultiMonthView
@@ -287,6 +345,13 @@ export default class TransitionView extends Component {
   }
 
   renderNavBar(navBarProps) {
+    navBarProps = assign({}, navBarProps)
+
+    if (navBarProps.mainNavBar) {
+      navBarProps.ref = (navBar) => { this.navBar = navBar }
+      navBarProps.onMouseDown = this.onNavMouseDown
+    }
+
     const props = this.props
     const { multiView } = navBarProps
 
@@ -503,13 +568,35 @@ export default class TransitionView extends Component {
     })
 
     if (this.props.focusOnTransitionEnd) {
-      this.getView().focus()
+      this.focus()
     }
+
     delete this.nextViewDate
+  }
+
+  onNavMouseDown() {
+    if (!this.isFocused()) {
+      this.focus()
+    }
+  }
+
+  isFocused() {
+    const view = this.getView()
+
+    if (view) {
+      return view.isFocused()
+    }
+
+    return false
+  }
+
+  focus() {
+    this.getView().focus()
   }
 }
 
 TransitionView.defaultProps = {
+  enableHistoryView: true,
   constrainActiveInView: false,
   focusOnTransitionEnd: false,
   navBar: true,

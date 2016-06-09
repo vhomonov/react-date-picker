@@ -11,8 +11,6 @@ import toMoment from './toMoment'
 import join from './join'
 import bemFactory from './bemFactory'
 
-import assignDefined from './assignDefined'
-
 const bem = bemFactory('react-date-picker__decade-view')
 
 const ARROWS = {
@@ -109,8 +107,13 @@ const confirm = function (date, event) {
   }
 
   const dateMoment = this.toMoment(date)
+  const timestamp = +dateMoment
 
-  this.select({ dateMoment, timestamp: +dateMoment }, event)
+  this.select({ dateMoment, timestamp }, event)
+
+  if (this.props.onConfirm) {
+    this.props.onConfirm({ dateMoment, timestamp })
+  }
 
   return undefined
 }

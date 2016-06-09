@@ -7,6 +7,16 @@
     margin-right: 7px;
   }
 
+  .react-date-picker__nav-bar-history-view {
+    background: white;
+  }
+
+  &.react-date-picker__nav-bar--with-history-view {
+    .react-date-picker__nav-bar-date {
+      cursor: pointer;
+    }
+  }
+
   .react-date-picker__nav-bar-arrow {
     position: relative;
     fill: $NAV_BAR_ARROW_COLOR;

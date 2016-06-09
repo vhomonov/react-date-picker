@@ -36,13 +36,13 @@ $NAV_BAR_ARROW_COLOR_HOVER: lighten(gray, 10%) !default;
 $NAV_BAR_ARROW_COLOR_DISABLED: #C5C5C5;
 
 @import './field.scss';
-@import './navbar.scss';
 @import './clock.scss';
 @import './footer.scss';
 @import './spinner.scss';
 @import './year-view.scss';
 @import './decade-view.scss';
 @import './history-view.scss';
+@import './navbar.scss';
 
 $base: 'react-date-picker__month-view';
 
