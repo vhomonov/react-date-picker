@@ -2,7 +2,6 @@ import React from 'react'
 import { findDOMNode } from 'react-dom'
 import Component from 'react-class'
 
-import moment from 'moment'
 import assign from 'object-assign'
 import join from './join'
 import toMoment from './toMoment'
@@ -240,7 +239,7 @@ export default class TransitionView extends Component {
     let footer
 
     if (props.footer) {
-      footer = renderFooter(props, props)
+      footer = renderFooter(props, props.insideField ? props : this.view)
     }
 
     if (multiView) {

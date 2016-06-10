@@ -27,7 +27,7 @@ const RENDER_DAY = (props) => {
   return <div {...props} />
 }
 
-const isDateInMinMax = function (timestamp, props) {
+const isDateInMinMax = function(timestamp, props) {
   if (props.minDate && timestamp < props.minDate) {
     return false
   }
@@ -917,12 +917,20 @@ export default class MonthView extends Component {
     const range = props.range
     const rangeStart = props.rangeStart
 
-    if (!rangeStart || dateMoment == null) {
+    if (dateMoment == null) {
+      this.setState({
+        rangeStart: null
+      })
+      this.onRangeChange([], event)
+      return
+    }
+
+    if (!rangeStart) {
       this.setState({
         rangeStart: dateMoment
       })
 
-      if (range.length == 2 || dateMoment == null) {
+      if (range.length == 2 ) {
         this.onRangeChange([], event)
       }
     } else {

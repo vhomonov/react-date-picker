@@ -5,6 +5,9 @@
 //
 require('./style/index.scss')
 
+import {findDOMNode} from 'react-dom'
+
+global.findDOMNode = findDOMNode
 import DateFormatInput from './src/DateFormatInput'
 import MonthView from './src/MonthView'
 
@@ -116,14 +119,12 @@ var App = React.createClass({
         <YearView minDate="2016-04-03" locale="ro" xstyle={{width: 300, height: 300}}/>
 
         <DateFormatSpinnerInput dateFormat="YYYY-MM-DD HH:mm" /><br />
-        <DateField forceValidDate dateFormat="YYYY-MM-DD HH:mm">
-          <TransitionView >
-            <Calendar />
-          </TransitionView>
+        <DateField updateOnDateClick collapseOnDateClick forceValidDate dateFormat="YYYY-MM-DD HH:mm">
+          <Calendar />
         </DateField>
 
-        <TransitionView navigation={false} footer>
-          <MonthView defaultRange={[]} />
+        <TransitionView footer>
+          <MultiMonthView defaultRange={[]} size={4}/>
         </TransitionView>
 
             {/*

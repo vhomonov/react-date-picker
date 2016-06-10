@@ -90,18 +90,26 @@ export default class NavBar extends Component {
     const className = bem('history-view')
     const { viewMoment, theme } = this.p
 
+    const historyViewProps = {
+      defaultViewDate: viewMoment,
+      defaultDate: viewMoment,
+
+      ref: view => { this.historyView = view },
+      focusDecadeView: false,
+
+      className,
+      theme,
+
+      onOkClick: this.onHistoryViewOk,
+      onCancelClick: this.onHistoryViewCancel
+    }
+
+    if (this.props.renderHistoryView) {
+      return this.props.renderHistoryView(historyViewProps)
+    }
+
     return <HistoryView
-      defaultViewDate={viewMoment}
-      defaultDate={viewMoment}
-
-      ref={view => { this.historyView = view }}
-      focusDecadeView={false}
-
-      className={className}
-      theme={theme}
-
-      onOkClick={this.onHistoryViewOk}
-      onCancelClick={this.onHistoryViewCancel}
+      {...historyViewProps}
     />
   }
 

@@ -449,6 +449,7 @@ export default class DateField extends Component {
   }
 
   onFooterTodayClick() {
+    debugger
     const today = this.toMoment(new Date())
                     .startOf('day')
 
