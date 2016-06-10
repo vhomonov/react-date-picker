@@ -2286,6 +2286,9 @@
   .react-date-field--theme-default .react-date-field__clear-icon:hover {
     color: #4d4d4d;
     fill: #4d4d4d; }
+  .react-date-field--theme-default.react-date-field--focused .react-date-field__clear-icon {
+    color: #349aef;
+    fill: #349aef; }
   .react-date-field--theme-default .react-date-field__calendar-icon:hover {
     border-color: #4d4d4d; }
     .react-date-field--theme-default .react-date-field__calendar-icon:hover:after, .react-date-field--theme-default .react-date-field__calendar-icon:hover:before,
