@@ -141,7 +141,7 @@ export default class DateFormatInput extends Component {
     event.stopPropagation()
   }
 
-  onDirection(dir, event = {}){
+  onDirection(dir, event = {}) {
     this.onKeyDown({
       key: dir > 0 ? 'ArrowUp' : 'ArrowDown',
       type: event.type || 'unknown',

@@ -32,7 +32,6 @@ const joinFunctions = (a, b) => {
   return a || b
 }
 
-
 const TRANSITION_DURATION = '0.4s'
 
 export default class TransitionView extends Component {
@@ -140,6 +139,7 @@ export default class TransitionView extends Component {
 
     const onViewDateChange = joinFunctions(this.onViewDateChange, props.onViewDateChange)
 
+    // TODO make transition view pass all props, as is to child component
     const newProps = {
       key: 'picker',
       ref: (v) => { this.view = v },
@@ -172,6 +172,12 @@ export default class TransitionView extends Component {
       // this is here in order to ensure time changes are reflected
       // when using a TransitionView inside a DateField
       onTimeChange: props.onTimeChange,
+      onClockInputBlur: props.onClockInputBlur,
+      onClockInputFocus: props.onClockInputFocus,
+      onClockEnterKey: props.onClockEnterKey,
+      onClockEscapeKey: props.onClockEscapeKey,
+
+      tabIndex: props.tabIndex,
 
       dateFormat: props.dateFormat,
       locale: props.locale,
@@ -286,10 +292,16 @@ export default class TransitionView extends Component {
     }
 
     if (initialKeyDown) {
-      initialKeyDown(event)
+      return initialKeyDown(event)
+    }
+  }
+
+  isHistoryViewVisible() {
+    if (this.navBar && this.navBar.isHistoryViewVisible) {
+      return this.navBar.isHistoryViewVisible()
     }
 
-    return true
+    return false
   }
 
   showHistoryView() {
@@ -441,6 +453,7 @@ export default class TransitionView extends Component {
 
     if (this.state.transitionTime) {
       date = forwardTime(this.state.transitionTime, this.toMoment(date))
+      // console.log('date.format', date.format('HH:mm'));
     }
 
     const newProps = assign({
@@ -547,7 +560,6 @@ export default class TransitionView extends Component {
         this.addTransitionEnd()
 
         this.setState({
-          transitionTime: null,
           transition
         })
       })

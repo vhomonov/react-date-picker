@@ -340,7 +340,11 @@ export default class DateField extends Component {
 
       return React.cloneElement(picker, assignDefined({
         ref: (p) => {
-          this.picker = p && p.getView ? p.getView() : p
+          this.picker = this.pickerView = p
+
+          if (p && p.getView) {
+            this.pickerView = p.getView()
+          }
 
           if (!this.state.viewDate) {
             this.onViewDateChange(props.viewDate)
@@ -358,8 +362,11 @@ export default class DateField extends Component {
         getTransitionTime: this.getTime,
 
         updateOnWheel: props.updateOnWheel,
+
         onClockInputBlur: this.onClockInputBlur,
         onClockEnterKey: this.onClockEnterKey,
+        onClockEscapeKey: this.onClockEscapeKey,
+
         footerClearDate: props.clearDate || props.minDate,
 
         onFooterCancelClick: this.onFooterCancelClick,
@@ -373,6 +380,8 @@ export default class DateField extends Component {
         className: join(pickerProps.className, 'react-date-field__picker'),
 
         date: date || null,
+
+        tabIndex: -1,
 
         viewDate,
         activeDate,
@@ -427,9 +436,7 @@ export default class DateField extends Component {
     if (activeDate) {
       const date = this.toMoment(activeDate)
 
-      if (this.time) {
-        forwardTime(this.time, date)
-      }
+      forwardTime(this.time, date)
 
       this.setValue(date, { skipTime: !!this.time })
     }
@@ -513,8 +520,8 @@ export default class DateField extends Component {
   onViewKeyDown(event) {
     const key = event.key
 
-    if (this.picker) {//} && (key == 'Escape' || key == 'Enter' || (key in NAV_KEYS))) {
-      this.picker.onViewKeyDown(event)
+    if (this.pickerView) {//} && (key == 'Escape' || key == 'Enter' || (key in NAV_KEYS))) {
+      this.pickerView.onViewKeyDown(event)
     }
   }
 
@@ -585,8 +592,8 @@ export default class DateField extends Component {
   }
 
   isTimeInputFocused() {
-    if (this.picker && this.picker.isTimeInputFocused) {
-      return this.picker.isTimeInputFocused()
+    if (this.pickerView && this.pickerView.isTimeInputFocused) {
+      return this.pickerView.isTimeInputFocused()
     }
 
     return false
@@ -619,7 +626,7 @@ export default class DateField extends Component {
 
     this.props.onBlur(event)
 
-    if (!this.picker || !this.picker.isTimeInputFocused) {
+    if (!this.pickerView || !this.pickerView.isTimeInputFocused) {
       this.onLazyBlur()
       return
     }
@@ -633,6 +640,14 @@ export default class DateField extends Component {
     }
 
     this.onFooterOkClick()
+  }
+
+  onClockEscapeKey() {
+    if (!this.isFocused()) {
+      this.focus()
+    }
+
+    this.onFooterCancelClick()
   }
 
   onClockInputBlur() {
@@ -750,6 +765,8 @@ export default class DateField extends Component {
     const updateOnDateClick = forceUpdate ? true : this.props.updateOnDateClick || isEnter
 
     if (updateOnDateClick) {
+      forwardTime(this.time, dateMoment)
+
       this.setDate(dateString, { dateMoment })
 
       if (this.props.collapseOnDateClick || isEnter) {
@@ -796,7 +813,7 @@ export default class DateField extends Component {
 
     newState.activeDate = dateMoment
 
-    if (!this.picker || !this.picker.isInView || !this.picker.isInView(dateMoment)) {
+    if (!this.pickerView || !this.pickerView.isInView || !this.pickerView.isInView(dateMoment)) {
       newState.viewDate = dateMoment
     }
 

@@ -59,11 +59,10 @@ export default class ClockInput extends Component {
                   .toArray(props.children)
                   .filter(child => child && child.props && child.props.isDateInput)[0]
 
-    const dateInputProps = assign({
-      tabIndex: props.tabIndex || 0,
-      readOnly: props.readOnly
-    }, this.props, {
+    const dateInputProps = assign({}, this.props, {
       ref: (field) => { this.field = field },
+      tabIndex: props.readOnly ? -1 : (props.tabIndex || 0),
+      readOnly: props.readOnly,
       value: this.value,
       dateFormat: this.dateFormat,
       onChange: this.onChange,
@@ -87,6 +86,10 @@ export default class ClockInput extends Component {
   onKeyDown(event) {
     if (this.props.onEnterKey && event.key == 'Enter') {
       this.props.onEnterKey(event)
+    }
+
+    if (this.props.onEscapeKey && event.key == 'Escape') {
+      this.props.onEscapeKey(event)
     }
   }
 

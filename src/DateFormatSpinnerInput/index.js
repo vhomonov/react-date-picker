@@ -30,6 +30,7 @@ export default class DateFormatSpinnerInput extends Component {
     const input = this.inputChild = children.filter(c => c && c.type == 'input')[0]
     const inputProps = input ? assign({}, input.props) : {}
 
+    const onKeyDown = joinFunctions(props.onKeyDown, inputProps.onKeyDown)
     const onChange = joinFunctions(props.onChange, inputProps.onChange)
     const disabled = props.disabled || inputProps.disabled
 
@@ -40,6 +41,9 @@ export default class DateFormatSpinnerInput extends Component {
 
       changeDelay: props.changeDelay === undefined ? inputProps.changeDelay : props.changeDelay,
 
+      tabIndex: props.tabIndex,
+
+      onKeyDown,
       onChange,
       disabled,
 

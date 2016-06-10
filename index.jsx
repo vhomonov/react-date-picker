@@ -117,7 +117,7 @@ var App = React.createClass({
 
         <DateFormatSpinnerInput dateFormat="YYYY-MM-DD HH:mm" /><br />
         <DateField forceValidDate dateFormat="YYYY-MM-DD HH:mm">
-          <TransitionView xtransitionDuration="2s">
+          <TransitionView >
             <Calendar />
           </TransitionView>
         </DateField>

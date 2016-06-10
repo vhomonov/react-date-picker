@@ -108,7 +108,9 @@ export default class Calendar extends Component {
   }
 
   onViewKeyDown(...args) {
-    this.view.onViewKeyDown(...args)
+    if (this.view) {
+      this.view.onViewKeyDown(...args)
+    }
   }
 
   isTimeInputFocused() {
@@ -133,8 +135,9 @@ export default class Calendar extends Component {
 
     assignDefined(clockInputProps, {
       onEnterKey: this.props.onClockEnterKey,
+      onEscapeKey: this.props.onClockEscapeKey,
       readOnly,
-      tabIndex: this.props.clockTabIndex,
+      tabIndex: readOnly ? null : this.props.clockTabIndex,
       theme: this.props.theme,
       updateOnWheel: this.props.updateOnWheel
     })
