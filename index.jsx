@@ -119,13 +119,14 @@ var App = React.createClass({
         <YearView minDate="2016-04-03" locale="ro" xstyle={{width: 300, height: 300}}/>
 
         <DateFormatSpinnerInput dateFormat="YYYY-MM-DD HH:mm" /><br />
-        <DateField updateOnDateClick collapseOnDateClick forceValidDate dateFormat="YYYY-MM-DD HH:mm">
+        <DateField  updateOnDateClick collapseOnDateClick forceValidDate dateFormat="YYYY-MM-DD HH:mm">
           <Calendar />
         </DateField>
 
-        <TransitionView footer>
-          <MultiMonthView defaultRange={[]} size={4}/>
-        </TransitionView>
+
+          <TransitionView footer>
+            <Calendar />
+          </TransitionView>
 
             {/*
             <MultiMonthView size={4}

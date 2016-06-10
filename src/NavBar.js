@@ -70,7 +70,7 @@ export default class NavBar extends Component {
       <Item
         className={bem('date')}
         style={{ textAlign: 'center' }}
-        onMouseDown={props.historyViewEnabled ? this.showHistoryView : null}
+        onMouseDown={props.historyViewEnabled ? this.toggleHistoryView : null}
       >
         {this.renderNavDate(viewMoment)}
       </Item>
@@ -113,6 +113,14 @@ export default class NavBar extends Component {
     />
   }
 
+  toggleHistoryView(event) {
+    if (this.isHistoryViewVisible()) {
+      this.hideHistoryView(event)
+    } else {
+      this.showHistoryView(event)
+    }
+  }
+
   getHistoryView() {
     return this.historyView
   }
@@ -142,7 +150,11 @@ export default class NavBar extends Component {
     }
   }
 
-  hideHistoryView() {
+  hideHistoryView(event) {
+    if (event && event.preventDefault) {
+        event.preventDefault()
+    }
+
     this.setState({
       historyView: false
     })

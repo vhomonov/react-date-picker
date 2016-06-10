@@ -9,3 +9,7 @@ $base: 'react-date-picker__history-view';
     border: none;
   }
 }
+
+.react-date-picker__nav-bar .#{$base}--theme-#{$THEME_NAME} {
+  font-size: 0.833em;
+}

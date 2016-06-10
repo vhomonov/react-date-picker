@@ -175,14 +175,13 @@ export default class TransitionView extends Component {
       onClockInputFocus: props.onClockInputFocus,
       onClockEnterKey: props.onClockEnterKey,
       onClockEscapeKey: props.onClockEscapeKey,
+      showClock: props.showClock,
 
       tabIndex: props.tabIndex,
 
       dateFormat: props.dateFormat,
       locale: props.locale,
       theme: props.theme,
-
-      showClock: props.showClock,
 
       minDate: props.minDate,
       maxDate: props.maxDate,
@@ -468,7 +467,6 @@ export default class TransitionView extends Component {
       viewDate,
       key: index,
       footer: false,
-      readOnly: true,
       className: join(
         childProps.className,
         `react-date-picker__${index == -1 ? 'prev' : 'next'}`
@@ -476,6 +474,7 @@ export default class TransitionView extends Component {
     })
 
     assignDefined(newProps, {
+      showClock: renderedProps.showClock,
       minDate: renderedProps.minDate,
       maxDate: renderedProps.maxDate
     })

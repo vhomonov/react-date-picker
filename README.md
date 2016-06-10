@@ -7,9 +7,9 @@ react-date-picker
 
 > A carefully crafted date picker built especially for React, with love.
 
-[![Date picker](./react-date-picker.gif)](http://zippyui.com/docs/react-date-picker)
-
 [![Date picker](./react-date-field.png)](http://zippyui.com/docs/react-date-picker)
+
+[![Date picker](./picker.gif)](http://zippyui.com/docs/react-date-picker)
 
 Click for [LIVE DEMO!](http://zippyui.com/docs/react-date-picker/examples)
 

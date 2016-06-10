@@ -4,12 +4,6 @@ $FIELD_BORDER_COLOR: gray !default;
 $ICON_COLOR: gray !default;
 $ICON_COLOR_HOVER: darken($ICON_COLOR, 20%);
 
-$CALENDAR_ICON_COLOR: $ICON_COLOR !default;
-$CLEAR_ICON_COLOR: $ICON_COLOR !default;
-
-$CALENDAR_ICON_COLOR_HOVER: $ICON_COLOR_HOVER !default;
-$CLEAR_ICON_COLOR_HOVER: $ICON_COLOR_HOVER !default;
-
 $DAY_SIZE: 40px !default;
 $DAY_COLOR_DISABLED: #D8D8D8 !default;
 $DAY_COLOR_HOVER: #D8EDFF !default;
@@ -26,14 +20,22 @@ $TODAY_HIGHLIGHT_COLOR: magenta !default;
 $WEEKEND_OTHER_MONTH_HIGHLIGHT_COLOR: lighten(#BB4343, 20%) !default;
 $TODAY_OTHER_MONTH_HIGHLIGHT_COLOR: lighten(magenta, 20%) !default;
 
-$FOOTER_BUTTON_FONT_SIZE: inherit !default;
+$FOOTER_BUTTON_FONT_SIZE: 0.9em !default;
 $WEEK_NUMBER_COLOR: #B1B1B1 !default;
-$WEEK_NUMBER_FONT_SIZE: 12px !default;
+$WEEK_NUMBER_FONT_SIZE: 0.8em !default;
 $WEEK_DAY_NAMES_TEXT_TRANSFORM: uppercase !default;
 
 $NAV_BAR_ARROW_COLOR: darken(gray, 10%) !default;
 $NAV_BAR_ARROW_COLOR_HOVER: lighten(gray, 10%) !default;
 $NAV_BAR_ARROW_COLOR_DISABLED: #C5C5C5;
+
+$CALENDAR_ICON_COLOR: $ICON_COLOR !default;
+$CALENDAR_ICON_COLOR_ACTIVE: $ACTIVE_COLOR !default;
+$CLEAR_ICON_COLOR: $ICON_COLOR !default;
+$CLEAR_ICON_COLOR_ACTIVE: $ACTIVE_COLOR !default;
+
+$CALENDAR_ICON_COLOR_HOVER: $ICON_COLOR_HOVER !default;
+$CLEAR_ICON_COLOR_HOVER: $ICON_COLOR_HOVER !default;
 
 @import './field.scss';
 @import './clock.scss';
@@ -47,6 +49,14 @@ $NAV_BAR_ARROW_COLOR_DISABLED: #C5C5C5;
 $base: 'react-date-picker__month-view';
 
 @import './picker.scss';
+
+.react-date-picker__calendar--theme-#{$THEME_NAME},
+.react-date-picker__month-view--theme-#{$THEME_NAME},
+.react-date-picker__date-field--theme-#{$THEME_NAME},
+.react-date-picker__transition-month-view--theme-#{$THEME_NAME} {
+  font-size: 16px;
+  font-size: 1em;
+}
 
 .react-date-picker__transition-month-view--theme-#{$THEME_NAME} {
   border: 1px solid $VIEW_BORDER_COLOR;
