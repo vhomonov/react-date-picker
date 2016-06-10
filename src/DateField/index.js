@@ -21,7 +21,7 @@ import forwardTime from '../utils/forwardTime'
 
 const POSITIONS = { top: 'top', bottom: 'bottom' }
 
-const getPicker = (props, cmp) => {
+const getPicker = props => {
   return React.Children
     .toArray(props.children)
     .filter(c => c && c.props && c.props.isDatePicker)[0] || <Calendar />
