@@ -116,27 +116,16 @@ var App = React.createClass({
         <YearView minDate="2016-04-03" locale="ro" xstyle={{width: 300, height: 300}}/>
 
         <DateFormatSpinnerInput dateFormat="YYYY-MM-DD HH:mm" /><br />
+        <DateField forceValidDate dateFormat="YYYY-MM-DD HH:mm">
+          <TransitionView xtransitionDuration="2s">
+            <Calendar />
+          </TransitionView>
+        </DateField>
 
-        <Calendar dateFormat="YYYY-MM-DD HH:mm" />
-        <DateField dateFormat="YYYY-MM-DD HH:mm" />
-
-        <MonthView>
-          <NavBar expandedHistoryView />
-        </MonthView>
-
-        <MultiMonthView
-          defaultRange={[]}
-          highlightRangeOnMouseMove
-          size={4}
-        />
-
-        <TransitionView xtransitionDuration="2s">
-          <MultiMonthView
-            defaultRange={[]}
-            size={2}
-            highlightRangeOnMouseMove
-          />
+        <TransitionView navigation={false} footer>
+          <MonthView defaultRange={[]} />
         </TransitionView>
+
             {/*
             <MultiMonthView size={4}
             />*/}

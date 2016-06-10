@@ -27,7 +27,7 @@ const RENDER_DAY = (props) => {
   return <div {...props} />
 }
 
-const isDateInMinMax = function(timestamp, props) {
+const isDateInMinMax = function (timestamp, props) {
   if (props.minDate && timestamp < props.minDate) {
     return false
   }
@@ -160,10 +160,16 @@ const renderFooter = (props, buttonHandlers) => {
     clearButton: props.clearButton,
     clearButtonText: props.clearButtonText,
 
-    okButton: props.okButton === undefined && !props.insideField ? false : props.okButton,
+    okButton: props.okButton === undefined && !props.insideField ?
+      false :
+      props.okButton,
+
     okButtonText: props.okButtonText,
 
-    cancelButton: props.cancelButton === undefined && !props.insideField ? false : props.cancelButton,
+    cancelButton: props.cancelButton === undefined && !props.insideField ?
+      false :
+      props.cancelButton,
+
     cancelButtonText: props.cancelButtonText,
 
     clearDate: props.clearDate || props.footerClearDate
@@ -419,13 +425,14 @@ export default class MonthView extends Component {
       }
     }
 
-    if (range && range.length < 2 && hoverRange && isInRange(dateMoment, hoverRange)){
+    if (range && range.length < 2 && hoverRange && isInRange(dateMoment, hoverRange)) {
       className.push(this.bem('day--in-hover-range'))
 
-      if (dateMoment.isSame(hoverRange[0])){
+      if (dateMoment.isSame(hoverRange[0])) {
         className.push(this.bem('day--hover-range-start'))
       }
-      if (dateMoment.isSame(hoverRange[1])){
+
+      if (dateMoment.isSame(hoverRange[1])) {
         className.push(this.bem('day--hover-range-end'))
       }
     }
@@ -613,7 +620,15 @@ export default class MonthView extends Component {
     return result
   }
 
+  focusFromFooter() {
+    if (!this.isFocused() && this.props.focusOnFooterMouseDown) {
+      this.focus()
+    }
+  }
+
   onFooterTodayClick() {
+    this.focusFromFooter()
+
     if (this.props.onFooterTodayClick) {
       if (this.props.onFooterTodayClick() === false) {
         return
@@ -624,6 +639,8 @@ export default class MonthView extends Component {
   }
 
   onFooterClearClick() {
+    this.focusFromFooter()
+
     if (this.props.onFooterClearClick) {
       if (this.props.onFooterClearClick() === false) {
         return
@@ -634,6 +651,8 @@ export default class MonthView extends Component {
   }
 
   onFooterOkClick() {
+    this.focusFromFooter()
+
     if (this.props.onFooterOkClick) {
       this.props.onFooterOkClick()
     }
@@ -641,7 +660,7 @@ export default class MonthView extends Component {
 
   onFooterCancelClick() {
     if (this.props.onFooterCancelClick) {
-      this.onFooterCancelClick()
+      this.props.onFooterCancelClick()
     }
   }
 
@@ -867,6 +886,10 @@ export default class MonthView extends Component {
   }
 
   select({ dateMoment, timestamp }, event) {
+    if (dateMoment && timestamp === undefined) {
+      timestamp = +dateMoment
+    }
+
     if (this.props.select) {
       return this.props.select({ dateMoment, timestamp }, event)
     }
@@ -894,12 +917,12 @@ export default class MonthView extends Component {
     const range = props.range
     const rangeStart = props.rangeStart
 
-    if (!rangeStart) {
+    if (!rangeStart || dateMoment == null) {
       this.setState({
         rangeStart: dateMoment
       })
 
-      if (range.length == 2) {
+      if (range.length == 2 || dateMoment == null) {
         this.onRangeChange([], event)
       }
     } else {
@@ -915,7 +938,7 @@ export default class MonthView extends Component {
   }
 
   format(mom) {
-    return mom.format(this.props.dateFormat)
+    return mom == null ? '' : mom.format(this.props.dateFormat)
   }
 
   setHoverRange(hoverRange) {
@@ -1067,7 +1090,8 @@ MonthView.defaultProps = {
   isDatePicker: true,
 
   enableHistoryView: true,
-  focusOnNavMouseDown: true
+  focusOnNavMouseDown: true,
+  focusOnFooterMouseDown: true
 }
 
 MonthView.propTypes = {

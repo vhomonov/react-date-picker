@@ -273,6 +273,10 @@ export default class HistoryView extends Component {
   }
 
   onKeyDown(event) {
+    if (event.key == 'Escape') {
+      return this.onCancelClick()
+    }
+
     if (this.decadeView) {
       this.decadeView.onKeyDown(event)
     }

@@ -17,6 +17,8 @@ import Calendar, { NAV_KEYS } from '../Calendar'
 import joinFunctions from '../joinFunctions'
 import assignDefined from '../assignDefined'
 
+import forwardTime from '../utils/forwardTime'
+
 const POSITIONS = { top: 'top', bottom: 'bottom' }
 
 const getPicker = (props, cmp) => {
@@ -322,6 +324,7 @@ export default class DateField extends Component {
     const props = this.p
 
     if (this.isExpanded()) {
+      const newExpand = !this.picker
       const picker = getPicker(props, this)
 
       const pickerProps = props.pickerProps
@@ -331,6 +334,9 @@ export default class DateField extends Component {
 
       const date = props.valid && props.date
       const footer = pickerProps.footer !== undefined ? pickerProps.footer : props.footer
+
+      const viewDate = newExpand && date ? date : props.viewDate
+      const activeDate = newExpand && date ? date : props.activeDate
 
       return React.cloneElement(picker, assignDefined({
         ref: (p) => {
@@ -344,8 +350,12 @@ export default class DateField extends Component {
         footer,
 
         focusOnNavMouseDown: false,
+        focusOnFooterMouseDown: false,
+
         insideField: true,
         showClock: props.showClock,
+
+        getTransitionTime: this.getTime,
 
         updateOnWheel: props.updateOnWheel,
         onClockInputBlur: this.onClockInputBlur,
@@ -364,13 +374,15 @@ export default class DateField extends Component {
 
         date: date || null,
 
-        viewDate: props.viewDate,
-        activeDate: props.activeDate,
+        viewDate,
+        activeDate,
         locale: props.locale,
 
         onViewDateChange: this.onViewDateChange,
         onActiveDateChange: this.onActiveDateChange,
         onTimeChange: this.onTimeChange,
+
+        onTransitionStart: this.onTransitionStart,
 
         tabIndex: -1,
 
@@ -398,11 +410,31 @@ export default class DateField extends Component {
     this.time = time
   }
 
+  getTime() {
+    return this.time
+  }
+
   setValue(value, config = {}) {
     const dateMoment = this.toMoment(value)
     const dateString = this.format(dateMoment)
 
     this.setDate(dateString, assign(config, { dateMoment }))
+  }
+
+  onFooterOkClick() {
+    const activeDate = this.p.activeDate
+
+    if (activeDate) {
+      const date = this.toMoment(activeDate)
+
+      if (this.time) {
+        forwardTime(this.time, date)
+      }
+
+      this.setValue(date, { skipTime: !!this.time })
+    }
+
+    this.setExpanded(false)
   }
 
   onFooterCancelClick() {
@@ -418,24 +450,6 @@ export default class DateField extends Component {
     this.onActiveDateChange(today)
 
     return false
-  }
-
-  onFooterOkClick() {
-    const activeDate = this.p.activeDate
-
-    if (activeDate) {
-      const date = this.toMoment(activeDate)
-
-      if (this.time) {
-        ['hour', 'minute', 'second', 'millisecond'].forEach(part => {
-          date.set(part, this.time[part])
-        })
-      }
-
-      this.setValue(date, { skipTime: !!this.time })
-    }
-
-    this.setExpanded(false)
   }
 
   onFooterClearClick() {
@@ -499,7 +513,7 @@ export default class DateField extends Component {
   onViewKeyDown(event) {
     const key = event.key
 
-    if (this.picker && (key == 'Enter' || (key in NAV_KEYS))) {
+    if (this.picker) {//} && (key == 'Escape' || key == 'Enter' || (key in NAV_KEYS))) {
       this.picker.onViewKeyDown(event)
     }
   }
@@ -531,6 +545,11 @@ export default class DateField extends Component {
       return false
     }
 
+    if (historyVisible && (key == 'Escape' || key == 'Enter')) {
+      this.onViewKeyDown(event)
+      return false
+    }
+
     if (key == 'Escape') {
       if (expanded) {
         this.setExpanded(false)
@@ -539,7 +558,7 @@ export default class DateField extends Component {
     }
 
     if (expanded) {
-      if (historyVisible || (key in NAV_KEYS)) {
+      if (key in NAV_KEYS) {
         this.onViewKeyDown(event)
         return false
       }

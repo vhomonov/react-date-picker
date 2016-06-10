@@ -6,6 +6,7 @@ import moment from 'moment'
 import assign from 'object-assign'
 import join from './join'
 import toMoment from './toMoment'
+import forwardTime from './utils/forwardTime'
 
 import getTransitionEnd from './getTransitionEnd'
 import assignDefined from './assignDefined'
@@ -86,7 +87,7 @@ export default class TransitionView extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.viewDate) {
       // this is in order to transition when the prop changes
-      // is we were to simply do setState({ viewDate }) it wouldn't have had a transition
+      // if we were to simply do setState({ viewDate }) it wouldn't have had a transition
       this.transitionTo(nextProps.viewDate, nextProps)
     }
   }
@@ -191,7 +192,6 @@ export default class TransitionView extends Component {
       newProps.onRangeChange = joinFunctions(props.onRangeChange, renderedChildProps.onRangeChange)
     }
 
-
     if (props.onActiveDateChange) {
       newProps.onActiveDateChange = joinFunctions(
         props.onActiveDateChange,
@@ -227,14 +227,14 @@ export default class TransitionView extends Component {
       multiView
     }
 
-    if (props.navBar) {
+    if (props.navigation) {
       navBar = this.renderNavBar(assign({}, navBarProps, { mainNavBar: true }))
     }
 
     let footer
 
     if (props.footer) {
-      footer = renderFooter(props)
+      footer = renderFooter(props, props)
     }
 
     if (multiView) {
@@ -337,7 +337,7 @@ export default class TransitionView extends Component {
         renderNavNext={renderHiddenNav}
         renderNavPrev={renderHiddenNav}
         onViewDateChange={null}
-        viewDate={moment(viewDate)}
+        viewDate={this.toMoment(viewDate)}
       />
     }
 
@@ -429,7 +429,7 @@ export default class TransitionView extends Component {
     const childProps = this.child.props
     const renderedProps = this.renderedChildProps
 
-    let viewDate = moment(this.viewDate).add(viewDiff, 'month')
+    let viewDate = this.toMoment(this.viewDate).add(viewDiff, 'month')
 
     if (this.nextViewDate && this.state.prepareTransition == -index) {
       // we're transitioning to this viewDate, so make sure
@@ -437,8 +437,15 @@ export default class TransitionView extends Component {
       viewDate = this.nextViewDate
     }
 
+    let date = renderedProps.date || renderedProps.moment
+
+    if (this.state.transitionTime) {
+      date = forwardTime(this.state.transitionTime, this.toMoment(date))
+    }
+
     const newProps = assign({
-      date: renderedProps.date || renderedProps.moment,
+      date,
+      readOnly: true,
       range: renderedProps.range,
       activeDate: renderedProps.activeDate,
       dateFormat: renderedProps.dateFormat,
@@ -448,6 +455,7 @@ export default class TransitionView extends Component {
       navigation: multiView,
       viewDate,
       key: index,
+      footer: false,
       readOnly: true,
       className: join(
         childProps.className,
@@ -496,11 +504,13 @@ export default class TransitionView extends Component {
       // this.nextViewDate = dateMoment
       return
     }
+    // to protect of null, which will default to current date
+    dateMoment = this.toMoment(dateMoment)
 
-    const newMoment = moment(dateMoment).startOf('month')
-    const viewMoment = moment(this.viewDate).startOf('month')
+    const newMoment = this.toMoment(dateMoment).startOf('month')
+    const viewMoment = this.toMoment(this.viewDate).startOf('month')
 
-    if (newMoment.isSame(viewMoment)) {
+    if (newMoment.format('YYYY-MM') == viewMoment.format('YYYY-MM')) {
       return
     }
 
@@ -509,7 +519,7 @@ export default class TransitionView extends Component {
     const viewSize = this.getViewSize()
 
     if (Math.abs(viewSize) > 1) {
-      const temp = moment(viewMoment).add(viewSize * -transition, 'month')
+      const temp = this.toMoment(viewMoment).add(viewSize * -transition, 'month')
 
       if (navNext) {
         dateMoment = dateMoment.isAfter(temp) ? dateMoment : temp
@@ -518,7 +528,12 @@ export default class TransitionView extends Component {
       }
     }
 
+    const transitionTime = this.props.getTransitionTime ?
+      this.props.getTransitionTime() :
+      null
+
     this.setState({
+      transitionTime,
       prepareTransition: transition
     }, () => {
       setTimeout(() => {
@@ -532,6 +547,7 @@ export default class TransitionView extends Component {
         this.addTransitionEnd()
 
         this.setState({
+          transitionTime: null,
           transition
         })
       })
@@ -575,7 +591,7 @@ export default class TransitionView extends Component {
   }
 
   onNavMouseDown() {
-    if (!this.isFocused()) {
+    if (this.props.focusOnNavMouseDown && !this.isFocused()) {
       this.focus()
     }
   }
@@ -595,11 +611,21 @@ export default class TransitionView extends Component {
   }
 }
 
+TransitionView.propTypes = {
+  children: React.PropTypes.node.isRequired
+}
+
 TransitionView.defaultProps = {
+  focusOnNavMouseDown: true,
+
+  onTransitionStart: () => {},
+  onTransitionEnd: () => {},
+
+  footerClearDate: null,
   enableHistoryView: true,
   constrainActiveInView: false,
   focusOnTransitionEnd: false,
-  navBar: true,
+  navigation: true,
   theme: 'default',
   isDatePicker: true
 }

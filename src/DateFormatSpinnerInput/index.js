@@ -34,6 +34,7 @@ export default class DateFormatSpinnerInput extends Component {
     const disabled = props.disabled || inputProps.disabled
 
     assignDefined(inputProps, {
+      size: props.size || inputProps.size,
       minDate: props.minDate || inputProps.minDate,
       maxDate: props.maxDate || inputProps.maxDate,
 
@@ -127,9 +128,10 @@ export default class DateFormatSpinnerInput extends Component {
       this.start(dir)
     } else {
       this.focus()
+
       setTimeout(() => {
-        this.start(dir)
-      })
+        this.increment(dir)
+      }, 1)
     }
   }
 
@@ -157,9 +159,13 @@ export default class DateFormatSpinnerInput extends Component {
     return !!(this.started && this.input)
   }
 
+  increment(dir) {
+    this.input.onDirection(dir)
+  }
+
   step(dir, callback, delay) {
     if (this.isStarted()) {
-      this.input.onDirection(dir)
+      this.increment(dir)
 
       if (typeof callback == 'function') {
         this.timeoutId = setTimeout(() => {

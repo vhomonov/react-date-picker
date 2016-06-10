@@ -13,7 +13,7 @@ import join from './join'
 import isInRange from './utils/isInRange'
 
 import { getDaysInMonthView } from './BasicMonthView'
-import MonthView from './MonthView'
+import MonthView, { renderFooter } from './MonthView'
 
 const times = (count) => [...new Array(count)].map((v, i) => i)
 
@@ -223,17 +223,25 @@ export default class MultiMonthView extends Component {
     const rowCount = Math.ceil(size / props.perRow)
     const children = times(rowCount).map(this.renderRow).filter(x => !!x)
 
+    const className = join(
+      props.className,
+      'react-date-picker__multi-month-view',
+      props.theme && `react-date-picker__multi-month-view--theme-${props.theme}`
+    )
+
+    const footer = renderFooter(props, this)
+
+    if (footer) {
+      children.push(footer)
+    }
+
     return <Flex
       column
       inline
       alignItems="stretch"
       wrap={false}
       {...props}
-      className={join(
-        props.className,
-        'react-date-picker__multi-month-view',
-        props.theme && `react-date-picker__multi-month-view--theme-${props.theme}`
-      )}
+      className={className}
       children={children}
     />
   }
@@ -310,6 +318,22 @@ export default class MultiMonthView extends Component {
     />
   }
 
+  onFooterTodayClick() {
+    this.views[0].onFooterTodayClick()
+  }
+
+  onFooterClearClick() {
+    this.views[0].onFooterClearClick()
+  }
+
+  onFooterOkClick() {
+    this.views[0].onFooterOkClick()
+  }
+
+  onFooterCancelClick() {
+    this.views[0].onFooterCancelClick()
+  }
+
   isFocused() {
     const firstView = this.views[0]
 
@@ -324,7 +348,7 @@ export default class MultiMonthView extends Component {
     const firstView = this.views[0]
 
     if (firstView) {
-      return firstView.focus()
+      firstView.focus()
     }
   }
 
@@ -335,17 +359,18 @@ export default class MultiMonthView extends Component {
   }
 
   select({ dateMoment, timestamp }) {
-    if (!dateMoment) {
-      return
-    }
+    // if (!dateMoment) {
+    //   return
+    // }
 
     const props = this.p
 
     const visibleRange = [props.inViewStart, props.inViewEnd]
 
-    if (!isInRange(dateMoment, { range: visibleRange, inclusive: true })) {
-      return
-    }
+    // TODO check why this was needed
+    // if (!isInRange(dateMoment, { range: visibleRange, inclusive: true })) {
+    //   return
+    // }
 
     this.onAdjustViewDateChange({ dateMoment, timestamp })
     this.onActiveDateChange({ dateMoment, timestamp })
@@ -421,13 +446,13 @@ export default class MultiMonthView extends Component {
   onAdjustViewDateChange({ dateMoment, timestamp }) {
     const props = this.p
 
-    let update = false
+    let update = dateMoment == null
 
-    if (dateMoment.isAfter(props.viewEnd)) {
+    if (dateMoment && dateMoment.isAfter(props.viewEnd)) {
       dateMoment = this.toMoment(dateMoment).add(-props.size + 1, 'month')
       timestamp = +dateMoment
       update = true
-    } else if (dateMoment.isBefore(props.viewStart)) {
+    } else if (dateMoment && dateMoment.isBefore(props.viewStart)) {
       update = true
     }
 
@@ -517,7 +542,7 @@ export default class MultiMonthView extends Component {
   }
 
   format(mom) {
-    return mom.format(this.props.dateFormat)
+    return mom == null ? '' : mom.format(this.props.dateFormat)
   }
 
   onChange({ dateMoment, timestamp }, event) {
@@ -543,6 +568,8 @@ MultiMonthView.defaultProps = {
   size: 2,
 
   enableHistoryView: true,
+
+  footerClearDate: null,
 
   isDatePicker: true,
   forceViewUpdate: false,

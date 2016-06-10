@@ -71,7 +71,15 @@ export default class Calendar extends Component {
     const children = [
       navBar,
       <Flex justifyContent="center" wrap={this.props.wrap || this.props.wrapTime}>
-        <Flex flexGrow="1" flexShrink="0" flexBasis="auto" column wrap={false} alignItems="stretch" children={inner} />
+        <Flex
+          flexGrow="1"
+          flexShrink="0"
+          flexBasis="auto"
+          column
+          wrap={false}
+          alignItems="stretch"
+          children={inner}
+        />
         {clockInput}
       </Flex>,
       footer
@@ -91,6 +99,14 @@ export default class Calendar extends Component {
     }
   }
 
+  isFocused() {
+    if (this.view) {
+      return this.view.isFocused()
+    }
+
+    return false
+  }
+
   onViewKeyDown(...args) {
     this.view.onViewKeyDown(...args)
   }
@@ -101,14 +117,14 @@ export default class Calendar extends Component {
 
   renderClockInput() {
     const clockInput = null
-    // const clockInput = React.Children
-    //   .toArray(this.props.children)
-    //   .filter(c => c && c.props && c.props.isClockInput)[0]
+
+    const readOnly = this.props.readOnly
 
     const clockInputProps = {
       ref: (clkInput) => { this.clockInput = clkInput },
+      viewIndex: this.props.viewIndex,
       dateFormat: this.p.dateFormat,
-      defaultValue: this.p.date,
+      [readOnly ? 'value' : 'defaultValue']: this.p.date,
       onFocus: this.onClockInputFocus,
       onBlur: this.onClockInputBlur,
       onChange: this.onTimeChange,
@@ -117,7 +133,7 @@ export default class Calendar extends Component {
 
     assignDefined(clockInputProps, {
       onEnterKey: this.props.onClockEnterKey,
-      readOnly: this.props.readOnly,
+      readOnly,
       tabIndex: this.props.clockTabIndex,
       theme: this.props.theme,
       updateOnWheel: this.props.updateOnWheel
@@ -171,7 +187,12 @@ Calendar.defaultProps = {
 
   onClockEnterKey: () => {},
   onClockInputBlur: () => {},
-  onClockInputFocus: () => {}
+  onClockInputFocus: () => {},
+
+  onFooterTodayClick: () => {},
+  onFooterCancelClick: () => {},
+  onFooterClearClick: () => {},
+  onFooterOkClick: () => {}
 }
 
 Calendar.propTypes = {
