@@ -6,10 +6,11 @@ import assign from 'object-assign'
 import { Flex, Item } from 'react-flex'
 import moment from 'moment'
 
-import times from './utils/times'
 import toMoment from './toMoment'
 import join from './join'
 import bemFactory from './bemFactory'
+
+import times from './utils/times'
 
 const bem = bemFactory('react-date-picker__decade-view')
 

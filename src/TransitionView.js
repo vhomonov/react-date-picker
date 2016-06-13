@@ -18,6 +18,10 @@ import times from './utils/times'
 import InlineBlock from 'react-inline-block'
 import normalize from 'react-style-normalizer'
 
+import bemFactory from './bemFactory'
+
+const bem = bemFactory('react-date-picker__transition-month-view')
+
 const renderHiddenNav = (props) => <InlineBlock {...props} style={{visibility: 'hidden'}} />
 
 const joinFunctions = (a, b) => {
@@ -235,12 +239,6 @@ export default class TransitionView extends Component {
       navBar = this.renderNavBar(assign({}, navBarProps, { mainNavBar: true }))
     }
 
-    let footer
-
-    if (props.footer) {
-      footer = renderFooter(props, props.insideField ? props : this.view)
-    }
-
     if (multiView) {
       newProps.renderNavBar = this.renderMultiViewNavBar.bind(this, navBarProps)
     }
@@ -255,8 +253,8 @@ export default class TransitionView extends Component {
       {...props}
       className={join(
         props.className,
-        'react-date-picker__transition-month-view',
-        props.theme && `react-date-picker__transition-month-view--theme-${props.theme}`
+        bem(),
+        props.theme && bem(null, `theme-${props.theme}`)
       )}
     >
       {navBar}
@@ -265,8 +263,21 @@ export default class TransitionView extends Component {
         {clone}
         {this.renderAt(1, { multiView, navBarProps })}
       </Flex>
-      {footer}
+      {this.renderFooter()}
     </Flex>
+  }
+
+  renderFooter() {
+    const props = this.props
+
+    return props.footer ?
+      renderFooter(
+        props,
+        props.insideField ?
+          props :
+          this.view
+      ) :
+      null
   }
 
   tryNavBarKeyDown(event) {
