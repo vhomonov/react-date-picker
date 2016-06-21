@@ -280,9 +280,8 @@ class BasicMonthView extends Component {
     return buckets.map((bucket, index) => <div
       key={`row_${index}`}
       className={`${this.bem('row')} dp-week dp-row`}
-    >
-      {bucket}
-    </div>)
+      children={bucket}
+    />)
   }
 
   renderDay(props, dateMoment) {

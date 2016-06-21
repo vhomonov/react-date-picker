@@ -23,6 +23,7 @@ import NavBar from './src/NavBar'
 import Calendar from './src/Calendar'
 import Footer from './src/Footer'
 import MultiMonthView from './src/MultiMonthView'
+import BasicMonthView from './src/BasicMonthView'
 import DateField from './src/DateField'
 import Clock from './src/Clock'
 import DateFormatSpinnerInput from './src/DateFormatSpinnerInput'
@@ -113,20 +114,7 @@ var App = React.createClass({
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
-        <HistoryView minDate="2004-04-04"  />
-
-        <DecadeView minDate="2004-04-04" navigation xstyle={{width: 1000, height: 300}}/>
-        <YearView minDate="2016-04-03" locale="ro" xstyle={{width: 300, height: 300}}/>
-
-        <DateFormatSpinnerInput dateFormat="YYYY-MM-DD HH:mm" /><br />
-        <DateField  updateOnDateClick collapseOnDateClick forceValidDate dateFormat="YYYY-MM-DD HH:mm">
-          <Calendar />
-        </DateField>
-
-
-          <TransitionView footer>
-            <Calendar />
-          </TransitionView>
+            <MonthView viewDate="2016-10-14" locale="pt_br"/>
 
             {/*
             <MultiMonthView size={4}
