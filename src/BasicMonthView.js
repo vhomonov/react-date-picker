@@ -393,8 +393,8 @@ BasicMonthView.propTypes = {
   weekDayNames(props, propName) {
     const value = props[propName]
 
-    if (typeof value != 'function' && value !== false) {
-      return new Error(`"weekDayNames" should either be a function or the boolean "false"`)
+    if (typeof value != 'function' && value !== false && !Array.isArray(value)) {
+      return new Error(`"weekDayNames" should be a function, an array or the boolean "false"`)
     }
 
     return undefined

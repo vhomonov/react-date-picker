@@ -114,7 +114,16 @@ var App = React.createClass({
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
-            <MonthView viewDate="2016-10-14" locale="pt_br"/>
+            <MonthView
+              locale="pt-br"
+              date={"2016-06-21"}
+              xonChange={this._onDateSelect}
+              dateFormat="DD/MM/YYYY"
+              navPrev="«"
+              navNext="»"
+              weekDayNames={["Doss", "Se", "Te", "Qu", "Qu", "Se", "Sa"]}
+              viewDate="14/10/2016"
+            />
 
             {/*
             <MultiMonthView size={4}
@@ -127,14 +136,19 @@ var App = React.createClass({
         <DateField
           forceValidDate
           xexpanded
+          onChange={(d) => console.log('d', d)}
           expandOnFocus={false}
           dateFormat="YYYY-MM-DD HH:mm"
+          minDate="2016-04-23 14:23"
           defaultValue="2016-04-02 15:23"
         >
             <DatePicker>
 
             </DatePicker>
         </DateField>
+        <DateFormatSpinnerInput dateFormat="YYYY-MM-DD HH:mm"
+        minDate="2016-04-23 14:23"
+        defaultValue="2016-04-02 15:23" />
         <br />
         <input defaultValue="dadas"/>
 

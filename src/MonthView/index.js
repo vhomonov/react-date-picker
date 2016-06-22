@@ -1003,7 +1003,19 @@ export default class MonthView extends Component {
   }
 
   onViewDateChange({ dateMoment, timestamp }) {
-    if (this.props.constrainViewDate && !isDateInMinMax(timestamp, this.p)) {
+    let minDate
+    let maxDate
+
+    if (this.p.minDateMoment) {
+      minDate = +this.toMoment(this.p.minDateMoment).startOf('month')
+    }
+    if (this.p.maxDateMoment) {
+      maxDate = +this.toMoment(this.p.maxDateMoment).endOf('month')
+    }
+    if (this.props.constrainViewDate && !isDateInMinMax(timestamp, {
+      minDate,
+      maxDate
+    })) {
       return
     }
 

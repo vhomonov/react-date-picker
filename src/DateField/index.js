@@ -749,7 +749,7 @@ export default class DateField extends Component {
   }
 
   onTextChange(text) {
-    if (this.props.text === undefined) {
+    if (this.props.text === undefined && this.props.value === undefined) {
       this.setState({
         text
       })

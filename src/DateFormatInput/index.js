@@ -324,7 +324,7 @@ export default class DateFormatInput extends Component {
     const { minDate, maxDate } = this.state
 
     if (minDate && dateMoment.isBefore(minDate)) {
-      const clone = moment(dateMoment)
+      const clone = this.toMoment(dateMoment)
 
       // try with time
       dateMoment = forwardTime(clone, this.toMoment(minDate))
@@ -338,7 +338,7 @@ export default class DateFormatInput extends Component {
     }
 
     if (maxDate && dateMoment.isAfter(maxDate)) {
-      const clone = moment(dateMoment)
+      const clone = this.toMoment(dateMoment)
       dateMoment = forwardTime(clone, this.toMoment(maxDate))
 
       if (dateMoment.isAfter(maxDate)) {
