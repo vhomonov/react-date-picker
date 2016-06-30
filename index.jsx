@@ -121,7 +121,6 @@ var App = React.createClass({
               dateFormat="DD/MM/YYYY"
               navPrev="«"
               navNext="»"
-              weekDayNames={["Doss", "Se", "Te", "Qu", "Qu", "Se", "Sa"]}
               viewDate="14/10/2016"
             />
 
@@ -136,15 +135,13 @@ var App = React.createClass({
         <DateField
           forceValidDate
           xexpanded
+          locale="pt-br"
           onChange={(d) => console.log('d', d)}
           expandOnFocus={false}
           dateFormat="YYYY-MM-DD HH:mm"
           minDate="2016-04-23 14:23"
           defaultValue="2016-04-02 15:23"
         >
-            <DatePicker>
-
-            </DatePicker>
         </DateField>
         <DateFormatSpinnerInput dateFormat="YYYY-MM-DD HH:mm"
         minDate="2016-04-23 14:23"

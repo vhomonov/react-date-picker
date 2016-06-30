@@ -169,6 +169,7 @@ export default class Calendar extends Component {
 
   onClockInputMouseDown(event) {
     event.stopPropagation()
+    event.preventDefault()
 
     this.clockInput.focus()
   }
