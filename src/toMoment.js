@@ -1,5 +1,4 @@
 import moment from 'moment'
-import CONFIG from './config'
 
 /**
  * This function will be used to convert a date to a moment.

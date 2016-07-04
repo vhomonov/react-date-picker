@@ -27,7 +27,7 @@ const RENDER_DAY = (props) => {
   return <div {...props} />
 }
 
-const isDateInMinMax = function(timestamp, props) {
+const isDateInMinMax = function (timestamp, props) {
   if (props.minDate && timestamp < props.minDate) {
     return false
   }

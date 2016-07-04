@@ -41,11 +41,10 @@ const getWeekStartDay = (props) => {
  * @return {Number}
  */
 const getWeekendStartDay = (props) => {
-  let weekendStartDay = props.weekendStartDay
-  const weekStartDay = getWeekStartDay(props)
+  const { weekendStartDay } = props
 
   if (weekendStartDay == null) {
-    weekendStartDay = weekStartDay + 5 % 7
+    return getWeekStartDay(props) + 5 % 7
   }
 
   return weekendStartDay
