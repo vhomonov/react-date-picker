@@ -36,8 +36,7 @@
   border-radius: 2px;
   padding: 5px 7px;
   margin: 2px 4px 0px 2px;
-  position: relative;
-  cursor: pointer; }
+  position: relative; }
 
 .react-date-field__clear-icon {
   color: gray;
@@ -50,12 +49,6 @@
 .react-date-field__clear-icon:hover {
   color: #4d4d4d;
   fill: #4d4d4d; }
-
-.react-date-field__calendar-icon:hover {
-  border-color: #4d4d4d; }
-  .react-date-field__calendar-icon:hover:after, .react-date-field__calendar-icon:hover:before,
-  .react-date-field__calendar-icon:hover .react-date-field__calendar-icon-inner {
-    background: #4d4d4d; }
 
 .react-date-field__calendar-icon:after,
 .react-date-field__calendar-icon:before {
@@ -2268,7 +2261,8 @@
   .react-date-field--theme-default.react-date-field--focused {
     border: 1px solid #349aef; }
   .react-date-field--theme-default > .react-date-field__picker {
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.34375); }
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.34375);
+    border: 1px solid #349aef; }
   .react-date-field--theme-default .react-date-field__calendar-icon {
     border: 2px solid gray; }
     .react-date-field--theme-default .react-date-field__calendar-icon:before, .react-date-field--theme-default .react-date-field__calendar-icon:after {
@@ -2289,25 +2283,34 @@
   .react-date-field--theme-default.react-date-field--focused .react-date-field__clear-icon {
     color: #349aef;
     fill: #349aef; }
-  .react-date-field--theme-default .react-date-field__calendar-icon:hover {
-    border-color: #4d4d4d; }
-    .react-date-field--theme-default .react-date-field__calendar-icon:hover:after, .react-date-field--theme-default .react-date-field__calendar-icon:hover:before,
-    .react-date-field--theme-default .react-date-field__calendar-icon:hover .react-date-field__calendar-icon-inner {
+  .react-date-field--theme-default:not(.react-date-field--disabled) .react-date-field__calendar-icon:hover {
+    border-color: #4d4d4d;
+    cursor: pointer; }
+    .react-date-field--theme-default:not(.react-date-field--disabled) .react-date-field__calendar-icon:hover:after, .react-date-field--theme-default:not(.react-date-field--disabled) .react-date-field__calendar-icon:hover:before,
+    .react-date-field--theme-default:not(.react-date-field--disabled) .react-date-field__calendar-icon:hover .react-date-field__calendar-icon-inner {
       background: #4d4d4d; }
-  .react-date-field--theme-default.react-date-field--focused .react-date-field__calendar-icon,
-  .react-date-field--theme-default .react-date-field__calendar-icon:active {
-    border-color: #349aef; }
-    .react-date-field--theme-default.react-date-field--focused .react-date-field__calendar-icon:after, .react-date-field--theme-default.react-date-field--focused .react-date-field__calendar-icon:before,
-    .react-date-field--theme-default.react-date-field--focused .react-date-field__calendar-icon .react-date-field__calendar-icon-inner,
-    .react-date-field--theme-default .react-date-field__calendar-icon:active:after,
-    .react-date-field--theme-default .react-date-field__calendar-icon:active:before,
-    .react-date-field--theme-default .react-date-field__calendar-icon:active .react-date-field__calendar-icon-inner {
-      background: #349aef; }
   .react-date-field--theme-default .react-date-field__calendar-icon:after,
   .react-date-field--theme-default .react-date-field__calendar-icon:before {
     background: gray; }
   .react-date-field--theme-default .react-date-field__calendar-icon-inner {
     background: gray; }
+  .react-date-field--theme-default.react-date-field--focused .react-date-field__calendar-icon,
+  .react-date-field--theme-default.react-date-field--focused .react-date-field__calendar-icon:hover,
+  .react-date-field--theme-default.react-date-field--focused .react-date-field__calendar-icon:active,
+  .react-date-field--theme-default:not(.react-date-field--disabled) .react-date-field__calendar-icon:active {
+    border-color: #349aef; }
+    .react-date-field--theme-default.react-date-field--focused .react-date-field__calendar-icon:after, .react-date-field--theme-default.react-date-field--focused .react-date-field__calendar-icon:before,
+    .react-date-field--theme-default.react-date-field--focused .react-date-field__calendar-icon .react-date-field__calendar-icon-inner,
+    .react-date-field--theme-default.react-date-field--focused .react-date-field__calendar-icon:hover:after,
+    .react-date-field--theme-default.react-date-field--focused .react-date-field__calendar-icon:hover:before,
+    .react-date-field--theme-default.react-date-field--focused .react-date-field__calendar-icon:hover .react-date-field__calendar-icon-inner,
+    .react-date-field--theme-default.react-date-field--focused .react-date-field__calendar-icon:active:after,
+    .react-date-field--theme-default.react-date-field--focused .react-date-field__calendar-icon:active:before,
+    .react-date-field--theme-default.react-date-field--focused .react-date-field__calendar-icon:active .react-date-field__calendar-icon-inner,
+    .react-date-field--theme-default:not(.react-date-field--disabled) .react-date-field__calendar-icon:active:after,
+    .react-date-field--theme-default:not(.react-date-field--disabled) .react-date-field__calendar-icon:active:before,
+    .react-date-field--theme-default:not(.react-date-field--disabled) .react-date-field__calendar-icon:active .react-date-field__calendar-icon-inner {
+      background: #349aef; }
 
 .react-date-picker__clock--theme-default .react-date-picker__clock-hand-second {
   background: red; }

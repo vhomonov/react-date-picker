@@ -145,11 +145,8 @@ var App = React.createClass({
             />*/}
 
         <br />
-        <br />
-        <br />
-        <input defaultValue="" onKeyDown={(e) => console.log(e.key, e.which)} />
         <DateField
-          forceValidDate
+          xforceValidDate
           xexpanded
           locale="pt-br"
           onChange={(d) => console.log('d', d)}
@@ -157,6 +154,7 @@ var App = React.createClass({
           dateFormat="YYYY-MM-DD HH:mm"
           minDate="2016-04-23 14:23"
           defaultValue="2016-04-02 15:23"
+          disabled
         >
           <Calendar>
             <F />

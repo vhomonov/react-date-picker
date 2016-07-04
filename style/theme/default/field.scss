@@ -7,6 +7,7 @@
 
   & > .react-date-field__picker {
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.34375);
+    border: 1px solid $ACTIVE_COLOR;
   }
 
   .react-date-field__calendar-icon {
@@ -44,24 +45,16 @@
     fill: $CLEAR_ICON_COLOR_ACTIVE;
   }
 
-  .react-date-field__calendar-icon:hover {
-    border-color: $CALENDAR_ICON_COLOR_HOVER;
+  &:not(.react-date-field--disabled) {
+    .react-date-field__calendar-icon:hover {
+      border-color: $CALENDAR_ICON_COLOR_HOVER;
+      cursor: pointer;
 
-    &:after,
-    &:before,
-    .react-date-field__calendar-icon-inner {
-      background: $CALENDAR_ICON_COLOR_HOVER;
-    }
-  }
-
-  &.react-date-field--focused .react-date-field__calendar-icon,
-  .react-date-field__calendar-icon:active {
-    border-color: $CALENDAR_ICON_COLOR_ACTIVE;
-
-    &:after,
-    &:before,
-    .react-date-field__calendar-icon-inner {
-      background: $CALENDAR_ICON_COLOR_ACTIVE;
+      &:after,
+      &:before,
+      .react-date-field__calendar-icon-inner {
+        background: $CALENDAR_ICON_COLOR_HOVER;
+      }
     }
   }
 
@@ -72,5 +65,18 @@
 
   .react-date-field__calendar-icon-inner {
     background: $CALENDAR_ICON_COLOR;
+  }
+
+  &.react-date-field--focused .react-date-field__calendar-icon,
+  &.react-date-field--focused .react-date-field__calendar-icon:hover,
+  &.react-date-field--focused .react-date-field__calendar-icon:active,
+  &:not(.react-date-field--disabled) .react-date-field__calendar-icon:active {
+    border-color: $CALENDAR_ICON_COLOR_ACTIVE;
+
+    &:after,
+    &:before,
+    .react-date-field__calendar-icon-inner {
+      background: $CALENDAR_ICON_COLOR_ACTIVE;
+    }
   }
 }

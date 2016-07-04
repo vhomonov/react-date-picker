@@ -97,7 +97,7 @@ export default class DateField extends Component {
   renderClearIcon() {
     const props = this.p
 
-    if (!props.clearIcon || props.forceValidDate) {
+    if (!props.clearIcon || props.forceValidDate || props.disabled) {
       return undefined
     }
 
@@ -158,6 +158,9 @@ export default class DateField extends Component {
   }
 
   onCalendarIconMouseDown(event) {
+    if (this.props.disabled) {
+      return
+    }
     event.preventDefault()
 
     if (!this.isFocused()) {
@@ -266,6 +269,8 @@ export default class DateField extends Component {
       'react-date-field',
       props.className,
 
+      props.disabled && 'react-date-field--disabled',
+
       props.theme && `react-date-field--theme-${props.theme}`,
       `react-date-field--picker-position-${position}`,
 
@@ -313,6 +318,7 @@ export default class DateField extends Component {
     })
 
     assignDefined(newInputProps, {
+      disabled: props.disabled,
       minDate: props.minDate,
       maxDate: props.maxDate
     })
