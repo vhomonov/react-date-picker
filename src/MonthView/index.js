@@ -16,7 +16,7 @@ import bemFactory from '../bemFactory'
 import joinFunctions from '../joinFunctions'
 import assignDefined from '../assignDefined'
 
-import BasicMonthView, { getDaysInMonthView } from '../BasicMonthView'
+import BasicMonthView, { getDaysInMonthView, getWeekendStartDay } from '../BasicMonthView'
 
 import ON_KEY_DOWN from './onKeyDown'
 import NAV_KEYS from './navKeys'
@@ -373,9 +373,11 @@ export default class MonthView extends Component {
   }
 
   prepareWeekendClassName(dateMoment, { highlightWeekends }) {
+    const props = this.p
     const weekDay = dateMoment.day()
+    const weekendStartDay = getWeekendStartDay(props)
 
-    if (weekDay === 0 /* Sunday */ || weekDay === 6 /* Saturday */) {
+    if (weekDay === weekendStartDay || weekDay === weekendStartDay + 1) {
       return join(
         this.bem('day--weekend'),
         highlightWeekends && this.bem('day--weekend-highlight')

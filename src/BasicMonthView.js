@@ -33,6 +33,25 @@ const getWeekStartDay = (props) => {
 }
 
 /**
+ * Gets the number for the first day of the weekend
+ *
+ * @param  {Object} props
+ * @param  {Number/String} props.weekStartDay
+ *
+ * @return {Number}
+ */
+const getWeekendStartDay = (props) => {
+  let weekendStartDay = props.weekendStartDay
+  const weekStartDay = getWeekStartDay(props)
+
+  if (weekendStartDay == null) {
+    weekendStartDay = weekStartDay + 5 % 7
+  }
+
+  return weekendStartDay
+}
+
+/**
  * Gets a moment that points to the first day of the week
  *
  * @param  {Moment/Date/String} value]
@@ -427,5 +446,6 @@ export default BasicMonthView
 export {
   getWeekStartDay,
   getWeekStartMoment,
+  getWeekendStartDay,
   getDaysInMonthView
 }

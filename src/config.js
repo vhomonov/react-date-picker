@@ -8,6 +8,9 @@ export default {
   //the day to display as first day of week. defaults to 0, which is sunday
   weekStartDay: null,
 
+  //the day the weekend starts on. defaults to 6, which is saturday
+  weekendStartDay: null,
+
   locale: null,
 
   //the format in which days should be displayed in month view
