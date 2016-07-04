@@ -133,6 +133,9 @@ var App = React.createClass({
               navPrev="«"
               navNext="»"
               footer
+              navBarArrows={{
+                '-2': 'x'
+              }}
             >
               <F />
             </MonthView>
