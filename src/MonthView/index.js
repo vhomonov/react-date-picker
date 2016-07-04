@@ -172,7 +172,9 @@ const renderFooter = (props, buttonHandlers) => {
 
     cancelButtonText: props.cancelButtonText,
 
-    clearDate: props.clearDate || props.footerClearDate
+    clearDate: props.clearDate || props.footerClearDate,
+
+    selectDate: props.selectDate
   })
 
   if (childFooter) {
@@ -665,7 +667,10 @@ export default class MonthView extends Component {
   }
 
   renderFooter(props) {
-    return renderFooter(props, this)
+    return renderFooter(assign({}, props, {
+      selectDate: this.select,
+      owner: this
+    }), this)
   }
 
   renderNavBar(props) {

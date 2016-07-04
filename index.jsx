@@ -47,6 +47,20 @@ var TODAY = {
     ro: 'Azi'
 }
 
+class F extends React.Component {
+  render(){
+    const onClick = () => {
+      this.props.selectDate({dateMoment: moment('14/10/2016','DD/MM/YYYY')})
+    }
+    return <div onClick={onClick}>
+      Select
+    </div>
+  }
+}
+
+F.defaultProps = {
+  isDatePickerFooter: true
+}
 var GO2SELECTED = {
     en: 'Go to selected',
     es: 'Vaya a Favoritos',
@@ -115,14 +129,13 @@ var App = React.createClass({
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
             <MonthView
-              locale="pt-br"
-              date={"2016-06-21"}
-              xonChange={this._onDateSelect}
               dateFormat="DD/MM/YYYY"
               navPrev="«"
               navNext="»"
-              viewDate="14/10/2016"
-            />
+              footer
+            >
+              <F />
+            </MonthView>
 
             {/*
             <MultiMonthView size={4}
@@ -142,6 +155,9 @@ var App = React.createClass({
           minDate="2016-04-23 14:23"
           defaultValue="2016-04-02 15:23"
         >
+          <Calendar>
+            <F />
+          </Calendar>
         </DateField>
         <DateFormatSpinnerInput dateFormat="YYYY-MM-DD HH:mm"
         minDate="2016-04-23 14:23"
