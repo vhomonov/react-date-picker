@@ -376,6 +376,7 @@ export default class DateField extends Component {
 
         dateFormat: props.dateFormat,
         theme: props.theme || pickerProps.theme,
+        arrows: props.navBarArrows,
 
         className: join(pickerProps.className, 'react-date-field__picker'),
 

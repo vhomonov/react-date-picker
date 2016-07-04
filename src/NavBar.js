@@ -207,14 +207,19 @@ export default class NavBar extends Component {
       disabled && bem('arrow--disabled')
     ]
 
-    const arrow = props.arrows[name] || ARROWS[name]
+    const arrow = props.arrows[dir] || props.arrows[name] || ARROWS[name]
 
     let children
 
     if (secondary) {
-      const secondArrow = <InlineBlock style={{position: 'absolute', [dir < 0? 'left': 'left']: 7}}>{arrow}</InlineBlock>
+      const dirArrow = props.arrows[dir]
 
-      children = dir < 0? [secondArrow, arrow] : [secondArrow, arrow]
+      if (dirArrow) {
+        children = dirArrow
+      } else {
+        const secondArrow = <InlineBlock style={{ position: 'absolute', [dir < 0 ? 'left' : 'left']: 7 }}>{arrow}</InlineBlock>
+        children = dir < 0 ? [secondArrow, arrow] : [secondArrow, arrow]
+      }
     } else {
       children = arrow
     }
