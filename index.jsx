@@ -114,9 +114,10 @@ var App = React.createClass({
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
 
-        <DateField expanded updateOnDateClick collapseOnDateClick forceValidDate dateFormat="YYYY-MM-DD HH:mm">
+        <DateField updateOnDateClick collapseOnDateClick forceValidDate dateFormat="YYYY-MM-DD HH:mm">
           <TransitionView>
             <Calendar />
+            <Footer okButton={false} cancelButton={false} clearButton={false} />
           </TransitionView>
         </DateField>
 
