@@ -17,7 +17,14 @@ import bemFactory from './bemFactory'
 const CLASS_NAME = 'react-date-picker__basic-month-view'
 
 const RENDER_DAY = (props) => {
-  return <div {...props} />
+  const divProps = assign({}, props)
+
+  delete divProps.date
+  delete divProps.dateMoment
+  delete divProps.day
+  delete divProps.timestamp
+
+  return <div {...divProps} />
 }
 
 const getWeekStartDay = (props) => {
@@ -210,16 +217,36 @@ class BasicMonthView extends Component {
       children = props.renderChildren(children, props)
     }
 
+    const flexProps = assign({}, props)
+
+    delete flexProps.alwaysShowPrevWeek
+    delete flexProps.cleanup
+    delete flexProps.dateFormat
+    delete flexProps.daysInView
+    delete flexProps.defaultClassName
+    delete flexProps.defaultValue
+    delete flexProps.locale
+    delete flexProps.onRenderDay
+    delete flexProps.renderChildren
+    delete flexProps.renderDay
+    delete flexProps.value
+    delete flexProps.viewDate
+    delete flexProps.viewMoment
+    delete flexProps.weekDayNames
+    delete flexProps.weekNumbers
+    delete flexProps.weekNumberName
+    delete flexProps.weekStartDay
+
+    if (typeof props.cleanup == 'function') {
+      props.cleanup(flexProps)
+    }
+
     return <Flex
       column
       wrap={false}
       inline
       alignItems="stretch"
-      {...props}
-
-      weekStartDay={null}
-      value={null}
-      defaultValue={null}
+      {...flexProps}
 
       children={children}
     />
@@ -259,7 +286,15 @@ class BasicMonthView extends Component {
     }
 
     if (result === undefined) {
-      result = <div {...weekNumberProps} />
+      const divProps = assign({}, weekNumberProps)
+
+      delete divProps.date
+      delete divProps.days
+      delete divProps.week
+
+      result = <div
+        {...divProps}
+      />
     }
 
     return result
@@ -383,10 +418,14 @@ class BasicMonthView extends Component {
           return renderWeekDayName(props)
         }
 
+        const divProps = assign({}, props)
+
+        delete divProps.index
+        delete divProps.weekStartDay
+        delete divProps.name
+
         return <div
-          {...props}
-          name={null}
-          index={null}
+          {...divProps}
         />
       })}
 

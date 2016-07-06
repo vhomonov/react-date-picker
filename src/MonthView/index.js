@@ -24,7 +24,17 @@ import NAV_KEYS from './navKeys'
 let TODAY
 
 const RENDER_DAY = (props) => {
-  return <div {...props} />
+  const divProps = assign({}, props)
+
+  delete divProps.date
+  delete divProps.dateMoment
+  delete divProps.day
+  delete divProps.isAfterMaxDate
+  delete divProps.isBeforeMinDate
+  delete divProps.inRange
+  delete divProps.timestamp
+
+  return <div {...divProps} />
 }
 
 const isDateInMinMax = function (timestamp, props) {
@@ -571,24 +581,64 @@ export default class MonthView extends Component {
   render() {
     const props = this.p = this.prepareProps(this.props)
 
+    const basicViewProps = assign({}, props)
+
+    delete basicViewProps.activeDate
+    delete basicViewProps.activateOnHover
+
+    delete basicViewProps.cleanup
+    delete basicViewProps.constrainViewDate
+    delete basicViewProps.constrainActiveInView
+    delete basicViewProps.dayPropsMap
+
+    delete basicViewProps.enableHistoryView
+
+    delete basicViewProps.focusOnFooterMouseDown
+    delete basicViewProps.focusOnNavMouseDown
+    delete basicViewProps.footer
+    delete basicViewProps.footerClearDate
+
+    delete basicViewProps.highlightRangeOnMouseMove
+    delete basicViewProps.highlightToday
+    delete basicViewProps.highlightWeekends
+    delete basicViewProps.hoverRange
+
+    delete basicViewProps.isDatePicker
+
+    delete basicViewProps.maxDate
+    delete basicViewProps.minDate
+
+    delete basicViewProps.navBarArrows
+    delete basicViewProps.navNext
+    delete basicViewProps.navigation
+    delete basicViewProps.navOnDateClick
+    delete basicViewProps.navPrev
+
+    delete basicViewProps.partialRange
+    delete basicViewProps.range
+
+    delete basicViewProps.showDaysAfterMonth
+    delete basicViewProps.showDaysBeforeMonth
+
+    delete basicViewProps.theme
+
+    delete basicViewProps.viewDate
+    delete basicViewProps.viewMonthEnd
+    delete basicViewProps.viewMonthStart
+
+    if (typeof props.cleanup == 'function') {
+      props.cleanup(basicViewProps)
+    }
+
     return <BasicMonthView
       tabIndex={0}
-      {...props}
+      {...basicViewProps}
 
       renderChildren={this.renderChildren}
 
       onKeyDown={this.onViewKeyDown}
       onFocus={this.onFocus}
       onBlur={this.onBlur}
-
-      viewMonthStart={null}
-      viewMonthEnd={null}
-
-      minDate={null}
-      maxDate={null}
-
-      viewDate={null}
-      range={null}
 
       renderDay={this.renderDay}
       viewMoment={props.viewMoment}

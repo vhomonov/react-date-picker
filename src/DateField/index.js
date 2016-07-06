@@ -53,15 +53,46 @@ export default class DateField extends Component {
   render() {
     const props = this.prepareProps(this.props)
 
+    const flexProps = assign({}, props)
+
+    delete flexProps.activeDate
+    delete flexProps.cleanup
+    delete flexProps.clearIcon
+    delete flexProps.collapseOnDateClick
+    delete flexProps.date
+    delete flexProps.dateFormat
+    delete flexProps.expanded
+    delete flexProps.expandOnFocus
+    delete flexProps.footer
+    delete flexProps.forceValidDate
+    delete flexProps.locale
+    delete flexProps.onExpand
+    delete flexProps.onExpandChange
+    delete flexProps.onCollapse
+    delete flexProps.minDate
+    delete flexProps.maxDate
+    delete flexProps.pickerProps
+    delete flexProps.position
+    delete flexProps.showClock
+    delete flexProps.skipTodayTime
+    delete flexProps.strict
+    delete flexProps.valid
+    delete flexProps.validateOnBlur
+    delete flexProps.viewDate
+    delete flexProps.value
+    delete flexProps.text
+    delete flexProps.theme
+    delete flexProps.updateOnDateClick
+
+    if (typeof props.cleanup == 'function') {
+      props.cleanup(flexProps)
+    }
+
     return <Flex
       inline
       row
       wrap={false}
-      value={null}
-      date={null}
-      text={null}
-      {...props}
-      position={null}
+      {...flexProps}
     >
       {this.renderInput()}
       {this.renderClearIcon()}
@@ -86,9 +117,16 @@ export default class DateField extends Component {
 
       const FieldInput = props.forceValidDate ? DateFormatInput : Input
 
+      const propsForInput = assign({}, inputProps)
+
+      delete propsForInput.date
+      delete propsForInput.dateFormat
+      delete propsForInput.maxDate
+      delete propsForInput.minDate
+
       input = input ?
-        React.cloneElement(input, inputProps) :
-        <FieldInput {...inputProps} />
+        React.cloneElement(input, propsForInput) :
+        <FieldInput {...propsForInput} />
     }
 
     return input

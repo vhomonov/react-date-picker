@@ -13,12 +13,12 @@ import bemFactory from './bemFactory'
 import HistoryView from './HistoryView'
 
 const ARROWS = {
-  prev: <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+  prev: <svg height="24" viewBox="0 0 24 24" width="24">
     <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
     <path d="M0 0h24v24H0z" fill="none" />
   </svg>,
 
-  next: <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+  next: <svg height="24" viewBox="0 0 24 24" width="24">
     <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
     <path d="M0 0h24v24H0z" fill="none" />
   </svg>
@@ -62,7 +62,28 @@ export default class NavBar extends Component {
 
     const historyView = props.historyViewEnabled ? this.renderHistoryView() : null
 
-    return <Flex inline row {...props} className={className} viewDate={null}>
+    const flexProps = assign({}, props)
+
+    delete flexProps.arrows
+    delete flexProps.date
+    delete flexProps.enableHistoryView
+    delete flexProps.historyViewEnabled
+    delete flexProps.isDatePickerNavBar
+    delete flexProps.minDate
+    delete flexProps.maxDate
+    delete flexProps.navDateFormat
+    delete flexProps.onNavClick
+    delete flexProps.onViewDateChange
+    delete flexProps.secondary
+    delete flexProps.theme
+    delete flexProps.viewDate
+    delete flexProps.viewMoment
+
+    if (typeof props.cleanup == 'function') {
+      props.cleanup(flexProps)
+    }
+
+    return <Flex inline row {...flexProps} className={className}>
 
       {secondary && this.renderNav(-2, viewMoment)}
       {this.renderNav(-1, viewMoment)}

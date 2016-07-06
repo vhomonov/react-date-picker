@@ -146,8 +146,7 @@ var App = React.createClass({
 
         <br />
         <DateField
-          xforceValidDate
-          xexpanded
+          
           locale="pt-br"
           onChange={(d) => console.log('d', d)}
           expandOnFocus={false}
