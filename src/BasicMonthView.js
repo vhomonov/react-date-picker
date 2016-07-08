@@ -226,9 +226,11 @@ class BasicMonthView extends Component {
     delete flexProps.defaultClassName
     delete flexProps.defaultValue
     delete flexProps.locale
+    delete flexProps.moment
     delete flexProps.onRenderDay
     delete flexProps.renderChildren
     delete flexProps.renderDay
+    delete flexProps.timestamp
     delete flexProps.value
     delete flexProps.viewDate
     delete flexProps.viewMoment

@@ -43,8 +43,28 @@ export default class Calendar extends Component {
       props.theme && `react-date-picker__calendar--theme-${props.theme}`
     )
 
+    const monthViewProps = assign({}, this.props)
+
+    delete monthViewProps.onClockEnterKey
+    delete monthViewProps.onClockEscapeKey
+    delete monthViewProps.onClockInputBlur
+    delete monthViewProps.onClockInputFocus
+    delete monthViewProps.onClockInputMouseDown
+    delete monthViewProps.onFooterCancelClick
+    delete monthViewProps.onFooterClearClick
+    delete monthViewProps.onFooterOkClick
+    delete monthViewProps.onFooterTodayClick
+    delete monthViewProps.onTimeChange
+    delete monthViewProps.showClock
+    delete monthViewProps.updateOnWheel
+    delete monthViewProps.wrapTime
+
+    if (typeof this.props.cleanup == 'function') {
+      this.props.cleanup(monthViewProps)
+    }
+
     const monthView = <MonthView
-      {...this.props}
+      {...monthViewProps}
       className={null}
       style={null}
       ref={view => { this.view = view }}

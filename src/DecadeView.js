@@ -14,12 +14,12 @@ import bemFactory from './bemFactory'
 const bem = bemFactory('react-date-picker__decade-view')
 
 const ARROWS = {
-  prev: <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+  prev: <svg height="24" viewBox="0 0 24 24" width="24">
     <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
     <path d="M0 0h24v24H0z" fill="none" />
   </svg>,
 
-  next: <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+  next: <svg height="24" viewBox="0 0 24 24" width="24">
     <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
     <path d="M0 0h24v24H0z" fill="none" />
   </svg>
@@ -375,12 +375,39 @@ export default class DecadeView extends Component {
       ]
     }
 
+    const flexProps = assign({}, this.props)
+
+    delete flexProps.activeDate
+    delete flexProps.adjustDateStartOf
+    delete flexProps.adjustMaxDateStartOf
+    delete flexProps.adjustMinDateStartOf
+    delete flexProps.arrows
+    delete flexProps.cleanup
+    delete flexProps.constrainViewDate
+    delete flexProps.date
+    delete flexProps.dateFormat
+    delete flexProps.isDecadeView
+    delete flexProps.navigation
+    delete flexProps.navKeys
+    delete flexProps.onActiveDateChange
+    delete flexProps.onConfirm
+    delete flexProps.onlyCompareYear
+    delete flexProps.onViewDateChange
+    delete flexProps.perRow
+    delete flexProps.theme
+    delete flexProps.viewDate
+    delete flexProps.yearFormat
+
+    if (typeof props.cleanup == 'function') {
+      props.cleanup(flexProps)
+    }
+
     return <Flex
       inline
       column={column}
       alignItems={align}
       tabIndex={0}
-      {...this.props}
+      {...flexProps}
       onKeyDown={this.onKeyDown}
       className={className}
       children={children}

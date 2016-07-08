@@ -587,11 +587,13 @@ export default class MonthView extends Component {
 
     delete basicViewProps.activeDate
     delete basicViewProps.activateOnHover
+    delete basicViewProps.arrows
 
     delete basicViewProps.cleanup
     delete basicViewProps.constrainViewDate
     delete basicViewProps.constrainActiveInView
     delete basicViewProps.dayPropsMap
+    delete basicViewProps.date
 
     delete basicViewProps.enableHistoryView
 
@@ -600,24 +602,36 @@ export default class MonthView extends Component {
     delete basicViewProps.footer
     delete basicViewProps.footerClearDate
 
+    delete basicViewProps.getTransitionTime
+
     delete basicViewProps.highlightRangeOnMouseMove
     delete basicViewProps.highlightToday
     delete basicViewProps.highlightWeekends
     delete basicViewProps.hoverRange
 
+    delete basicViewProps.insideField
     delete basicViewProps.isDatePicker
 
+    delete basicViewProps.maxConstrained
     delete basicViewProps.maxDate
+    delete basicViewProps.maxDateMoment
+    delete basicViewProps.minConstrained
     delete basicViewProps.minDate
+    delete basicViewProps.minDateMoment
 
     delete basicViewProps.navBarArrows
     delete basicViewProps.navNext
     delete basicViewProps.navigation
     delete basicViewProps.navOnDateClick
     delete basicViewProps.navPrev
+    delete basicViewProps.onActiveDateChange
+    delete basicViewProps.onChange
+    delete basicViewProps.onViewDateChange
+    delete basicViewProps.onTransitionStart
 
     delete basicViewProps.partialRange
     delete basicViewProps.range
+    delete basicViewProps.renderNavBar
 
     delete basicViewProps.showDaysAfterMonth
     delete basicViewProps.showDaysBeforeMonth

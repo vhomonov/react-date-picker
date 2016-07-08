@@ -6,6 +6,7 @@ import InlineBlock from 'react-inline-block'
 
 import assign from 'object-assign'
 
+import joinFunctions from './joinFunctions'
 import join from './join'
 import bemFactory from './bemFactory'
 
@@ -70,10 +71,35 @@ export default class Footer extends Component {
       children = props.renderChildren(children, props)
     }
 
+    const flexProps = assign({}, props)
+
+    delete flexProps.actionEvent
+    delete flexProps.buttonFactory
+    delete flexProps.cancelButton
+    delete flexProps.cancelButtonText
+    delete flexProps.centerButtons
+    delete flexProps.clearDate
+    delete flexProps.cleanup
+    delete flexProps.clearButton
+    delete flexProps.clearButtonText
+    delete flexProps.isDatePickerFooter
+    delete flexProps.onCancelClick
+    delete flexProps.onOkClick
+    delete flexProps.onTodayClick
+    delete flexProps.okButton
+    delete flexProps.okButtonText
+    delete flexProps.theme
+    delete flexProps.todayButton
+    delete flexProps.todayButtonText
+
+    if (typeof props.cleanup == 'function') {
+      props.cleanup(flexProps)
+    }
+
     return <Flex
       inline
       row
-      {...props}
+      {...flexProps}
       justifyContent="center"
       className={className}
       children={children}
@@ -156,6 +182,12 @@ Footer.defaultProps = {
 
 Footer.propTypes = {
   theme: PropTypes.string,
+  centerButtons: PropTypes.bool,
+
+  cokButtonText: PropTypes.node,
+  clearButtonText: PropTypes.node,
+  cancelButtonText: PropTypes.node,
+  todayButtonText: PropTypes.node,
 
   onTodayClick: PropTypes.func,
   onClearClick: PropTypes.func,

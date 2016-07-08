@@ -9,7 +9,6 @@ import joinFunctions from './joinFunctions'
 import bemFactory from './bemFactory'
 
 import Footer from './Footer'
-import DecadeView from './DecadeView'
 import YearView from './YearView'
 
 import assignDefined from './assignDefined'
@@ -20,11 +19,9 @@ const preventDefault = (e) => {
   e.preventDefault()
 }
 
-import {
+import DecadeView, {
   prepareDateProps,
   getInitialState,
-
-  onKeyDown,
 
   onViewDateChange,
   onActiveDateChange,
@@ -83,11 +80,49 @@ export default class HistoryView extends Component {
       ref: view => { this.decadeView = view }
     })
 
+    const flexProps = assign({}, this.props)
+
+    delete flexProps.activeDate
+    delete flexProps.adjustDateStartOf
+    delete flexProps.adjustMaxDateStartOf
+    delete flexProps.adjustMinDateStartOf
+
+    delete flexProps.cleanup
+
+    delete flexProps.date
+    delete flexProps.dateFormat
+    delete flexProps.defaultDate
+    delete flexProps.defaultViewDate
+
+    delete flexProps.focusDecadeView
+    delete flexProps.focusYearView
+    delete flexProps.footer
+
+    delete flexProps.locale
+
+    delete flexProps.maxDate
+    delete flexProps.minDate
+
+    delete flexProps.onOkClick
+    delete flexProps.onCancelClick
+    delete flexProps.okOnEnter
+
+    delete flexProps.navigation
+
+    delete flexProps.theme
+
+    delete flexProps.viewMoment
+
+    if (typeof props.cleanup == 'function') {
+      props.cleanup(flexProps)
+    }
+
+
     return <Flex
       inline
       column
       alignItems="stretch"
-      {...this.props}
+      {...flexProps}
       className={className}
     >
       {this.renderYearView(yearViewProps)}
@@ -280,6 +315,8 @@ export default class HistoryView extends Component {
     if (this.decadeView) {
       this.decadeView.onKeyDown(event)
     }
+
+    return undefined
   }
 
   confirm(date, event) {

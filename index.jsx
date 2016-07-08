@@ -128,8 +128,8 @@ var App = React.createClass({
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
-            <MonthView
-              dateFormat="DD/MM/YYYY"
+            <Calendar
+              dateFormat="DD/MM/YYYY HH:mm"
               navPrev="«"
               navNext="»"
               footer
@@ -138,7 +138,7 @@ var App = React.createClass({
               }}
             >
               <F />
-            </MonthView>
+            </Calendar>
 
             {/*
             <MultiMonthView size={4}
@@ -153,7 +153,6 @@ var App = React.createClass({
           dateFormat="YYYY-MM-DD HH:mm"
           minDate="2016-04-23 14:23"
           defaultValue="2016-04-02 15:23"
-          disabled
         >
           <Calendar>
             <F />

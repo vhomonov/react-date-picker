@@ -227,8 +227,46 @@ export default class Clock extends Component {
       width, height, borderWidth: props.borderWidth
     })
 
+    const divProps = assign({}, props)
+
+    delete divProps.bigTickHeight
+    delete divProps.bigTickOffset
+    delete divProps.bigTickWidth
+    delete divProps.borderColor
+    delete divProps.borderWidth
+    delete divProps.centerOverlaySize
+    delete divProps.centerSize
+    delete divProps.cleanup
+    delete divProps.defaultSeconds
+    delete divProps.defaultTime
+    delete divProps.handHeight
+    delete divProps.handOffset
+    delete divProps.handWidth
+    delete divProps.hourHandDiff
+    delete divProps.isDatePickerClock
+    delete divProps.minuteHandDiff
+    delete divProps.seconds
+    delete divProps.secondHandDiff
+    delete divProps.secondHandWidth
+    delete divProps.showHoursHand
+    delete divProps.showMinutesHand
+    delete divProps.showSecondsHand
+    delete divProps.showSmallTicks
+    delete divProps.smallTickHeight
+    delete divProps.smallTickOffset
+    delete divProps.smallTickWidth
+    delete divProps.theme
+    delete divProps.time
+    delete divProps.tickHeight
+    delete divProps.tickOffset
+    delete divProps.tickWidth
+
+    if (typeof props.cleanup == 'function') {
+      props.cleanup(divProps)
+    }
+
     return <div
-      {...props}
+      {...divProps}
       className={className}
       style={style}
     >

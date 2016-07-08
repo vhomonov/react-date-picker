@@ -438,8 +438,6 @@ export default class DateField extends Component {
 
         onTransitionStart: this.onTransitionStart,
 
-        tabIndex: -1,
-
         onMouseDown,
         onChange
       }, {

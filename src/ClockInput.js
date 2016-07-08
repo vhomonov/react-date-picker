@@ -41,9 +41,27 @@ export default class ClockInput extends Component {
       props.theme && `react-date-picker__clock-input--theme-${props.theme}`
     )
 
+    const flexProps = assign({}, this.props)
+
+    delete flexProps.changeDelay
+    delete flexProps.cleanup
+    delete flexProps.dateFormat
+    delete flexProps.isClockInput
+    delete flexProps.onEnterKey
+    delete flexProps.onEscapeKey
+    delete flexProps.onTimeChange
+    delete flexProps.updateOnWheel
+    delete flexProps.theme
+    delete flexProps.viewIndex
+    delete flexProps.wrapTime
+
+    if (typeof this.props.cleanup == 'function') {
+      this.props.cleanup(flexProps)
+    }
+
     return <Flex
       column
-      {...this.props}
+      {...flexProps}
       value={null}
       defaultValue={null}
       className={className}

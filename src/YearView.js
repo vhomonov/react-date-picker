@@ -139,12 +139,47 @@ export default class YearView extends Component {
 
     const monthsInView = this.getMonthsInYear(props.viewMoment)
 
+    const flexProps = assign({}, props)
+
+    delete flexProps.activeDate
+    delete flexProps.activeMoment
+    delete flexProps.adjustDateStartOf
+    delete flexProps.adjustMaxDateStartOf
+    delete flexProps.adjustMinDateStartOf
+
+    delete flexProps.cleanup
+    delete flexProps.constrainViewDate
+
+    delete flexProps.date
+    delete flexProps.dateFormat
+
+    delete flexProps.isYearView
+
+    delete flexProps.moment
+    delete flexProps.monthFormat
+
+    delete flexProps.navKeys
+
+    delete flexProps.onActiveDateChange
+    delete flexProps.onViewDateChange
+    delete flexProps.onlyCompareMonth
+
+    delete flexProps.timestamp
+    delete flexProps.theme
+
+    delete flexProps.viewDate
+    delete flexProps.viewMoment
+
+    if (typeof props.cleanup == 'function') {
+      props.cleanup(flexProps)
+    }
+
     return <Flex
       inline
       column
       alignItems="stretch"
       tabIndex={0}
-      {...props}
+      {...flexProps}
       onKeyDown={this.onKeyDown}
       className={className}
     >
