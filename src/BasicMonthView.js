@@ -224,6 +224,7 @@ class BasicMonthView extends Component {
     delete flexProps.dateFormat
     delete flexProps.daysInView
     delete flexProps.defaultClassName
+    delete flexProps.defaultDate
     delete flexProps.defaultValue
     delete flexProps.locale
     delete flexProps.moment
