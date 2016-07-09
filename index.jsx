@@ -128,35 +128,21 @@ var App = React.createClass({
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
-            <Calendar
-              dateFormat="DD/MM/YYYY HH:mm"
-              navPrev="«"
-              navNext="»"
-              footer
-              navBarArrows={{
-                '-2': 'x'
-              }}
-            >
-              <F />
-            </Calendar>
+            <DateField
+      forceValidDate
+      defaultValue={Date.now()}
+      dateFormat="YYYY-MM-DD"
+      onChange={(dateFormat, {dateMoment}) => {
+        console.log(dateMoment);
+      }}
+    />
 
             {/*
             <MultiMonthView size={4}
             />*/}
 
         <br />
-        <DateField
-          locale="pt-br"
-          onChange={(d) => console.log('d', d)}
-          expandOnFocus={false}
-          dateFormat="YYYY-MM-DD HH:mm"
-          minDate="2016-04-23 14:23"
-          defaultValue="2016-04-02 15:23"
-        >
-          <Calendar>
-            <F />
-          </Calendar>
-        </DateField>
+
         <DateFormatSpinnerInput dateFormat="YYYY-MM-DD HH:mm"
         minDate="2016-04-23 14:23"
         defaultValue="2016-04-02 15:23" />

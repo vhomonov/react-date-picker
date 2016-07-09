@@ -45,15 +45,6 @@ export default class Calendar extends Component {
 
     const monthViewProps = assign({}, this.props)
 
-    delete monthViewProps.onClockEnterKey
-    delete monthViewProps.onClockEscapeKey
-    delete monthViewProps.onClockInputBlur
-    delete monthViewProps.onClockInputFocus
-    delete monthViewProps.onClockInputMouseDown
-    delete monthViewProps.onFooterCancelClick
-    delete monthViewProps.onFooterClearClick
-    delete monthViewProps.onFooterOkClick
-    delete monthViewProps.onFooterTodayClick
     delete monthViewProps.onTimeChange
     delete monthViewProps.showClock
     delete monthViewProps.updateOnWheel

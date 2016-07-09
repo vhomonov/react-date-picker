@@ -84,10 +84,12 @@ export default class Footer extends Component {
     delete flexProps.clearButtonText
     delete flexProps.isDatePickerFooter
     delete flexProps.onCancelClick
+    delete flexProps.onClearClick
     delete flexProps.onOkClick
     delete flexProps.onTodayClick
     delete flexProps.okButton
     delete flexProps.okButtonText
+    delete flexProps.selectDate
     delete flexProps.theme
     delete flexProps.todayButton
     delete flexProps.todayButtonText

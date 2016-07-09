@@ -228,6 +228,15 @@ class BasicMonthView extends Component {
     delete flexProps.defaultValue
     delete flexProps.locale
     delete flexProps.moment
+    delete flexProps.onClockEnterKey
+    delete flexProps.onClockEscapeKey
+    delete flexProps.onClockInputBlur
+    delete flexProps.onClockInputFocus
+    delete flexProps.onClockInputMouseDown
+    delete flexProps.onFooterCancelClick
+    delete flexProps.onFooterClearClick
+    delete flexProps.onFooterOkClick
+    delete flexProps.onFooterTodayClick
     delete flexProps.onRenderDay
     delete flexProps.renderChildren
     delete flexProps.renderDay
