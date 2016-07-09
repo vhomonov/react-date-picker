@@ -594,6 +594,9 @@ export default class MonthView extends Component {
     delete basicViewProps.constrainActiveInView
     delete basicViewProps.dayPropsMap
     delete basicViewProps.date
+    delete basicViewProps.defaultActiveDate
+    delete basicViewProps.defaultDate
+    delete basicViewProps.defaultViewDate
 
     delete basicViewProps.enableHistoryView
 

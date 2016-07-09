@@ -189,7 +189,10 @@ export default class Calendar extends Component {
 
   onClockInputMouseDown(event) {
     event.stopPropagation()
-    event.preventDefault()
+    if (event.target && event.target.type != 'text') {
+      //in order not to blur - in case we're in a date field
+      event.preventDefault()
+    }
 
     this.clockInput.focus()
   }

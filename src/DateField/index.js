@@ -119,10 +119,12 @@ export default class DateField extends Component {
 
       const propsForInput = assign({}, inputProps)
 
-      delete propsForInput.date
-      delete propsForInput.dateFormat
-      delete propsForInput.maxDate
-      delete propsForInput.minDate
+      if (!props.forceValidDate) {
+        delete propsForInput.date
+        delete propsForInput.maxDate
+        delete propsForInput.minDate
+        delete propsForInput.dateFormat
+      }
 
       input = input ?
         React.cloneElement(input, propsForInput) :

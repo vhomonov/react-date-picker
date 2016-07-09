@@ -101,6 +101,7 @@ export default class DateFormatInput extends Component {
     const inputProps = assign({}, props)
 
     delete inputProps.changeDelay
+    delete inputProps.date
     delete inputProps.dateFormat
     delete inputProps.isDateInput
     delete inputProps.maxDate
