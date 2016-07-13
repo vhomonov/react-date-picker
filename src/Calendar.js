@@ -8,6 +8,7 @@ import MonthView, { NAV_KEYS } from './MonthView'
 import toMoment from './toMoment'
 import join from './join'
 import ClockInput from './ClockInput'
+import forwardTime from './utils/forwardTime'
 
 import { Flex } from 'react-flex'
 
@@ -56,6 +57,7 @@ export default class Calendar extends Component {
 
     const monthView = <MonthView
       {...monthViewProps}
+      onChange={this.onChange}
       className={null}
       style={null}
       ref={view => { this.view = view }}
@@ -181,7 +183,7 @@ export default class Calendar extends Component {
   onClockInputMouseDown(event) {
     event.stopPropagation()
     if (event.target && event.target.type != 'text') {
-      //in order not to blur - in case we're in a date field
+      // in order not to blur - in case we're in a date field
       event.preventDefault()
     }
 
@@ -189,7 +191,36 @@ export default class Calendar extends Component {
   }
 
   onTimeChange(value, timeFormat) {
+    this.time = value
     this.props.onTimeChange(value, timeFormat)
+
+    const view = this.view
+    const moment = view.p.moment
+
+    if (moment == null) {
+      return
+    }
+
+    view.onChange({
+      dateMoment: moment,
+      timestamp: +moment
+    })
+  }
+
+  onChange(dateString, { dateMoment, timestamp }, event) {
+    const props = this.p
+    const time = toMoment(this.time || this.clockInput.getValue(), {
+      dateFormat: props.timeFormat,
+      locale: props.locale
+    })
+
+    forwardTime(time, dateMoment)
+    timestamp = +dateMoment
+    dateString = this.view.format(dateMoment)
+
+    if (this.props.onChange) {
+      this.props.onChange(dateString, { dateMoment, timestamp, dateString }, event)
+    }
   }
 }
 

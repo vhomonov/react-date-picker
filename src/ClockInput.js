@@ -25,6 +25,10 @@ export default class ClockInput extends Component {
     }
   }
 
+  getValue() {
+    return this.value
+  }
+
   render() {
     const props = this.props
     const format = props.dateFormat || props.format

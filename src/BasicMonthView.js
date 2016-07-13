@@ -226,6 +226,7 @@ class BasicMonthView extends Component {
     delete flexProps.defaultClassName
     delete flexProps.defaultDate
     delete flexProps.defaultValue
+    delete flexProps.forceValidDate
     delete flexProps.locale
     delete flexProps.moment
     delete flexProps.onClockEnterKey

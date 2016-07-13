@@ -565,7 +565,7 @@ export default class DateField extends Component {
   onViewKeyDown(event) {
     const key = event.key
 
-    if (this.pickerView) {//} && (key == 'Escape' || key == 'Enter' || (key in NAV_KEYS))) {
+    if (this.pickerView) { // } && (key == 'Escape' || key == 'Enter' || (key in NAV_KEYS))) {
       this.pickerView.onViewKeyDown(event)
     }
   }
@@ -846,6 +846,8 @@ export default class DateField extends Component {
     if (dateMoment != null && !moment.isMoment(dateMoment)) {
       dateMoment = this.toMoment(dateMoment)
     }
+
+    forwardTime(this.time, dateMoment)
 
     const newState = {}
 

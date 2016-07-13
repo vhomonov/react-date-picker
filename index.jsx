@@ -130,10 +130,10 @@ var App = React.createClass({
         <br />*/}
             <DateField
       forceValidDate
-      defaultValue={Date.now()}
-      dateFormat="YYYY-MM-DD"
+      defaultValue="2016-07-12 04:34"
+      dateFormat="YYYY-MM-DD HH:mm"
       onChange={(dateFormat, {dateMoment}) => {
-        console.log(dateMoment);
+        console.log(dateFormat, '!!!');
       }}
     />
 
