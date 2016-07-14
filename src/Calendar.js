@@ -209,14 +209,17 @@ export default class Calendar extends Component {
 
   onChange(dateString, { dateMoment, timestamp }, event) {
     const props = this.p
-    const time = toMoment(this.time || this.clockInput.getValue(), {
-      dateFormat: props.timeFormat,
-      locale: props.locale
-    })
 
-    forwardTime(time, dateMoment)
-    timestamp = +dateMoment
-    dateString = this.view.format(dateMoment)
+    if (props.showClock) {
+      const time = toMoment(this.time || this.clockInput.getValue(), {
+        dateFormat: props.timeFormat,
+        locale: props.locale
+      })
+
+      forwardTime(time, dateMoment)
+      timestamp = +dateMoment
+      dateString = this.view.format(dateMoment)
+    }
 
     if (this.props.onChange) {
       this.props.onChange(dateString, { dateMoment, timestamp, dateString }, event)
