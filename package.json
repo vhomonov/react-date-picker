@@ -1,6 +1,6 @@
 {
   "name": "react-date-picker",
-  "version": "5.3.23",
+  "version": "5.3.24",
   "description": "A carefully crafted date picker for React",
   "main": "lib/index.js",
   "scripts": {
