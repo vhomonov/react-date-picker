@@ -129,12 +129,12 @@ var App = React.createClass({
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
             <DateField
-      forceValidDate
-      defaultValue="2016-07-12"
+
       dateFormat="YYYY-MM-DD"
       onChange={(dateFormat, {dateMoment}) => {
         console.log(dateFormat, '!!!');
       }}
+      placeholder="test"
     >
       <Calendar />
     </DateField>

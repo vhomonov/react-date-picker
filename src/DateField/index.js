@@ -358,6 +358,7 @@ export default class DateField extends Component {
     })
 
     assignDefined(newInputProps, {
+      placeholder: props.placeholder,
       disabled: props.disabled,
       minDate: props.minDate,
       maxDate: props.maxDate
