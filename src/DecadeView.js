@@ -250,7 +250,7 @@ const prepareMinMax = function (props) {
     result.maxDateMoment = toMoment(
       props.maxDate,
       props
-    ).endOf(props.props.adjustMaxDateStartOf)
+    ).endOf(props.adjustMaxDateStartOf)
 
     result.maxDate = +result.maxDateMoment
   }

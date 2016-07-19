@@ -135,7 +135,9 @@ var App = React.createClass({
       onChange={(dateFormat, {dateMoment}) => {
         console.log(dateFormat, '!!!');
       }}
-    />
+    >
+      <Calendar />
+    </DateField>
 
             {/*
             <MultiMonthView size={4}
