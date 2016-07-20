@@ -5,6 +5,7 @@ import { Flex, Item } from 'react-flex'
 import InlineBlock from 'react-inline-block'
 
 import assign from 'object-assign'
+import assignDefined from './assignDefined'
 
 import toMoment from './toMoment'
 import join from './join'
@@ -109,9 +110,9 @@ export default class NavBar extends Component {
     }
 
     const className = bem('history-view')
-    const { viewMoment, theme } = this.p
+    const { viewMoment, theme, minDate, maxDate } = this.p
 
-    const historyViewProps = {
+    const historyViewProps = assignDefined({
       defaultViewDate: viewMoment,
       defaultDate: viewMoment,
 
@@ -123,7 +124,10 @@ export default class NavBar extends Component {
 
       onOkClick: this.onHistoryViewOk,
       onCancelClick: this.onHistoryViewCancel
-    }
+    }, {
+      minDate,
+      maxDate
+    })
 
     if (this.props.renderHistoryView) {
       return this.props.renderHistoryView(historyViewProps)

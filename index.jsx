@@ -128,6 +128,7 @@ var App = React.createClass({
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
+        <HistoryView minDate={Date.now()} />
             <DateField
 
       dateFormat="YYYY-MM-DD"
@@ -135,8 +136,8 @@ var App = React.createClass({
         console.log(dateFormat, '!!!');
       }}
       placeholder="test"
+      maxDate={Date.now()}
     >
-      <Calendar />
     </DateField>
 
             {/*
@@ -144,12 +145,6 @@ var App = React.createClass({
             />*/}
 
         <br />
-
-        <DateFormatSpinnerInput dateFormat="YYYY-MM-DD HH:mm"
-        minDate="2016-04-23 14:23"
-        defaultValue="2016-04-02 15:23" />
-        <br />
-        <input defaultValue="dadas"/>
 
 
         </div>

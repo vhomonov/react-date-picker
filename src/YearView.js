@@ -155,6 +155,12 @@ export default class YearView extends Component {
 
     delete flexProps.isYearView
 
+    delete flexProps.maxConstrained
+    delete flexProps.maxDate
+    delete flexProps.maxDateMoment
+    delete flexProps.minConstrained
+    delete flexProps.minDate
+    delete flexProps.minDateMoment
     delete flexProps.moment
     delete flexProps.monthFormat
 

@@ -387,6 +387,8 @@ export default class DecadeView extends Component {
     delete flexProps.date
     delete flexProps.dateFormat
     delete flexProps.isDecadeView
+    delete flexProps.maxDate
+    delete flexProps.minDate
     delete flexProps.navigation
     delete flexProps.navKeys
     delete flexProps.onActiveDateChange
@@ -422,7 +424,7 @@ export default class DecadeView extends Component {
 
     const disabled = dir == -1 ?
       props.minDateMoment && getDecadeEndYear(navMoment) < getDecadeEndYear(props.minDateMoment) :
-      props.maxDateMoment && getDecadeEndYear(navMoment) < getDecadeEndYear(props.maxDateMoment)
+      props.maxDateMoment && getDecadeEndYear(navMoment) > getDecadeEndYear(props.maxDateMoment)
 
     const className = join(
       bem('arrow'),
@@ -510,6 +512,15 @@ export default class DecadeView extends Component {
 
   handleClick({ timestamp, dateMoment }, event) {
     event.target.value = timestamp
+
+    const props = this.p
+    if (props.minDate && timestamp < props.minDate) {
+      return
+    }
+
+    if (props.maxDate && timestamp > props.maxDate) {
+      return
+    }
 
     this.select({ dateMoment, timestamp }, event)
   }
