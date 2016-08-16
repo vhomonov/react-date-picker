@@ -247,12 +247,25 @@ export default class TransitionView extends Component {
 
     const clone = React.cloneElement(child, newProps)
 
+    const flexProps = assign({}, props)
+
+    delete flexProps.constrainActiveInView
+    delete flexProps.enableHistoryView
+    delete flexProps.focusOnNavMouseDown
+    delete flexProps.focusOnTransitionEnd
+    delete flexProps.footerClearDate
+    delete flexProps.isDatePicker
+    delete flexProps.navigation
+    delete flexProps.onTransitionEnd
+    delete flexProps.onTransitionStart
+    delete flexProps.theme
+
     return <Flex
       column
       inline
       wrap={false}
       alignItems="stretch"
-      {...props}
+      {...flexProps}
       className={join(
         props.className,
         'react-date-picker__transition-month-view',

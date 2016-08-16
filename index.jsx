@@ -140,9 +140,9 @@ var App = React.createClass({
     >
     </DateField>
 
-            {/*
-            <MultiMonthView size={4}
-            />*/}
+            {<TransitionView>
+            <MultiMonthView highlightRangeOnMouseMove defaultRange={[]} size={4}
+            /></TransitionView>}
 
         <br />
 

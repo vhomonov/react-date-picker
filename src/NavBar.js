@@ -72,9 +72,14 @@ export default class NavBar extends Component {
     delete flexProps.isDatePickerNavBar
     delete flexProps.minDate
     delete flexProps.maxDate
+    delete flexProps.mainNavBar
+    delete flexProps.multiView
     delete flexProps.navDateFormat
     delete flexProps.onNavClick
+    delete flexProps.onUpdate
     delete flexProps.onViewDateChange
+    delete flexProps.renderNavNext
+    delete flexProps.renderNavPrev
     delete flexProps.secondary
     delete flexProps.theme
     delete flexProps.viewDate

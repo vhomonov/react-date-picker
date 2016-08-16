@@ -235,12 +235,44 @@ export default class MultiMonthView extends Component {
       children.push(footer)
     }
 
+    const flexProps = assign({}, props)
+
+    delete flexProps.activeDate
+    delete flexProps.clockTabIndex
+    delete flexProps.constrainActiveInView
+    delete flexProps.constrainViewDate
+    delete flexProps.date
+    delete flexProps.dateFormat
+    delete flexProps.daysInView
+    delete flexProps.defaultRange
+    delete flexProps.enableHistoryView
+    delete flexProps.footer
+    delete flexProps.footerClearDate
+    delete flexProps.forceViewUpdate
+    delete flexProps.highlightRangeOnMouseMove
+    delete flexProps.inViewEnd
+    delete flexProps.inViewStart
+    delete flexProps.isDatePicker
+    delete flexProps.locale
+    delete flexProps.navigation
+    delete flexProps.onViewDateChange
+    delete flexProps.perRow
+    delete flexProps.range
+    delete flexProps.rangeStart
+    delete flexProps.renderNavBar
+    delete flexProps.theme
+    delete flexProps.viewDate
+    delete flexProps.viewEnd
+    delete flexProps.viewMoment
+    delete flexProps.viewMoments
+    delete flexProps.viewStart
+
     return <Flex
       column
       inline
       alignItems="stretch"
       wrap={false}
-      {...props}
+      {...flexProps}
       className={className}
       children={children}
     />
@@ -248,6 +280,17 @@ export default class MultiMonthView extends Component {
 
   renderRow(rowIndex) {
     const props = this.p
+    const viewProps = assign({}, this.p)
+
+    delete viewProps.forceViewUpdate
+    delete viewProps.index
+    delete viewProps.inViewEnd
+    delete viewProps.inViewStart
+    delete viewProps.navigate
+    delete viewProps.perRow
+    delete viewProps.viewEnd
+    delete viewProps.viewMoments
+    delete viewProps.viewStart
 
     const children = times(props.perRow).map(i => {
       const index = (rowIndex * props.perRow) + i
@@ -256,13 +299,13 @@ export default class MultiMonthView extends Component {
         return null
       }
 
-      return this.renderView(index, props.size)
+      return this.renderView(viewProps, index, props.size)
     })
 
     return <Flex inline row wrap={false} children={children} />
   }
 
-  renderView(index, size) {
+  renderView(viewProps, index, size) {
     const props = this.p
     const viewMoment = props.viewMoments[index]
 
@@ -277,7 +320,7 @@ export default class MultiMonthView extends Component {
     return <MonthView
       ref={view => { this.views[index] = view }}
       constrainViewDate={false}
-      {...this.props}
+      {...viewProps}
 
       className={null}
 
