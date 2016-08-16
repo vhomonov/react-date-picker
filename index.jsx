@@ -129,16 +129,17 @@ var App = React.createClass({
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
         <HistoryView maxDate={Date.now()} />
-            <DateField
+            <MonthView
 
       dateFormat="YYYY-MM-DD"
       onChange={(dateFormat, {dateMoment}) => {
         console.log(dateFormat, '!!!');
       }}
       placeholder="test"
-      maxDate={Date.now()}
+      defaultRange={[]}
+      isDisabledDay={() => false}
     >
-    </DateField>
+    </MonthView>
 
             {<TransitionView>
             <MultiMonthView highlightRangeOnMouseMove defaultRange={[]} size={4}

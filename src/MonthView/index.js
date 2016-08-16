@@ -618,6 +618,7 @@ export default class MonthView extends Component {
     delete basicViewProps.insideField
     delete basicViewProps.insideMultiView
     delete basicViewProps.isDatePicker
+    delete basicViewProps.isDisabledDay
 
     delete basicViewProps.maxConstrained
     delete basicViewProps.maxDate
