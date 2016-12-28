@@ -131,7 +131,9 @@ export default class Calendar extends Component {
   }
 
   renderClockInput() {
-    const clockInput = null
+    const clockInput = React.Children
+      .toArray(this.props.children)
+      .filter(child => child && child.props && child.props.isClockInput)[0]
 
     const readOnly = this.props.readOnly
 
@@ -156,6 +158,8 @@ export default class Calendar extends Component {
     })
 
     if (clockInput) {
+      assignDefined(clockInputProps, clockInput.props);
+
       return React.cloneElement(clockInput, clockInputProps)
     }
 
